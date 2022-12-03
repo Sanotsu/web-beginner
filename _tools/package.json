@@ -6,11 +6,14 @@
   "author": "davidsu",
   "license": "MIT",
   "dependencies": {
+    "get-video-duration": "^4.1.0",
     "imagemin": "^8.0.1",
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-pngquant": "^9.0.2",
-    "nodejieba": "^2.6.0",
     "inquirer": "^8.2.0",
-    "puppeteer": "^19.3.0"
+    "moment": "^2.29.4",
+    "nodejieba": "^2.6.0",
+    "puppeteer": "^19.3.0",
+    "tesseract.js": "^4.0.0"
   }
 }
