@@ -1,0 +1,211 @@
+%%%%%%%%%% 设置字体大小超过12pt时需要的包
+% (字体设置在md的yaml处)
+%%% 估计至少要放在页面布局前，否则可能页面样式结构会出问题
+% \usepackage{extsizes}
+
+%%%%%%%%%% 页面大小设置
+%% 设置页边距，上下左右边框大小
+% 如果页眉需要显示章节标题之类的，至少要1.5cm，页脚1.2cm则可以显示(设成a4paper格式又白调了...)
+% \usepackage[top=1.2cm, bottom=1.2cm, left=0.8cm, right=0.8cm]{geometry}
+% 重新调整
+\usepackage[a4paper, top=1.2cm, bottom=1.2cm, left=0.8cm, right=0.8cm]{geometry}
+
+%%%%%%%%%% 修改目录标题名称
+% 默认是 Contents 字符串
+\renewcommand{\contentsname}{目录}
+
+%%%%%%%%%% 使用 CJKmainfont 选项指定支持中文的字体，以及相关设置
+% \setCJKmainfont 设置 CJK 主字体，也就是设置 \rmfamily 的 CJK 字体
+% \setCJKsansfont 设置 CJK 无衬线的字体，也就是设置 \sffamily 的 CJK 字体 (一般不用设置)
+% \setCJKmonofont 设置 CJK 的等宽字体，也就是设置 \ttfamily 的 CJK 字体 (一般不用设置)
+
+%%%% windows下
+% \usepackage{xeCJK}  % 导入字体包
+% \usepackage{fontspec} 
+% \setCJKmainfont{Microsoft YaHei} 
+% \setCJKmonofont{Microsoft YaHei Mono}
+
+%%%%  ubuntu下
+\usepackage{xeCJK}  % 导入字体包
+\usepackage{fontspec} 
+% \setCJKmainfont{Noto Serif CJK SC} 
+% \setCJKmonofont{NotoSansCJK}
+
+% 中文默认字体：{Noto Serif CJK SC，粗体为对应的粗体，斜体为 某种楷体
+%   注意: 代码中的注释，也会变为斜体,楷体会比之前字体占得宽点好像，长度可能超出
+%    2022-09-05 暂时好像不支持dart的代码块
+\setCJKmainfont{Noto Serif CJK SC}
+      [
+        % BoldFont   = {Noto Sans Mono CJK TC:style=Bold},
+        ItalicFont = {AR PL UKai CN}
+      ]
+
+%%% 针对中文自动换行
+\XeTeXlinebreaklocale "zh"
+
+%%% 设置行间距 1.0 倍
+\linespread{1.1}\selectfont
+
+%%% 段落之间的距离
+\setlength{\parskip}{5pt}   
+
+%%% 字与字之间加入0pt至1pt的间距，确保左右对齐
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+%%%%%%%%%% 设置页眉页脚
+% 如果我们同时使用了 geometry 和 fancyhdr 宏包，
+%   那么一定要把 \usepackage{fancyhdr} 及相应的页眉、页脚设置写在 \usepackage{geometry} 的前面，否则会出现奇怪的错误。
+%   2022-09-05 放到geometry前面了才出现了奇怪问题，先还是放在这里
+
+% 使用说明: https://bookdown.org/yihui/rmarkdown-cookbook/latex-header.html
+% E偶数页、O表示奇数页、L为左侧、C为中心、R表示右侧
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%%% Latex 预定义了以下几种页眉页脚的页面风格：
+%       empty 没有页眉页脚；
+%       plain 没有页眉，页脚是居中的页码；
+%       heading 没有页脚，页眉是章节名称的页码；
+%       myheading 没有页脚，页眉是页码和用户自定义的内容。
+% \pagestyle{plain}
+
+% 默认第一页是没有页眉页脚的，加上这句就可以显示
+% \fancypagestyle{plain}{\pagestyle{fancy}}
+
+%%% 这几个是动态的值 
+% 放在页眉，原本的1.2就不够用，至少1.5，那排版又乱了，多了至少7页出来...
+% \fancyhead[OR]{\rightmark\qquad | \qquad\thepage} 
+% \fancyhead[EL]{\thepage\qquad | \qquad\itshape\leftmark} 
+
+%%% 设置页脚，奇数页右边显示小章节标题，偶数页左边显示大章节标题（页码都靠外）
+% 要配合md文件yaml设置twoside，否则这里分不清左右
+\fancyhf{} % 清空页眉页脚
+% \itshape好像是变斜体，\qquad 是留了一个空白，这里直接打空格不会有用
+\fancyfoot[OR]{\itshape\rightmark\qquad | \qquad\thepage} 
+\fancyfoot[EL]{\itshape\thepage\qquad | \qquad\leftmark} 
+% \fancyfoot[EL]{\thepage\qquad | \qquad\itshape\leftmark} 
+
+%%% 底部设置子标题、页面、章标题（正常是放到header，为了1.2cm的页眉不变形，先放到页脚）
+% \fancyhead{} % clear all header fields 没办法只有页脚自定义，所以需要显示页眉，但清空数据(那条线还在，但下面可以设定线宽为0)
+% \lfoot{\rightmark}
+% \cfoot{\thepage}
+% \rfoot{\leftmark}
+
+%%% 这几个是固定页眉页脚的显示 
+% \lhead{Js Web Base} 
+% \chead{}
+% \rhead{version: 0.1.0}
+% \lfoot{author: davidsu}
+% \cfoot{\thepage}
+% \rfoot{email: callmedavidsu@gmail.com}
+
+%%% 页眉页脚的线宽
+\renewcommand{\headrulewidth}{0pt}  %% 页眉分割线宽，设置0不显示
+\renewcommand{\footrulewidth}{0.4pt}  %% 页脚分割线宽，最小好像就0.4pt，不能更小了
+
+%%%%%%%%%% 解决 ! LaTeX Error: Too deeply nested (lists more than 6 levels deep) 问题
+\usepackage{enumitem}
+\setlistdepth{9}
+
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\bullet$}
+\setlist[itemize,3]{label=$\bullet$}
+\setlist[itemize,4]{label=$\bullet$}
+\setlist[itemize,5]{label=$\bullet$}
+\setlist[itemize,6]{label=$\bullet$}
+\setlist[itemize,7]{label=$\bullet$}
+\setlist[itemize,8]{label=$\bullet$}
+\setlist[itemize,9]{label=$\bullet$}
+\renewlist{itemize}{itemize}{9}
+
+\setlist[enumerate,1]{label=$\arabic*.$}
+\setlist[enumerate,2]{label=$\alph*.$}
+\setlist[enumerate,3]{label=$\roman*.$}
+\setlist[enumerate,4]{label=$\arabic*.$}
+\setlist[enumerate,5]{label=$\alpha*$}
+\setlist[enumerate,6]{label=$\roman*.$}
+\setlist[enumerate,7]{label=$\arabic*.$}
+\setlist[enumerate,8]{label=$\alph*.$}
+\setlist[enumerate,9]{label=$\roman*.$}
+\renewlist{enumerate}{enumerate}{9}
+
+%%%%%%%%%% 设置长表格
+% \usepackage{longtable}   %% 导入长表格宏包，支持插入表格
+% % %% 设置表头背景色
+% \usepackage{colortbl}
+% \definecolor{tableheadcolor}{RGB}{225,225,225}
+
+% %%%%%%%%%% 设置 shade 背景色（代码背景颜色）
+% \usepackage{color,framed}
+% \definecolor{shadecolor}{RGB}{235,235,235}
+
+% %%%%%%%%%% 设置 block quote 的样式
+% %% 由于还不知道怎么统一设置 quote 的背景色，先引用 shade 背景色
+% %% 用左右边距区分 quote
+% \usepackage{quoting}
+% \newenvironment{shadedquotation}
+%  {\begin{shaded*}
+%   \quoting[leftmargin=1em, rightmargin=1em, vskip=0pt, font=itshape]
+%  }
+%  {\endquoting
+%  \end{shaded*}
+%  }
+
+% % quote 应用 shadedquotation 环境
+% \def\quote{\shadedquotation}
+% \def\endquote{\endshadedquotation}
+
+%%%%%%%%%% 设置超链接的颜色，（但是不生效，不知道为什么）
+% 2022-09-02 在 https://github.com/jgm/pandoc/issues/8226 中找到原因
+%   需要在md文件的头部yaml中设置 boxlinks: true ，再配合 hyperref 的配置，即可生效。 之前使用的变量 colorlinks 无效了
+%   不能在这个heperref的配置里直接该colorlinks为boxlinks，是因为它没有这个配置项，且删除colorlinks之后，链接颜色不生效
+%   所有超链接都可以变颜色，包括toc。默认好像是红色
+\usepackage{xcolor}
+\usepackage{color}
+
+\usepackage{hyperref}
+% 有需要可以先制定颜色
+\definecolor{linkcolor}{rgb}{0.9,0,0}
+\definecolor{citecolor}{rgb}{0,0.6,0}
+\definecolor{urlcolor}{rgb}{0,0,1}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+    citecolor=cyan,
+}
+\urlstyle{same}
+
+% %%%%%%%%%% 给 inline code 加上背景色
+\usepackage{fvextra}
+% 代码块中的注释超过一行，也能自动换行了(之前是延伸显示，超过了就看不到了)
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+
+\definecolor{bgcolor}{HTML}{E0E0E0}
+\let\oldtexttt\texttt
+\newcommand{\code}[1]{\begingroup\setlength{\fboxsep}{1pt}\colorbox{bgcolor}{\oldtexttt{\hspace*{2pt}\vphantom{A}#1\hspace*{2pt}}}\endgroup}
+\renewcommand{\texttt}[1]{\code{\oldtexttt{#1}}}
+
+%%% 还可以使用relsize包，将inline code的字体进行缩放
+% \usepackage{fvextra}
+% \usepackage{relsize}
+% \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+
+% \definecolor{bgcolor}{HTML}{E0E0E0}
+% \let\oldtexttt\texttt
+% \newcommand{\code}[1]{\begingroup\setlength{\fboxsep}{1pt}\colorbox{bgcolor}{\oldtexttt{\hspace*{2pt}\vphantom{A}#1\hspace*{2pt}}}\endgroup}
+% \renewcommand{\texttt}[1]{\code{\relscale{.7}\oldtexttt{#1}}}
+
+%%%%%%%%%% 在正文中画一条横线
+% \rule[水平高度]{长度}{粗细} 
+% 例如: \rule[-10pt]{14.3cm}{0.05em}
+
+%%%%%%%%%% 添加文字水印
+% https://mirror-hk.koddos.net/CTAN/macros/latex/contrib/draftwatermark/draftwatermark.pdf
+% \usepackage{ctex, draftwatermark, everypage} % 用这个正文文字大小有问题
+\usepackage{draftwatermark} % 默认也是每一页都加水印，默认45°角
+\SetWatermarkText{David Su | callmedavidsu@gmail.com} %关键字
+\SetWatermarkLightness{0.8} %关键字的亮度 the lightness from 0 to 1, default 0.8, 1就不显示文字了
+\SetWatermarkScale{0.3} %关键字的大小 default 1.2

@@ -1,0 +1,25 @@
+.\rclone.exe config
+--------------------
+[minio]
+type = s3
+provider = Minio
+access_key_id = xxx
+secret_access_key = xxx
+endpoint = http://192.168.1.1:32000
+-------------------
+--------------------
+[minio]
+type = s3
+provider = Minio
+access_key_id = xxx
+secret_access_key = 8qbWHmZqKQtYU4et8g0u
+endpoint = http://192.168.1.1:9000
+--------------------
+-- 整个minio数据
+.\rclone.exe --size-only  sync //192.168.1.1/scan/local-server-config/minio/Data/ minio:
+-- 指定某个buket
+.\rclone.exe --size-only  sync //192.168.1.1/scan/local-server-config/minio/Data/flink minio:flink
+
+从minio下载到本地
+.\rclone.exe --size-only  sync minio_zhong:product ./bak
+
