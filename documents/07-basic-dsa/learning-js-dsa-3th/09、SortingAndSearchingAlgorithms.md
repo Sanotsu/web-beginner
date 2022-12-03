@@ -107,6 +107,7 @@ console.log(array);
 ```
 
 冒泡排序执行示意图，初始数组`[5, 4, 3, 2, 1]`：
+
 ![冒泡排序执行示意图](./pictures/sorting/1-1冒泡排序执行示意图.png)
 
 ### 改进后的冒泡排序
@@ -127,6 +128,7 @@ function modifiedBubbleSort(array, compareFn = defaultCompare) {
 ```
 
 改进冒泡排序执行示意图，初始数组`[5, 4, 3, 2, 1]`：
+
 ![改进冒泡排序执行示意图](./pictures/sorting/1-2改进后的冒泡排序执行示意图.png)
 
 即便我们做了这个小改变来改进冒泡排序算法，但还是**不推荐**该算法，它的复杂度是 **O(n^2)**。
@@ -171,6 +173,7 @@ export const selectionSort = (array, compareFn = defaultCompare) => {
 ```
 
 选择排序执行示意图，初始数组`[5, 4, 3, 2, 1]`：
+
 ![选择排序执行示意图](./pictures/sorting/2选择排序执行示意图.png)
 
 选择排序同样也是一个复杂度为 **O(n^2)**的算法。和冒泡排序一样，它包含有嵌套的两个循环，这导致了二次方的复杂度。
@@ -216,6 +219,7 @@ export const insertionSort = (array, compareFn = defaultCompare) => {
 ```
 
 选择排序执行示意图，初始数组`[3, 5, 1, 4, 2]`：
+
 ![插入排序执行示意图](./pictures/sorting/3插入排序执行示意图.png)
 
 排序小型数组时，此算法比选择排序和冒泡排序性能要好。
@@ -287,6 +291,7 @@ export function mergeSort(array, compareFn = defaultCompare) {
 ```
 
 归并排序执行示意图，初始数组`[8,7,6,5,4,3,2,1]`：
+
 ![归并排序执行示意图](./pictures/sorting/4归并排序执行示意图.png)
 
 可以看到，算法首先将原始数组分割直至只有一个元素的子数组，然后开始归并。归并过程也会完成排序，直至原始数组完全合并并完成排序。
@@ -373,6 +378,7 @@ export function quickSort(array, compareFn = defaultCompare) {
 ```
 
 快速排序执行示意图，初始数组`[3, 5, 1, 6, 4, 7, 2]`：
+
 ![快速排序执行示意图](./pictures/sorting/5快速排序执行示意图.png)
 
 ## 计数排序
@@ -460,6 +466,7 @@ export function countingSort(array) {
 ```
 
 计数排序执行示意图，初始数组`[5,4,3,2,3,1]`：
+
 ![计数排序执行示意图](./pictures/sorting/6计数排序执行示意图.png)
 
 ## 桶排序
@@ -543,6 +550,7 @@ function sortBuckets(buckets) {
 ```
 
 桶排序执行过程示意图，初始数组`[5,4,3,2,6,1,7,10,9,8]`：
+
 ![桶排序执行过程示意图](./pictures/sorting/7桶排序执行过程示意图.png)
 
 ## 基数排序
@@ -639,6 +647,7 @@ const countingSortForRadix = (array, radixBase, significantDigit, minValue) => {
 ```
 
 基数排序执行示意图，初始数组`[4, 7, 1, 2, 3, 9]`：
+
 ![基数排序执行示意图](./pictures/sorting/8基数排序执行示意图.png)
 
 # 搜索算法
@@ -685,6 +694,7 @@ export function sequentialSearch(array, value, equalsFn = defaultEquals) {
 ```
 
 顺序搜索执行示意图，数组 `[5, 4, 3, 2, 1]` 和待搜索值 3：
+
 ![顺序搜索执行示意图](./pictures/search/1顺序搜索执行示意图.png)
 
 ## 二分搜索
@@ -741,6 +751,7 @@ export function binarySearch(array, value, compareFn = defaultCompare) {
 ```
 
 二分搜索执行示意图，数组 `[8, 7, 6, 5, 4, 3, 2, 1]` 和待搜索值 `1`：
+
 ![二分搜索执行示意图](./pictures/search/2二分搜索执行示意图.png)
 
 ## 内插搜索
@@ -826,6 +837,7 @@ export function interpolationSearch(
 ```
 
 内插搜索执行示意图，数组 `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]` 和待搜索值 `4`：
+
 ![3内插搜索执行示意图](./pictures/search/3内插搜索执行示意图.png)
 
 # 随机算法
@@ -854,6 +866,7 @@ export function shuffle(array) {
 ```
 
 Fisher-Yates 随机算法执行示意图，数组 `[1, 2, 3, 4, 5]` ：
+
 ![Fisher-Yates随机算法执行示意图](./pictures/shuffle/Fisher-Yates随机算法执行示意图.png)
 
 # (排序算法简洁示例)

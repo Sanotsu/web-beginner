@@ -86,7 +86,7 @@ GOF 的 23 中里面有观察者模式，没有**发布订阅模式**，但后�
 
 ## 图示
 
-![design-patterns](./pictures/design-pattern.png)
+![design-patterns](./pictures-dp/design-pattern.png)
 
 ## 适用场景
 

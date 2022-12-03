@@ -170,7 +170,7 @@ void backtracking(参数) {
 
 把组合问题抽象为如下树形结构图示:
 
-![组合](./pictures-aps/组合.png){width=70%}
+![组合](./pictures-aps/组合.png)
 
 可以看出这个棵树，一开始集合是 1，2，3，4， 从左向右取数，取过的数，不在重复取。
 
@@ -334,7 +334,7 @@ var letterCombinations = function (digits) {
 
 **其实切割问题类似组合问题**。也可以抽象为一棵树形结构，如图：
 
-![分割回文串.jpeg](./pictures-aps/分割回文串.jpeg){width=70%}
+![分割回文串.jpeg](./pictures-aps/分割回文串.jpeg)
 
 综上，代码如下:
 
@@ -666,7 +666,7 @@ var jump = function (nums) {
 
 以图中{5,2} 为例：
 
-![根据身高重建队列.png](./pictures-aps/根据身高重建队列.png){width=70%}
+![根据身高重建队列.png](./pictures-aps/根据身高重建队列.png)
 
 按照身高排序之后，优先按身高高的 people 的 k 来插入，后序插入节点也不会影响前面已经插入的节点，最终按照 k 的规则完成了队列。  
 所以在按照身高从大到小排序后：  
@@ -732,7 +732,7 @@ var reconstructQueue = function (people) {
 
 图示：
 
-![合并区间.png](./pictures-aps/合并区间.png){width=70%}
+![合并区间.png](./pictures-aps/合并区间.png)
 
 合并区间：  
 用合并区间后左边界和右边界，作为一个新的区间，加入到 result 数组里就可以了。如果没有合并就把原区间加入到 result 数组。
@@ -1081,9 +1081,10 @@ var minCostClimbingStairs = function (cost) {
 这样就可以保证推导 dp[i][j]的时候，dp[i - 1][j] 和 dp[i][j - 1]一定是有数值的。
 
 5 举例推导 dp 数组
+
 如下图:
 
-![不同路径示例.png](./pictures-aps/不同路径示例.png){width=70%}
+![不同路径示例.png](./pictures-aps/不同路径示例.png)
 
 综上，代码如下:
 

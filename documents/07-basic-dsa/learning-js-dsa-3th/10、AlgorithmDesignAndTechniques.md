@@ -78,6 +78,7 @@ export function binarySearch(array, value, compareFn = defaultCompare) {
 ```
 
 顺序搜索执行示意图，数组 `[8, 7, 6, 5, 4, 3, 2, 1]` 和待搜索值 2：
+
 ![1递归版二分搜索执行示意图](./pictures/techniques/1递归版二分搜索执行示意图.png)
 
 # 动态规划
@@ -305,6 +306,7 @@ function findValues(n, capacity, kS) {
 ```
 
 背包问题 ks 矩阵构造示意图:
+
 ![背包问题](./pictures/techniques/2背包问题.png)
 
 ## 最长公共子序列
@@ -323,6 +325,7 @@ LCS:长度为4的a c a d
 ```
 
 LCS 字符串示例:
+
 ![3-1LCS字符串示例](./pictures/techniques/3-1LCS字符串示例.png)
 
 代码示例：
@@ -433,6 +436,7 @@ console.log(lcsLength("acbaed", "abcadf"));
 ```
 
 LCS 执行示意图:
+
 ![lcs执行示意图](./pictures/techniques/3-2lcs执行示意图.png)
 
 如果比较背包问题和 LCS 算法，我们会发现两者非常相似。
@@ -570,6 +574,7 @@ export function minCoinChangeGreedy(coins, amount) {
 ```
 
 贪心算法的最少硬币问题:
+
 ![贪心算法的最少硬币问题](./pictures/techniques/贪心算法的最少硬币问题.png)
 
 ## 分数背包问题
@@ -658,6 +663,7 @@ using ratio of 0.25 for item 3 for the solution
 如下图所示，其中 S 是起点，D 是终点。
 
 迷宫老鼠问题示例:
+
 ![迷宫老鼠问题示例](./pictures/techniques/迷宫老鼠问题示例.png)
 
 矩阵就是迷宫，“老鼠”的目标是从位置 `[0][0]` 开始并移动到 `[n-1][n-1]` （终点）。
@@ -752,6 +758,7 @@ console.log(ratInAMaze(maze));
 谜题在开始给出一个已填了部分数字的矩阵，如下图所示。
 
 数独解题器示例:
+
 ![数独解题器示例](./pictures/techniques/数独解题器示例.png)
 
 代码示例：

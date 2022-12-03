@@ -21,7 +21,7 @@
 - 将 View 转化成 Model，即将所看到的页面转化成后端的数据。实现方式：**DOM 事件监听**
 - 这两个方向都实现的，称之为数据的**双向绑定**
 
-![mvvm相关图示](./pictures-vue/mvvm相关图示.png){width=80%}
+![mvvm相关图示](./pictures-vue/mvvm相关图示.png)
 
 在 MVVM 框架下 View 和 Model 是不能直接通信的，它们通过 ViewModel 来通信:
 
@@ -48,7 +48,7 @@ Vue 采用 **数据劫持** 结合 **发布者-订阅者模式** 的方式来实
 
 [vue2 深入响应式原理](https://v2.cn.vuejs.org/v2/guide/reactivity.html)中图示：
 
-![vue2-data-reactivity](./pictures-vue/vue2-data-reactivity.png){width=50%}
+![vue2-data-reactivity](./pictures-vue/vue2-data-reactivity.png)
 
 MVVM 的双向绑定的几个重点角色:
 
@@ -127,9 +127,9 @@ const effect3 = effect(() => {  console.log("effect3: " + state.count, state.age
 
 这里的 targetMap 应该为这个样子,`{ target -> key -> dep }` 的对应关系就建立起来了，依赖收集也就完成了。整体流程:
 
-<!-- ![targetMap示例](./pictures-vue/targetMap示例.png){width=50%} -->
+<!-- ![targetMap示例](./pictures-vue/targetMap示例.png) -->
 
-![vue3响应式原理-1.jpg](./pictures-vue/vue3响应式原理-1-2.jpg){width=100%}
+![vue3响应式原理-1.jpg](./pictures-vue/vue3响应式原理-1-2.jpg)
 
 类比(但不一样): targetMap - Dep，响应式函数 cb - watcher，track - addSub，trigger - notify。
 

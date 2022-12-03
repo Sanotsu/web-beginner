@@ -1,10 +1,10 @@
 js-faq 是收集了一些网上阅读量比较大的 js 面试题文章(查看时间为 2022-08-03)，
 
-- 此部分查看`01-questions.md`
+- 此部分查看[01-questions.md](./01-questions.md)
 
 整理出关于 js 各个方面常见的问题种类
 
-- 此部分查看`02-question-sort.md`
+- 此部分查看[02-question-sort.md](./02-question-sort.md)
 
 使用以下代码生成关键字，并生成词云(需要下载对应依赖)
 

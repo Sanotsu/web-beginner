@@ -74,7 +74,7 @@ Node.js 是一个构建在 Chrome 浏览器 V8 引擎上的 JavaScript 运行环
 
 nodejs 主要特点就是：单线程、非阻塞 IO、事件驱动。
 
-![Key-Features-of-NodeJs.png](./pictures-node//Key-Features-of-NodeJs.png){width=75%}
+![Key-Features-of-NodeJs.png](./pictures-node//Key-Features-of-NodeJs.png)
 
 ### 1.1.3 Nodejs 的优缺点
 
@@ -243,7 +243,7 @@ async await 就是 generator 语法糖，可以用 generator 来模拟 async awa
 
 微型计算机系统构成示例图示:
 
-![微型计算机系统构成示例](./pictures-node/微型计算机系统构成示例.png){width=70%}
+![微型计算机系统构成示例](./pictures-node/微型计算机系统构成示例.png)
 
 | 对比     | 进程                                                                       | 线程                                                                        |
 | -------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
@@ -308,7 +308,7 @@ Node.js 通过事件(events)模块和 EventEmitter 类拥有多个内置的事�
 
 Node.js 主要分为四大部分，Node Standard Library，Node Bindings，V8，Libuv，架构图如下：
 
-![nodejs-architecture.jpeg](./pictures-node/nodejs-architecture.jpeg){width=60%}
+![nodejs-architecture.jpeg](./pictures-node/nodejs-architecture.jpeg)
 
 - Node Standard Library: 是我们每天都在用的标准库，如 Http, Buffer 模块。
 - Node Bindings: 是沟通 JS 和 C++的桥梁，封装 V8 和 Libuv 的细节，向上层提供基础 API 服务。
@@ -320,7 +320,7 @@ Node.js 主要分为四大部分，Node Standard Library，Node Bindings，V8，
 
 整个异步 I/O 的流程结束，事件循环、观察者、请求对象和执行回调是整个异步 I/O 的四个基本要素。
 
-![asynchronous-IO-flow](./pictures-node/asynchronous-IO-flow.png){width=60%}
+![asynchronous-IO-flow](./pictures-node/asynchronous-IO-flow.png)
 
 理清事件驱动的本质：通过主循环加事件触发的方式来运行程序。
 
@@ -328,7 +328,7 @@ Node.js 主要分为四大部分，Node Standard Library，Node Bindings，V8，
 
 事件循环图示:
 
-![event-loop](./pictures-node/event-loop.png){width=85%}
+![event-loop](./pictures-node/event-loop.png)
 
 **事件循环是 Node.js 处理非阻塞 I/O 操作的机制**——尽管 JavaScript 是单线程处理的——当有可能的时候，它们会把操作转移到系统内核中去。
 
@@ -414,7 +414,7 @@ Node.js 通过 `event` 模块和 `EventEmitter` 类的多个内置事件，来�
 
 事件循环图示 2:
 
-![事件循环](./pictures-node/event-loop-2.png){width=100%}
+![事件循环](./pictures-node/event-loop-2.png)
 
 - 1 每个 Node.js 进程只有一个主线程在执行程序代码，形成一个执行栈（execution context stack)。
 - 2 主线程之外，还维护了一个"事件队列"（Event queue）。
@@ -443,7 +443,7 @@ Node.js 通过 `event` 模块和 `EventEmitter` 类的多个内置事件，来�
 
 反应器模式是 Node.js 中非阻塞 I/O 操作的一个思想。
 
-![reactor-pattern](./pictures-node/reactor-pattern.jpg){width=55%}
+![reactor-pattern](./pictures-node/reactor-pattern.jpg)
 
 (以下是使用反应器模式的应用程序中执行的操作):
 
@@ -953,7 +953,7 @@ app.listen(3000);
 
 Koa 的路由执行顺序与 Express 有所不同，Koa 选择了洋葱圈模型，即最先访问的路由里的 next()后面的代码最后响应。
 
-![onion-model.png](./pictures-node/onion-model.png){width=50%}
+![onion-model.png](./pictures-node/onion-model.png)
 
 示例`koa-app.js`:
 

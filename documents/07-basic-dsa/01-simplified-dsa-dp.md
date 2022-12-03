@@ -145,7 +145,7 @@
 - 循环链表和链表之间唯一的区别在于，_最后一个元素指向下一个元素的指针(tail.next)不是引用 undefined,而是指向第一个元素(head)_;
   - 双向循环链表有指向 head 元素的 tail.next 和指向 tail 元素的 head.prev 。
 
-![circular-linked-list](./pictures-dsa-dp/circular-linked-list.png){width=75%}
+![circular-linked-list](./pictures-dsa-dp/circular-linked-list.png)
 
 ### 1.3.3 有序链表 (Sorted Linked List）
 
@@ -162,7 +162,7 @@
 - 跳表在原有的有序链表上面增加了多级索引，通过索引来实现快速查找。(跳跃列表是按层建造的。底层是一个普通的有序链表。)
 - 跳表不仅能提高搜索性能，同时也可以提高插入和删除操作的性能。
 
-![skip-list](./pictures-dsa-dp/skip-list.png){width=75%}
+![skip-list](./pictures-dsa-dp/skip-list.png)
 
 跳表的产生就是为了解决链表过长的问题，通过增加链表的多级索引来加快原始链表的查询效率。这样的方式可以让查询的时间复杂度从 O(n)提升至 O(logn)。
 
@@ -228,7 +228,7 @@
 
 ### 1.6.1 散列表 (HashTable 类，也叫 HashMap 类)
 
-![hash-table](./pictures-dsa-dp/hash-table.png){width=80%}
+![hash-table](./pictures-dsa-dp/hash-table.png)
 
 - 定义:
   - 是 Dictionary (Map) 类的一种散列表，**是根据键（Key）而直接访问在内存储存位置**的数据结构。
@@ -262,7 +262,7 @@
 
 ## 1.7 树(Tree)
 
-![tree](./pictures-dsa-dp/0tree.png){width=50%}
+![tree](./pictures-dsa-dp/0tree.png)
 
 - 定义:
   - 是一种抽象数据类型（ADT）或是实现这种抽象数据类型的数据结构，用来模拟具有树状结构性质的数据集合。
@@ -307,13 +307,13 @@
 - 定义:
   - 二叉树中的节点最多只能有两个子节点：一个是左侧子节点，另一个是右侧子节点。
 
-![binary-tree](./pictures-dsa-dp/binary-tree.png){width=30%}
+![binary-tree](./pictures-dsa-dp/binary-tree.png)
 
 ### 1.7.2 二叉搜索树 (Binary Search Tree)
 
 - 是二叉树的一种，但是只允许你在左侧节点存储（比父节点）小的值，在右侧节点存储（比父节点）大的值。
 
-![binary-search-tree](./pictures-dsa-dp/binary-search-tree.png){width=45%}
+![binary-search-tree](./pictures-dsa-dp/binary-search-tree.png)
 
 遍历:
 
@@ -322,9 +322,12 @@
 - 后序遍历：左子树 ---> 右子树 ---> 根结点
 - 层次遍历：从上到下，从左到右。
 
-![前序遍历](./pictures-dsa-dp/per-order.png){width=50%}  
-![中序遍历](./pictures-dsa-dp/in-order.png){width=50%}  
-![后序遍历](./pictures-dsa-dp/post-order.png){width=50%}
+![前序遍历](./pictures-dsa-dp/per-order.png)
+
+![中序遍历](./pictures-dsa-dp/in-order.png)
+
+![后序遍历](./pictures-dsa-dp/post-order.png)
+
 
 ### 1.7.3 平衡树 (Balance Tree)
 
@@ -334,7 +337,7 @@
 
 平衡树图示:
 
-![balance-tree](./pictures-dsa-dp/balance-tree.png){width=70%}
+![balance-tree](./pictures-dsa-dp/balance-tree.png)
 
 #### 1.7.3.1 AVL 树(Adelson-Velskii-Landi Tree)
 
@@ -384,7 +387,7 @@ AVL 树是计算机科学中最早被发明的自平衡二叉查找树。
 
 红黑树图示；
 
-![red-black-tree](./pictures-dsa-dp/red-black-tree.png){width=70%}
+![red-black-tree](./pictures-dsa-dp/red-black-tree.png)
 
 ## 1.8 堆(Heap) 也叫作 二叉堆
 
@@ -423,7 +426,7 @@ wiki:
 
 堆图示:
 
-![heap](./pictures-dsa-dp/heap.png){width=70%}
+![heap](./pictures-dsa-dp/heap.png)
 
 堆的使用: 堆排序算法
 
@@ -448,7 +451,7 @@ wiki:
 
 - 基本图示例:
 
-![1基本的图](./pictures-dsa-dp/graph.png){width=26%}
+![1基本的图](./pictures-dsa-dp/graph.png)
 
 2. 术语
 
@@ -464,13 +467,13 @@ wiki:
 - 6 **无环图与连通图**: 如果图中不存在环，则称该图是无环的。如果图中每两个顶点间都存在路径，则该图是连通的。
 - 7 **有向图和无向图**: 图可以是无向的（边没有方向）或是有向的（有向图）。
 
-![有向图](./pictures-dsa-dp/2有向图.png){width=26%}
+![有向图](./pictures-dsa-dp/2有向图.png)
 
 - 8 **强连通**: 如果图中每两个顶点间在双向上都存在路径，则该图是强连通的。
   - 例如，C 和 D 是强连通的，而 A 和 B 不是强连通的。
 - 9 **加权与未加权**: 图还可以是未加权的（目前为止我们看到的图都是未加权的）或是加权的。
 
-![加权有向图](./pictures-dsa-dp/3加权有向图.png){width=26%}
+![加权有向图](./pictures-dsa-dp/3加权有向图.png)
 
 3. 应用
 
@@ -494,7 +497,7 @@ wiki:
     - 邻接矩阵表示法不够好的另一个理由是，_图中顶点的数量可能会改变，而二维数组不太灵活_。
     - 如图:
 
-![邻接矩阵表示图.png](./pictures-dsa-dp/4邻接矩阵表示图.png){width=50%}
+![邻接矩阵表示图.png](./pictures-dsa-dp/4邻接矩阵表示图.png)
 
 - 2 邻接表
   - 邻接表由图中每个顶点的相邻顶点列表所组成。存在好几种方式来表示这种数据结构。
@@ -504,7 +507,7 @@ wiki:
   - **在示例中，将会使用邻接表表示法。**
     - 下面的示意图展示了邻接表数据结构:
 
-![邻接表表示图.png](./pictures-dsa-dp/5邻接表表示图.png){width=45%}
+![邻接表表示图.png](./pictures-dsa-dp/5邻接表表示图.png)
 
 - 3 关联矩阵
 
@@ -513,7 +516,7 @@ wiki:
   - **关联矩阵通常用于边的数量比顶点多的情况，以节省空间和内存**。
     - 如下图所示:
 
-![关联矩阵表示图.png](./pictures-dsa-dp/6关联矩阵表示图.png){width=50%}
+![关联矩阵表示图.png](./pictures-dsa-dp/6关联矩阵表示图.png)
 
 5. 图的操作
 
@@ -535,7 +538,7 @@ wiki:
 
 算法复杂度性能对比示例:
 
-![算法复杂度](./pictures-dsa-dp/算法复杂度.png){width=82%}
+![算法复杂度](./pictures-dsa-dp/算法复杂度.png)
 
 分析算法时，时常遇到以下几类函数:
 
@@ -584,7 +587,7 @@ gif 查看: [十大经典排序算法](https://www.runoob.com/w3cnote/ten-sortin
   - 循环数组，比较当前元素和下一个元素，如果当前元素比下一个元素大，向上冒泡。
   - 下一次循环继续上面的操作，不循环已经排序好的数。
 
-    ![bubbleSort](./pictures-dsa-dp/sort/bubbleSort.gif){width=50%}
+    ![bubbleSort](./pictures-dsa-dp/sort/bubbleSort.gif)
 
 - **选择排序** O(n^2) 不推荐使用
 
@@ -592,7 +595,7 @@ gif 查看: [十大经典排序算法](https://www.runoob.com/w3cnote/ten-sortin
   - 再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。
   - 重复第二步，直到所有元素均排序完毕。
 
-    ![selectionSort](./pictures-dsa-dp/sort/selectionSort.gif){width=50%}
+    ![selectionSort](./pictures-dsa-dp/sort/selectionSort.gif)
 
 - **插入排序** O(n^2)
 
@@ -603,20 +606,20 @@ gif 查看: [十大经典排序算法](https://www.runoob.com/w3cnote/ten-sortin
     - （如果待插入的元素与有序序列中的某个元素相等，则将待插入元素插入到相等元素的后面。）
   - _排序小型数组时，此算法比选择排序和冒泡排序性能要好。最好情况时间复杂度为 O(n)_
 
-    ![insertionSort](./pictures-dsa-dp/sort/insertionSort.gif){width=50%}
+    ![insertionSort](./pictures-dsa-dp/sort/insertionSort.gif)
 
 - **归并排序** O(nlog(n))
 
   - 归并排序是一种分而治之算法。
   - 其思想是将原始数组切分成较小的数组，直到每个小数组只有一个位置，接着将小数组归并成较大的数组，直到最后只有一个排序完毕的大数组。
 
-    ![mergeSort](./pictures-dsa-dp/sort/mergeSort.gif){width=50%}
+    ![mergeSort](./pictures-dsa-dp/sort/mergeSort.gif)
 
 - **快速排序** O(nlog(n))
 
   - 选择一个目标值，比目标值小的放左边，比目标值大的放右边，目标值的位置已排好，将左右两侧再进行快排。
 
-    ![quickSort](./pictures-dsa-dp/sort/quickSort.gif){width=50%}
+    ![quickSort](./pictures-dsa-dp/sort/quickSort.gif)
 
 - **堆排序** O(nlog(n))
 
@@ -624,7 +627,7 @@ gif 查看: [十大经典排序算法](https://www.runoob.com/w3cnote/ten-sortin
   - 交换第一个元素和最后一个元素，让剩余的元素继续调整为大顶堆。
   - 从后往前以此和第一个元素交换并重新构建，排序完成。
 
-    ![heapSort](./pictures-dsa-dp/sort/heapSort.gif){width=45%}
+    ![heapSort](./pictures-dsa-dp/sort/heapSort.gif)
 
 - **计数排序** O(n+k) _整数排序算法_
 
@@ -634,7 +637,7 @@ gif 查看: [十大经典排序算法](https://www.runoob.com/w3cnote/ten-sortin
   - （4）反向填充目标数组：将每个元素 i 放在新数组的第 C(i)项，每放一个元素就将 C(i)减去 1
   - _它是用来排序整数的优秀算法，时间复杂度为 O(n+k)，其中 k 是临时计数数组的大小；但是，它确实需要更多的内存来存放临时数组。(一个分布式排序)_
 
-    ![countingSort](./pictures-dsa-dp/sort/countingSort.gif){width=50%}
+    ![countingSort](./pictures-dsa-dp/sort/countingSort.gif)
 
 ### 2.2.2 递归
 

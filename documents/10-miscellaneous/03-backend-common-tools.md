@@ -1,25 +1,25 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-  - [NGINX](#nginx)
-  - [Nacos](#nacos)
-  - [Spring Cloud](#spring-cloud)
-  - [EMQX](#emqx)
-  - [MQTT](#mqtt)
-  - [Spring Boot](#spring-boot)
-  - [Flink](#flink)
-  - [Prometheus](#prometheus)
-  - [Grafana](#grafana)
-  - [链路追踪](#%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA)
-  - [Fluentd](#fluentd)
-  - [TiDB](#tidb)
-  - [Flink job 读取 tikv 数据变更](#flink-job-%E8%AF%BB%E5%8F%96-tikv-%E6%95%B0%E6%8D%AE%E5%8F%98%E6%9B%B4)
-  - [Elasticsearch](#elasticsearch)
-  - [倒排索引](#%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95)
-  - [Redis](#redis)
-  - [MinIO](#minio)
-  - [kafka](#kafka)
-  - [gitlab](#gitlab)
+- [NGINX](#nginx)
+- [Nacos](#nacos)
+- [Spring Cloud](#spring-cloud)
+- [EMQX](#emqx)
+- [MQTT](#mqtt)
+- [Spring Boot](#spring-boot)
+- [Flink](#flink)
+- [Prometheus](#prometheus)
+- [Grafana](#grafana)
+- [链路追踪](#%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA)
+- [Fluentd](#fluentd)
+- [TiDB](#tidb)
+- [Flink job 读取 tikv 数据变更](#flink-job-%E8%AF%BB%E5%8F%96-tikv-%E6%95%B0%E6%8D%AE%E5%8F%98%E6%9B%B4)
+- [Elasticsearch](#elasticsearch)
+- [倒排索引](#%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95)
+- [Redis](#redis)
+- [MinIO](#minio)
+- [kafka](#kafka)
+- [gitlab](#gitlab)
 - [Nexus Repository Manager](#nexus-repository-manager)
 - [harbor](#harbor)
 - [Jenkins](#jenkins)
@@ -706,6 +706,8 @@ Logstash 的用途是什么？
 
 <img src="https://help-static-aliyun-doc.aliyuncs.com/assets/img/zh-CN/2004752461/p386457.png"></div>
 
+![倒排索引检索](./pictures-additions/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95%E6%A3%80%E7%B4%A2.png)
+
 ---
 
 wiki
@@ -925,43 +927,43 @@ Apache Kafka 与 RabbitMQ
   <tbody> 
   <tr> 
     <td width="155"><p style="text-align: center;"><b>特性</b></p> </td> 
-    <td width="151"><p style="text-align: center;"><b>Apache Kafka</b></p> </td> 
-    <td width="166"><p style="text-align: center;"><b>RabbitMQ</b></p> </td> 
+    <td width="500"><p style="text-align: center;"><b>Apache Kafka</b></p> </td> 
+    <td width="500"><p style="text-align: center;"><b>RabbitMQ</b></p> </td> 
   </tr> 
   <tr> 
     <td width="155"><p><b>架构</b></p> </td> 
-    <td width="151"><p>Kafka 使用分区日志模型，结合了消息收发队列和发送-订阅方法。</p> </td> 
-    <td width="166"><p>RabbitMQ 使用消息收发队列。</p> </td> 
+    <td width="500"><p>Kafka 使用分区日志模型，结合了消息收发队列和发送-订阅方法。</p> </td> 
+    <td width="500"><p>RabbitMQ 使用消息收发队列。</p> </td> 
   </tr> 
   <tr> 
     <td width="155"><p><b>可扩展性</b></p> </td> 
-    <td width="151"><p>Kafka 允许跨不同服务器分发分区，因此具有可扩展性。</p> </td> 
-    <td width="166"><p>增加队列中的使用器数量可以将处理扩展到竞争使用器。</p> </td> 
+    <td width="500"><p>Kafka 允许跨不同服务器分发分区，因此具有可扩展性。</p> </td> 
+    <td width="500"><p>增加队列中的使用器数量可以将处理扩展到竞争使用器。</p> </td> 
   </tr> 
   <tr> 
     <td width="155"><p><b>消息保留</b></p> </td> 
-    <td width="151"><p>基于策略，例如消息可以存储一天。用户可以配置此保留窗口。</p> </td> 
-    <td width="166"><p>基于确认，表示消息在使用后被删除。</p> </td> 
+    <td width="500"><p>基于策略，例如消息可以存储一天。用户可以配置此保留窗口。</p> </td> 
+    <td width="500"><p>基于确认，表示消息在使用后被删除。</p> </td> 
   </tr> 
   <tr> 
     <td width="155"><p><b>多使用器</b></p> </td> 
-    <td width="151"><p>多个使用器可以订阅相同主题，因为 Kafka 允许将同一条消息重放指定的时间长度。</p> </td> 
-    <td width="166"><p>多个使用器无法全部接收同一条消息，因为消息在使用后将被删除。</p> </td> 
+    <td width="500"><p>多个使用器可以订阅相同主题，因为 Kafka 允许将同一条消息重放指定的时间长度。</p> </td> 
+    <td width="500"><p>多个使用器无法全部接收同一条消息，因为消息在使用后将被删除。</p> </td> 
   </tr> 
   <tr> 
     <td width="155"><p><b>复制</b></p> </td> 
-    <td width="151"><p>自动复制主题，但是用户可以手动将主题配置为不复制。</p> </td> 
-    <td width="166"><p>消息不会自动复制，但是用户可以手动将其配置为复制。</p> </td> 
+    <td width="500"><p>自动复制主题，但是用户可以手动将主题配置为不复制。</p> </td> 
+    <td width="500"><p>消息不会自动复制，但是用户可以手动将其配置为复制。</p> </td> 
   </tr> 
   <tr> 
     <td width="155"><p><b>消息排序</b></p> </td> 
-    <td width="151"><p>由于采用了分区日志架构，每个使用器按顺序收到信息。</p> </td> 
-    <td width="166"><p>消息按照其到达队列的顺序传送给使用器。如果有竞争使用器，每个使用器都将处理该消息的子集。</p> </td> 
+    <td width="500"><p>由于采用了分区日志架构，每个使用器按顺序收到信息。</p> </td> 
+    <td width="500"><p>消息按照其到达队列的顺序传送给使用器。如果有竞争使用器，每个使用器都将处理该消息的子集。</p> </td> 
   </tr> 
   <tr> 
     <td width="155"><p><b>协议</b></p> </td> 
-    <td width="151"><p>Kafka 通过 TCP 使用二进制协议。</p> </td> 
-    <td width="166"><p>高级消息收发队列协议 (AMQP) 及通过插件获得的支持：MQTT、STOMP。</p> </td> 
+    <td width="500"><p>Kafka 通过 TCP 使用二进制协议。</p> </td> 
+    <td width="500"><p>高级消息收发队列协议 (AMQP) 及通过插件获得的支持：MQTT、STOMP。</p> </td> 
   </tr> 
   </tbody> 
 </table>

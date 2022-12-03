@@ -107,7 +107,7 @@
 - 缺点
   - 1、为了维护一致性所付出的巨大代价就是其**读写性能比较差**；
   - 2、**固定的表结构**，表结构更新困难；
-  - 3、**高并发(差)**读写需求，硬盘 I/O 是一个很大的瓶颈；
+  - 3、**高并发(差)** 读写需求，硬盘 I/O 是一个很大的瓶颈；
   - 4、**海量数据的读写效率低**；
 - 非关系型数据库
   - MongoDb、redis、Hbase 等
@@ -1124,13 +1124,15 @@ NULL 值可以使用 <=> 符号进行比较，该符号与等号作用相似，�
 ---
 
 ref:
-78681 阅读 [MySQL 三万字精华总结 + 面试 100 问，和面试官扯皮绰绰有余（收藏系列）](https://juejin.cn/post/6850037271233331208)
-1121222 阅读 [MySQL 数据库面试题（2020 最新版）](https://blog.csdn.net/ThinkWon/article/details/104778621)
-[常见面试题整理--数据库篇（每位开发者必备）](https://zhuanlan.zhihu.com/p/23713529)
-[2020 年 MySQL 数据库面试题（50 道题含答案和思维导图总结）](https://blog.csdn.net/Design407/article/details/108055113)
-[DataBase 常见面试题](https://github.com/DmrfCoder/interview/blob/master/DataBase/DataBase常见面试题.md)
+
+- [MySQL 三万字精华总结 + 面试 100 问，和面试官扯皮绰绰有余（收藏系列）](https://juejin.cn/post/6850037271233331208)
+- [MySQL 数据库面试题（2020 最新版）](https://blog.csdn.net/ThinkWon/article/details/104778621)
+- [常见面试题整理--数据库篇（每位开发者必备）](https://zhuanlan.zhihu.com/p/23713529)
+- [2020 年 MySQL 数据库面试题（50 道题含答案和思维导图总结）](https://blog.csdn.net/Design407/article/details/108055113)
+- [DataBase 常见面试题](https://github.com/DmrfCoder/interview/blob/master/DataBase/DataBase常见面试题.md)
 
 tidb
-[我们为什么放弃 MongoDB 和 MySQL，选择 TiDB](https://tech.ipalfish.com/blog/2020/01/29/database_selection/)
-[对比五款数据库，告诉你 NewSQL 的独到之处](https://www.infoq.cn/article/zyyub0-qtpqmxfv5h9ch)
-[新一代数据库 TiDB 在美团的实践](https://tech.meituan.com/2018/11/22/mysql-pingcap-practice.html)
+
+- [我们为什么放弃 MongoDB 和 MySQL，选择 TiDB](https://tech.ipalfish.com/blog/2020/01/29/database_selection/)
+- [对比五款数据库，告诉你 NewSQL 的独到之处](https://www.infoq.cn/article/zyyub0-qtpqmxfv5h9ch)
+- [新一代数据库 TiDB 在美团的实践](https://tech.meituan.com/2018/11/22/mysql-pingcap-practice.html)

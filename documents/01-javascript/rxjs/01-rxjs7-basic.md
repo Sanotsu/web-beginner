@@ -25,7 +25,7 @@
     - [Piping](#piping)
     - [Creation Operators(创建操作符)](#creation-operators%E5%88%9B%E5%BB%BA%E6%93%8D%E4%BD%9C%E7%AC%A6)
     - [高阶可观察对象(Higher-order Observables)](#%E9%AB%98%E9%98%B6%E5%8F%AF%E8%A7%82%E5%AF%9F%E5%AF%B9%E8%B1%A1higher-order-observables)
-    - [Marble diagrams(译为`弹珠图`?)](#marble-diagrams%E8%AF%91%E4%B8%BA%E5%BC%B9%E7%8F%A0%E5%9B%BE)
+    - [Marble diagrams(弹珠图)](#marble-diagrams%E5%BC%B9%E7%8F%A0%E5%9B%BE)
     - [操作符的分类(Categories of operators)](#%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%9A%84%E5%88%86%E7%B1%BBcategories-of-operators)
       - [创建型操作符(Creation Operators)](#%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%93%8D%E4%BD%9C%E7%AC%A6creation-operators)
       - [连接型创建运算符(Join Creation Operators)](#%E8%BF%9E%E6%8E%A5%E5%9E%8B%E5%88%9B%E5%BB%BA%E8%BF%90%E7%AE%97%E7%AC%A6join-creation-operators)
@@ -119,19 +119,20 @@
     - [常用操作符(多播型)](#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%A4%9A%E6%92%AD%E5%9E%8B)
       - [share](#share)
       - [shareReplay](#sharereplay)
-    - [常用操作符(一句话概述)](#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A6%82%E8%BF%B0)
+    - [常用操作符一句话概述](#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A6%82%E8%BF%B0)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ref:
-[[note] RxJS 筆記](https://pjchender.dev/npm/npm-rx-js/)
-[An introduction to RxJS: things you need to know in 2022](https://www.akveo.com/blog/an-introduction-to-rxjs-things-you-need-to-know-in-2022)
-[RxJS 7 in-depth](https://javascript.plainenglish.io/rxjs-7-in-depth-32cc7bf3e5c)
-[rxjs7](https://gitee.com/iceleee/rxjs7)
-[rxjs 官方文档](https://rxjs.dev/guide/overview)
-[RxJS 6.x to 7.x Detailed Change List](https://rxjs.dev/6-to-7-change-summary)
-[RxJS v6 学习指南](https://www.cnblogs.com/ang-/p/9514430.html)
-[[RxJS] Cold Observable v.s Hot Observable](https://fullstackladder.dev/blog/2020/09/28/mastering-rxjs-13-cold-observable-hot-observable/)
+
+- [[note] RxJS 筆記](https://pjchender.dev/npm/npm-rx-js/)
+- [An introduction to RxJS: things you need to know in 2022](https://www.akveo.com/blog/an-introduction-to-rxjs-things-you-need-to-know-in-2022)
+- [RxJS 7 in-depth](https://javascript.plainenglish.io/rxjs-7-in-depth-32cc7bf3e5c)
+- [rxjs7](https://gitee.com/iceleee/rxjs7)
+- [rxjs 官方文档](https://rxjs.dev/guide/overview)
+- [RxJS 6.x to 7.x Detailed Change List](https://rxjs.dev/6-to-7-change-summary)
+- [RxJS v6 学习指南](https://www.cnblogs.com/ang-/p/9514430.html)
+- [[RxJS] Cold Observable v.s Hot Observable](https://fullstackladder.dev/blog/2020/09/28/mastering-rxjs-13-cold-observable-hot-observable/)
 
 # rxjs 入门
 
@@ -140,9 +141,10 @@ ref:
 ### 响应式编程（RP —— Reactive Programming）
 
 响应式编程是一种面向数据流和变化传播的编程范式。在编程语言中很方便地表达静态或动态的数据流，而相关的计算模型会自动将变化的值通过数据流进行传播。—— wikipedia
-1、响应式编程是使用异步数据流进行编程。常见的异步数据流包含 Event buses。用包含这些事件在内的任何东西创建数据流（Data stream），监听他并作出响应。
-2、只关注业务逻辑互相依赖的事件而不是实现细节
-3、适用于大量和数据有关的事件交互，特别是高实时性要求
+
+- 1、响应式编程是使用异步数据流进行编程。常见的异步数据流包含 Event buses。用包含这些事件在内的任何东西创建数据流（Data stream），监听他并作出响应。
+- 2、只关注业务逻辑互相依赖的事件而不是实现细节
+- 3、适用于大量和数据有关的事件交互，特别是高实时性要求
 
 ### 流(Stream)的特点
 
@@ -198,7 +200,7 @@ ref:
 - 5、应用程序需要将信息传递给多个消费者，这些消费者可能具有与发送者不同的可用性要求或正常运行时间计划。
   - 例如你消息在上午发布了出去，消费者计划在下午才去处理这些消息。
 
-_<u>以下就是根据[rxjs 官方文档](https://rxjs.dev/guide/overview)整理。</u>_
+_<u>以下就是根据[rxjs 官方文档](https://rxjs.dev/guide/overview)整理</u>_。中文翻译在[RxJS 快速入门](https://rxjs.tech/guide/overview)
 
 ## 简单介绍(以下几节为 rxjs 官方文档翻译)
 
@@ -772,7 +774,7 @@ obs.pipe(op1(), op2(), op3(), op4());
 
 ### Creation Operators(创建操作符)
 
-**什么是创建操作符？**区别于 pipeable 操作符，创建操作符是一些函数，可以用来创建一个具有一些共同的预定义行为的 Observable，或者通过连接(join)其他 Observable。
+**什么是创建操作符**？区别于 pipeable 操作符，创建操作符是一些函数，可以用来创建一个具有一些共同的预定义行为的 Observable，或者通过连接(join)其他 Observable。
 
 创建运算符的一个典型例子是**interval** 函数。它接受一个数字（不是 Observable）作为输入参数，并产生一个 Observable 作为输出:
 
@@ -804,7 +806,7 @@ const fileObservable = urlObservable.pipe(
 );
 ```
 
-**concatAll()**操作符订阅了从 "外部" Observable 出来的每个 "内部" Observable，并复制了所有发射的值，直到该 Observable 完成，并继续到下一个。所有的值都以这种方式被串联起来。
+**concatAll()** 操作符订阅了从 "外部" Observable 出来的每个 "内部" Observable，并复制了所有发射的值，直到该 Observable 完成，并继续到下一个。所有的值都以这种方式被串联起来。
 
 其他有用的扁平化操作符（称为连接操作符）有:
 
@@ -814,7 +816,7 @@ const fileObservable = urlObservable.pipe(
 
 正如许多数组库将`map()`和`flat(`)（或`flatten()`）合并为一个单一的`flatMap()`，所有 RxJS 扁平化操作符`concatMap()`、`mergeMap()`、`switchMap()`和`exhaustMap()`都有映射等价物(mapping equivalents)。
 
-### Marble diagrams(译为`弹珠图`?)
+### Marble diagrams(弹珠图)
 
 为了解释运算符如何工作，文本描述往往是不够的。许多运算符与时间有关，它们可能以不同的方式进行延迟(delay)、采样(sample)、节流(throttle)或退避值排放(debounce value emissions)。在这方面，图表往往是一个更好的工具。
 "Marble diagrams(弹珠图)"是运算符如何工作的可视化表示，包括输入的可观察对象、运算符及其参数，以及输出的可观察对象。
@@ -983,7 +985,7 @@ Also see the Join Creation Operators section above.
 
 #### 使用`pipe()`函数创建新的操作符
 
-如果你的代码中有一个常用的运算符序列(sequence of operators)，使用**pipe()**函数将该序列提取为一个新的运算符。
+如果你的代码中有一个常用的运算符序列(sequence of operators)，使用 **pipe()** 函数将该序列提取为一个新的运算符。
 即使一个序列不是那么常见，把它分解成一个运算符也可以提高可读性。
 
 例如，你可以做一个丢弃奇数值并将偶数值加倍的函数，像这样:
@@ -1743,8 +1745,6 @@ hotSource$.complete();
 
 ### 常用操作符（创建型）
 
---- 创建型
-
 #### of(will DEPRECATED on v8)
 
 - 将传进去的值当作一条 Observable，当值都发送完后结束。
@@ -1918,6 +1918,7 @@ const subscription = merge(sourceA$, sourceB$, sourceC$).subscribe((data) => {
 ```
 
 弹珠图:
+
 ![merge弹珠图](./pictures-rxjs/operators/merge弹珠图.png)
 
 #### zip
@@ -2848,86 +2849,86 @@ setTimeout(() => {
 
 ~~empty：用来产生一条「空的 Observble」，也就是没有发生任合事件值，就结束。~~
 ~~of：用里面的参数当作每次事件的资料。~~
-range：用一定范围内的数值数据作为事件的数据。
-iif：依照第一个参数的条件，决定要使用不同的 Observable 数据流。
-throwError：让 Observable 发生错误。
+range：用一定范围内的数值数据作为事件的数据。  
+iif：依照第一个参数的条件，决定要使用不同的 Observable 数据流。  
+throwError：让 Observable 发生错误。  
 ajax：呼叫一个 HTTP 请求作为 Observable 的事件数据。
 
-from：使用数组、Promoise、Observable 等来源建立新的 Observable。
-fromEvent：封装 DOM 的 addEventListener 事件处理来建立 Observable。
-fromEvenPattern：可依照自行定义的事件来建立 Observable。
-interval：每隔指定的时间发出一次事件值。
-timer：与 interval 相同，但可以设定起始的等待时间。
+from：使用数组、Promoise、Observable 等来源建立新的 Observable。  
+fromEvent：封装 DOM 的 addEventListener 事件处理来建立 Observable。  
+fromEvenPattern：可依照自行定义的事件来建立 Observable。  
+interval：每隔指定的时间发出一次事件值。  
+timer：与 interval 相同，但可以设定起始的等待时间。  
 defer：用来延迟执行内部的 Observable。
 
-concat：用来「串接」数个 Observables，会依序执行每个 Observable，上一个 Observable 「完成」后才会执行下一个 Observable。
-merge：用来「同时执行」数个 Observables，所有 Observables 会同时执行，并只在一条新的 Observable 上发生事件。
-zip：一样「同时执行」数个 Observables，差别是会将每个 Observable 的数据「组合」成一个新的事件值，在新的 Observable 上发生新事件。
+concat：用来「串接」数个 Observables，会依序执行每个 Observable，上一个 Observable 「完成」后才会执行下一个 Observable。  
+merge：用来「同时执行」数个 Observables，所有 Observables 会同时执行，并只在一条新的 Observable 上发生事件。  
+zip：一样「同时执行」数个 Observables，差别是会将每个 Observable 的数据「组合」成一个新的事件值，在新的 Observable 上发生新事件。  
 partition：依照指定逻辑，将一条 Observable 拆成两条 Observables。
 
-combineLatest：同时订阅所有内部 Observables，并将内部 Observables 里面的最后一次事件数据组合起来。
-forkJoin：同时订阅所有内部 Observables，并将内部 Observables 「完成」前的最后一个事件数据组合起来。
+combineLatest：同时订阅所有内部 Observables，并将内部 Observables 里面的最后一次事件数据组合起来。  
+forkJoin：同时订阅所有内部 Observables，并将内部 Observables 「完成」前的最后一个事件数据组合起来。  
 race：同时订阅所有内部 Observables，当其中一个 Observable 先发生第一次事件后，以此 Observable 为主，并将其它 Observable 取消订阅。
 
-map：将一个给定的项目函数应用于源 Observable 发出的每个值，并将结果值作为 Observable 发出。
-scan：适用于封装和管理状态。在初始状态建立后，将一个累加器（或 "还原函数"）应用于来自源的每个值--通过一个种子值（第二个参数），或来自源的第一个值。
+map：将一个给定的项目函数应用于源 Observable 发出的每个值，并将结果值作为 Observable 发出。  
+scan：适用于封装和管理状态。在初始状态建立后，将一个累加器（或 "还原函数"）应用于来自源的每个值--通过一个种子值（第二个参数），或来自源的第一个值。  
 pairwise：将成对的连续排放物组合在一起，并作为两个值的数组发出。
 
-switchMap：「切换」的概念，退订阅上次未完成的数据流，订阅新的数据流；若有新事件时过去的资料就不重要了，可以使用此 operator。
-mergeMap：上次数据流若未完成，不会退订阅，且继续订阅新的数据流；若数据流顺序相对不重要，可以使用此 operator，整体效率会比较快。
-concatMap：持续等到上次数据流完成，才继续订阅新的数据流；若执行顺序非常重要，可以使用此 opereator；不过要注意每次转换的 Observable 都需要有完成，否则永远不会进入下一个 Observable。
+switchMap：「切换」的概念，退订阅上次未完成的数据流，订阅新的数据流；若有新事件时过去的资料就不重要了，可以使用此 operator。  
+mergeMap：上次数据流若未完成，不会退订阅，且继续订阅新的数据流；若数据流顺序相对不重要，可以使用此 operator，整体效率会比较快。  
+concatMap：持续等到上次数据流完成，才继续订阅新的数据流；若执行顺序非常重要，可以使用此 opereator；不过要注意每次转换的 Observable 都需要有完成，否则永远不会进入下一个 Observable。  
 exhaustMap：若上次数据流未完成，则忽略订阅这次的数据流；若希望避免产生太多资料流，可以考虑使用此 operator。
 
-`xxxAll` 系列和 `xxxMap` 系列处理「上一个」数据流的方式一样，差别在于 `xxxAll` 是使用别人传给我们的 Observable of Observable，而 `xxxMap` 必须自行撰写转换成 Observable 的规则 。
-~~combineAll 和 combineLatest 行为也非常类似，combineAll 的数据来源是 Observable of Observable，而 combineLatest 则必须明确指定要组合哪写 Observables。~~
+`xxxAll` 系列和 `xxxMap` 系列处理「上一个」数据流的方式一样，差别在于 `xxxAll` 是使用别人传给我们的 Observable of Observable，而 `xxxMap` 必须自行撰写转换成 Observable 的规则 。  
+~~combineAll 和 combineLatest 行为也非常类似，combineAll 的数据来源是 Observable of Observable，而 combineLatest 则必须明确指定要组合哪写 Observables。~~  
 startWith 适合用在一些希望订阅 Observable 时就能够有第一笔默认值的情境。
 
-filter：用来依照指定的条件过滤事件值，只有符合条件的事件值会发生。
-first：只有第一个事件值会发生，若有指定条件会变成符合条件的第一个事件值会发生。
-last：只有最后一个事件值会发生，若有指定条件会变成符合条件的最后一个事件值会发生。
+filter：用来依照指定的条件过滤事件值，只有符合条件的事件值会发生。  
+first：只有第一个事件值会发生，若有指定条件会变成符合条件的第一个事件值会发生。  
+last：只有最后一个事件值会发生，若有指定条件会变成符合条件的最后一个事件值会发生。  
 single：可以用来确保整个 Observable 「只会发生一次事件」，没有指定条件时，发生两次以上事件会发生错误；有指定条件时，发生两次以上事件会产生 undefined 事件值。
 
-take：代表要让前 N 次事件可以发生，符合数量后结束目前的 Observable。
-takeLast：代表要让后 N 次事件可以发生，因此需要来源 Observable 结束。
-takeUntil：会持续让来源 Observable 事件发生，直到指定的另一个 Observable 发生新事件了，结束目前的 Observable。
+take：代表要让前 N 次事件可以发生，符合数量后结束目前的 Observable。  
+takeLast：代表要让后 N 次事件可以发生，因此需要来源 Observable 结束。  
+takeUntil：会持续让来源 Observable 事件发生，直到指定的另一个 Observable 发生新事件了，结束目前的 Observable。  
 takeWhile：可以判断数据是否符合条件，只要数据符合条件，事件就会持续发生，当资料不符合条件，目前的 Observable 就会结束。
 
-skip：从订阅开始后忽略指定数量的事件数据。
-skipLast：依照指定的数量，忽略整个 Observable 最后的事件数量。
-skipUntil：持续忽略目前 Observable 的事件资料，直到另一个 Observable 发生事件为止。
+skip：从订阅开始后忽略指定数量的事件数据。  
+skipLast：依照指定的数量，忽略整个 Observable 最后的事件数量。  
+skipUntil：持续忽略目前 Observable 的事件资料，直到另一个 Observable 发生事件为止。  
 skipWhile：持续忽略目前 Observable 的事件数据，直到事件数据值不符合指定条件为止。
 
-distinct：用来过滤「重复」的事件值发生，distinct 会把出现过的事件值记录下来，当事件数据曾经出现过，就不让事件发生，我们也可以自己决定何时要把这个纪录清除。
-distinctUntilChanged：如果事件数据「持续重复」就会被过滤掉，直到这次事件数据与上次事件数据不同时，才允许事件发生。
+distinct：用来过滤「重复」的事件值发生，distinct 会把出现过的事件值记录下来，当事件数据曾经出现过，就不让事件发生，我们也可以自己决定何时要把这个纪录清除。  
+distinctUntilChanged：如果事件数据「持续重复」就会被过滤掉，直到这次事件数据与上次事件数据不同时，才允许事件发生。  
 distinctUntilKeyChanged：与 distinctUntilChanged 逻辑一样，但提供了比较简单的方式，让我们处理事件对象的某个属性就是 key 值的情境。
 
-sampleTime：每个一个循环时间取一次时间区段内来源 Observable 最新的数据
-sample：依照指定的 Observable 事件发生时机来取时间区段内来源 Observable 最新的数据
-auditTime：当来源 Observable 有新事件发生时，依照指定时间取得事件发生后这段时间内来源 Observable 最新的数据
-audit：当来源 Observable 有新事件发生时，依照另外一个 Observable 来决定要在多长的时间内取得来源 Observable 最新的资料
-debounceTime：当来源 Observable 有新事件发生时，须在指定时间内没有新的事件发生，才允许此事件发生在新的 Observable 上
+sampleTime：每个一个循环时间取一次时间区段内来源 Observable 最新的数据  
+sample：依照指定的 Observable 事件发生时机来取时间区段内来源 Observable 最新的数据  
+auditTime：当来源 Observable 有新事件发生时，依照指定时间取得事件发生后这段时间内来源 Observable 最新的数据  
+audit：当来源 Observable 有新事件发生时，依照另外一个 Observable 来决定要在多长的时间内取得来源 Observable 最新的资料  
+debounceTime：当来源 Observable 有新事件发生时，须在指定时间内没有新的事件发生，才允许此事件发生在新的 Observable 上  
 debounce：当来源 Observable 有新事件发生时，依照另外一个 Observable 来决定要再多长时间内没有新的事件发生，才允许此事件发生在新的 Observable 上
 
-isEmpty：用来判断来源 Observable 是否是空的，也就是没有任何事件发生就结束了。
-defaultIfEmpty：当来源 Observable 是空的时候，给予一个默认值。
-find：用来判断来源 Observable 是否有符合条件的事件资料，如果有，将此事件资料发生在新的 Observable 上，并结束。
-findIndex：用来判断来源 Observable 是否有符合条件的事件资料，如果有，将此事件数据在来源 Observable 的索引值发生在新的 Observable 上，并结束。
+isEmpty：用来判断来源 Observable 是否是空的，也就是没有任何事件发生就结束了。  
+defaultIfEmpty：当来源 Observable 是空的时候，给予一个默认值。  
+find：用来判断来源 Observable 是否有符合条件的事件资料，如果有，将此事件资料发生在新的 Observable 上，并结束。  
+findIndex：用来判断来源 Observable 是否有符合条件的事件资料，如果有，将此事件数据在来源 Observable 的索引值发生在新的 Observable 上，并结束。  
 every：用来判断来源 Observable 的事件是否「全部符合指定条件」。
 
-min：找出来源 Observable 事件的最小值。
-max：找出来源 Observable 事件的最大值。
-count：找出来源 Observable 事件总数。
+min：找出来源 Observable 事件的最小值。  
+max：找出来源 Observable 事件的最大值。  
+count：找出来源 Observable 事件总数。  
 reduce：依照指定运算逻辑，找出来源 Observable 事件汇总的结果。
 
-tap：可以用来隔离「side effect」以及「非 side effect」，在 Observable 运作过程中，不论是 next()、error()或 complete()，只要有 side effect 逻辑都建议放到 tap 内处理。
-toArray：将来源 Observable 数据汇整成一个数组。toArray 可以应用来处理数组数据。
-delay：延迟一段时间后，才开始运行来源 Observable。
+tap：可以用来隔离「side effect」以及「非 side effect」，在 Observable 运作过程中，不论是 next()、error()或 complete()，只要有 side effect 逻辑都建议放到 tap 内处理。  
+toArray：将来源 Observable 数据汇整成一个数组。toArray 可以应用来处理数组数据。  
+delay：延迟一段时间后，才开始运行来源 Observable。  
 delayWhen：可自行设计 Observable，来决定来源 Observable 每个事件的延迟逻辑。
 
-catchError：可以用来决定当来源 Observable 发生错误时该如何进行，回传一个 Observable 代表会使用此 Observable 继续下去，因此回传 throwError 则代表依然发生错误。
-retry：当来源 Observable 发生错误时，重新尝试指定次数。
-~~retryWhen：当来源 Observable 发生错误时，可以照自定的 Observable 来决定重试的时机。~~
+catchError：可以用来决定当来源 Observable 发生错误时该如何进行，回传一个 Observable 代表会使用此 Observable 继续下去，因此回传 throwError 则代表依然发生错误。  
+retry：当来源 Observable 发生错误时，重新尝试指定次数。  
+~~retryWhen：当来源 Observable 发生错误时，可以照自定的 Observable 来决定重试的时机。~~  
 finalize：在 Observable 结束时，无论是 error() 还是 complete()，最后都可以进入 finalize 进行最终处理。
 
-share：意义为来源 Observable 的数据共享给所有观察者。`multicast(() => new Subject()) + refCount()`
+share：意义为来源 Observable 的数据共享给所有观察者。`multicast(() => new Subject()) + refCount()`  
 shareReplay：每次订阅时会回放来源 Observable 最近 N 次的资料，也就是最近 N 次事件数据共享给所有观察者。`multicast(() => new ReplaySubject()) + refCount()`

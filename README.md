@@ -36,7 +36,7 @@
 - 在线阅读的 md 文件每次修改保存都格式化无所谓的。
 - 尽量只把有需要制作成 pdf 的内容单独抽出 pandoc 的 md，注意符合 Latex 格式(需要安装相应工具)。
 
-分类如下:
+**分类如下(加粗为应对面试的精华)** 。以下都有整理到`《web 前端基础知识汇整(精简版)》`部分
 
 ## 前端基础知识汇整的 pdf
 
@@ -61,8 +61,8 @@
 - [04-基本引用类型](documents/01-javascript/base-js/04、基本引用类型.md)
 - [05-集合引用类型](documents/01-javascript/base-js/05、集合引用类型.md)
 - [06-迭代器与生成器](documents/01-javascript/base-js/06、迭代器与生成器.md)
-- [07-对象、类与面向对象编程](<documents/01-javascript/base-js/07、对象、类与面向对象编程(上).md>)
-- [08-对象、类与面向对象编程](<documents/01-javascript/base-js/08、对象、类与面向对象编程(下).md>)
+- [07-对象、类与面向对象编程(上)](<documents/01-javascript/base-js/07、对象、类与面向对象编程(上).md>)
+- [08-对象、类与面向对象编程(下)](<documents/01-javascript/base-js/08、对象、类与面向对象编程(下).md>)
 - [09-代理与反射](documents/01-javascript/base-js/09、代理与反射.md)
 - [10-函数](documents/01-javascript/base-js/10、函数.md)
 - [11-Promises 和异步函数](documents/01-javascript/base-js/11、Promises和异步函数.md)
@@ -77,21 +77,21 @@
 
 ## vue
 
-- [01-vue-faq](documents/02-vue/01-vue-faq.md)
-- [02-vue-simplification-FAQs](documents/02-vue/03-vue-simplification-FAQs.md)
-- [03-vuejs 设计与实现总结](documents/02-vue/03-vuejs设计与实现总结.md)
-- [04-vue 响应式原理](documents/02-vue/04-vue响应式原理.md)
+- [01-vue 常见问题(纯问题转存)](documents/02-vue/01-vue-faq.md)
+- **[02-vue-FAQs](documents/02-vue/02-vue-simplification-FAQs.md)**
+- **[03-vuejs 设计与实现总结](documents/02-vue/03-vuejs设计与实现总结.md)**
+- **[04-vue 响应式原理](documents/02-vue/04-vue响应式原理.md)**
 
 ## nodejs
 
 - [01-nodejs_interview_questions](documents/03-nodejs/01-nodejs_interview_questions_en-cn.md)
-- [02-nodejs-faq](documents/03-nodejs/02-node-faq.md)
+- **[02-nodejs-faq](documents/03-nodejs/02-node-faq.md)**
 
 ## 前端工程化
 
-- [01-前端工程化概述](documents/04-engineered/01-frontend-engineered-overview.md)
-- [02-渲染页面:浏览器的工作原理](documents/04-engineered/02-渲染页面:浏览器的工作原理.md)
-- [03-web 性能指标及优化](documents/04-engineered/03-web性能指标及优化.md)
+- **[01-前端工程化概述](documents/04-engineered/01-frontend-engineered-overview.md)**
+- **[02-渲染页面:浏览器的工作原理](documents/04-engineered/02-渲染页面:浏览器的工作原理.md)**
+- **[03-web 性能指标及优化](documents/04-engineered/03-web性能指标及优化.md)**
 
 ## typescript
 
@@ -131,13 +131,25 @@
 - [01-前端基础杂项简述(css、网络相关、浏览器相关、性能问题、前端编译、数据库相关)](documents/10-miscellaneous/01-other-web-faq.md)
 - [02-mysql 常见问题](documents/10-miscellaneous/02-mysql-faq.md)
 - [03-后端常用工具简介](documents/10-miscellaneous/03-backend-common-tools.md)
-- [04-sass 简介](documents/10-miscellaneous/04.sass-overview.md)
-- [05-http 基础](documents/10-miscellaneous/05-http-basic.md)
-- [06-http 缓存](documents/10-miscellaneous/06-http-cache.md)
-- [07-跨源资源共享 cors](documents/10-miscellaneous/07-cors.md)
-- [08-web 安全](documents/10-miscellaneous/08-web-secure.md)
+- [04-sass 简介](documents/10-miscellaneous/04-sass-overview.md)
+- **[05-http 基础](documents/10-miscellaneous/05-http-basic.md)**
+- **[06-http 缓存](documents/10-miscellaneous/06-http-cache.md)**
+- **[07-跨源资源共享 cors](documents/10-miscellaneous/07-cors.md)**
+- **[08-web 安全](documents/10-miscellaneous/08-web-secure.md)**
 
 ## 脚本命令等
 
 - [配合 cron 的 mysql 备份脚本](documents/09-scripts-and-commands/scripts/mysqlbak.sh)
 - [常用的 linux 命令](documents/09-scripts-and-commands/commands/linux-command.md)
+
+## 其他
+
+- [工作经验(updating)](<pandoc/format-doc/work-ex-just-read-(updating).md>)
+
+---
+
+《web 前端基础知识汇整》pdf 文件截图:
+
+![pdf截图1](pandoc/format-doc/pictures/pdf-screenshots-1.png)
+
+![pdf截图2](pandoc/format-doc/pictures/pdf-screenshots-2.png)

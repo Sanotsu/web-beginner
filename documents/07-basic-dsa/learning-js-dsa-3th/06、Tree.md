@@ -182,7 +182,7 @@ console.timeEnd("递归3"); // 递归3: 0.174ms
   - 森林：由 m（m>=0）棵互不相交的树的集合称为森林；
 - 树是一种分层数据的抽象模型。现实生活中最常见的树的例子是家谱，或是公司的组织架构图.
 
-![tree](pictures/tree/tree/0tree.png)
+![tree](pictures/tree/0tree.png)
 
 # 二叉树 (Binary tree)
 
@@ -203,8 +203,6 @@ console.timeEnd("递归3"); // 递归3: 0.174ms
   - remove(key) ：从树中移除某个键。
 
 ## 二叉搜索树的实现
-
-============== 注意：代码中的{x}还有使用示例里面的步骤，感觉乱乱得需要和书进行对应，后续补充
 
 ```js
 // 创建一个二叉搜索树
@@ -1013,78 +1011,77 @@ module.exports = {
 ## 红黑树的实现
 
 ```js
-const { Compare, Colors, defaultCompare } = require('../utils');
-const { TreeNode, BinarySearchTree } = require('./1BinarySearchTree');
+const { Compare, Colors, defaultCompare } = require("../utils");
+const { TreeNode, BinarySearchTree } = require("./1BinarySearchTree");
 
 // 对红黑树来说，节点和之前比起来需要一些额外的属性：节点的颜色和指向父节点的引用
 class RedBlackNode extends TreeNode {
-    constructor(key) {
-        super(key);
-        this.key = key;
-        // 节点的颜色,默认情况下，创建的节点颜色是红色
-        this.color = Colors.RED;
-        // 指向父节点的引用
-        this.parent = null;
-    }
+  constructor(key) {
+    super(key);
+    this.key = key;
+    // 节点的颜色,默认情况下，创建的节点颜色是红色
+    this.color = Colors.RED;
+    // 指向父节点的引用
+    this.parent = null;
+  }
 
-    isRed() {
-        return this.color === Colors.RED;
-    }
+  isRed() {
+    return this.color === Colors.RED;
+  }
 }
 
 // 从创建 RedBlackTree 类,也是一个BST,继承它
 class RedBlackTree extends BinarySearchTree {
-    constructor(compareFn = defaultCompare) {
-        super(compareFn);
-        this.compareFn = compareFn;
-        this.root = null;
-    }
+  constructor(compareFn = defaultCompare) {
+    super(compareFn);
+    this.compareFn = compareFn;
+    this.root = null;
+  }
 
-    // 向红黑树中插入节点
-    // 向红黑树插入节点和在二叉搜索树中是一样的。
-    // 除了插入的代码，还要在插入后给节点应用一种颜色，
-    // 并且验证树是否满足红黑树的条件以及是否还是自平衡的。
-    insert(key) {
-        // 如果树是空的
-        if (this.root == null) {
-            // 需要创建一个红黑树节点
-            this.root = new RedBlackNode(key);
-            // 为了满足规则 2(根节点要是黑色)，要将这个根节点的颜色设为黑色
-            this.root.color = Colors.BLACK;
-        } else {
-            // 如果树不是空的，会像二叉搜索树一样在正确的位置插入节点
-            const newNode = this.insertNode(this.root, key);
-            // insertNode 方法需要返回新插入的节点,用于验证在插入后，红黑树的规则是否得到了满足。
-            this.fixTreeProperties(newNode);
-        }
+  // 向红黑树中插入节点
+  // 向红黑树插入节点和在二叉搜索树中是一样的。
+  // 除了插入的代码，还要在插入后给节点应用一种颜色，
+  // 并且验证树是否满足红黑树的条件以及是否还是自平衡的。
+  insert(key) {
+    // 如果树是空的
+    if (this.root == null) {
+      // 需要创建一个红黑树节点
+      this.root = new RedBlackNode(key);
+      // 为了满足规则 2(根节点要是黑色)，要将这个根节点的颜色设为黑色
+      this.root.color = Colors.BLACK;
+    } else {
+      // 如果树不是空的，会像二叉搜索树一样在正确的位置插入节点
+      const newNode = this.insertNode(this.root, key);
+      // insertNode 方法需要返回新插入的节点,用于验证在插入后，红黑树的规则是否得到了满足。
+      this.fixTreeProperties(newNode);
     }
+  }
 
-    insertNode(node, key) {
-        // 逻辑和二叉搜索树中的一样
-        if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
-            if (node.left == null) {
-                node.left = new RedBlackNode(key);
-                // 与BST的插入不同之处在于保存了指向被插入节点父节点的引用
-                node.left.parent = node;
-                // 并且返回了节点的引用
-                return node.left;
-            }
-            else {
-                return this.insertNode(node.left, key);
-            }
-        } else if (node.right == null) {
-            node.right = new RedBlackNode(key);
-            // 与BST的插入不同之处在于保存了指向被插入节点父节点的引用
-            node.right.parent = node;
-            // 并且返回了节点的引用
-            return node.right;
-        } else {
-            return this.insertNode(node.right, key);
-        }
+  insertNode(node, key) {
+    // 逻辑和二叉搜索树中的一样
+    if (this.compareFn(key, node.key) === Compare.LESS_THAN) {
+      if (node.left == null) {
+        node.left = new RedBlackNode(key);
+        // 与BST的插入不同之处在于保存了指向被插入节点父节点的引用
+        node.left.parent = node;
+        // 并且返回了节点的引用
+        return node.left;
+      } else {
+        return this.insertNode(node.left, key);
+      }
+    } else if (node.right == null) {
+      node.right = new RedBlackNode(key);
+      // 与BST的插入不同之处在于保存了指向被插入节点父节点的引用
+      node.right.parent = node;
+      // 并且返回了节点的引用
+      return node.right;
+    } else {
+      return this.insertNode(node.right, key);
     }
+  }
 
-    // 在插入节点后验证红黑树属性 
-    /*
+  // 在插入节点后验证红黑树属性
+  /*
     要验证红黑树是否还是平衡的以及满足它的所有要求，需要使用两个概念：重新填色和旋转。 
 
     在向树中插入节点后，新节点将会是红色。这不会影响黑色节点数量的规则（规则6），但会影响规则 5：两个后代红节点不能共存。
@@ -1092,81 +1089,83 @@ class RedBlackTree extends BinarySearchTree {
         但是如果插入节点的父节点是红色，那么会违反规则 5。
     要解决这个冲突，只需要改变父节点、祖父节点和叔节点（因为同样改变了父节点的颜色）
     */
-    fixTreeProperties(node) {
-        // 要验证它的父节点是否是红色以及这个节点是否不是黑色(自注:书上的isRed()真的是那样用的吗?)
-        while (node && node.parent && node.parent.isRed() && node.color !== Colors.BLACK) {
+  fixTreeProperties(node) {
+    // 要验证它的父节点是否是红色以及这个节点是否不是黑色(自注:书上的isRed()真的是那样用的吗?)
+    while (
+      node &&
+      node.parent &&
+      node.parent.isRed() &&
+      node.color !== Colors.BLACK
+    ) {
+      // 为了保证代码的可读性，保存父节点和祖父节点的引用。
+      let parent = node.parent;
+      const grandParent = parent.parent;
+      // 情形 A：父节点是左侧子节点
+      if (grandParent && grandParent.left === parent) {
+        // 由于也需要改变叔节点的颜色，需要一个指向它的引用
+        const uncle = grandParent.right;
+        // 情形 1A：叔节点也是红色——只需要重新填色
+        if (uncle && uncle.color === Colors.RED) {
+          // 就改变祖父节点、父节点和叔节点的颜色，
+          grandParent.color = Colors.RED;
+          parent.color = Colors.BLACK;
+          uncle.color = Colors.BLACK;
+          // 并且将当前节点的引用指向祖父节点，继续检查树是否有其他冲突。
+          node = grandParent;
+        } else {
+          // 在节点的叔节点颜色为黑时，也就是说仅仅重新填色是不够的，树是不平衡的，那么需要进行旋转操作。
+          // 情形 2A：节点是右侧子节点——左旋转
 
-            // 为了保证代码的可读性，保存父节点和祖父节点的引用。
-            let parent = node.parent;
-            const grandParent = parent.parent;
-            // 情形 A：父节点是左侧子节点 
-            if (grandParent && grandParent.left === parent) {
-                // 由于也需要改变叔节点的颜色，需要一个指向它的引用
-                const uncle = grandParent.right;
-                // 情形 1A：叔节点也是红色——只需要重新填色 
-                if (uncle && uncle.color === Colors.RED) {
-                    // 就改变祖父节点、父节点和叔节点的颜色， 
-                    grandParent.color = Colors.RED;
-                    parent.color = Colors.BLACK;
-                    uncle.color = Colors.BLACK;
-                    // 并且将当前节点的引用指向祖父节点，继续检查树是否有其他冲突。
-                    node = grandParent;
-                }
-                else {
-                    // 在节点的叔节点颜色为黑时，也就是说仅仅重新填色是不够的，树是不平衡的，那么需要进行旋转操作。 
-                    // 情形 2A：节点是右侧子节点——左旋转 
+          // 如果父节点是左侧子节点并且节点是右侧子节点，要进行两次旋转，
+          if (node === parent.right) {
+            // 首先是右-右旋转
+            this.rotationRR(parent);
+            // 并更新节点和父节点的引用
+            node = parent;
+            parent = node.parent;
+          }
+          // 情形 3A：节点是左侧子节点——右旋转
 
-                    // 如果父节点是左侧子节点并且节点是右侧子节点，要进行两次旋转，
-                    if (node === parent.right) {
-                        // 首先是右-右旋转
-                        this.rotationRR(parent);
-                        // 并更新节点和父节点的引用
-                        node = parent;
-                        parent = node.parent;
-                    }
-                    // 情形 3A：节点是左侧子节点——右旋转 
-
-                    // 第一次旋转后，要再次旋转，以祖父节点为基准
-                    this.rotationLL(grandParent);
-                    // 并在旋转过程中更新父节点和祖父节点的颜色。
-                    parent.color = Colors.BLACK;
-                    grandParent.color = Colors.RED;
-                    // 最后，更新当前节点的引用，以便继续检查树的其他冲突。 
-                    node = parent;
-                }
-            }
-            else { // 情形 B：父节点是右侧子节点 
-                // 由于也需要改变叔节点的颜色，需要一个指向它的引用
-                const uncle = grandParent.left;
-
-                // 情形 1B：叔节点是红色——只需要重新填色 
-                if (uncle && uncle.color === Colors.RED) {
-                    grandParent.color = Colors.RED;
-                    parent.color = Colors.BLACK;
-                    uncle.color = Colors.BLACK;
-                    node = grandParent;
-                }
-                else {
-                    // 逻辑是一样的，不同之处在于选择会这样进行：先进行左-左旋转，再进行右-右旋转
-                    // 情形 2B：节点是左侧子节点——右旋转 
-                    if (node === parent.left) {
-                        this.rotationLL(parent);
-                        node = parent;
-                        parent = node.parent;
-                    }
-                    // 情形 3B：节点是右侧子节点——左旋转 
-                    this.rotationRR(grandParent);
-                    parent.color = Colors.BLACK;
-                    grandParent.color = Colors.RED;
-                    node = parent;
-                }
-            }
+          // 第一次旋转后，要再次旋转，以祖父节点为基准
+          this.rotationLL(grandParent);
+          // 并在旋转过程中更新父节点和祖父节点的颜色。
+          parent.color = Colors.BLACK;
+          grandParent.color = Colors.RED;
+          // 最后，更新当前节点的引用，以便继续检查树的其他冲突。
+          node = parent;
         }
-        // 为了保证根节点的颜色始终是黑色（规则 2），在代码最后设置根节点的颜色
-        this.root.color = Colors.BLACK;
-    }
+      } else {
+        // 情形 B：父节点是右侧子节点
+        // 由于也需要改变叔节点的颜色，需要一个指向它的引用
+        const uncle = grandParent.left;
 
-    /*
+        // 情形 1B：叔节点是红色——只需要重新填色
+        if (uncle && uncle.color === Colors.RED) {
+          grandParent.color = Colors.RED;
+          parent.color = Colors.BLACK;
+          uncle.color = Colors.BLACK;
+          node = grandParent;
+        } else {
+          // 逻辑是一样的，不同之处在于选择会这样进行：先进行左-左旋转，再进行右-右旋转
+          // 情形 2B：节点是左侧子节点——右旋转
+          if (node === parent.left) {
+            this.rotationLL(parent);
+            node = parent;
+            parent = node.parent;
+          }
+          // 情形 3B：节点是右侧子节点——左旋转
+          this.rotationRR(grandParent);
+          parent.color = Colors.BLACK;
+          grandParent.color = Colors.RED;
+          node = parent;
+        }
+      }
+    }
+    // 为了保证根节点的颜色始终是黑色（规则 2），在代码最后设置根节点的颜色
+    this.root.color = Colors.BLACK;
+  }
+
+  /*
     红黑树旋转操作
      左-左（LL）：父节点是祖父节点的左侧子节点，节点是父节点的左侧子节点（情形 3A）。 
      左-右（LR）：父节点是祖父节点的左侧子节点，节点是父节点的右侧子节点（情形 2A）。 
@@ -1174,79 +1173,79 @@ class RedBlackTree extends BinarySearchTree {
      右-左（RL）：父节点是祖父节点的右侧子节点，节点是父节点的左侧子节点（情形 2A）。 
     */
 
-    // 在插入算法中，只使用了右-右旋转和左-左旋转。逻辑和 AVL 树是一样，
-    // 但是，由于保存了父节点的引用，需要将引用更新为旋转后的新父节点。 
-    // 1 左-左旋转（右旋转）的代码如下（更新父节点句末跟///）。 
-    /**
-     * Left left case: rotate right
-     *
-     *       b                           a
-     *      / \                         / \
-     *     a   e -> rotationLL(b) ->   c   b
-     *    / \                             / \
-     *   c   d                           d   e
-     *
-     * @param node RedBlackNode<T>
-     */
-    rotationLL(node) {
-        const tmp = node.left;
-        node.left = tmp.right;
-        if (tmp.right && tmp.right.key) {
-            tmp.right.parent = node;        ///
-        }
-        tmp.parent = node.parent;           ///
-        if (!node.parent) {                 ///
-            this.root = tmp;                ///
-        }                                   ///
-        else {
-            if (node === node.parent.left) {
-                node.parent.left = tmp;     ///
-            }
-            else {
-                node.parent.right = tmp;    ///
-            }
-        }
-        tmp.right = node;
-        node.parent = tmp;                  ///
+  // 在插入算法中，只使用了右-右旋转和左-左旋转。逻辑和 AVL 树是一样，
+  // 但是，由于保存了父节点的引用，需要将引用更新为旋转后的新父节点。
+  // 1 左-左旋转（右旋转）的代码如下（更新父节点句末跟///）。
+  /**
+   * Left left case: rotate right
+   *
+   *       b                           a
+   *      / \                         / \
+   *     a   e -> rotationLL(b) ->   c   b
+   *    / \                             / \
+   *   c   d                           d   e
+   *
+   * @param node RedBlackNode<T>
+   */
+  rotationLL(node) {
+    const tmp = node.left;
+    node.left = tmp.right;
+    if (tmp.right && tmp.right.key) {
+      tmp.right.parent = node; ///
     }
+    tmp.parent = node.parent; ///
+    if (!node.parent) {
+      ///
+      this.root = tmp; ///
+    } ///
+    else {
+      if (node === node.parent.left) {
+        node.parent.left = tmp; ///
+      } else {
+        node.parent.right = tmp; ///
+      }
+    }
+    tmp.right = node;
+    node.parent = tmp; ///
+  }
 
-    // 右-右旋转（左旋转）的代码如下（更新父节点句末跟///）。 
-    /**
-     * Right right case: rotate left
-     *
-     *     a                              b
-     *    / \                            / \
-     *   c   b   -> rotationRR(a) ->    a   e
-     *      / \                        / \
-     *     d   e                      c   d
-     *
-     * @param node Node<T>
-     */
-    rotationRR(node) {
-        const tmp = node.right;
-        node.right = tmp.left;
-        if (tmp.left && tmp.left.key) {
-            tmp.left.parent = node;         ///
-        }
-        tmp.parent = node.parent;           ///
-        if (!node.parent) {                 ///
-            this.root = tmp;                ///
-        }                                   ///
-        else {
-            if (node === node.parent.left) {
-                node.parent.left = tmp;     ///
-            }
-            else {
-                node.parent.right = tmp;    /// 
-            }
-        }
-        tmp.left = node;
-        node.parent = tmp;                  ///
+  // 右-右旋转（左旋转）的代码如下（更新父节点句末跟///）。
+  /**
+   * Right right case: rotate left
+   *
+   *     a                              b
+   *    / \                            / \
+   *   c   b   -> rotationRR(a) ->    a   e
+   *      / \                        / \
+   *     d   e                      c   d
+   *
+   * @param node Node<T>
+   */
+  rotationRR(node) {
+    const tmp = node.right;
+    node.right = tmp.left;
+    if (tmp.left && tmp.left.key) {
+      tmp.left.parent = node; ///
     }
+    tmp.parent = node.parent; ///
+    if (!node.parent) {
+      ///
+      this.root = tmp; ///
+    } ///
+    else {
+      if (node === node.parent.left) {
+        node.parent.left = tmp; ///
+      } else {
+        node.parent.right = tmp; ///
+      }
+    }
+    tmp.left = node;
+    node.parent = tmp; ///
+  }
 
-    getRoot() {
-        return this.root;
-    }
+  getRoot() {
+    return this.root;
+  }
 }
 ```
 
