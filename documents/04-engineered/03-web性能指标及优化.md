@@ -101,7 +101,7 @@
 
 为了确保您能够在大部分用户的访问期间达成建议目标值，对于上述每项指标，一个良好的测量阈值为页面加载的**第 75 个百分位数**，且该阈值同时适用于移动和桌面设备。
 
-![典型的网页加载时间轴](./pictures-additions/典型的网页加载时间轴.png)
+![典型的网页加载时间轴](pictures-engineered/典型的网页加载时间轴.png)
 
 **【各项指标改进方式】** : 参看 [如何改进 FCP](https://web.dev/fcp/#%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B-fcp)、 [如何改进 TTI](https://web.dev/tti/#%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B-tti)、 [如何改进 TBT](https://web.dev/tbt/#%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B-tbt)、 [如何改进 LCP](https://web.dev/lcp/#%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B-lcp)、[如何改进 FID](https://web.dev/fid/#%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B-fid)、[如何改进 CLS](https://web.dev/cls/#%E5%A6%82%E4%BD%95%E6%94%B9%E8%BF%9B-cls)
 

@@ -73,7 +73,7 @@
 
 #### 常见面试题(纯题目收集)
 
-- [js-faq](documents/01-javascript/js-faq/readme.md)
+- [js-FAQs](documents/01-javascript/js-faq/readme.md)
 
 ## vue
 
@@ -85,7 +85,7 @@
 ## nodejs
 
 - [01-nodejs_interview_questions](documents/03-nodejs/01-nodejs_interview_questions_en-cn.md)
-- **[02-nodejs-faq](documents/03-nodejs/02-node-faq.md)**
+- **[02-nodejs-FAQs](documents/03-nodejs/02-node-faq.md)**
 
 ## 前端工程化
 
