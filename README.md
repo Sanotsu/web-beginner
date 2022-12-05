@@ -140,7 +140,8 @@
 ## 脚本命令等
 
 - [配合 cron 的 mysql 备份脚本](documents/09-scripts-and-commands/scripts/mysqlbak.sh)
-- [常用的 linux 命令](documents/09-scripts-and-commands/commands/linux-command.md)
+- [linux 常用的命令](documents/09-scripts-and-commands/commands/linux-command.md)
+- [k8s 常用的命令](documents/09-scripts-and-commands/commands/k8s-command.md)
 
 ## 其他
 

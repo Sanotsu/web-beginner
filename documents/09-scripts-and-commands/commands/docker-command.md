@@ -61,5 +61,5 @@ https://docs.docker.com/engine/reference/commandline/rmi/
 docker rm [OPTIONS] CONTAINER [CONTAINER...]  
 https://docs.docker.com/engine/reference/commandline/rm/
 
-卸载docker-cli（同样安装方式下）：
+卸载docker-cli（同样安装方式下）：  
 sudo apt-get remove docker-ce docker-ce-cli

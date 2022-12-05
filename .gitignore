@@ -74,7 +74,8 @@ Thumbs.db
 
 # 自行本地的测试用脚本文件夹
 /test
-/self-utils
+**/self-utils
+**/self-configs
 
 # tesseract.js 生成的数据文件
 *.traineddata
