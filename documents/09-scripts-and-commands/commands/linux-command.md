@@ -410,3 +410,19 @@ xargs kill -9 中的 xargs 命令表示用前面命令的输出结果（也就�
 上面是用 kill 配合过滤操作来完成，实际上还有更简单的方法——使用 killall 命令。killall 通过进程名字终止所有进程，用法如下：`killall -9 <process_name>` 。
 
 https://blog.csdn.net/lu_embedded/article/details/53590815
+
+## 显示当前进程的状态
+
+`ps` （英文全拼：process status）命令用于显示当前进程的状态，类似于 windows 的任务管理器。
+
+常用参数:
+
+- `-A` 列出所有的进程
+- `-w` 显示加宽可以显示较多的资讯
+- `-au` 显示较详细的资讯
+- `-aux` 显示所有包含其他使用者的进程
+  - au(x)的输出格式:`USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND`
+
+例如查看 chrome 的进程: `ps -aux |grep chrome`
+
+显示所有命令，连带命令行: `ps -ef`

@@ -1,16 +1,16 @@
 ---
 # pandoc生成标题信息时用到
-title: "web前端基础知识汇整（精简版）"
-author: David Su | callmedavidsu@gmail.com
-date: \today
-abstract: |
-  This is a front-end knowledge manual containing JavaScript, vue, nodejs, rxjs, TypeScript, dart, DSA, DP, HTML, CSS, HTTP, webpack, DB, Microservice Architecture, etc. 
+# title: "web前端基础知识汇整（精简版）"
+# author: David Su | callmedavidsu@gmail.com
+# date: \today
+# abstract: |
+#   This is a front-end knowledge manual containing JavaScript, vue, nodejs, rxjs, TypeScript, dart, DSA, DP, HTML, CSS, HTTP, webpack, DB, Microservice Architecture, etc. 
 
-  It helps to improve the overall idea of the big front-end and consolidate the basic knowledge skills. For interviews or self-improvement are helpful.
+#   It helps to improve the overall idea of the big front-end and consolidate the basic knowledge skills. For interviews or self-improvement are helpful.
 
-  这是一本前端知识手册，包含JavaScript、vue、nodejs、rxjs、TypeScript、dart、DSA、DP、HTML、CSS、HTTP、webpack、DB、微服务架构等。
+#   这是一本前端知识手册，包含JavaScript、vue、nodejs、rxjs、TypeScript、dart、DSA、DP、HTML、CSS、HTTP、webpack、DB、微服务架构等。
 
-  有助于提高大前端的整体思路，巩固基础知识技能。对于面试或自我提升都有帮助。
+#   有助于提高大前端的整体思路，巩固基础知识技能。对于面试或自我提升都有帮助。
 
 # 正文字体，默认最大是12pt，要更大需要其他包(常见字号: 四号14pt 小四12pt 五号10.5pt 小五9pt)
 fontsize: 10pt
@@ -2671,6 +2671,18 @@ Babel 本质上就是在*操作 AST 来完成代码的转译* 。AST 是抽象�
 
 **【Serverless(无服务器架构)】** 指的是由开发者实现的服务端逻辑运行在无状态的计算容器中，它*由事件触发，完全被第三方管理*，其业务层面的状态则被开发者使用的数据库和存储资源所记录。六个特质(trait):入门门槛低（Low barrier-to-entry），无主机（Hostless），无状态（Stateless），弹性（Elasticity），分布式（Distributed），事件驱动（Event-driven）。
 
+**缓存雪崩**(在某一时间大量缓存同时失效，请求全部转发到 DB。可能导致 DB 瞬时压力过重而崩溃)
+
+- 将缓存失效时间分散开，比如在原有的失效时间基础上增加一个随机值(比如 1-5 分钟)，避开集体失效的事件。
+
+**缓存击穿/失效**(缓存中热点数据在高并发请求时过期，导致访问直接转到 DB，DB 崩溃。与雪崩的区别在于 key 的一个与多个)
+
+- 永远不过期:过期时间设置为不过气，或者检测到即将过期时重新获取(后台的异步线程进行缓存)。
+
+**缓存穿透**(缓存中不存在,DB 中也不存在。每次查询都会直接查询 DB，失去缓存的意义。流量大可能导致 DB 崩溃)
+
+- 查询结果为空也一样缓存，只不过时间设置相对较短。或者布隆过滤器
+
 \newpage
 
 # TypeScript
@@ -4749,19 +4761,19 @@ location ~ .*\.php$ {
 
 **web 用户体验**两重点: **页面内容快速加载**和**流畅的交互**。**影响 Web 性能**的两大主因: **等待资源加载时间**和**大部分情况下的浏览器单线程执行**。
 
-*网络等待时间*是在链路上*传送二进制到电脑端*所消耗的链路传输时间。Web 性能优化需要做的就是*尽可能快的使页面加载完成*。
+**网络等待时间**是在链路上*传送二进制到电脑端*所消耗的链路传输时间。Web 性能优化需要做的就是*尽可能快的使页面加载完成*。
 
 *大部分情况下，浏览器是单线程执行*的。为了有流畅的交互，开发者的目标是*确保网站从流畅的页面滚动到点击响应的交互性能*。  
 渲染时间是关键要素，确保主线程可以完成所有给它的任务并且仍然一直可以处理用户的交互。  
 **通过了解浏览器单线程的本质与最小化主线程的责任可以优化 Web 性能，来确保渲染的流畅和交互响应的及时。**
 
-\rule[0pt]{19.4cm}{0.03em}
+<!-- \rule[0pt]{19.4cm}{0.03em} -->
 
 **页面渲染过程**
 
 **\textcolor{brown}{【导航】}**: 用户通过在地址栏输入一个 URL、点击一个链接、提交表单或者是其他的行为。
 
-- 在理想情况下，它通常不会花费太多的时间，但是*等待时间(**[web 性能优化]**的目标之一)和带宽会导致它的延时*。
+- 在理想情况下，它通常不会花费太多的时间，但是*等待时间和带宽会导致它的延时*(**[web 性能优化]**提高服务器响应速度?)。
 
 **\textcolor{brown}{【DNS 查询】}**: 浏览器向名称服务器发起 DNS 查询请求，最终得到一个 IP 地址。对于页面指向的不同的主机名，则需要多次 DNS 查询。
 
@@ -4817,7 +4829,7 @@ location ~ .*\.php$ {
   - **JavaScript 编译**: _JavaScript 被解释、编译、解析和执行。脚本被解析为抽象语法树。一些浏览器引擎使用抽象语法树并将其传递到解释器中，输出在主线程上执行的字节码_。这就是所谓的 JavaScript 编译。
     - 当 CSS 被解析并创建 CSSOM 时，其他资源，包括 JavaScript 文件正在下载（借助预加载扫描器）。
   - **构建辅助功能树**: 浏览器还构建辅助设备用于分析和解释内容的辅助功能（accessibility）树。
-    - 无障碍对象模型（AOM）类似于 DOM 的语义版本。_当 DOM 更新时，浏览器会更新辅助功能树_。辅助技术本身无法修改无障碍树。
+    - 无障碍对象模型`AOM`类似于`DOM`的语义版本。_当`DOM`更新时浏览器会更新辅助功能树_。辅助技术本身无法修改无障碍树。
 
 **\textcolor{brown}{【渲染】}**: 渲染步骤包括样式(Style)、布局(Layout)、绘制(Paint)，在某些情况下还包括合成(Compositing)。
 
@@ -4905,29 +4917,31 @@ location ~ .*\.php$ {
 - 可交互是 FCP 之后的时间点，页面在 50ms 内响应用户的交互。(执行时间超过 50 毫秒的任何任务称为[长任务](https://web.dev/custom-metrics/#long-tasks-api))
   - 如果主线程正在解析、编译和执行 JavaScript，则它不可用，因此无法及时（小于 50ms）响应用户交互。
 
-[TTI(Time to Interactive)](https://web.dev/tti/) `可交互时间`指标测量*页面从开始加载到主要子资源完成渲染，并能够快速、可靠地响应用户输入所需的时间。*(实验室)。 **TTI 是*安静窗口*(没有长任务且不超过两个正在处理的网络 GET 请求)之前最后一个长任务的结束时间。**
+[TTI(Time to Interactive)](https://web.dev/tti/) `可交互时间`指标测量**页面从开始加载到主要子资源完成渲染，并能够快速、可靠地响应用户输入所需的时间。**
 
-[TBT(Total Blocking Time)](https://web.dev/tbt/) `总阻塞时间`指标测量*FCP 与 TTI 之间的总时间，这期间主线程被阻塞的时间过长，无法作出输入响应。*
+- *TTI 是**安静窗口**(没有长任务且不超过两个正在处理的网络 GET 请求)之前最后一个长任务的结束时间。*
 
-- **一个页面的总阻塞时间是在 FCP 和 TTI 之间发生的每个长任务的阻塞时间总和**。
+[TBT(Total Blocking Time)](https://web.dev/tbt/) `总阻塞时间`指标测量**FCP 与 TTI 之间的总时间，这期间主线程被阻塞的时间过长，无法作出输入响应。**
+
+- *一个页面的总阻塞时间是在 FCP 和 TTI 之间发生的每个长任务的阻塞时间总和*。
 - 如果任务时长足够长（例如超过 50 毫秒），那么用户很可能会注意到延迟，并认为页面缓慢或卡顿。
 
-[LCP(Largest contentful paint)](https://web.dev/lcp/) `最大内容绘制`指标测量*页面从开始加载到最大文本块或图像元素在屏幕上完成渲染的时间*。
+[LCP(Largest contentful paint)](https://web.dev/lcp/) `最大内容绘制`指标测量**页面从开始加载到最大文本块或图像元素在屏幕上完成渲染的时间**。
 
 - **最大内容绘制考量的元素类型**: 1 `<img>`元素; 2 内嵌在`<svg>`元素内的`<image>`元素; 3 `<video>`元素（使用封面图像）;
 - 4 通过`url()`函数（而非使用 CSS 渐变）加载的带有背景图像的元素; 5 包含文本节点或其他行内级文本元素子元素的块级元素。
 - LCP 主要受四个因素影响: **缓慢的服务器响应速度、JavaScript 和 CSS 渲染阻塞、资源加载时间、客户端渲染**。
 
-[FID(First input delay)](https://web.dev/fid/) `首次输入延迟`指标测量*从用户第一次与页面交互（例如当他们单击链接、点按按钮或使用由 JavaScript 驱动的自定义控件）直到浏览器对交互作出响应，并实际能够开始处理事件处理程序所经过的时间*。
+[FID(First input delay)](https://web.dev/fid/) `首次输入延迟`指标测量**从用户第一次与页面交互（例如当他们单击链接、点按按钮或使用由 JavaScript 驱动的自定义控件）直到浏览器对交互作出响应，并实际能够开始处理事件处理程序所经过的时间**。
 
 - 一般来说，发生输入延迟（又称输入延时）是因为浏览器的主线程正忙着执行其他工作，所以（还）不能响应用户。
   - 可能导致这种情况发生的一种常见原因是**浏览器正忙于解析和执行由您的应用程序加载的大型 JavaScript 文件**。
   - 在此过程中，浏览器不能运行任何事件侦听器，因为正在加载的 JavaScript 可能会让浏览器去执行其他工作。
-  - 较长的首次输入延迟**通常发生在首次内容绘制(FCP)和可交互时间(TTI)之间**
-- 以下所有 HTML 元素都需要等待主线程上正在进行的任务完成运行：
+  - 较长的首次输入延迟**通常发生在首次内容绘制(FCP)和可交互时间(TTI)之间**。
+- 以下所有 HTML 元素都需要*等待主线程上正在进行的任务完成*运行：
   - 文本字段、复选框和单选按钮`<input>、<textarea>`、下拉选择列表`<select>`、链接`<a>`
 
-[CLS(Cumulative layout shift)](https://web.dev/cls/) `累积布局偏移`指标测量*整个页面生命周期内发生的所有意外布局偏移中最大`一连串的布局偏移`(会话窗口)分数*。
+[CLS(Cumulative layout shift)](https://web.dev/cls/) `累积布局偏移`指标测量**整个页面生命周期内发生的所有意外布局偏移中最大`一连串的布局偏移`分数**。
 
 - 每当一个可见元素的位置从一个已渲染帧变更到下一个已渲染帧时，就发生了**布局偏移** 。
   - 只有当现有元素的起始位置发生变更时才算作布局偏移。
