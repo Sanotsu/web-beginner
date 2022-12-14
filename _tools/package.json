@@ -12,6 +12,7 @@
     "imagemin-pngquant": "^9.0.2",
     "inquirer": "^8.2.0",
     "moment": "^2.29.4",
+    "mqtt": "^4.3.7",
     "nodejieba": "^2.6.0",
     "puppeteer": "^19.3.0",
     "tesseract.js": "^4.0.0"
