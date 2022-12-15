@@ -51,7 +51,7 @@
 
 ---
 
-## javascript
+## javascript、css、html
 
 #### 基础知识
 
@@ -74,6 +74,11 @@
 #### 常见面试题(纯题目收集)
 
 - [js-FAQs](documents/01-javascript/js-faq/readme.md)
+- **[js 常用技巧](documents/01-javascript/js-faq/03-javascript-tricks.md)**
+
+#### css
+
+- [01-CSS 布局与响应式布局简述](documents/01-javascript/_css-part/01-CSS布局与响应式布局简述.md)
 
 ## vue
 
@@ -136,6 +141,7 @@
 - **[06-http 缓存](documents/10-miscellaneous/06-http-cache.md)**
 - **[07-跨源资源共享 cors](documents/10-miscellaneous/07-cors.md)**
 - **[08-web 安全](documents/10-miscellaneous/08-web-secure.md)**
+- [09-http 方法和常见响应码介绍](documents/10-miscellaneous/09-http-methods.md)
 
 ## 脚本命令等
 
