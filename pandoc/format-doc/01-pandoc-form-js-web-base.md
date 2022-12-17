@@ -20869,6 +20869,223 @@ console.log(newArr);
 - 使用 async 和 defer
 - 使用 Web Workers 在后台运行 CPU 密集型任务
 
+### 8.2.5 js 常用技巧
+
+- **1. 数组相关**
+
+  - **数组去重**: ES6 引入了 Set 对象和延展（spread）语法`…`
+
+  ```cs
+  const uniqueArray = [...new Set([1, 1, 2, 3, 5, 5, 1])]; // [1, 2, 3, 5]
+  // 截取数组，slice()的运行速度比重新定义数组的 length 属性快
+  let array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; array.length = 4; console.log(array); // [ 0, 1, 2, 3 ]
+  console.log([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].slice(0, 4)); // [ 0, 1, 2, 3 ]
+  console.log([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].slice(-4)); // [ 6, 7, 8, 9 ]
+  ```
+
+  - **在循环中缓存数组长度**
+
+  ```js
+  // 从性能方面来看，即使数组变得很大，也不需要花费额外的运行时重复计算 array.length。
+  for (let i = 0, length = array.length; i < length; i++) {...}
+  ```
+
+  - **使用 Boolean 过滤数组中的所有假值**
+
+  ```js
+  const compact = (arr) => arr.filter(Boolean);
+  compact([0, 1, false, 2, "", 3, "a", "e" * 23, NaN, "s", 34]); // 结果值为: [ 1, 2, 3, 'a', 's', 34 ]
+  ```
+
+  - **数组元素转化为数字**
+
+  ```js
+  const array2 = ["12", "1", "3.1415", "-10.01"];
+  console.log(array2.map(Number)); // [12, 1, 3.1415, -10.01]
+  ```
+
+  - **将数组平铺到指定深度**
+
+  ```cs
+  const flatten = (arr, depth = 1) =>
+      depth != 1
+          ? arr.reduce((a, v) => a.concat(Array.isArray(v) ? flatten(v, depth - 1) : v), [])
+          : arr.reduce((a, v) => a.concat(v), []);
+  console.log(flatten([1, [2], 3, 4]));                         // [1, 2, 3, 4]
+  console.log(flatten([1, [2, [3, [4, 5], 6], 7], 8], 2));      // [1, 2, 3, [4, 5], 6, 7, 8]
+  ```
+
+  - **返回数组中最大值**
+
+  ```cs
+  const maxElementFromArray = (array, number = 1) => [...array].sort((x, y) => y - x).slice(0, number)
+  console.log(maxElementFromArray([1, 4, 3, 6, 7]), maxElementFromArray([7, 8, 9, 9, 9])) // [7] [9]
+  ```
+
+- **2. 字符串相关**
+
+  - 数字转换成字符串: `strval = numval + ""`； 字符串转成数字: `~~strnum`，一个波浪号表示**按位取反**操作，`~15` 等于`-16`。
+
+  ```cs
+  console.log(+"15", typeof +"15") // 输出: 15 number
+  // 在某些情况下，+运算符会被解析成连接操作，而不是加法操作。对于这种情况，可以使用两个波浪号：~~
+  console.log(~15, ~"15", ~~"15", typeof ~~"15"); // 输出都是number类型: -16 -16 15 number
+  ```
+
+  - **格式化 JSON.stringify() 输出的字符串**
+
+  该方法接受两个额外的参数，一个是函数，用于过滤要显示的 JSON；另一个是空格个数，也可以是一个字符串。
+
+  ```js
+  console.log(JSON.stringify({ alpha: "A", beta: "B" })); // 挤在了一行输出
+  console.log(JSON.stringify({ alpha: "A", beta: "B" }, null, "\t")); // 有格式的输出
+  ```
+
+  - **string 强制转换为数字**
+
+  用`*1`来转化为数字(实际上是调用`.valueOf` 方法)，也可以使用`+`来转化字符串为数字。
+
+  ```cs
+  console.log('32'*1, 'ds'*1, null*1, undefined*1, 1*{ valueOf: () => '3' }) // 32 NaN 0 NaN 3
+  console.log(+'123', +'ds', +'', +null, +undefined, +{ valueOf: () => '3' }) // 123 NaN 0 0 NaN 3
+  ```
+
+  - **字符串反转**
+
+  ```js
+  const reverseStr = (string) => [...string].reverse().join("");
+  console.log(reverseStr("hello"), reverseStr("1234")); // "olleh" "4321"
+  ```
+
+- **3. 对象等结构相关**
+
+  - **object 强制转化为 string**
+
+  使用 `字符串 + Object` 的方式来转化对象为字符串，也可以覆盖对象的 toString 和 valueOf 方法来自定义对象的类型转换。
+
+  ```cs
+  // 输出: Math转字符串:[object Math] JSON字符串:[object JSON]
+  console.log('Math转字符串:' + Math, 'JSON字符串:' + JSON)
+  console.log(2 * { valueOf: () => '3' }, 'J' + { toString: () => 'S' }) // 输出: 6 "JS"
+  ```
+
+  - **对象动态声明属性**
+
+  ```cs
+  const dynamic = 'color';
+  let item = {brand: 'Ford', [dynamic]: 'Blue'}
+  console.log(item); // { brand: "Ford", color: "Blue" }
+  ```
+
+- **4. 语法相关**
+
+  - **短路求值**: `||`
+
+  ```cs
+  let one = 1, two = 2, three = 3; console.log(one && two && three); // 3
+  console.log(0 && null); // 0
+  ```
+
+  - 转换成布尔值: **使用`!`**
+
+  在 JavaScript 中，除了 0、空字符串、null、undefined、NaN 和 false 是假值之外，其他的都是真值。
+
+  ```js
+  console.log(!"hello", !0, typeof true, !typeof true); // false true "boolean" false
+  ```
+
+  - 快速幂运算`**`，比使用`Math.pow()`更快: `console.log(Math.pow(2, 3) == 2 ** 3) // true`
+
+  - 快速取整: **使用位或运算符 `|`** 比 Math.floor()、Math.ceil()或 Math.round()更快。
+
+  ```js
+  console.log(23.9 | 0, -23.9 | 0); // 位运算符，正数向下取整，负数向上取整，输出: 23 -23
+  console.log(Math.floor(23.9), Math.ceil(-23.9)); // 输出: 23 -23
+  console.log(1553 / 100, (1553 / 100) | 0); // // 移除整数尾部数字,输出: 15.53, 15
+  ```
+
+  - **判断奇偶数 `& 1`**
+
+  ```cs
+  const num = 3; console.log(!!(num & 1), !!(num % 2)); // true true
+  ```
+
+  - **给多个变量赋值**
+
+  ```cs
+  let [a, b, c] = [5, 8, 12]; console.log(a, b, c) // 5 8 12
+  ```
+
+  - **交换两个变量**
+
+  ```cs
+  let x = 'Hello', y = 55; console.log(x, y); // Hello 55
+  [x, y] = [y, x]; console.log(x, y); // 55 Hello
+  ```
+
+  - **多条件检查**
+
+  对于多个值匹配，我们可以将所有的值放到数组中，然后使用 indexOf() 或 includes() 方法。
+
+  ```js
+  if (value === 1 || value === "one" || value === 2 || value === "two") {...}
+  if ([1, "one", 2, "two"].indexOf(value) >= 0) {  ...}
+  if ([1, "one", 2, "two"].includes(value)) {...}
+  ```
+
+  - **仅在变量为 true 的情况下才调用函数**，则可以使用 `&&` 运算符
+
+  ```cs
+  if (test1) { callMethod(); }
+  test1 && callMethod();
+  ```
+
+  - **在 return 语句中使用比较**
+
+  ```cs
+  function checkReturn() { return test || callMe('test'); }
+  ```
+
+- **5. 工具方法**
+
+  - **数组洗牌**
+
+  ```js
+  const shuffleArray = (arr) => arr.sort(() => Math.random() - 0.5);
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  console.log(shuffleArray(arr)); // 每次输出都不一样
+  ```
+
+  - **生成随机颜色字符串**
+
+  ```cs
+  const generateRandomHexColor = () => `#${Math.floor(Math.random() * 0xffffff).toString(16)}`;
+  console.log(generateRandomHexColor()) // 输出类似: #7a40e7
+  ```
+
+  - **缩短 console.log()**
+
+  ```cs
+  // 在nodejs使用 globalThis，看环境使用window、document等
+  const cc = console.log.bind(globalThis);
+  cc(996, "hello world", new Date); // 996 hello world 2022-12-15T07:02:08.567Z
+  ```
+
+\rule[0pt]{19.4cm}{0.03em}
+
+ref: 实际上，这些大部分的所谓技巧都是 ES6 以来新特性的用法，有几个实用的工具方法到还有点用
+
+- 2019-05-27 \* [11 JavaScript Tricks You Won’t Find in Most Tutorials](https://bretcameron.medium.com/12-javascript-tricks-you-wont-find-in-most-tutorials-a9c9331f169d)
+- 2019-09-05 [学会这些 JS 小技巧，提升编码幸福度](https://www.infoq.cn/article/wF1PorTPQiW0*Q2Jc2XU)
+- 2020-11-02 [JavaScript shorthand tips and tricks that will save your time](https://javascript.plainenglish.io/20-javascript-shorthand-techniques-that-will-save-your-time-f1671aab405f)
+- 2018-11-06 [JavaScript 复杂判断的更优雅写法](https://juejin.cn/post/6844903705058213896)
+- 2020-11-11 [25 JavaScript Tricks You Need To Know About](https://medium.com/before-semicolon/25-javascript-code-solutions-utility-tricks-you-need-to-know-about-3023f7ed993e)
+- 2022-02-13 \* [7 Killer One-Liners in JavaScript](https://tapajyoti-bose.medium.com/7-killer-one-liners-in-javascript-33db6798f5bf)
+- 2021-03-10 [新老手必备的 34 种 JavaScript 简写优化技术](https://mp.weixin.qq.com/s/WJLLtXEVhmk5m2DHkK4U_g)
+- 2021-12-08 \* [20+个超级实用的 JavaScript 开发技巧](https://juejin.cn/post/7039142750503534599)
+- 2022-04-20 \* [面向 Web 开发人员的 58 个 JavaScript 技巧](https://juejin.cn/post/7088527867037876255)
+- 2020-03-19 [上次 24 个实用 ES6 方法受到好评，这次再来 10 个](https://www.toutiao.com/article/6805704151348019715/)
+
 ## 8.3 网络相关
 
 ### 8.3.1 OSI 7 层模型，TCP 5 层模型
@@ -22302,6 +22519,362 @@ skywalking: java 编写， 传输协议支持 gRPC,实现方式字节码注入�
 \newpage
 
 # 第八章补充 前端常见研究课题
+
+## ES6 以来的新特性关键字
+
+内容都应该属于基本知识了，但有些人就直接来问一句“你知道 ES6 有哪些新特性吗？”就很烦人。少量可能有补充说明。
+
+如果 ECMAScript® 2015 称为 ES6 的话，到现在(2022-12-15)正式版本已经到 ECMAScript 2023(December 15, 2022)
+
+**ES2015(ES6)**
+
+- **声明命令**: let、块级作用域、const、globalThis 顶层对象。ES6 声明变量的六种方法: var、function、let、const、import、class
+- **变量的解构赋值**: 数组、对象、字符串、数值和布尔值、函数参数
+  - 应用场景: 交换变量值，从函数返回多个值，定义函数参数，提取 JSON 数据，函数参数的默认值，遍历 Map 结构，输入模块的指定方法
+- **字符串的扩展**: 大括号包含表示 Unicode 字符(`\u{0xXX}`或`\u{0XXX}`)；字符串遍历`for of`；模板字符串；标签模板
+  - 标签模板:“标签”指的就是函数，紧跟在后面的模板字符串就是它的参数，模板字符里面有变量，则先先处理成多个参数，再调用函数。
+    ```js
+    console.log`hello`  等价于  console.log(['hello']) // 都输出 [ 'hello' ]
+    let a = 5; let b = 10;
+    tag`Hello ${ a + b } world ${ a * b }`; // 等同于
+    tag(['Hello ', ' world ', ''], 15, 50); // 注意参数的位置和数量
+    ```
+- **字符串的新增方法**:
+  - 静态方法: `String.fromCodePoint()`从 Unicode 码点返回对应字符；`String.raw()`返回一个斜杠都被转义的字符串。
+  - 实例方法: codePointAt()、normalize()、repeat()、matchAll()、 includes()、startsWith()、endsWith()
+- **正则的扩展**:
+  - 变更 RegExp 构造函数入参：允许首参数为正则对象，尾参数为正则修饰符(返回的正则表达式会忽略原正则表达式的修饰符)
+  - 字符串的实例方法 match()、replace()、search()和 split()在语言内部全部调用 RegExp 的实例方法
+  - 正则表达式添加了 `u` 修饰符，含义为“Unicode 模式”，用来正确处理大于`\uFFFF` 的 Unicode 字符
+  - [`y`修饰符](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags): 与 g 修饰符类似也是全局匹配，执行“粘性 (sticky)”搜索，匹配从目标字符串的当前位置开始。
+- **数值的扩展**: 二进制和八进制表示法(前缀`0b`和`0o`)
+  - Number 对象新增方法: isFinite()、isNaN()、parseInt()、parseFloat()、isInteger()、isSafeInteger()
+    - 一个极小的常量`Number.EPSILON`，**js 能够表示的最小精度**。误差如果小于这个值，可以认为已经没有意义，即不存在误差。
+    - `Number.MAX_SAFE_INTEGER === Math.pow(2, 53)-1` 和 `Number.MIN_SAFE_INTEGER === -(2^53-1)`
+  - Math 对象新增方法: ES6 在 Math 对象上新增了 17 个与数学相关的方法，trunc()、sign()、cbrt()等
+- **函数的扩展**: 参数默认值(指定了默认值后，函数的 length 属性将失真)；rest 参数`...`；函数的 name 属性；箭头函数；尾调用尾递归。
+  - 只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。
+- **数组的扩展**: 扩展运算符`...`，应用于复制数组、合并数组、与解构赋值结合、字符串转字符数组、实现了 Iterator 接口的对象。
+  - 静态方法: `Array.from()`类数组和可迭代对象转数组；`Array.of()`将一组值转数组。
+  - 实例方法: copyWithin()、find()，findIndex()，findLast() 和 findLastIndex()、fill()、entries()，keys() 和 values()、flat() 和 flatMap()。ES5 对空位的处理很不一致，大多数情况下会忽略空位。ES6 则是明确将数组空位转为 undefined。别有空位。
+- **对象的扩展**: 对象属性、方法可简写；用表达式作为对象的属性名；方法的 name 属性；属性的可枚举性和遍历；super 关键字。
+  - 静态方法:is()、assign()、setPrototypeOf()、getPrototypeOf()、Object.keys()、fromEntries()
+- **新的原始数据类型 Symbol**: 表示独一无二的值，通过 Symbol()函数生成。不支持语法`new Symbol()`。
+- **新的数据结构 Set、WeakSet、Map、WeakMap**；
+- **新的对象 Proxy、Reflect、Promise**
+- **迭代器 Iterator 和 for...of 循环**: 迭代器为各种不同的数据结构提供统一的访问机制。
+- **Generator 对象**: 生成器函数，用`function*`声明，返回一个 Generator 对象。是一种异步编程解决方案。
+
+  - 形式上，Generator 函数是一个普通函数，但是有两个特征。
+    - 一是，function 关键字与函数名之间有一个星号；二是，函数体内部使用 yield 表达式，定义不同的内部状态。
+
+- **Class 类**: 定义、原理、方法和关键字、属性、静态属性和方法、继承、super、实例、表达式、this 指向、`new.target`
+- **Module**: export、import 命令；ES6 的模块自动采用严格模式。
+  - ES6 模块与 CommonJS 模块三个重大差异:
+    - CommonJS 模块输出的是一个**值的拷贝**，ES6 模块输出的是**值的引用**。
+    - CommonJS 模块是**运行时加载**，ES6 模块是**编译时输出接口**。
+    - CommonJS 模块的 require()是**同步加载**模块，ES6 模块的 import 命令是**异步加载**，有一个独立的模块依赖的解析阶段。
+      - 语法上: CommonJS 模块使用 `require()`和 `module.exports`，ES6 模块使用 `import` 和 `export`。
+      - node13.2 版本开始默认打开 ES6 模块支持(模块采用`.mjs`后缀文件名或项目 package.json 指定`"type":"module"`)
+
+**ES2016**
+
+- **数组扩展**: 实例方法 `includes()`；**指数运算符** `**`(可与其他某些运算符一起用)
+
+**ES2017**
+
+- **字符串扩展**: padStart()、padEnd()；**对象扩展**: Object.getOwnPropertyDescriptors()、Object.values()、Object.entries()
+- **函数扩展**: 允许函数最后一个参数有尾逗号；**引入 SharedArrayBuffer**，允许 Worker 线程与主线程共享同一块内存。
+- **引入了 `async` 函数**，使得异步操作变得更加方便。是 Generator 函数的语法糖，返回一个 Promise 对象。
+  - 正常情况下，`await` 命令后面是一个 Promise 对象，返回该对象的结果。如果不是 Promise 对象，就直接返回对应的值。
+
+**ES2018**
+
+- **字符串扩展**: 放松对标签模板里字符串转义的限制：遇到不合法的字符串转义返回 undefined，并且从 raw 上可获取原字符串。
+- **对象扩展**: 扩展运算符`...`：转换对象为用逗号分隔的参数序列`{ ...obj }`。
+- **正则扩展**: s 修饰符、dotAll、后行断言、后行否定断言、Unicode 属性转义、具名组匹配(为每组匹配指定名字)。
+- **Promise 扩展**: 实例方法`finally()`：指定不管最后状态如何都会执行的回调函数。
+- **async 扩展**: 异步迭代器`for-await-of`：循环等待每个 Promise 对象变为 resolved 状态才进入下一步。
+
+**ES2019**
+
+- **字符串扩展**: 直接输入`U+2028`和`U+2029`；`JSON.stringify()`改造；实例方法`trimStart()`、`trimEnd()`。
+- **对象扩展**: `Object.fromEntries()`：返回以键和值组成的对象(`Object.entries()`的逆操作)。
+- **数组扩展**: `sort()`排序默认要稳定实现。实例方法`flat()`、`flatMap()`。
+- **函数扩展**: `toString()`改造，返回函数原始代码；`catch()`中的参数可省略。
+- **Symbol 扩展**: 实例属性`description`，返回 Symbol 值的描述。
+
+**ES2020**
+
+- **声明**: `globalThis`，作为顶层对象，指向全局环境下的 this。浏览器是`window`，nodejs 是`global`，webworker 是`self`。
+- **数值扩展**: `BigInt` 是一种内置对象(数据类型)，表示大于`2^53-1`的整数，表示任意大的整数。定义方式: 整数字面量后面加 `n`。
+  - 该对象有静态方法`asIntN()`、`asUintN()`，实例方法`toLocaleString()`、`toString()`、`valueOf()`。
+  - 全局方法`parseInt()` 会将 BigInt 转换为 Number，并在这个过程中失去了精度(因为拖尾的非数字值，包括 "n"，会被丢弃)。
+- **对象扩展**: 链判断操作符`?.`是否存在对象属性，不存在返回 undefined；空判断操作符`??`是否值为 undefined 或 null，是则使用默认值。
+- **正则扩展**: `matchAll()`：返回所有匹配的遍历器。
+- **Module**: `import()`函数，动态加载模块(返回 Promise)。
+- **Iterator**: `for-in`遍历顺序，不同的引擎已就如何迭代属性达成一致，从而使行为标准化。
+  **Promise 扩展**: `Promise.allSettled()`参数数组的*所有 Promise 对象都发生状态变更*，返回的 Promise 对象才会发生状态变更。
+
+**ES2021**
+
+- **字符串扩展**: `String.prototype.replaceAll()`；
+- **逻辑赋值运算符** `||=`、`&&=`、`??=`。例如`opts.baz ?? (opts.baz = 'qux');  简写->  opts.baz ??= 'qux';`
+- **数字分隔符** 是一个有用的工具，它在数字中用下划线 (`_`)分隔数字，从而使长数字文字更具可读性。
+- **Promise 扩展**: `Promise.any()`接受一个可迭代的 Promise 对象数组，在数组中任意一个 Promise resolve 时，即 resolve。
+  - 如果所有 Promise 都没有 resolve，则会抛出一种新类型的异常 `AggregateError`，将错误以对象数组的形式组合为一个错误数组。
+- **弱引用 WeakRef**: `WeakRef`直接创建对象的弱引用；
+- **FinalizationRegistry** 对象可以让你在对象被垃圾回收时请求一个回调。
+
+## ES2022
+
+- **Class 类**: 类字段只能在构造函数之外声明；使用`#`声明私有字段和成员；为类声明静态字段和静态私有方法；允许在创建类时定义只执行一次的静态块；支持使用 in 运算符检查一个对象中是否有一个特定的私有字段；
+- **Top-level `await`**(不限定只在 async 中使用)；
+- 数组，字符串和 TypedArray 对象现在也有 **`at()`** 方法，访问末尾的第 N 个元素。
+- **RegExp 匹配索引**: 指定一个 `d`修饰符标志，来获取匹配开始和结束的两个索引。
+- **Object.hasOwn()** 方法，如果指定的属性是对象的直接属性，则返回 true。否则返回 false。
+- **错误原因**: Error 对象新增了 `cause` 属性表示错误原因
+
+## ES2023
+
+- **数组扩展**: `findLast()` 和 `findLastIndex()` 方法； **Hashbang Grammar**
+
+\newpage
+
+## CSS 页面布局技术
+
+在 MDN 的 CSS 布局中，有介绍以下几种布局方式，先了解一些基本前置概念:
+
+- **CSS 布局模式**:有时简称为布局，是一种基于盒子与其兄弟和祖辈盒子的交互方式来确定盒子的位置和大小的算法。
+- **CSS 基础框盒模型**: 当对一个文档进行布局的时候，浏览器的渲染引擎会根据标准之一的 CSS 基础框盒模型，将所有元素表示为一个个矩形的盒子。CSS 决定这些盒子的大小、位置以及属性（例如颜色、背景、边框尺寸…）
+  - 每个盒子都由四个部分（或区域）组成，**每个盒子有四个边界: content、padding、border、margin**。
+  - 在计算一个元素的总宽度和总高度，**标准盒子模型只包括 content 的宽和高**，怪异盒子模型则包括 content、padding、border。
+- 出现在另一个元素**下面**的元素被描述为**块**(block)元素，出现在另一个元素**旁边**的元素叫**内联**(inline)元素。
+  - 块元素内容的布局方向被描述为**块方向**。可以在任何**垂直**书写模式的语言中水平运行。对应的**内联方向**是内联内容（如句子）的运行方向。
+
+几种布局的概述:
+
+- **正常布局流**(normal flow)是指在不对页面进行任何布局控制时，浏览器默认的 HTML 布局方式。
+  - 使用 css 创建一个布局时，则将离开正常布局流，但是对于页面上的多数元素，正常布局流将完全可以创建所需要的布局。
+  - 默认的，一个*块级元素的内容宽度是其父元素的 100%，其高度与其内容高度一致*。
+  - _内联元素的高度和宽度与内容一致_。无法设置内联元素的高度和宽度——它们就那样置于块级元素的内容里。
+    - 如果想控制内联元素的尺寸，需要为元素设置 `display: block;`(或者 inline-block; 混合了 inline 和 block 的特性)
+  - 使用一些 display 属性、float 属性、position 属性、表格布局、多列布局会**覆盖默认的布局行为**。
+- **display 属性**: 设置元素是否被视为块或者内联元素以及用于子元素的布局，例如流式布局、网格布局或弹性布局。
+  - 正常流中的**所有内容都有**一个 display 的值，用作元素的默认行为方式。因此可以更改任何元素的 display 值。
+    - 这意味着可以根据它们的语义选择 html 元素，而不必关心它们的外观。他们的样子是可以改变的。
+- **float 属性**: 把一个元素“浮动”(float) 起来，会改变该元素本身和在正常布局流中跟随它的其他元素的行为。
+  - 这一元素会浮动到左侧或右侧，并且从正常布局流中移除，这时候其他的周围内容就会在这个被设置浮动的元素周围环绕。
+- **position 属性**: 定位 (positioning) 能够把一个元素从它原本在正常布局流中应该在的位置移动到另一个位置。
+  - 定位并不是一种用来给你做主要页面布局的方式，它更像是*管理和微调页面中的一个特殊项的位置*。
+- **Flexbox** CSS 弹性盒子布局被专门设计出来用于创建*横向或是纵向的一维页面布局*。
+  - *父元素/容器*通过指定`display: flex`启用弹性盒子布局后，所有直接子元素都将会按照 flex 进行布局。
+- **Gridbox** CSS 网格布局则被设计用于*同时在两个维度上把元素按行和列排列整齐*。
+  - *父元素/容器*通过指定`display: grid`启用网格布局后，所有直接子元素都将会按照 grid 进行布局。
+- **表格布局**: 一个 table 标签之所以能够像表格那样展示，是由于 css 默认给 table 标签设置了一组 table 布局属性。_当这些属性被应用于排列非 table 元素时，这种用法被称为“使用 CSS 表格”_。
+  - *父元素/容器*通过指定`display: table`启用表格布局，子元素使用`display: table-row|table-column|table-cell`等。
+- **多列布局**: 把一个块(block)转变成多列容器(multicol container)，可以在*父元素/容器*使用`column-width`来告诉浏览器以**至少某个宽度**的尽可能多的列来填充容器，也可以使用`column-count`属性来告诉浏览器**需要多少列**。`columns`为前两者的 css 缩写属性。
+
+**CSS property 三巨头(position、display、float)**
+
+**position** 属性用于**指定一个元素在文档中的定位方式**。top，right，bottom 和 left 属性则决定了该元素的最终位置。属性值:
+
+- `static`: 元素在文档常规流中**当前**的布局位置。默认定位。
+- `relative`: 元素**先**放置在未添加定位时的位置，**再**在不改变页面布局的前提下调整元素位置。
+- `absolute`: 元素会被移出正常文档流，并不为元素预留空间，通过**指定元素相对于最近的非 static 定位祖先元素的偏移**来确定元素位置。
+- `fixed`: 元素会被移出正常文档流，并不为元素预留空间，通过**指定元素相对于屏幕视口的位置**来指定元素位置。在屏幕滚动时不会改变。
+- `sticky`: 元素**先**正常文档流进行定位，**然后**相对它的*最近滚动祖先*和*最近块级祖先*进行偏移。偏移值不会影响任何其他元素的位置。
+
+**display** 属性可以**设置元素的内部和外部显示类型**。  
+元素的*外部*显示类型将决定该*元素在流式布局中的表现*（块级或内联元素）；元素的*内部*显示类型可以*控制其子元素的布局*。常见属性值:
+
+- `<display-outside>`: 这些关键字指定了元素的**外部**显示类型，实际上就是*其在流式布局中的角色*（即在流式布局中的表现）。
+  - **`block`**:这个值会生成一个块级元素盒子，同时在该元素之前和之后**打断**（换行）。简单来说就是，这个值会将该元素变成**块级**元素。
+  - **`inline`**:这个值会生成一个行内元素盒子，该元素之前和之后**不会打断**（换行）。简单来说就是，这个值会将该元素变成**行内**元素。
+- `<display-inside>`: 这些关键字指定了元素的**内部**显示类型，它们定义了*该元素内部内容的布局方式*。可与外部显示类型一起使用。
+  - `table`: 这些元素的行为类似于 HTML`<table>`元素。它定义了一个块级框。(布局都不要用 table)
+  - **`flex`**: 该元素的行为类似于块元素，并根据 **flexbox 模型**布置其内容。
+  - **`grid`**: 该元素的行为类似于块元素，并根据**网格模型**布置其内容。
+- `<display-listitem>`: 将这个元素的外部显示类型变为 block 盒，并将内部显示类型变为多个 list-item inline 盒。
+  - `list-item`: 将使元素表现得像一个列表项。
+- `<display-internal>`: 有些布局模型有**复杂的内部结构**。这类关键字用来**定义这些“内部”显示类型**，且仅在这样的布局中才有意义。
+  - 目前是一堆`<display-inside>`中`table`和实验性质的`ruby`布局模性的属性，类似:
+    - `table-row`: 这些元素的行为类似于`<tr>`HTML 元素。
+    - `table-cell`: 这些元素的行为类似于`<td>`HTML 元素。
+    - `ruby-base` Experimental: 这些元素的行为类似于`<rb>`HTML 元素。
+    - `ruby-text` Experimental: 这些元素的行为类似于`<rt>`HTML 元素。
+- `<display-box>`: 这些值决定元素**是否使用盒模型**。
+  - **`none`**: **关闭元素的显示**，不影响布局（文件中没有该元素）。所有子项的显示也被关闭。**盒子和内容不会渲染**
+  - 要一个元素占据空间（文件中存在），但不渲染，使用 CSS 的 visibility 属性。
+- `<display-legacy>`:CSS 2 对于 display 属性使用单关键字语法，对于相同布局模式的块级和行级变体需要使用单独的关键字。
+  - `inline-block`: 元素会产生一个块元素盒子，并且像内联盒子一样（表现得更像一个被替换的元素），可以融入到周围内容中。
+  - `inline-table`: 它表现为一个 HTML `<table>` 元素， 但是又表现为一个不同于块级盒子的内联盒子。
+  - `inline-flex`: 元素表现为一个内联元素，并对内容采用弹性盒子模型进行布局。
+  - `inline-grid`: 元素表现为一个内联元素，并对内容采用网格模型进行布局。
+
+**float** 属性**指定一个元素应沿其容器的左侧或右侧放置**，允许文本和内联元素环绕它。该元素从网页的正常流动（文档流）中移除，尽管仍然保持部分的流动性（与绝对定位相反）。由于 float 意味着使用块布局，它在某些情况下会修改 display 值的计算值。属性的值如下:
+
+- `left`: 表明元素必须浮动在其所在的块容器**左侧**的关键字。
+- `right`: 表明元素必须浮动在其所在的块容器**右侧**的关键字。
+- `none`: 表明元素**不进行浮动**的关键字。
+- `inline-start`:关键字，表明元素必须浮动在其所在块容器的**开始**一侧，在 `ltr` 脚本中是左侧，在 `rtl` 脚本中是右侧。
+- `inline-end`: 关键字，表明元素必须浮动在其所在块容器的**结束**一侧，在 `ltr` 脚本中是右侧，在 `rtl` 脚本中是左侧。
+- `inherit`: 继承父元素的浮动属性
+
+**box-sizing** 属性定义了 user agent(一个在 Web 上的浏览器)应该如何**计算一个元素的总宽度和总高度。**属性值如下:
+
+- `content-box`: 默认值，标准盒子模型，**只包括内容(content)的宽和高**，不包括边框（border），内边距（padding），外边距（margin）。
+- `border-box`: width 和 height 属性**包括内容，内边距和边框**，但不包括外边距。IE 盒子模型。
+
+![grid-and-flex布局](./pictures/pictures-others/grid-and-flex.png)
+
+**flex 弹性布局**的一些相关属性说明(父元素使用`display:flex`):
+
+- `flex-direction`: 指定了内部元素是如何在 flex 容器中布局的，定义了**主轴的方向** (正方向或反方向，与文字内容水平或垂直)
+  - `row`: flex 容器的主轴被定义为与文本方向相同。主轴起点和主轴终点与内容方向相同。
+  - `row-reverse`: 表现和 row 相同，但是置换了主轴起点和主轴终点
+  - `column`: flex 容器的主轴和块轴相同。主轴起点与主轴终点和书写模式的前后点相同
+  - `column-reverse`: 表现和 column 相同，但是置换了主轴起点和主轴终点
+- `flex-wrap` 属性指定 flex 元素单行显示还是多行显示。如果允许换行，这个属性允许你控制行的堆叠方向。
+  - `nowrap`: flex 的元素被摆放到到一行，这可能导致 flex 容器溢出。为该属性的默认值。
+  - `wrap`: flex 元素被打断到多个行中。
+  - `wrap-reverse`:和 wrap 的行为一样，但是 cross-start 和 cross-end 互换。
+- `flex-grow:<number>`: 设置 flex 项主尺寸(main-size)的 flex 增长系数。 主尺寸是项的宽度或高度，这取决于 flex-direction 值。
+  - `<number>`为 CSS 数据类型代表一个数字，可为整数或小数。此属性负值无效，默认为 0。
+- `flex-shrink: <number>;`flex 元素仅在默认宽度之和大于容器的时候才会发生收缩，其收缩的大小是依据 flex-shrink 的值。
+- `flex-basis: <'width'> | content` 指定了 flex 元素在主轴方向上的初始大小。
+  - `<'width'>` 值可以是*像素值*，该值也可以是一个相对于其父弹性盒容器主轴尺寸的*百分数*。负值是不被允许的。默认为`auto`。
+  - `content` 基于 flex 的元素的内容自动调整大小。
+  - 如果不使用 box-sizing 改变盒模型的话，那么这个属性就决定了 flex 元素的内容盒（content-box）的尺寸。
+- `order: <integer>` 属性规定了弹性容器中的可伸缩项目在布局时的顺序。元素按照 order 属性的值的增序进行布局。
+- **flex 的 css 缩写**
+  - `flex-flow` 是 flex-direction、flex-wrap 的缩写。
+  - `flex` 是 flex-grow、flex-shrink、flex-basis 的缩写，可以使用一个，两个或三个值来指定 flex 属性。
+- 水平垂直居中
+  - `align-items: normal | stretch | flex-start | center | baseline | ...` 控制 flex 项在**交叉轴**上的位置
+    - 将所有直接子节点上的 align-self 值设置为一个组。align-self 属性设置项目在其包含块中在交叉轴方向上的对齐方式。
+  - `justify-content: start | center | left | right | space-between | ...` 控制 flex 项在**主轴**上的位置
+  ```cs
+  div {display: flex; align-items: center; justify-content: space-around; }
+  ```
+
+**grid 网格布局**的一些相关属性说明(父元素使用`display:grid`，直接子元素向为网格布局):
+
+- 一个网格通常具有许多的**列(column)**与**行(row)**，以及行与行、列与列之间的**间隙**，这个间隙一般被称为**沟槽(gutter)**。
+- **启用网格布局**: 父元素设置`display: grid`，使用 grid-template-rows 和 grid-template-columns 两个属性定义了一些**行和列的轨道**。
+  - 除了长度和百分比，也可以用`fr`这个单位来灵活地定义*网格的行与列的大小*。`fr` 单位按比例划分了可用空间。
+  - `grid-template-columns: 2fr 1fr 1fr`第一列被分配了 2fr 可用空间，剩下两列各被分配了 1fr 的可用空间(是前者的一半)。
+  - 可以*使用 **repeat** 来重复构建具有某些宽度配置的某些列*。
+    - `grid-template-columns:repeat(3,1fr)`得到 3 个 1fr 的列；`repeat(2,2fr 1fr)`相当于填入`2fr 1fr 2fr 1fr`。
+- **显式网格**是用`grid-template-columns` 或 `grid-template-rows` 属性创建的。
+- **隐式网格**则是当有内容被放到网格外时才会生成的。显式网格与隐式网格的关系与弹性盒子的 main 和 cross 轴的关系有些类似。
+  - 隐式网格中生成的行/列大小是参数默认是 auto，大小会根据放入的内容自动调整(`grid-auto-rows:auto`)。
+  - 也可以使用`grid-auto-rows`和`grid-auto-columns`属性手动设定隐式网格的大小(例如`grid-auto-rows:100px`)。
+- **动态的行高/列宽**: minmax 函数为一个行/列的尺寸设置了取值范围。`minmax(100px, auto)`表示至少 100px，超过则动态调整。
+- **自动使用多列填充**: grid-template-columns 属性中结合 repeat 和 minmax 函数来动态创建列。
+  - `grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))`，_一个包含了许多至少 200 像素宽的列的网格，将容器填满_。随着容器宽度的改变，网格会自动根据容器宽度进行调整，每行的列数会随着宽度改变，但每一列的宽度总是大于 200 像素，并且容器总会被列填满。
+- **网格间隙**: 使用`grid-column-gap`属性来定义**列间隙**；使用`grid-row-gap`来定义**行间隙**；使用`grid-gap`可以**同时设定两者**。
+  - 间隙距离可以用任何长度单位包括百分比来表示，但不能使用 `fr` 单位。
+- **在网格内放置元素**:
+  - **基于线的元素放置**: 利用 `grid-column` 和 `grid-row` 两个属性来**指定每一个子元素应该从哪一行/列开始，并在哪一行/列结束**。
+    - grid-column 是 grid-column-start 和 grid-column-end 的简写属性，用于指定*网格项目的大小和位置*
+    - grid-row 是 grid-row-start 和 grid-row-end 的缩写形式，它定义了*网格单元与网格行相关的尺寸和位置*
+    - `grid-column: 2 / 4`，纵向从第二列开始，第四列结束。(默认为 1 开始， 负整数或 0 无效)
+    - `grid-row: 2`，横向从第 2 排开始，第三排结束。(默认为 1 开始， 负整数或 0 无效，end 未指定则为 start+1)
+  - **使用 grid-template-areas 属性放置元素**:要命名一些元素并在属性中使用这些名字作为一个区域。
+    - `grid-template-areas:"a a ." "a a ." ". b c"`， a b c 为对应页面区域的别名， `.`表示该区域留空。
+    - 上面示例是 9 等分的空间，a 占左上角 4 个位置，c 占最右下角 1 个位置，b 在第三排第二列占 1 个位置，其余空位。
+
+![使用grid-template-areas属性](./pictures/pictures-css/使用grid-template-areas属性.png)
+
+## 响应式设计
+
+**响应式网页设计** (responsive web design，RWD) 指的是**允许 Web 页面适应不同屏幕宽度因素等，进行布局和外观的调整**的一系列实践。
+
+**自适应网页设计** (adaptive web design，AWD) 是一个服务器端检测的过程，它选择了一个设计布局和尺寸来显示。自适应设计将**根据常见的屏幕尺寸和分辨率向不同的设备提供不同版本的网站**（或页面）。
+
+非响应式设计如，创建一个“液态”站点，它会拉伸以充满整个浏览器视窗；或者是一个“固定宽度”站点，它有一个以像素计的固定尺寸。
+
+**响应式设计的一些技术方法**
+
+- **[媒介查询(media queries)](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Media_Queries)**: 根据各种设备特征和参数的值或者是否存在来调整网站或应用。
+  - 在 CSS 中，使用`@`规则的`@media`根据媒体查询的结果**有条件**地应用样式表的**一部分**。使用`@import`**有条件**地应用**整个**样式表。
+  - 示例: `@media screen and (min-width: 800px) {.container {margin: 1em 2em;} }`
+  - 只有当前的 Web 页面被展示为屏幕媒体且视口至少有 800 像素宽，才会应用`.container`中的 css 属性
+- **现代布局技术**: flexbox、gridbox、多列布局等。
+- **响应式图像**: 1 没有必要把一张大图显示在比它的实际尺寸小得多的屏幕上(浪费带宽)。2 在移动端和桌面端可能不需要相同的图像宽高比例。
+  - **分辨率切换: 不同的尺寸**。使用了`<picture>`元素和`<img>`的 [srcset](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/img#attr-srcset) 和 [sizes](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/img#attr-sizes) 特性，解决了这两个问题。
+    - srcset: 定义了*浏览器可选择的图片设置以及每个图片的大小*，每张图片信息的设置和前一个用逗号隔开。
+      - 每个字符串包含一个文件名、图片的固有宽度
+    - sizes: 定义了一组媒体条件并且指明*当某些媒体条件为真时，什么样的图片尺寸是最佳选择*。
+      - 每一个字符串包含一个媒体条件、媒体条件为真时图像将填充的槽的宽度。最后一个宽度值没有媒体条件，当没有任何一个媒体条件为真时，它默认生效。当浏览器成功匹配第一个媒体条件的时候，剩下所有的条件都会被忽略，所以要注意**媒体条件的顺序**。
+    - 有了这些属性后，浏览器会: 检查设备宽度，检查 sizes 列表中哪个媒体条件是第一个为真，查看给予该媒体查询的槽大小，加载 srcset 列表中引用的最接近所选的槽大小的图像。
+    ```cs
+    <img srcset="elva-fairy-480w.jpg 480w, elva-fairy-800w.jpg 800w"
+    sizes="(max-width: 600px) 480px, 800px" src="elva-fairy-800w.jpg" alt="Elva dressed fairy" />
+    ```
+  - **分辨率切换: 相同的尺寸，不同的分辨率**。要支持多分辨率显示，但希望每个人在屏幕上看到的图片的实际尺寸是相同的，可以使用 srcset 结合 x 语法而不用 sizes，来让浏览器选择合适分辨率的图片(1x 是默认值，所以不需要写出来)。
+    ```cs
+    <img srcset="elva-fairy-320w.jpg, elva-fairy-480w.jpg 1.5x, elva-fairy-640w.jpg 2x"
+    src="elva-fairy-640w.jpg" alt="Elva dressed fairy">
+    ```
+    - 当 css 属性设置为 `img {width: 320px;}`，如果访问页面的设备具有标准/低分辨率显示，用一个设备像素表示一个 CSS 像素，那么会加载 elva-fairy-320w.jpg。设备有高分辨率，用两个或更多的设备像素表示一个 CSS 像素，会加载 elva-fairy-640w.jpg。
+  - **美术设计(art direction)**。美术设计问题涉及到*更改显示的图像以适应不同的显示尺寸*。
+    - 例如，如果在**桌面浏览器**上的一个网站上显示**一张大的、横向的照片，照片中央有个人**。然后当在移动端浏览器上浏览这个网站时，照片会缩小，这时照片上的人会变得非常小，看起来会很糟糕。此时可能在**移动端**显示一个**更小的、聚焦到这个人的肖像图**会更好。
+    - 使用`<picture>`元素实现上述设计。其包含了**一些**`<source>`元素，使浏览器在不同资源间做出选择，紧跟着的是`<img>`元素。
+    ```cs
+    <picture>
+      <source media="(max-width: 799px)" srcset="elva-480w-close-portrait.jpg" />
+      <source media="(min-width: 800px)" srcset="elva-800w.jpg" />
+      <img src="elva-800w.jpg" alt="Chris standing up holding his daughter Elva" />
+    </picture>
+    ```
+    - `<source>` 元素有一个 media 属性包含一个媒体条件。srcset 属性包含要显示图片的路径。
+    - 在任何情况下都必须在`</picture>`之前正确提供一个`<img>`元素以及它的 src 和 alt 属性，**否则不会有图片显示**。
+  - **为什么不用 CSS 或 JavaScript 来实现图片响应式**。当浏览器开始加载一个页面，它会*在主解析器开始加载和解析页面的 CSS 和 JavaScript 之前先下载（预加载）任意的图片*。这种有用的机制*总体上会减少页面加载时间*，但是它对响应式图片没有帮助，所以需要类似 srcset 的实现方法。先加载好`<img>`元素后，js 再检测可视窗口动态地加载其他图片进行替换已加载的图片，并不响应式。
+  - **大胆的使用现代图像格式**。像 WebP 和 AVIF 等新型图片格式可以做到高质量的同时保持较低的文件大小。
+- **响应式排版(字体)**: 本质上讲，这描述了*根据屏幕真实使用范围的多少，在媒体查询的同时改变字体大小。*
+  ```cs
+  // 先弄个小点的标题，再使用媒体查询，在用户使用至少1200px的屏幕的时候，拿大些的尺寸覆写它。
+  html { font-size: 1em; } h1 { font-size: 2rem; }
+  @media (min-width: 1200px) { h1 { font-size: 4rem; } }
+  ```
+  - **使用视口单位实现响应式排版**: 使用视口单位 vw 来实现响应式排版。**`1vw` 等同于视口宽度的百分之一**。
+    - 因为文本总是随着视口的大小改变大小，**用户失去了放缩任何使用 vw 单位的文本的能力**。所以不要只用 viewport 单位设定文本。
+    - 解决: 例如`font-size:calc(1.5rem + 3vw)`，如果将 vw 单位加到了使用固定大小的值组，那么文本仍然是可放缩的。
+    - 使用`cale()`函数，允许在声明 CSS 属性值时执行一些计算，**`+`和`-`运算符的两边必须要有空白字符**，否则无法正确解析。
+- **视口元标签(viewport meta tag)**
+  - `<meta name="viewport" content="width=device-width,initial-scale=1">`
+  - 这个元标签告诉移动端浏览器，它们应该**将视口宽度设定为设备的宽度，将文档放大到其预期大小的 100%**。
+
+**回流/重排** reflow: 当浏览器必须**重新处理和绘制部分或全部页面**时，回流就会发生，例如当一个交互式站点更新后。[最大限度地减少浏览器重排](https://developers.google.com/speed/docs/insights/browser-reflow)
+
+**重绘** repaint: 由于**节点的几何属性或者样式属性发生变化**而不影响布局的称为重绘。
+
+---
+
+通过对 MDN 的教程简单学习，就可以看出来，别的文章总结起来内容都是差不多的。
+
+ref
+
+- [MDN-介绍 CSS 布局](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Introduction)
+- [MDN-响应式设计](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Responsive_Design)
+- [MDN-布局模式](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Layout_mode)
+
+\rule[0pt]{19.4cm}{0.03em}
+
+- [前端响应式布局原理与方案（详细版）](https://juejin.cn/post/6844903814332432397)- 媒体查询、百分比布局、rem 布局、vh/vw、图片响应式
+- [响应式布局](https://tsejx.github.io/css-guidebook/layout/responsive/responsive-layout/) - viewport、媒体查询、百分比布局、rem、grid
+- [前端响应式布局原理与实践](https://segmentfault.com/a/1190000021929510) - 主要是 viewport 和媒体查询
+- [自适应布局和响应式布局](https://juejin.cn/post/7154261916733407246) - 静态、流式布局、viewport、媒体查询、flex、grid
+- [PC 端响应式布局方案](https://juejin.cn/post/7155013489394712606) - flex、媒体查询、rem、viewport、scale 缩放
+- [WebFront-响应式布局](https://github.com/jeanboydev/Android-ReadTheFuckingSourceCode/blob/master/article/web_front/WebFront-%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80.md) - rem、flex、grid、媒体查询
+- [前端响应式布局为什么是个坑？](https://www.cnblogs.com/web-learn/p/15189009.html) - viewport、媒体查询、响应式布局优缺点
+- [响应式布局的五种实现方法](https://blog.51cto.com/u_15295057/5051905) - 百分比布局、媒体查询、rem、vh/vw、flex
+- [菜鸟教程-响应式 Web 设计 - Viewport](https://www.runoob.com/css/css-rwd-viewport.html) - viewport、grid、媒体查询、图片/视频响应式、Bootstrap 框架
+- [element-plus 的 Layout 布局](https://element-plus.org/zh-CN/component/layout.html) - 默认 flex 布局。参照了 Bootstrap 的 响应式设计，预设了五个响应尺寸：xs、sm、md、lg 和 xl
+
+\newpage
 
 ## [CSS 预处理器 Sass/SCSS](https://sass-lang.com/guide)
 
@@ -24803,6 +25376,149 @@ HTTP 协议 提供了一种特殊的机制，这一机制**允许将一个已建
 如果使用用 [WebSocket API](https://developer.mozilla.org/zh-CN/docs/Web/API/WebSocket) 以及其他大部分实现 WebSockets 的库去建立 WebSocket 连接时，基本上都不用操心升级的过程，因为这些 API 已经实现了这一步。_`WebSocket()` 构造函数已经自动完成了发送初始 HTTP/1.1 请求，处理握手及升级过程。_
 
 \textcolor{brown}{.}![http1.1升级到websocket示例](./pictures/pictures-additions/http1.1升级到websocket.png)
+
+### HTTP 请求方法
+
+`CONNECT`方法可以*开启一个客户端与所请求资源之间的双向沟通的通道*。它可以用来创建隧道(tunnel)。**成功的响应有主体(body)**，其他否。
+
+- 只有当浏览器配置为使用代理服务器时才会用到 CONNECT 方法，一些代理服务器在创建隧道时会要求进行身份验证。
+- 例如，浏览器通过代理服务器发起 HTTPS 请求，请求的站点地址和端口号都是加密保存于 HTTPS 请求头中的，代理服务器是如何既**确保通信是加密**的（代理服务器自身也无法读取通信内容）又知道**该往哪里发送请求**呢:
+  - 浏览器需要先通过明文 HTTP 形式向代理服务器发送一个 CONNECT 请求告诉它目标站点地址及端口号。
+  - 当代理服务器收到这个请求后，会在对应的端口上与目标站点建立一个 TCP 连接，
+    - 连接建立成功后返回一个 HTTP 200 状态码告诉浏览器与该站点的加密通道已建成。
+  - 接下来代理服务器仅仅是来回传输浏览器与该服务器之间的加密数据包，代理服务器并不需要解析这些内容以保证 HTTPS 的安全性。
+
+`DELETE`方法用于*删除指定的资源*。请求**可能有**主体、成功的返回**可以有**主体、**是幂等**
+
+- 如果 DELETE 方法成功执行，那么可能会有以下几种状态码：
+  - 状态码 202 (Accepted) 表示请求的操作可能会成功执行，但是尚未开始执行。
+  - 状态码 204 (No Content) 表示操作已执行，但是无进一步的相关信息。
+  - 状态码 200 (OK) 表示操作已执行，并且响应中提供了相关状态的描述信息。
+
+`GET`方法*请求指定的资源*。使用 GET 的请求应该只用于获取数据。**成功的响应有主体、安全、是幂等、可缓存、支持 HTML 表单中使用**
+
+- 在 GET 请求中发送 body/payload 可能会*导致一些现有的实现拒绝该请求*。虽然规范中没有禁止，但语义没有定义，最好是避免。
+
+`HEAD`方法**请求资源的头部信息**，并且这些头部与 HTTP GET 方法请求时返回的一致。**安全**、**是幂等**、**可缓存**
+
+- 如果 HEAD 请求有响应主体，会被忽略。
+- HEAD 方法可以看做是 GET 方法的一个“简化版”或者“轻量版”。因为它的响应头与 GET 完全相同。
+- 使用场景: 检测资源是否存在；在下载一个大文件前先获取其大小再决定是否要下载，以此可以节约带宽资源。
+
+`OPTIONS`方法*用于获取目的资源所支持的通信选项*。**成功的响应有主体、安全、是幂等**
+
+- 客户端可以对特定的 URL 使用 OPTIONS 方法，也可以对整站（通过将 URL 设置为“\*”）使用该方法。
+- 可以使用 OPTIONS 方法对服务器发起请求，以**检测服务器支持哪些 HTTP 方法**。
+- 在 **CORS** 中，可以使用 OPTIONS 方法发起一个**预检请求**，以检测实际请求是否可以被服务器所接受。
+
+`PUT`方法*使用请求中的负载创建或者替换目标资源*。**请求有主体、可能有响应主体、是幂等**
+
+- 如果目标资源**不存在**，并且 PUT 方法成功**创建**了一份，那么源头服务器必须**返回 201** (Created) 来通知客户端资源已创建。
+- 如果目标资源**已经存在**，并且依照请求中封装的表现形式成功进行了**更新**，那么源头服务器必须**返回 200 或者 204** 来表示请求的成功完成。
+
+`POST`方法*发送数据给服务器*。请求主体的类型由 Content-Type 首部指定。**请求有主体、成功的响应有主体、支持 HTML 表单中使用**。
+
+- PUT 和 POST 方法的区别是，_PUT 方法是幂等的_：连续调用一次或者多次的效果相同（无副作用）。
+- _POST 方法不是幂等的_，连续调用同一个 POST 可能会带来额外的影响，比如多次提交订单。
+
+`PATCH`方法用于*对资源进行部分修改*。**请求可以有主体、成功的响应有主体**。
+
+- PUT 方法已经被用来表示对资源进行整体覆盖，而 POST 方法则没有对标准的补丁格式的提供支持。
+- 不同于 PUT 方法，而与 POST 方法类似，**PATCH 方法是非幂等**的，这就意味着连续多个的相同请求会产生不同的效果。
+- POST 请求通常通过 HTML 表单发送，并导致服务器发生变化。
+
+[`TRACE`](https://httpwg.org/specs/rfc9110.html#TRACE) 方法实现*沿通向目标资源的路径的消息环回（loop-back）测试*，提供了一种实用的 debug 机制。**安全、是幂等**，其他为否。
+
+- 请求的最终接收者应该将收到的消息作为 200 响应的内容返回给客户端。例如 Content-Type 为 message/http 的 200 响应。
+- 最终接收者是指源（origin）服务器，或者第一个接收到 Max-Forwards 值为 0 的请求的服务器。
+- TRACE 方法主要用于诊断，也就是说，_用于验证请求是否如愿穿过了请求 / 响应链_。
+- _客户端决不能在 TRACE 请求中生成包含敏感数据的字段_，因为这些敏感数据可能会被响应所披露。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**安全(Safe)**: 如果说一个 HTTP 方法是安全的，是指**这是个不会修改服务器的数据的方法**。
+
+- 也就是说，这是一个对服务器只读操作的方法。这些方法是安全的：GET，HEAD 和 OPTIONS。
+- 所有安全的方法都是幂等的，但并非所有幂等方法都是安全的，例如，PUT 和 DELETE 都是幂等的，但不是安全的。
+
+**幂等(Idempotent)**:一个 HTTP 方法是幂等的，指的是**同样的请求被执行一次与连续执行多次的效果是一样的，服务器的状态也是一样的**。
+
+- 在正确实现的条件下， GET ， HEAD ， PUT 和 DELETE 等方法都是幂等的
+
+**可缓存(Cacheable)**: 的响应是指**可以缓存的 HTTP 响应，即储存起来以便以后检索和使用**，省去了对服务器的新请求。
+
+### HTTP 响应状态码
+
+HTTP 响应状态码用来表明特定 HTTP 请求是否成功完成。 响应被归为以下五大类：
+
+- 信息响应 (100–199) : 101
+- 成功响应 (200–299) : 200
+- 重定向消息 (300–399) : 304
+- 客户端错误响应 (400–499) : 400、401、403、404
+- 服务端错误响应 (500–599) : 500、501、502、503
+
+常见的响应状态码
+
+- 100 Continue
+  - 这个临时响应表明，**迄今为止的所有内容都是可行的**，客户端应该继续请求，如果已经完成，则忽略它。
+- **101 Switching Protocols**
+  - 该代码是响应客户端的 Upgrade 请求头发送的，指明**服务器即将切换的协议**。(例如使用 ws 时)
+- **200 OK**
+  - 请求成功。GET: 资源已被提取并在消息正文中传输。HEAD: 实体标头位于消息正文中。
+  - PUT or POST: 描述动作结果的资源在消息体中传输。TRACE: 消息正文包含服务器收到的请求消息。
+- 201 Created
+  - 该请求已成功，并因此**创建了一个新的资源**。这通常是在 POST 请求，或是某些 PUT 请求之后返回的响应。
+- 202 Accepted
+  - 请求已经接收到，但还未响应，没有结果。表示请求的操作可能会成功执行，但是尚未开始执行。
+  - 意味着不会有一个异步的响应去表明当前请求的结果，预期**另外的进程和服务去处理请求**，或者批处理。
+- 204 No Content
+  - 对于该请求**没有的内容可发送，但头部字段可能有用**。用户代理可能会用此时请求头部信息来更新原来资源的头部缓存字段。
+- 300 Multiple Choice
+  - 请求拥有多个可能的响应。用户代理或者用户应当从中选择一个。(与 406 相关，查看 http 的[内容协商](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Content_negotiation)机制)
+- 301 Moved Permanently
+  - 请求资源的 URL 已永久更改。在响应中给出了新的 URL。
+- **304 Not Modified**
+  - 这是用于缓存的目的。它告诉客户端响应还没有被修改，因此客户端可以继续使用相同的缓存版本的响应。
+- **400 Bad Request**
+  - 由于被认为是**客户端错误**（例如，错误的请求语法、无效的请求消息帧或欺骗性的请求路由），服务器无法或不会处理请求。
+- **401 Unauthorized**
+  - 从语义上来说，这个响应意味着"unauthenticated"。也就是说，**客户端必须对自身进行身份验证**才能获得请求的响应。
+- **403 Forbidden**
+  - **客户端没有访问内容的权限**，因此服务器拒绝提供请求的资源。与 401 Unauthorized 不同，**服务器知道客户端的身份**。
+- **404 Not Found**
+  - 服务器找不到请求的资源。在浏览器中，这意味着无法识别 URL。在 API 中，这也**可能意味着端点有效，但资源本身不存在**。
+- 405 Method Not Allowed
+  - 服务器知道请求方法，但目标资源不支持该方法。例如，API 可能不允许调用 DELETE 来删除资源。
+- 406 Not Acceptable
+  - 当 web 服务器在执行服务端驱动型内容协商机制后，没有发现任何符合用户代理给定标准的内容时，就会发送此响应
+- 407 Proxy Authentication Required
+  - 类似于 401 Unauthorized 但是认证需要由代理完成。
+- **500 Internal Server Error**
+  - 服务器遇到了不知道如何处理的情况。
+- **501 Not Implemented**
+  - 服务器不支持请求方法，因此无法处理。服务器需要支持的唯二方法（因此不能返回此代码）是 GET 和 HEAD.
+- **502 Bad Gateway**
+  - 此错误响应表明服务器作为**网关**需要得到一个处理这个请求的响应，但是得到一个错误的响应。
+- **503 Service Unavailable**
+  - 服务器没有准备好处理请求。常见原因是服务器因维护或重载而停机。请注意，与此响应一起，应发送解释问题的用户友好页面。
+- 504 Gateway Timeout
+  - 当服务器充当网关且无法及时获得响应时，会给出此错误响应。
+- 510 Not Extended
+  - 服务器需要对请求进行进一步扩展才能完成请求。
+- 511 Network Authentication Required
+  - 指示客户端需要进行身份验证才能获得网络访问权限。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+虽然摘自 MDN 的请求方法部分，但是中英文的内容有很多不一致的地方，内容是以因为为准。但是英文的也不一定对。
+
+ref
+
+- [MDN-HTTP 请求方法](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods)
+- [理解 HTTP CONNECT 通道](https://www.joji.me/zh-cn/blog/the-http-connect-tunnel/)
+- [常见的 HTTP Method 深度解析](https://segmentfault.com/a/1190000013182974)
+- [HTTP 语义规范-TRACE](https://httpwg.org/specs/rfc9110.html#TRACE)
+- [MDN-HTTP 响应状态码](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status)
 
 \newpage
 

@@ -5,9 +5,9 @@ puppeteer:
   printBackground: true
 
 # pandoc生成标题信息时用到
-title: "web前端基础知识汇整（关键字）"
-author: David Su | callmedavidsu@gmail.com
-date: \today
+# title: "web前端基础知识汇整（关键字）"
+# author: David Su | callmedavidsu@gmail.com
+# date: \today
 
 # 正文字体，默认最大是12pt，要更大需要其他包(常见字号: 四号14pt 小四12pt 五号10.5pt 小五9pt)
 fontsize: 10pt
@@ -26,6 +26,10 @@ include-before:
 <!-- % 画一条横线：\rule[水平高度]{长度}{粗细} -->
 <!-- A4 宽21cm，左右边距0.8cm，线长19.4cm -->
 <!-- \rule[0pt]{19.4cm}{0.03em} -->
+
+\textcolor{white}{.}![基本web相关知识关键字](./pictures/基本web相关知识关键字.png){width=110%}
+
+\newpage
 
 **vue** **生命周期**：创建、挂载、更新、卸载。其他`keep-alive`时使用的 activated/deactivated，出错时 errorCaptured
 
@@ -218,7 +222,7 @@ webpack 同一个入口会打包成一个 bundle 文件，文件发生变化 bun
 
 - template → parse 模版基础编译 → optimize 优化 AST → generate 生成 JS 字符串 → render 函数
 
-**简单 Diff 算法**拿新的一组子节点中的节点去旧的一组子节点中寻找可复用的节点。如果找到了，则记录该节点的位置索引。把这个位置索引称为*最大索引*。在整个更新过程中，如果一个节点的索引值*小于最大索引*，则说明该节点对应的真实 DOM 元素*需要移动*。
+**简单 diff 算法**拿新的一组子节点中的节点去旧的一组子节点中寻找可复用的节点。如果找到了，则记录该节点的位置索引。把这个位置索引称为*最大索引*。在整个更新过程中，如果一个节点的索引值*小于最大索引*，则说明该节点对应的真实 DOM 元素*需要移动*。
 
 **双端 diff 算法**在新旧两组子节点的*四个端点之间分别进行比较*，并试图找到可复用的节点。如果头尾没有可复用的节点，就*尝试看看非头部、非尾部的节点能否复用*，具体做法是 _拿新的一组子节点中的头部节点去旧的一组子节点中寻找_。
 
@@ -307,7 +311,7 @@ TCP 是一个可靠的传输协议，由一端放到网络上的内容，最终�
 
 **`Cache-Control`主要取值**:`public`：所*有内容都将被缓存*（客户端和代理服务器都可缓存）。`private`(默认值)：所有内容*只有客户端*可以缓存。`no-cache`：客户端缓存内容，但是是否使用缓存则*需要经过协商缓存来验证*决定。`no-store`：所有内容*都不会被缓存*。`max-age=xxx`(xxx 是数字)：缓存内容将在*指定有效期后(单位秒)后失效*
 
-**\textcolor{brown}{[页面渲染过程]}**:导航、DNS 查询、TCP 握手、TLS 协商、响应(TCP 慢启动/14KB 规则、拥塞控制)、解析(\textcolor{red}{构建 DOM 树}、预加载扫描器、\textcolor{red}{构建 CSSOM 树}、JavaScript 编译、构建辅助功能树)、渲染(\textcolor{red}{样式}、\textcolor{red}{布局}、\textcolor{red}{绘制}、合成)、交互。
+**\textcolor{brown}{[页面渲染过程]}**:导航、DNS 查询、TCP 握手、TLS 协商、响应(TCP 慢启动/14KB 规则、拥塞控制)、解析(\textcolor{red}{构建 DOM 树}、预加载扫描器、\textcolor{red}{构建 CSSOM 树}、JavaScript 编译、构建辅助功能树)、渲染(\textcolor{red}{样式(渲染树构建)}、\textcolor{red}{页面布局}、\textcolor{red}{页面绘制}、合成)、交互。
 
 **关键渲染路径 CRP**:是浏览器将 HTML，CSS 和 JS 转换为屏幕上的像素所经历的步骤序列。**优化重点**:资源加载优先级顺序和资源大小。
 
@@ -362,7 +366,7 @@ CORS 还通过一种机制来检查服务器是否会允许要发送的真实请
 **可用于发起跨源请求的头字段**
 
 ```sh
-# 注意，在所有访问控制请求（Access control request）中，Origin 首部字段 总是 被发送。
+# 注意，在所有访问控制请求（Access control request）中，Origin 字段 总 被发送。
 Origin: `<origin>` # 表明预检请求或实际请求的源站。origin不包含任何路径信息，只是服务器名称。
 Access-Control-Request-Method: `<method>` # 将实际请求所使用的 HTTP 方法告诉服务器。
 Access-Control-Request-Headers: <field-name>[, <field-name>]* # 将实际请求所携带的首部字段告诉服务器。
@@ -463,3 +467,125 @@ Advanced topics
 **防止 ws 安全漏洞**:_使用`wss://`协议_、对`ws`端点的 url 进行硬编码、保护`ws`握手消息、将通过`ws`接收的数据在两个方向上都视为不受信任。  
 **防止 SQL 注入**: _使用预准备语句_、查询的字符串是硬编码常量、严格数据库操作权限、后台检查输入是否符合预期、数据库特殊字符串进行转义。  
 **防止 OS 命令注入攻击**: _永远不要从应用层代码调用操作系统命令_、不要直接拼接命令语句，要转义预处理、必须执行强输入验证。
+
+\newpage
+
+**必知必会的一些关键问题**
+
+- **js 中事件循环执行顺序**: (1) 执行宏任务 (一开始的代码块也是一个宏任务)，同步代码正常输出;(2) 然后执行该宏任务产生的微任务，若微任务在执行过程中产生了新的微任务，则继续执行微任务; (3) 微任务执行完毕后，再回到宏任务中进行下一轮循环。
+
+- **原型链**: 每个实例对象都有一个私有属性`__proto__ `指向它的构造函数的原型对象 (prototype)。该原型对象也有一个自己的原型对象 `__proto__` ，层层向上直到一个对象的原型对象为 null。根据定义，null 没有原型，并作为这个原型链中的最后一个环节。
+
+  ```txt
+  Person.prototype.constructor == Person  person01.__proto__ == Person.prototype
+  ```
+
+- **对象的属性**分两种：数据属性(`[[Configurable]] [[Enumerable]] [[Writable]] [[Value]]`)和  
+   访问器属性(`[[Configurable]] [[Enumerable]] [[Get]] [[Set]]`)。  
+   `Object.assign(`) 对象**浅拷贝**，一般使用 `JSON.parse()` 和 `JSON.stringify()` 实现**深拷贝**。
+
+- **Proxy** 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。**Reflect** 是一个内置的对象，它提供拦截 JavaScript 操作的 13 种方法。这些方法与 proxy handlers 的方法相同。
+
+- **函数内部**: `arguments`是一个包含调用函数时传入的所有参数的类数组对象；`this` 到底引用哪个对象必须到函数被调用时才能确定；`caller` 属性引用的是调用当前函数的函数；如果是使用 *new 关键字调用*的，则 `new.target` 将引用被调用的*构造函数*。
+
+- **Promise** 对象用于表示一个异步操作的最终完成(或失败)及其结果值。pending,fulfilled/resolved,rejected 状态之一不可逆。
+
+- **ts 常见类型**: 简单类型、联合类型(xx|xx)、类型别名(type)、接⼝(interface)、类型断言(as)、字⾯类型、null 和 undefined
+
+- **ts 类型收缩**: type of 类型保护、真值收缩、等值收缩、in 操作符收缩、instanceof 收缩、赋值语句、控制流程分析、使⽤类型谓词(is)、可辨识联合、never 类型、穷举检查
+
+- **ts 类型操作**: 泛型、keyof 操作符、typeof 操作符、索引访问类型、条件类型、映射类型、模板字⾯量类型
+
+- **vue3 生命周期**: 创建、挂载、更新、卸载；keep-alive 时的激活(activated/deactivated)，出现错误的捕获(errorCaptured)
+
+- **mvvm 双向绑定**: 数据绑定和 dom 事件监听。vue 的数据劫持`+`发布订阅模式。 watcher 可订阅的只有四种数据：**模板中的数据、watch 选项的数据、computed 选项的数据、调用 `$watch` API 的数据**。有数据改变后触发相应的回调函数，就重新渲染视图。(vue3 对应关键字 proxy、setter/trigger、getter/track)
+
+- **模板编译过程**:`模板-> parse(str)(词法、语法分析)->模板 AST->transform(ast)->JS AST->generate(JSAST)->渲染函数`
+
+- **vue3 渲染管线**: render 函数返回虚拟 dom 树 `->` diff 算法遍历更新虚拟 dom `->` 产生、更新真实 dom
+
+- **最原始**: 当新旧 vnode 都具有一组子节点时，采用了比较笨的方式来完成更新，即”卸载所有旧子节点，再挂载所有新子节点”。
+
+- **diff 算法处理规则**: 1 判断是否有节点需要移动，以及应该如何移动；2 找出那些需要被添加或移除的节点。
+
+- **简单 diff 算法**: 利用虚拟节点的 key 属性，尽可能地复用 DOM 元素，并通过移动 DOM 的方式来完成更新，从而减少不断地创建和销毁 DOM 元素带来的性能开销。
+
+- **双端 diff 算法**: 同时对新旧两组子节点的两个端点进行比较，比较四次 (新首旧首，新尾旧尾，新首旧尾，新尾旧首)，如果首尾没有可复用的，尝试看看非头部、非尾部的节点能否复用。复用了双端节点，减少了 DOM 的移动操作。
+
+- **快速 diff 算法**: 包含预处理步骤，相同的前置元素和后置元素不需要核心 diff 算法。剩余部分子节点构建 source 数组和最长连续子序列 seq(不需要移动)，判断 source 对应索引值是否为-1(挂载新节点)，或者 source 的索引对应的 seq 位置的值是否相等(不相等需移动节点)
+
+- **webpack 核心流程**: 【初始化】(初始化参数、创建编译器对象、初始化编译环境、运行编译、确定入口) 【构建阶段 make】(解析模块路径构建依赖图、解析模块内容为 AST、遍历 AST 触发一堆钩子解析、处理依赖、生成 module)、【生成阶段 seal】(webpack 得到足够的模块内容与模块关系信息，seal 函数主要完成从 module 到 chunks 的转化);【输出阶段 emit】(合并 chunk、写出 assets)  
+  资源形态变化: 文件 `->` 依赖 `->` module `->` chunk `->` assets `->` 文件
+
+- **plugin** 用于打包优化，资源管理，注入环境变量等。从形态上看，插件通常是一个带有 apply 函数的类，apply 函数运行时会得到参数 compiler ，以此为起点可以调用 hook 对象注册各种钩子回调。apply 虽然是一个函数，但是从设计上就只有输入，webpack 不关心输出，所以在插件中只能通过调用类型实体的各种方法来或者更改实体的配置信息，变更编译行为。
+
+- **loader** 资源内容转换器。在【构建阶段】有一过程，调用 loader-runner 仓库的 runLoaders 转译 module 内容，通常是从各类资源类型转译为 JavaScript 文本。runLoaders 会调用用户所配置的 loader 集合读取、转译各种类型的资源。转译之后理论上应该输出标准 js 文本或者 AST 对象，webpack 才能继续处理模块依赖。
+
+- **vite** 是直接启动开发服务器，请求哪个模块再对该模块进行实时编译。由于现代浏览器本身就支持 ES Module，会自动向依赖的 Module 发出请求。当浏览器请求某个模块时再根据需要对模块内容进行编译。这种*按需动态编译*的方式极大的缩减了编译时间，项目越复杂模块越多，vite 优势越明显。**在热更新方面，当改动了一个模块后，仅需让浏览器重新请求该模块即可，不像 webpack 那样需要把该模块的相关依赖模块全部编译一次，效率更高**。
+
+- **页面渲染过程**: 导航(输入 url)、DNS 解析、TCP 握手、TLS 协商、服务器响应(TCP 慢启动/14KB 规则)、解析(【构建 DOM 树】、预加载扫描器、【构建 CSSOM 树】、JavaScript 编译、构建辅助功能树)、渲染(【样式】(将 DOM 和 CSSOM 组合成一个 Render 树，计算样式树或渲染树从 DOM 树的根开始构建，遍历每个可见节点)、【布局】(确定呈现树中所有节点的宽度、高度和位置，以及确定页面上每个对象的大小和位置的过程。)、【绘制】(将各个节点绘制到屏幕上，浏览器将在布局阶段计算的每个框转换为屏幕上的实际像素。)、合成)、交互
+
+- **TCP/IP 四层**: 链路层、网络层(IP、ICMP、IGMP)、传输层(UDP、TCP)、应用层(HTTP、FTP、Telnet、SNMP、SMTP)
+
+- **TCP/UDP**: (两者相反)面向连接、传输可靠、传输大量数据、速度慢。UDP 任何必需的可靠性必须由应用层来提供。
+
+- **浏览器缓存过程总结**:_强制缓存优先于协商缓存进行_，若强制缓存(`Expires`和`Cache-Control`)生效则直接使用缓存，若不生效则进行协商缓存(`Last-Modified/If-Modified-Since`和`Etag/If-None-Match`)。通过在响应中添加 `Cache-Control: no-cache` 以及 Last-Modified 和 ETag，如果请求的资源已更新，客户端将收到 200 OK 响应；如果请求的资源尚未更新(使用缓存)，则会收到 304 Not Modified 响应。
+
+- **web 用户体验**两重点:**页面内容快速加载**和**流畅的交互**。**影响 web 性能**的两大主因:**等待资源加载时间**和**大部分情况下的浏览器单线程执行**
+
+**web 核心性能指标及阈值**
+
+- **LCP** 测试加载性能，2.5s - 4s。主要受四个因素影响: 缓慢的服务器响应速度、JS 和 CSS 渲染阻塞、资源加载时间、客户端渲染。【改进】使用 PRPL 模式做到即时加载(`PRPL`:Preload(预加载) 最重要的资源、尽快 Render(渲染) 初始路由、Pre-cache(预缓存) 剩余资源、Lazy load(懒加载) 其他路由和不重要资源)。优化 CRP、CSS 图像、网络字体、js 等。
+
+- **FID** 测试交互性，100ms - 300ms。糟糕的 FID 主要是由**繁重的 JavaScript 执行**导致的。【改进】减少第三方代码的影响，减少 JavaScript 执行时间，最小化主线程工作，保持较低请求数和较小传输大小。
+
+- **CLS** 测试视觉稳定性，0.1 - 0.25。CLS 较差的最常见原因: 无尺寸的图像，无尺寸的广告、嵌入和 iframe，动态注入的内容，导致不可见文本闪烁 (FOIT)/无样式文本闪烁 (FOUT) 的网络字体，在更新 DOM 之前等待网络响应的操作，css 属性触发重排、绘制和合成。
+
+- **FCP** 1.8s - 3s 。【改进】消除阻塞渲染的资源，缩小 CSS，移除未使用的 CSS，预连接到所需的来源，减少服务器响应时间，避免多个页面重定向，预加载关键请求，避免巨大的网络负载，使用高效的缓存策略服务静态资产，避免 DOM 过大，最小化关键请求深度，确保文本在网页字体加载期间保持可见，保持较低的请求数和较小的传输大小。
+
+**CORS http 请求头**
+
+- `Origin: <origin>`
+  - 在所有访问控制请求中，`Origin`(请求的来源[协议、主机、端口])首部字段总是被发送(浏览器会自动发出)。
+- `Access-Control-Request-Method: <method>`
+  - ACRM 将实际请求所使用的 HTTP 方法告诉服务器，用于预检请求(浏览器会自动发出)。
+- `Access-Control-Request-Headers: <field-name>[, <field-name>]*`
+  - ACRH 将实际请求所携带的首部字段告诉服务器，用于预检请求(浏览器会自动发出)。
+
+**CORS http 响应头**
+
+- `Access-Control-Allow-Origin: <origin> | *`
+  - ACAO 指定了单一的源，告诉浏览器允许该源访问资源，通配为`*`；
+  - 指定了具体的单个源而非通配符\*，那么响应头中的 Vary 字段的值必须包含 Origin，指服务器对不同的 Origin 返回不同的内容。
+- `Access-Control-Expose-Headers: <header-name>[, <header-name>]*` (可多个自定义头或非基本头)
+  - ACEH 指定标头放入允许列表中，供浏览器的 JavaScript 代码（如 getResponseHeader()）获取；
+- `Access-Control-Max-Age: <delta-seconds>`
+  - ACMA 指定了 preflight 请求的结果能够被缓存多久；
+- `Access-Control-Allow-Credentials: true`
+  - ACAC 定了当浏览器的 credentials 设置为 true 时是否允许浏览器读取 response 的内容；
+- `Access-Control-Allow-Methods: <method>[, <method>]*`
+  - ACAM 指定了访问资源时允许使用的请求方法，用于预检请求的响应；
+- `Access-Control-Allow-Headers: <header-name>[, <header-name>]*`
+  - ACAH 其指明了实际请求中允许携带的首部字段，用于预检请求的响应。
+
+**web 安全相关 http 响应头**
+
+- `Content-Security-Policy: default-src 'self';img-src *;media-src media2.com;script-src script1.com`
+  - 一个**额外的安全层**，用于检测并削弱某些特定类型的攻击，包括跨站脚本和数据注入攻击等。
+  - 示例含义: 所有内容均来自站点的同一个源；图片可以任意来源；音频或视频只能来源 media2.com；脚本只能来源 script1.com
+- `Strict-Transport-Security: max-age=<expire-time>; includeSubDomains | preload`
+  - 通知浏览器应该**只通过 HTTPS 访问该站点**，并自动转换 http 为 https。
+  - 配置依次为: 指定时间内访问该域的请求都转为 https；是否转换包括子域(可选)；查看查看 预加载 HSTS 获得详情(可选)
+- `X-Content-Type-Options: nosniff` (nosniff 只应用于 "script" 和 "style" 两种请求类型)
+  - 提示客户端**一定要遵循在 Content-Type 头中对 MIME 类型的设定**，不能对其进行修改。禁用客户端的 MIME 类型嗅探行为
+  - 以下会被阻止的:请求类型是‘style’但是 MIME 类型不是‘text/css’；请求类型是‘script’但 MIME 类型不是 [JS MIME 类型](https://mimesniff.spec.whatwg.org/#javascript-mime-type)
+- `X-Frame-Options:DENY | SAMEORIGIN`
+  - 用来给浏览器指示允许一个页面可否在 frame、iframe、embed 或者 object 中展现的标记(**防止点击劫持**)。
+  - 配置依次为: 该页面*不允许*在 frame 中展示，即使是同域；该页面*可以在相同域名*页面的 frame 中展示。
+- `Cross-Origin-Resource-Policy: same-site | same-origin` (慎用)
+  - 响应头会指示浏览器阻止对指定资源的无源跨域/跨站点请求。资源只能来自同站(eTLD+1 相同的网站)或者同域。
+- `Cross-Origin-Opener-Policy: unsafe-none | same-origin-allow-popups | same-origin`
+  - 确保顶级文档不与跨源文档共享浏览上下文组((防止基于 web 的跨站泄露)。
+- `Cross-Origin-Embedder-Policy: unsafe-none | require-corp`
+  - 防止文档加载未明确授予文档权限的任何跨域资源。
+  - COOP 的 same-origin 和 COEP 的 require-corp 一起使用开启跨域隔离，以便使用高级功能(例如一些高级 API)
