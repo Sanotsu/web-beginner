@@ -71,14 +71,15 @@
 
 - [01-rxjs7-basic](documents/01-javascript/rxjs/01-rxjs7-basic.md)
 
-#### 常见面试题(纯题目收集)
+#### 常见问题
 
-- [js-FAQs](documents/01-javascript/js-faq/readme.md)
+- [js-FAQs(纯题目收集)](documents/01-javascript/js-faq/readme.md)
 - **[js 常用技巧](documents/01-javascript/js-faq/03-javascript-tricks.md)**
+- [ES6 以来的新特性关键字(更新到 ES2023)](documents/01-javascript/js-faq/04-es6-new-features.md)
 
 #### css
 
-- [01-CSS 布局与响应式布局简述](documents/01-javascript/_css-part/01-CSS布局与响应式布局简述.md)
+- **[01-CSS 布局与响应式布局简述](documents/01-javascript/_css-part/01-CSS布局与响应式布局简述.md)**
 
 ## vue
 

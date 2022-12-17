@@ -92,6 +92,8 @@
 - `content-box`: 默认值，标准盒子模型，**只包括内容(content)的宽和高**，不包括边框（border），内边距（padding），外边距（margin）。
 - `border-box`: width 和 height 属性**包括内容，内边距和边框**，但不包括外边距。IE 盒子模型。
 
+![grid-and-flex布局](../../../pandoc/format-doc/pictures/pictures-others/grid-and-flex.png)
+
 **flex 弹性布局**的一些相关属性说明(父元素使用`display:flex`):
 
 - `flex-direction`: 指定了内部元素是如何在 flex 容器中布局的，定义了**主轴的方向** (正方向或反方向，与文字内容水平或垂直)
@@ -149,7 +151,7 @@
     - `grid-template-areas:"a a ." "a a ." ". b c"`， a b c 为对应页面区域的别名， `.`表示该区域留空。
     - 上面示例是 9 等分的空间，a 占左上角 4 个位置，c 占最右下角 1 个位置，b 在第三排第二列占 1 个位置，其余空位。
 
-<!-- ![使用grid-template-areas属性](./pictures/pictures-css/使用grid-template-areas属性.png) -->
+![使用grid-template-areas属性](../../../pandoc/format-doc/pictures/pictures-css/使用grid-template-areas属性.png)
 
 ## 响应式设计
 
