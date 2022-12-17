@@ -87,6 +87,7 @@
 - **[02-vue-FAQs](documents/02-vue/02-vue-simplification-FAQs.md)**
 - **[03-vuejs 设计与实现总结](documents/02-vue/03-vuejs设计与实现总结.md)**
 - **[04-vue 响应式原理](documents/02-vue/04-vue响应式原理.md)**
+- [05-vue3 新特性关键字](documents/02-vue/05-vue3-new-features.md)
 
 ## nodejs
 
