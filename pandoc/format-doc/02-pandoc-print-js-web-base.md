@@ -4,7 +4,7 @@
 # author: David Su | callmedavidsu@gmail.com
 # date: \today
 # abstract: |
-#   This is a front-end knowledge manual containing JavaScript, vue, nodejs, rxjs, TypeScript, dart, DSA, DP, HTML, CSS, HTTP, webpack, DB, Microservice Architecture, etc. 
+#   This is a front-end knowledge manual containing JavaScript, vue, nodejs, rxjs, TypeScript, dart, DSA, DP, HTML, CSS, HTTP, webpack, DB, Microservice Architecture, etc.
 
 #   It helps to improve the overall idea of the big front-end and consolidate the basic knowledge skills. For interviews or self-improvement are helpful.
 
@@ -30,11 +30,13 @@ include-before:
 <!-- A4 宽21cm，左右边距0.8cm，线长19.4cm -->
 <!-- \rule[0pt]{19.4cm}{0.03em} -->
 
-# JavaScript
+# JavaScript 基础知识
+
+## 1 JS 语法相关
 
 **提升**: 所谓的"提升"(hoist)，也就是把**所有变量声明**都拉到函数作用域的顶部(var)。  
-*函数声明和变量声明总是会被解释器悄悄地被"提升"到方法体的最顶部。*  
-JavaScript *只会提升声明，不会提升其初始化*。
+_函数声明和变量声明总是会被解释器悄悄地被"提升"到方法体的最顶部。_  
+JavaScript _只会提升声明，不会提升其初始化_。
 (带=等号声明的函数、类等等，是表达式声明)
 
 ECMAScript 中不能定义自己的数据类型。
@@ -59,7 +61,7 @@ _NaN 不等于包括 NaN 在内的任何值_。有 3 个函数可以将非数值
 
 **JavaScript 运行时概念(Runtime concepts)**
 
-![js运行时环境示例](./pictures/pictures-js/the_javascript_runtime_environment_example.png)
+![js运行时环境示例](./pictures/pictures-js/the_javascript_runtime_environment_example.png){width=35%}
 
 说明
 
@@ -88,19 +90,17 @@ Date 类型的 valueOf() 方法根本就不返回字符串，这个方法被重�
 
 **原始值为什么可以调用一些方法：**
 
-```js
+```cs
 let s = "str"; console.log(s.slice(1)); // "tr"
 ```
 
 如上代码，第二行中访问 s 时，是以读模式访问的，也就是要从内存中读取变量保存的值。在*以读模式访问字符串值的任何时候*，后台都会自动执行以下三步: (1)根据字符串值创建一个 String 类型的实例、(2)调用实例上的特定方法、(3)销毁实例。即相当于执行了以下三行代码：
 
-```js
+```cs
 /*创建String实例*/ let s = new String("str"); /*调用特定方法*/ s.slice(1); /*销毁实例*/ s = null;
 ```
 
 这种行为则让原始值拥有了对象的行为。
-
-\rule[0pt]{19.4cm}{0.03em}
 
 Symbol 全局对象不能使用 new 去实例化。
 
@@ -112,15 +112,15 @@ Math 不是一个构造器。Math 的所有属性与方法**都是静态**的。
 合并两个 Map 对象时，如果有重复的键值，则后面的会覆盖前面的。
 
 一个 Map 的 key 可以是任意值，包括函数、对象或任意基本类型。一个 Object 的 key 必须是一个 String 或是 Symbol。  
-[键的顺序](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#objects_vs._maps): Map 中的 key 是有序的。一个 Object 的 key 不一定是序的(**没有可以迭代对象所有**属性的机制)。  
+[键的顺序](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#objects_vs._maps): Map 中的 key 是有序的。一个 Object 的 key 不一定是序的(**没有可以迭代对象所有**属性的机制)。
 
-- for-in、Object.keys、Object.getOwnPropertyNames、Object.getOwnPropertySymbols获取内容各不一样。
+- for-in、Object.keys、Object.getOwnPropertyNames、Object.getOwnPropertySymbols 获取内容各不一样。
 <!-- - for-in 仅包含了以字符串为键的属性；
 - Object.keys 仅包含了对象自身的、可枚举的、以字符串为键的属性；
 - Object.getOwnPropertyNames 包含了所有以字符串为键的属性，即使是不可枚举的；
-- Object.getOwnPropertySymbols 与前者类似，但其包含的是以 Symbol 为键的属性  -->
+- Object.getOwnPropertySymbols 与前者类似，但其包含的是以 Symbol 为键的属性 -->
 
-Map 是可迭代的，但 Object 并没有实现迭代协议(即for...of 表达式并不能直接迭代对象，但对象可以实现迭代协议)。
+Map 是可迭代的，但 Object 并没有实现迭代协议(即 for...of 表达式并不能直接迭代对象，但对象可以实现迭代协议)。
 
 WeakMap 对象是一组键/值对的集合，其中的键是弱引用的。**其键必须是对象，而值可以是任意的。**  
 WeakSet **只能是对象的集合**，而不能是任何类型的任意值。
@@ -132,7 +132,7 @@ WeakSet **只能是对象的集合**，而不能是任何类型的任意值。
 “迭代”的意思是按照顺序反复多次执行一段程序，通常会有明确的终止条件。  
 ECMAScript 6 规范新增了两个高级特性：迭代器和生成器。使用这两个特性，能够更清晰、高效、方便地实现迭代。
 
-*迭代器可以为各种不同的数据结构提供统一的访问机制*。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作。  
+_迭代器可以为各种不同的数据结构提供统一的访问机制_。任何数据结构只要部署 Iterator 接口，就可以完成遍历操作。  
 迭代器是一个可以由任意对象实现的接口，支持连续获取对象产出的每一个值。
 
 可迭代对象即具有 `Symbol.iterator` 属性的数据结构。  
@@ -181,12 +181,12 @@ yield 关键字可以让生成器停止和开始执行，也是生成器最有�
 `Object.assign()`对象**浅拷贝**，一般使用`JSON.parse()` 和 `JSON.stringify()`实现**深拷贝**。  
 对于数组，可以理解为数组方法中那些会*改变原数组的方法都算深拷贝*。
 
-*任何函数只要使用 new 操作符调用就是构造函数*，而不使用 new 操作符调用的函数就是普通函数。
+_任何函数只要使用 new 操作符调用就是构造函数_，而不使用 new 操作符调用的函数就是普通函数。
 
 每个**实例对象**都有一个私有属性(称之为 **`__proto__`**)指向它的构造函数的原型对象(prototype)。  
 默认情况下，所有**原型对象**自动获得一个名为 **`constructor`** 的属性，指回与之关联的构造函数。即两个准则:
 
-```txt
+```cs
 // 准则 1：原型对象（即 Person.prototype）的 constructor 指向构造函数本身
 Person.prototype.constructor == Person
 // 准则 2：实例（即 person01）的 __proto__ 指向其构造函数的原型对象
@@ -199,17 +199,16 @@ Person.prototype.__proto__ === Object.prototype
 Object.prototype.__proto__ === null
 ```
 
-**原型链**: *每个实例对象都有一个私有属性 `__proto__`指向它的构造函数的原型对象(prototype)。该原型对象也有一个自己的原型对象`__proto__`，层层向上直到一个对象的原型对象为 null。根据定义，null 没有原型，并作为这个原型链中的最后一个环节。*
+**原型链**: _每个实例对象都有一个私有属性 `__proto__`指向它的构造函数的原型对象(prototype)。该原型对象也有一个自己的原型对象`__proto__`，层层向上直到一个对象的原型对象为 null。根据定义，null 没有原型，并作为这个原型链中的最后一个环节。_
 
-```txt
+```cs
 // 必知前置：每个构造函数都有一个原型对象，原型有一个属性指回构造函数，而实例有一个内部指针指向原型。
 Person.prototype.constructor = Person    person1.__proto__ = Person.prototype
-
 // 原型链的构想(下面的1 2 3)：前置 Coder 继承于 Person
 // 1 原型是另一个类型的实例:
 person1 = Coder.prototype
 // 每个实例对象都有一个私有属性(称之为 __proto__)指向它的构造函数的原型对象:
-coder1.__proto__ = Coder.prototype 
+coder1.__proto__ = Coder.prototype
 
 // 2 这个原型本身有一个内部指针指向另一个原型:
 coder1.__proto__.__proto__ = Coder.prototype.__proto__ = person1.__proto__ = Person.prototype
@@ -243,7 +242,7 @@ ECMAScript 6 新引入的 class 关键字具有正式定义类的能力。表面
 
 **类私有域**: 类属性在默认情况下是公有的，但可以使用增加哈希前缀 `# `的方法来定义私有类字段，这一隐秘封装的类特性由 js 自身**强制执行**。
 
-ES6 类支持**单继承**(extends)。虽然类继承使用的是新语法，但背后依旧使用的是原型链。(C++、python支持多继承)
+ES6 类支持**单继承**(extends)。虽然类继承使用的是新语法，但背后依旧使用的是原型链。(C++、python 支持多继承)
 
 调用 `super()` 会调用父类构造函数，并将返回的实例赋值给 this 。super 只能在*派生类构造函数和静态方法中*使用。
 
@@ -291,7 +290,7 @@ _理解函数声明与函数表达式之间的区别_，关键是理解**提升*
 
 - arguments 对象是一个类数组对象，包含调用函数时传入的所有参数。第一个参数:`arguments[0]` ，第二个参数是 `arguments[1]`……
 - **在标准函数中，`this` 引用的是把函数当成方法调用的上下文对象**，这时候通常称其为 this 值。
-  - *这个 this 到底引用哪个对象必须到函数被调用时才能确定。*
+  - _这个 this 到底引用哪个对象必须到函数被调用时才能确定。_
 - **在箭头函数中，`this` 引用的是定义该箭头函数的上下文。**
 - `caller`属性引用的是*调用当前函数的函数*，或者如果是*在全局作用域中调用的则为 null* 。
 - ECMAScript 6 新增了检测函数是否使用 new 关键字调用的 `new.target` 属性。
@@ -327,8 +326,9 @@ _理解函数声明与函数表达式之间的区别_，关键是理解**提升*
 过度使用闭包可能导致内存过度占用(因为闭包会保留它们包含函数的作用域)，因此建议**仅在十分必要时使用**。
 
 **IIFE**: 当函数变成立即执行的函数表达式时，表达式中的变量不能从外部访问。`(function(){statements;})();`  
-将 IIFE 分配给一个变量，不是存储 IIFE 本身，而是存储 IIFE 执行后返回的结果。  
-```js
+将 IIFE 分配给一个变量，不是存储 IIFE 本身，而是存储 IIFE 执行后返回的结果。
+
+```cs
 let result = (() => { let lname = "Barry"; return lname; })();
 console.log(result);  //  "Barry"
 ```
@@ -366,2537 +366,328 @@ _Promise 故意将异步行为封装起来，从而隔离外部的同步代码�
 
 \newpage
 
-# vue FAQs
+## 2 ES6 以来的新特性关键字
 
-**vue 生命周期及生命周期函数**
+**ES2015(ES6)**
 
-vue 的生命周期就是 vue 实例从创建到销毁/卸载的过程(括号内为对应 Options API)。
+- **声明命令**: let、块级作用域、const、globalThis 顶层对象。ES6 声明变量的六种方法: var、function、let、const、import、class
+- **变量的解构赋值**: 数组、对象、字符串、数值和布尔值、函数参数
+  - 应用场景: 交换变量值，从函数返回多个值，定义函数参数，提取 JSON 数据，函数参数的默认值，遍历 Map 结构，输入模块的指定方法
+- **字符串的扩展**: 大括号包含表示 Unicode 字符(`\u{0xXX}`或`\u{0XXX}`)；字符串遍历`for of`；模板字符串；标签模板
+  - 标签模板:“标签”指的就是函数，紧跟在后面的模板字符串就是它的参数，模板字符里面有变量，则先先处理成多个参数，再调用函数。
+    ```cs
+    console.log`hello`  等价于  console.log(['hello']) // 都输出 [ 'hello' ]
+    let a = 5; let b = 10;
+    tag`Hello ${ a + b } world ${ a * b }`; // 等同于
+    tag(['Hello ', ' world ', ''], 15, 50); // 注意参数的位置和数量
+    ```
+- **字符串的新增方法**:
+  - 静态方法: `String.fromCodePoint()`从 Unicode 码点返回对应字符；`String.raw()`返回一个斜杠都被转义的字符串。
+  - 实例方法: codePointAt()、normalize()、repeat()、matchAll()、 includes()、startsWith()、endsWith()
+- **正则的扩展**:
+  - 变更 RegExp 构造函数入参：允许首参数为正则对象，尾参数为正则修饰符(返回的正则表达式会忽略原正则表达式的修饰符)
+  - 字符串的实例方法 match()、replace()、search()和 split()在语言内部全部调用 RegExp 的实例方法
+  - 正则表达式添加了 `u` 修饰符，含义为“Unicode 模式”，用来正确处理大于`\uFFFF` 的 Unicode 字符
+  - [`y`修饰符](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags): 与 g 修饰符类似也是全局匹配，执行“粘性 (sticky)”搜索，匹配从目标字符串的当前位置开始。
+- **数值的扩展**: 二进制和八进制表示法(前缀`0b`和`0o`)
+  - Number 对象新增方法: isFinite()、isNaN()、parseInt()、parseFloat()、isInteger()、isSafeInteger()
+    - 一个极小的常量`Number.EPSILON`，**js 能够表示的最小精度**。误差如果小于这个值，可以认为已经没有意义，即不存在误差。
+    - `Number.MAX_SAFE_INTEGER === Math.pow(2, 53)-1` 和 `Number.MIN_SAFE_INTEGER === -(2^53-1)`
+  - Math 对象新增方法: ES6 在 Math 对象上新增了 17 个与数学相关的方法，trunc()、sign()、cbrt()等
+- **函数的扩展**: 参数默认值(指定了默认值后，函数的 length 属性将失真)；rest 参数`...`；函数的 name 属性；箭头函数；尾调用尾递归。
+  - 只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。
+- **数组的扩展**: 扩展运算符`...`，应用于复制数组、合并数组、与解构赋值结合、字符串转字符数组、实现了 Iterator 接口的对象。
+  - 静态方法: `Array.from()`类数组和可迭代对象转数组；`Array.of()`将一组值转数组。
+  - 实例方法: copyWithin()、find()，findIndex()，findLast() 和 findLastIndex()、fill()、entries()，keys() 和 values()、flat() 和 flatMap()。ES5 对空位的处理很不一致，大多数情况下会忽略空位。ES6 则是明确将数组空位转为 undefined。别有空位。
+- **对象的扩展**: 对象属性、方法可简写；用表达式作为对象的属性名；方法的 name 属性；属性的可枚举性和遍历；super 关键字。
+  - 静态方法:is()、assign()、setPrototypeOf()、getPrototypeOf()、Object.keys()、fromEntries()
+- **新的原始数据类型 Symbol**: 表示独一无二的值，通过 Symbol()函数生成。不支持语法`new Symbol()`。
+- **新的数据结构 Set、WeakSet、Map、WeakMap**；
+- **新的对象 Proxy、Reflect、Promise**
+- **迭代器 Iterator 和 for...of 循环**: 迭代器为各种不同的数据结构提供统一的访问机制。
+- **Generator 对象**: 生成器函数，用`function*`声明，返回一个 Generator 对象。是一种异步编程解决方案。
 
-- **创建** — 在组件创建时执行 (beforeCreate/created)
-- **挂载** — DOM 被挂载时执行 (beforeMount/mounted)
-- **更新** — 当响应数据被修改时执行 (beforeUpdate/updated)
-- **销毁/卸载** — 在元素被销毁之前立即运行 (beforeDestroy/destroyed 或 vue3 的 beforeUnmount/unmounted)
-  - 其他生命周期函数
-    - 被 `keep-alive` 缓存的组件激活/停用时调用 (activated/deactivated)。
-    - 在捕获一个来自后代组件的错误时被调用 (errorCaptured)
+  - 形式上，Generator 函数是一个普通函数，但是有两个特征。
+    - 一是，function 关键字与函数名之间有一个星号；二是，函数体内部使用 yield 表达式，定义不同的内部状态。
 
-_是在使用**组合式 API** 时，可以理解为 beforecate 和 created 被 setup() 方法本身所取代。_  
-其他生命周期函数在组合式 API 表现类似: onBeforeMount()、onMounted()、onBeforeUpdate()、onUpdated() ……
+- **Class 类**: 定义、原理、方法和关键字、属性、静态属性和方法、继承、super、实例、表达式、this 指向、`new.target`
+- **Module**: export、import 命令；ES6 的模块自动采用严格模式。
+  - ES6 模块与 CommonJS 模块三个重大差异:
+    - CommonJS 模块输出的是一个**值的拷贝**，ES6 模块输出的是**值的引用**。
+    - CommonJS 模块是**运行时加载**，ES6 模块是**编译时输出接口**。
+    - CommonJS 模块的 require()是**同步加载**模块，ES6 模块的 import 命令是**异步加载**，有一个独立的模块依赖的解析阶段。
+      - 语法上: CommonJS 模块使用 `require()`和 `module.exports`，ES6 模块使用 `import` 和 `export`。
+      - node13.2 版本开始默认打开 ES6 模块支持(模块采用`.mjs`后缀文件名或项目 package.json 指定`"type":"module"`)
 
-生命周期的实现原理:
+**ES2016**
 
-- 2.x 当创建组件实例的过程中会调用相应的钩子方法。内部会对钩子进行处理，将钩子函数维护成数组的形式。
-- 3.x 就是把各个生命周期的函数挂载或者叫注册到组件的实例上，然后等到组件运行到某个时刻，再去组件实例上把相应的生命周期的函数取出来执行。
+- **数组扩展**: 实例方法 `includes()`；**指数运算符** `**`(可与其他某些运算符一起用)
 
-\rule[0pt]{19.4cm}{0.03em}
+**ES2017**
 
-**vue 响应式**
+- **字符串扩展**: padStart()、padEnd()；**对象扩展**: Object.getOwnPropertyDescriptors()、Object.values()、Object.entries()
+- **函数扩展**: 允许函数最后一个参数有尾逗号；**引入 SharedArrayBuffer**，允许 Worker 线程与主线程共享同一块内存。
+- **引入了 `async` 函数**，使得异步操作变得更加方便。是 Generator 函数的语法糖，返回一个 Promise 对象。
+  - 正常情况下，`await` 命令后面是一个 Promise 对象，返回该对象的结果。如果不是 Promise 对象，就直接返回对应的值。
 
-**数据响应式**就是能够使数据变化可以被检测并对这种变化做出响应的机制。
+**ES2018**
 
-**vue 中响应式的实现**
+- **字符串扩展**: 放松对标签模板里字符串转义的限制：遇到不合法的字符串转义返回 undefined，并且从 raw 上可获取原字符串。
+- **对象扩展**: 扩展运算符`...`：转换对象为用逗号分隔的参数序列`{ ...obj }`。
+- **正则扩展**: s 修饰符、dotAll、后行断言、后行否定断言、Unicode 属性转义、具名组匹配(为每组匹配指定名字)。
+- **Promise 扩展**: 实例方法`finally()`：指定不管最后状态如何都会执行的回调函数。
+- **async 扩展**: 异步迭代器`for-await-of`：循环等待每个 Promise 对象变为 resolved 状态才进入下一步。
 
-- 2.x: 把一个普通的 js 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 `Object.defineProperty()` 把这些 property 全部转为 `getter/setter` (数据劫持)。每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把“接触(touch)”过的数据 property 记录为依赖。之后当依赖项的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染。
-  - 不足: 不能检测数组和对象的变化。由于 Vue 不允许动态添加根级响应式 property，所以必须在初始化实例前声明所有根级响应式 property，哪怕只是一个空值。
-  - 应对: 使用 `Vue.set(object, propertyName, value)` 全局方法或者 `vm.$set()` 实例方法向嵌套对象添加响应式 property。
-- 3.x: 主要把数据劫持这部分改为**使用 Proxy 来创建响应式对象**，将 `getter/setter` 用于 ref。**即 组合式 API reactive() 用于对象类型， ref() 用于基础数据类型。**
-  - 改进: Proxy 不仅可以代理对象，还可以代理数组。还可以代理动态增加的属性。（但旧版本浏览器可能不支持 ES 新语法）
-  - `reactive()` 返回一个对象的响应式代理。
-  - `ref()` 接受一个内部值，返回一个响应式的、可更改的 ref 对象，此对象只有一个指向其内部值的属性 `.value`。
-    - 如果将一个对象赋值给 ref，那么这个对象将通过 `reactive()` 转为具有深层次响应式的对象。这也意味着如果对象中包含了嵌套的 ref，它们将被深层地解包。
+**ES2019**
 
-**vue 双向绑定**(和上面一个意思)
+- **字符串扩展**: 直接输入`U+2028`和`U+2029`；`JSON.stringify()`改造；实例方法`trimStart()`、`trimEnd()`。
+- **对象扩展**: `Object.fromEntries()`：返回以键和值组成的对象(`Object.entries()`的逆操作)。
+- **数组扩展**: `sort()`排序默认要稳定实现。实例方法`flat()`、`flatMap()`。
+- **函数扩展**: `toString()`改造，返回函数原始代码；`catch()`中的参数可省略。
+- **Symbol 扩展**: 实例属性`description`，返回 Symbol 值的描述。
 
-- 两大核心: 数据劫持、发布订阅模式
-- 核心组成部分: 监听器 Observer(数据劫持)、订阅者容器(监听器监听到数据变动时，遍历订阅者容器发布消息)、Compile(解析模板指令)、Watcher(连接 Observe 和 Compile 的桥梁)
-  - Vue 双向绑定原理是采用发布订阅者模式，在初始化时劫持数据的各个属性的 setter/getter，在数据变动时发布消息给订阅者，触发响应的监听回调。
-  - 而每个组件都对应一个 Watcher 实例，它会在组件渲染的过程中把接触过的数据记录为依赖，当依赖的 setter 出发时，会通知 Watcher，从而使组件重新渲染。
+**ES2020**
 
-\rule[0pt]{19.4cm}{0.03em}
+- **声明**: `globalThis`，作为顶层对象，指向全局环境下的 this。浏览器是`window`，nodejs 是`global`，webworker 是`self`。
+- **数值扩展**: `BigInt` 是一种内置对象(数据类型)，表示大于`2^53-1`的整数，表示任意大的整数。定义方式: 整数字面量后面加 `n`。
+  - 该对象有静态方法`asIntN()`、`asUintN()`，实例方法`toLocaleString()`、`toString()`、`valueOf()`。
+  - 全局方法`parseInt()` 会将 BigInt 转换为 Number，并在这个过程中失去了精度(因为拖尾的非数字值，包括 "n"，会被丢弃)。
+- **对象扩展**: 链判断操作符`?.`是否存在对象属性，不存在返回 undefined；空判断操作符`??`是否值为 undefined 或 null，是则使用默认值。
+- **正则扩展**: `matchAll()`：返回所有匹配的遍历器。
+- **Module**: `import()`函数，动态加载模块(返回 Promise)。
+- **Iterator**: `for-in`遍历顺序，不同的引擎已就如何迭代属性达成一致，从而使行为标准化。
+  **Promise 扩展**: `Promise.allSettled()`参数数组的*所有 Promise 对象都发生状态变更*，返回的 Promise 对象才会发生状态变更。
 
-**虚拟 DOM**是一种编程概念，意为将目标所需的 UI 通过数据结构“虚拟”地表示出来，保存在内存中，然后将真实的 DOM 与之保持同步。
+**ES2021**
 
-**VNode** 虚拟节点，可以理解成节点描述对象，它描述了应该怎样去创建真实的 DOM 节点。
+- **字符串扩展**: `String.prototype.replaceAll()`；
+- **逻辑赋值运算符** `||=`、`&&=`、`??=`。例如`opts.baz ?? (opts.baz = 'qux');  简写->  opts.baz ??= 'qux';`
+- **数字分隔符** 是一个有用的工具，它在数字中用下划线 (`_`)分隔数字，从而使长数字文字更具可读性。
+- **Promise 扩展**: `Promise.any()`接受一个可迭代的 Promise 对象数组，在数组中任意一个 Promise resolve 时，即 resolve。
+  - 如果所有 Promise 都没有 resolve，则会抛出一种新类型的异常 `AggregateError`，将错误以对象数组的形式组合为一个错误数组。
+- **弱引用 WeakRef**: `WeakRef`直接创建对象的弱引用；
+- **FinalizationRegistry** 对象可以让你在对象被垃圾回收时请求一个回调。
 
-**Virtual DOM** 其实就是一棵以 VNode 节点作为基础的树，用对象属性来描述节点，实际上它只是一层对真实 DOM 的抽象。最终可以通过一系列操作使这棵树映射到真实环境上。(**虚拟 DOM 简单说就是用 JS 对象来模拟 DOM 结构。**)
+**ES2022**
 
-**引入虚拟 DOM 的目的**: vdom 把渲染过程抽象化了，从而使得组件的抽象能力也得到提升，并且可以适配 DOM 以外的渲染目标。
+- **Class 类**: 类字段只能在构造函数之外声明；使用`#`声明私有字段和成员；为类声明静态字段和静态私有方法；允许在创建类时定义只执行一次的静态块；支持使用 in 运算符检查一个对象中是否有一个特定的私有字段；
+- **Top-level `await`**(不限定只在 async 中使用)；
+- 数组，字符串和 TypedArray 对象现在也有 **`at()`** 方法，访问末尾的第 N 个元素。
+- **RegExp 匹配索引**: 指定一个 `d`修饰符标志，来获取匹配开始和结束的两个索引。
+- **Object.hasOwn()** 方法，如果指定的属性是对象的直接属性，则返回 true。否则返回 false。
+- **错误原因**: Error 对象新增了 `cause` 属性表示错误原因
 
-虚拟 DOM 在 Vue.js 主要做了两件事：
+**ES2023**
 
-- (1) 提供与真实 DOM 节点所对应的虚拟节点 vnode。(2) 将虚拟节点 vnode 和旧虚拟节点 oldVnode 进行对比，然后更新视图。
-
-**使用虚拟 DOM 的好处**:
-
-- (vue3 官网)虚拟 DOM 带来的主要收益是它赋予了开发者编程式地、声明式地创建、审查和组合所需 UI 结构的能力，而把直接与 DOM 相关的操作交给了渲染器。
-- 具备跨平台的优势、操作 DOM 慢，但 js 运行效率高，提高效率、提升渲染性能。(**组件抽象化、提高性能、跨平台**)
-
-**使用虚拟 DOM 的不足**:
-
-- 创建 dom 依赖创建函数
-- 当节点数量非常庞大时，其自身的各种判断和计算会将自己击溃
-- 单从创建 dom 的角度出发，它的创建速度比原生的慢
-- 无法进行极致优化(毕竟始终是隔了一层)
-
-**虚拟 dom 原理流程**: 构建虚拟 DOM 树、找出新旧两个虚拟 DOM 树的差异、将查询渲染到真实 DOM 上。
-
-- 1 用 JavaScript 对象模拟真实 DOM 树，对真实 DOM 进行抽象；
-- 2 比较两棵虚拟 DOM 树的差异 (diff 算法)；
-- 3 将两个虚拟 DOM 对象的差异应用到真正的 DOM 树 (patch 算法)。
-
-**diff 算法**
-
-v3 版文档所说：_如果我们有两份虚拟 DOM 树，渲染器将会有比较地遍历它们，找出它们之间的区别，并应用这其中的变化到真实的 DOM 上。这个过程被称为修补 (patch)，又被称为“比较差异(diffing)”或“协调 (reconciliation)”_
-
-一般步骤:
-
-- 同级比较，再比较子节点
-- 先判断一方有子节点一方没有子节点的情况 (如果新的 children 没有子节点，将旧的子节点移除)
-- 比较都有子节点的情况 (核心 diff)
-- 递归比较子节点
-- 正常 Diff 两个树的时间复杂度是 O(n^3) ，实际情况下很少会进行跨层级的移动 DOM，所以 Vue 将 Diff 进行了优化，从`O(n^3)->O(n)`。
-- 只有当新旧 children 都为多个子节点时才需要用核心的 Diff 算法进行同层级比较。
-
-\rule[0pt]{19.4cm}{0.03em}
-
-**MVVM 相关**
-
-\textcolor{white}{:}![mvvm相关图示](./pictures/pictures-vue/mvvm相关图示.png)
-
-- MVC
-  - 模型层（Model）：是应用程序中独立于用户界面的动态数据结构；它直接管理应用程序的数据，逻辑和规则。
-  - 视图层（View）：用户界面，用来展示信息。
-  - 控制层（Controller）：**接收输入事件**，操控 model 或 view。
-- MVP
-  - Model 定义用户界面所需要被显示的资料模型，一个模型包含着相关的业务逻辑（在实际开发中，数据相关的业务逻辑都会放到服务器）。
-  - View 视图为呈现用户界面的终端，用以表现来自 Model 的资料，和用户命令路由再经过 Presenter 对事件处理后的资料。
-  - Presenter **包含着组件的事件处理**，负责检索 Model 获取资料，和将获取的资料经过格式转换与 View 进行沟通。
-- MVVM
-  - Model 定义用户界面所需要被显示的资料模型，一个模型包含着相关的业务逻辑（在实际开发中，数据相关的业务逻辑都会放到服务器）。
-  - View 视图为呈现用户界面的终端，用以表现来自 Model 的资料，和用户命令路由再经过 Presenter 对事件处理后的资料。
-  - ViewModel 在原有 Controller 层的基础上，**将业务逻辑封和组件进行双向绑定**(data-binding)，达到同步更新的目的。
-
-\rule[0pt]{19.4cm}{0.03em}
-
-**key 的作用**: key 这个特殊的 attribute 主要作为 Vue 的虚拟 DOM 算法提示，在比较新旧节点列表时用于识别 vnode。  
-**尽量不要采用索引 (index) 作为 key**: 在一个数组中间插入某个元素，用 index 做 key，直接导致我们插入的元素到后面的全部元素，对应的位置关系都发生了变更，所以**全部都会执行更新操作**。
-
-**渐进式(progressive)的含义**: 没有多做职责之外的事，只做了自己该做的事，没有做不该做的事，仅此而已。
-
-**vue 的优缺点**: 看到一句比较有意思的话：_任何框架都没有缺点，一切缺点都是特性。只不过有些框架的优点是，支持很多很多特性。_
-
-**vue3 新特性**
-
-**组合式 API** 是一系列 API 的集合，使我们可以使用函数而不是声明选项的方式书写 Vue 组件(_并不是函数式编程_)。
-
-- 组合式 API 是以 Vue 中数据可变的、细粒度的响应性系统为基础的，而函数式编程更强调数据不可变。
-- 好处: 更好的逻辑复用、更灵活的代码组织、更好的类型推导、生产包体积更小
-- `<script setup>` 是在单文件组件 (SFC) 中使用组合式 API 的编译时语法糖
-
-**vue3 中的树摇**: _在 Vue3.x 中，所有的 API 都通过 ES6 模块化的方式引入_，这样就能让 webpack 或 rollup 等打包工具在打包时对没有用到 API 进行剔除，最小化 bundle 体积。很多打包工具支持 Treeshaking，但 Treeshaking 的前提是所有的东西都需要用 ES6 module 的 import 来写，_vue2 的全局 API 并不能按需导入，但 vue3 支持按需引入。_
-
-**`<Teleport>组件`** 是一个内置组件，它可以将一个组件内部的一部分模板“传送”到该组件的 DOM 结构外层的位置去(如全屏的模态框)。
-
-**新的相关推荐框架工具**: cli使用vite，状态管理 vuex `->` pinia， ide插件 vetur `-> `volar
+- **数组扩展**: `findLast()` 和 `findLastIndex()` 方法； **Hashbang Grammar**
 
 \newpage
 
-**vue 的模板编译**
+## 3 JS 常用技巧
 
-**模板编译过程**: Vue 的模板编译过程就是将 template 转化为 render 函数的过程。会经历以下主要分为三个阶段：
+- **1. 数组相关**
 
-- parse 模板编译,将模板代码转化为`AST`;transform 优化`AST`,方便后续虚拟`DOM`更新;codegen 生成代码,将`AST`转化为可执行的代码
+  - **数组去重**: ES6 引入了 Set 对象和延展（spread）语法`…`
 
-**Vue 默认推荐使用模板的几点原因**:
-
-- 模板更贴近实际的 HTML。由于其确定的语法，更容易对模板做静态分析。在实践中，模板对大多数的应用场景都是够用且高效的。
-
-**vue3 渲染管线**
-
-- **编译**：vue 模板被编译成**渲染函数**,即用来返回虚拟`DOM`树的函数。此步骤可以通过构建步骤提前完成,也可通过使用运行时编译器即时完成。
-- **挂载**：运行时渲染器调用渲染函数，遍历返回的虚拟 DOM 树，并基于它创建实际的 DOM 节点。这一步会作为响应式副作用执行，因此它会追踪其中所用到的所有响应式依赖。
-- **更新**：当一个依赖发生变化后，副作用会重新运行，这时候会创建一个更新后的虚拟 DOM 树。运行时渲染器遍历这棵新树，将它与旧树进行比较，然后将必要的更新应用到真实 DOM 上去。
-
-\textcolor{white}{:}![vue3-render-pipeline.png](./pictures/pictures-vue/vue3-render-pipeline-2.png){width=70%}
-
-SPA（single-page application）wiki: 它通过**动态重写当前页面**来与用户交互，而非传统的从服务器重新加载整个新页面。
-
-- 仅在 Web 页面初始化时加载相应的 HTML、JS 和 CSS。一旦页面加载完成，SPA **不会**因为用户的操作而进行**页面的重新加载或跳转**;
-- 取而代之的是利用路由机制实现 HTML 内容的变换，UI 与用户的交互，避免页面的重新加载。
-- **优点**：用户体验好、快；SPA 相对对服务器压力小；前后端职责分离，架构清晰，前端进行交互逻辑，后端负责数据处理。
-- **缺点**：初次加载耗时多；前进后退路由管理，不能使用浏览器的前进后退功能；SEO(搜索引擎优化) 难度较大。
-
-\rule[0pt]{19.4cm}{0.03em}
-
-**全局 API** (列式的是 v2 的版本，v3 的形式可能略有不同)
-
-Vue 2 没有`app`的概念，定义的应用只是通过`new Vue()`创建的**根 Vue 实例**。从同一个 Vue 构造函数创建的每个根实例**共享相同的全局配置**。  
-Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp 返回一个**应用实例**，一个 Vue 3 中的新概念。
-
-- v3 新的`createApp()`
-  - 创建一个应用实例。在 v3，**任何全局改变 Vue 行为的 API 现在都会移动到应用实例上**。(类似下面 API 的 `Vue.` 变 `app.`)
-  - `import {createApp} from 'vue';import App from './App.vue';const app = createApp(App);`
-- `Vue.nextTick([callback, context])` / `nextTick()`
-  - 在下次 DOM 更新循环结束之后执行延迟回调。_在修改数据之后立即使用这个方法，获取更新后的 DOM。_
-- v2 的`Vue.set(target, propertyName/index, value)` **v3 已移除**
-  - 向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新。`Vue.delete` 类似。
-- `Vue.mixin(mixin)` / `app.mixin()`
-  - 全局注册一个混入，影响注册之后所有创建的每个 Vue 实例。可以向组件注入自定义的行为。**不推荐在应用代码中使用。**
-- `Vue.use(plugin)` / `app.use()`
-  - 安装 Vue.js 插件。如果插件是一个对象，必须提供 install 方法。需要在调用 new Vue() 之前被调用。对同一个插件多次调用，该插件将只被安装一次。
-- v2.6以上 `Vue.observable(object)`/ v3 组合式 API `reactive()`
-  - 前者让一个对象可响应。Vue 内部会用它来处理 data 函数返回的对象。_被传入的对象会变更，和被返回的对象是同一个对象。_
-  - 后者返回一个对象的响应式代理。它会影响到**所有嵌套的 property**。_而对源对象直接进行变更仍然是不可响应的。_
-- `Vue.component(id, [definition])` / `app.component()`
-  - 如果**同时**传递一个组件名字符串及其定义，则**注册一个全局组件**；如果**只**传递一个名字，则会返回用该名字注册组件(如果存在的话)。
-- `Vue.directive(id, [definition])` / `app.directive()`
-  - 如果**同时**传递一个名字和一个指令定义，则**注册一个全局指令**；如果**只**传递一个名字，则会返回用该名字注册的指令(如果存在的话)。
-- `Vue.filter(id, [definition])` **v3 已移除**
-  - 注册或获取全局过滤器(用法同上)。在 vue3 里已经移除，推荐使用计算属性代替。
-- `Vue.version` / `app.version`: 提供字符串形式的 Vue 安装版本号。(不传参数，直接使用)
-- `Vue.extend(options)` / **v3 已移除**
-  - 使用基础 Vue 构造器，创建一个“子类”。参数是一个包含组件选项的对象。data 选项是特例，在 `Vue.extend()` 中它必须是函数。
-- `Vue.compile(template)` / _v3 不清楚_:  将一个模板字符串编译成 render 函数。**只在完整版时可用。**
-- v3 `进阶 API` 关于渲染函数中的部分 API:
-  - `h()`: 创建虚拟 DOM 节点 (vnode)。- `mergeProps()`: 合并多个 props 对象，用于处理含有特定的 props 参数的情况。
-  - `cloneVNode()`: 返回一个克隆的 vnode，可在原有基础上添加一些额外的 prop。
-
-**`setup()`钩子**是在组件中使用组合式API的入口，通常只在下列情况下使用：1 需要**在非单文件组件中使用组合式API时**；2 需要在**基于选项式API的组件中集成基于组合式API的代码**时。
-
-**其他情况下，都应该优先使用`<script setup>`语法**。优势：1 更小的样板内容，更简洁的代码（不用return数据和方法）。2 能够使用纯ts声明props和自定义事件。3 更好的运行时性能（其模块会被编译成同一作用域内的渲染函数，避免渲染上下文代理对象）4 更好的IDE类型推导性能（减少了语言服务器从代码中抽取类型的工作）。
-
-\newpage
-
-**指令**
-
-**vue 常用的修饰符**
-
-- 修饰符要在前面加个`.`点号，例如`<div @click.self="doThat">...</div>; <input v-model.trim="msg" />`
-- 使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。
-- 事件相关: 事件修饰符: stop、prevent、self、once、passive 等;按键修饰符: enter、esc、down、up 等;鼠标修饰符: left、right、middle
-- 表单输入相关: lazy、number、trim
-
-**v-if 和 v-for 不建议一起用**: 二者的优先级不明显
-
-- v-for 基于原始数据**多次渲染**元素或模板块。v-if 基于表达式值的真假性，来**条件性地渲染**元素或者模板片段。
-- **vue2**: 当和 v-if 一起使用时，**v-for** 的优先级比 v-if **更高**。**vue3**: 当它们同时存在于一个节点上时，**v-if** 比 v-for 的优先级**更高**。
-
-**v-if 和 v-show 的区别**
-
-- v-if 基于表达式值的真假性，来条件性地**渲染元素或者模板片段**。v-show 基于表达式值的真假性，来**改变元素的可见性**。
-- 当 v-if 元素被触发，元素及其所包含的指令/组件都会**销毁和重构**。v-show 通过**设置内联样式的 display CSS property 来工作**。
-
-**slot 插槽**
-
-通俗的理解就是“占坑”，在组件模板中占好了位置，当使用该组件标签时候，组件标签里面的内容就会自动填坑（替换组件模板中 slot 位置）并且可以作为承载分发内容的出口。
-
-使用**具名插槽**将多个插槽内容传入到各自目标插槽的插口。  
-在一个组件中多个插槽时，每个插槽`<slot>`元素可以用`name`属性来分配唯一 ID 指定渲染内容，没有提供 name 的`<slot>`插口隐式命名为`default`。
-
-**作用域插槽**在插槽的内容可能想要**同时使用**父组件域内和子组件域内的数据的情况,可以向一个插槽的插口上传递 attribute。
-
-使用: 在父组件使用类似`<slot name="header" message="hello"></slot>`表明这里需要有插槽占位，需要填充。  
-然后子组件使用类似`<template #header="headerProps"> {{ headerProps }} /*更多渲染内容*/ </template>`对其填充。  
-`#header`为`v-slot:header`的简写，此为具名作用域插槽，指定填充名为 header 的插槽接口，接收它传来的 attribute。
-
-**v-model**: 在表单输入元素或组件中**创建双向绑定**。预期：_根据表单输入元素或组件输出的值而变化_。
-<!-- 默认情况下，**v-model 是 `@input` 事件侦听器和 `:value` 属性上的语法糖**。仅限`<input> <select> <textarea> components`。 -->
-
-- `<select>` 会绑定 **value** property 并侦听 **change** 事件(`:value`属性和`@change`事件侦听器上的语法糖，下同)。
-- 文本类型的 `<input>` 和 `<textarea>` 元素会绑定 **value** property 并侦听 **input** 事件；
-- `<input type="checkbox">` 和 `<input type="radio">` 会绑定 **checked** property 并侦听 **change** 事件；
-
-**v-on**: Vue 中通过 `v-on` 或其语法糖 `@` 指令来**给元素绑定事件并且提供了事件修饰符**。可绑定多个事件。
-
-内置指令概述
-
-- v-text: 更新元素的文本内容。 `<span v-text="msg"></span>` 等同: `<span>{{msg}}</span>`
-- v-html: 更新元素的 innerHTML。 注意：内容按普通 HTML 插入，不会作为 Vue 模板进行编译。危险，容易被 XSS 攻击。
-- v-show: 基于表达式值的真假改变元素的可见性。通过设置内联样式的`display`来工作，当元素可见时将使用初始`display`值。
-- v-if:当 v-if 元素被触发，元素及其所包含的指令/组件都会销毁和重构。如果初始条件是假，那么其内部的内容根本都不会被渲染。
-- v-else: 前一兄弟元素必须有 `v-if` 或 `v-else-if`
-- v-else-if: 前一兄弟元素必须有 `v-if` 或 `v-else-if`。
-- v-for: 基于原始数据多次渲染元素或模板块。指令值必须使用特殊语法 `alias in expression` 为正在迭代的元素提供一个别名
-  - v-for 的默认方式是尝试就地更新元素而不移动它们
-- **v-on**: Vue 中通过 `v-on` 指令来**给元素绑定事件并且提供了事件修饰符**。可绑定多个事件。缩写为`@`
-- **v-bind**: 动态的绑定一个或多个 attribute，也可以是组件的 prop。缩写为`:` (当使用 `.prop` 修饰符,缩写为`.`)
-- v-model: 在表单输入元素或组件中创建双向绑定。预期：根据表单输入元素或组件输出的值而变化
-- **v-slot**: 用于声明具名插槽或是期望接收 props 的作用域插槽。限用于:`<template>`、组件(用于带有 prop 的单个默认插槽)，缩写为`#`
-- v-pre: 跳过该元素及其所有子元素的编译。所有 Vue 模板语法都会被保留并按原样渲染。
-- v-once:仅渲染元素和组件一次，并跳过之后的更新。在随后的重新渲染，元素/组件及其所有子项将被当作静态内容并跳过渲染。
-- v-cloak 用于隐藏未编译的模板，直到完成。**该指令只在没有构建步骤的环境下需要使用**。
-  - 与像 `[v-cloak] { display: none }` 这样的 CSS 规则结合，它可以隐藏原始模板直到组件编译完毕。
-- v-memo(vue3.2): 缓存一个模板的子树。元素和组件都可以使用。为了实现缓存，该指令期待传入一个定长地依赖值数组进行比较。
-
-**数据/状态 API**: 注意 v3 有部分组合式 API
-
-- computed: 用于声明要在组件实例上暴露的*计算属性*。
-  - 是计算属性，**依赖其它属性值**，只有它依赖的属性值发生改变，下一次获取 computed 的值时才会重新计算 computed 的值；
-  - computed **具有缓存机制**，依赖值不变的情况下其会直接读取缓存进行复用;
-  - computed 不能进行异步操作
-- watch: 用于声明在*数据更改*时调用的*侦听回调*。
-  - 更多的是「观察」的作用，类似于**某些数据的监听回调**，每当监听的数据变化时都会执行回调进行后续操作；
-  - watch 可以进**行异步操作**
-  - _(一般情况下 computed 是多对一，watch 是一对多)_
-- data: 用于声明组件初始响应式状态的**函数**。以 `_` 或 `$` 开头的属性将**不会**被组件实例代理，可能与内置冲突。
-  - _如果 data 仍然是一个纯粹的对象，则所有的实例将共享引用同一个数据对象！_
-  - 通过提供 data 函数，每次创建一个新实例后，我们能够调用 data 函数，从而返回初始数据的**一个全新副本数据对象**。
-- props: 用于声明一个组件的 props。props 可以是**数组或对象**，用于**接收来自父组件的数据**。
-- methods: 用于声明要混入到组件实例中的方法。
-- emits: 用于声明由组件触发的自定义事件。v3
-- expose: 用于声明当组件实例被父组件通过模板引用访问时暴露的公共属性。v3
-
-`<KeepAlive>` 或 `keep-alive` 是一个*内置组件*，它的功能是*在多个组件间动态切换时* **缓存被移除的组件实例**。
-
-**组件传值**
-
-- 父子通信：父向子传递数据是通过`props`，子向父是通过`$emit`。`$refs`也可以访问组件实例。
-- 兄弟通信：`$emit/$on`，vuex。
-- 跨级通信：`$emit/$on`，`provide/inject` API，vuex。
-
-父子组件创建过程自上而下，挂载过程自下而上。`parent created -> child created -> child mounted -> parent mounted`。  
-类似 koa 的洋葱模型，或者 U 型之类的，_父组件创建过程中涉及到子组件，则把子组件处理完之后，再回归父组件的接续处理_。
-
-**单向数据流**: 所有的 prop 都遵循着单向绑定原则，**prop 因父组件的更新而变化，自然地将新的状态向下流往子组件，而不会逆向传递。**
-
-**依赖注入**
-
-- provide(key,val):用于提供可以被后代组件注入的值。inject(key,default_v):用于声明要通过从上层提供方匹配并注入进当前组件的属性。
-- 两者通常成对一起使用，以**允许一个祖先组件向其所有子孙后代注入一个依赖**，不论组件层次有多深，只要他们处于同一条组件链上。
-
-**实例的属性和方法** (v2 的 API 标识为`vm.$xx`,v3 是直接`$xx`,在组件内都`this.$xx`的实例调用)
-
-- `vm.$refs`: 一个包含 DOM 元素和组件实例的对象，通过模板 ref 注册。
-- `模板 ref` 或者说特殊 attribute `ref`: `ref` 被用来给元素或子组件注册引用信息。
-- `vm.$attrs`: 一个包含了组件所有透传 attributes 的对象。
-  - `透传 Attributes` 是指由父组件传入，且没有被子组件声明为 props 或是组件自定义事件的 attributes 和事件处理函数。
-- `vm.$root`: 当前组件树的根组件实例。如果当前实例没有父组件，那么这个值就是它自己。
-- `vm.$parent`: 当前组件可能存在的父组件实例，如果当前组件是顶层组件，则为 null。
-- `vm.$emit()`: 在当前组件触发一个自定义事件。任何额外的参数都会传递给事件监听器的回调函数。
-- `vm.$forceUpdate()`: 强制该组件重新渲染。
-- `vm.$nextTick()`: 绑定在实例上的 `nextTick()` 函数。
-  - 和全局的`nextTick()`的唯一区别就是组件传递给`this.$nextTick()`的回调函数会带上 this 上下文，其绑定了当前组件实例。
-
-**组件的设计原则**:[风格指南](https://v2.cn.vuejs.org/v2/style-guide)、集中/统一的状态管理、更加纯粹的 State 变化、低耦合、辅助代码分离、及时模块化、扁平化面向数据的 state/props
-
-**异步组件**: 在大型项目中，我们可能**需要拆分应用为更小的块，并仅在需要时再从服务器加载相关组件**。v3的defineAsyncComponent方法。
-
-**函数式组件**是**自身没有任何状态**的组件的另一种形式。它们在*渲染过程中不会创建组件实例*，并跳过常规的组件生命周期。
-
-- 函数式组件剩下的唯一应用场景就是简单组件，比如创建动态标题的组件。否则，建议你像平常一样使用有状态组件。
-
-**组件写 name 的好处**: 可以通过名字找到对应的组件（递归组件）;可以通过 name 属性实现缓存功能 (keep-alive);可以通过 name 来识别组件（跨级组件通信时非常重要）。
-
-**组件和插件的区别**: 组件 (Component) 是用来构成你的 App 的业务模块，它的目标是 `App.vue`;插件 (Plugin) 是用来对 Vue 的功能的增强或补充，它的目标是 Vue 本身。
-
-**服务端渲染（Server-Side Rendering）**
-
-SSR 是指由**服务端**完成页面的 HTML 结构拼接的页面处理技术，发送到浏览器，然后为其绑定状态与事件，成为完全可交互页面的过程。  
-与客户端的单页应用 (SPA) 相比，**SSR 的优势**主要在于: 更快的内容到达时间，统一的心智模型，更好的 SEO。  
-不足(权衡考量): 开发中的限制，更多的与构建配置和部署相关的要求，更高的服务端负载。
-
-\rule[0pt]{19.4cm}{0.03em}
-
-**vue-router 相关**
-
-**Vue Router** 是 Vue.js 的官方路由。它与 Vue.js 核心深度集成，让用 Vue.js 构建单页应用变得轻而易举。功能包括：
-
-- 嵌套路由映射; 动态路由选择; 模块化、基于组件的路由配置; 路由参数、查询、通配符; 展示由 Vue.js 的过渡系统提供的过渡效果
-- 细致的导航控制; 自动激活 CSS 类的链接; HTML5 history 模式或 hash 模式; 可定制的滚动行为; URL 的正确编码
-
-**vue-router 路由模式**
-
-- v3 配置参数选项为 mode，可选值为"hash"(默认值) | "history" | "abstract"(Node.js 环境)
-  - **"history" 的 url 没有`#`号**，hash 反之。相同的 url，**"history" 会触发添加到浏览器历史记录栈中**，"hash" 不会触发。
-- v4 对应配置选项为 history，可选值为 createWebHashHistory() | createWebHistory() | createMemoryHistory()
-
-**vue-router 动态路由**
-
-- 动态路由匹配
-  - 路径参数用冒号`:`表示。当一个路由被匹配时，它的 params 的值将在每个组件中以 `this.$route.params` 的形式暴露出来。
-- 编程式导航
-  - `router.push` 导航到不同的`url`。这个方法**会**向 history 栈添加一个新的记录，当用户点击浏览器后退按钮时，会回到之前的`url`。
-  - `router.replace`: 替换当前位置, 在导航时**不会**向 history 添加新记录，正如它的名字所暗示的那样,它取代了当前的条目。
-  - `router.go`: 该方法采用一个整数作为参数，表示在历史堆栈中前进或后退多少步，类似于 `window.history.go(n)` 。
-- 响应路由参数变化:
-  - 用 `watch` 监听: `watch: { $route(to, from){ /** */ } }`
-  - 向 `router-view` 组件中添加 key: `<router-view :key="$route.fullPath"></router-view>`
-    - `$route.fullPath` 是完成后解析的 URL，包含其查询参数信息和 hash 完整路径。
-
-**vue-router 的导航守卫 (钩子函数)**
-
-- 1 全局守卫
-  - **全局前置守卫** `router.beforeEach((to, from) =>{/* */ return xxx })` (做权限管理有用到)
-    - 当一个导航触发时，全局前置守卫按照创建顺序调用。守卫是异步解析执行，此时导航在所有守卫 resolve 完之前一直处于*等待中*。
-  - 全局解析守卫 `router.beforeResolve(async to => {/* */ return xxx})`
-    - *每次导航时*都会触发，但是确保在导航被确认之前，**同时在所有组件内守卫和异步路由组件被解析之后，解析守卫就被正确调用**。
-      - **获取数据或执行任何其他操作**（如果用户无法进入页面时你希望避免执行的操作）的理想位置
-  - 全局后置钩子 `router.afterEach((to, from, failure) => {if (!failure) sendToAnalytics(to.fullPath)})`
-    - 和守卫不同的是，这些钩子**不会**接受 next 函数也**不会**改变导航本身。
-    - *对于分析、更改页面标题、声明页面等辅助功能*以及许多其他事情都很有用。
-- 2 路由独享的守卫 `beforeEnter`: **只在进入路由时触发**，不会在 params、query 或 hash 改变时触发。
-- 3 组件内的守卫: 在路由组件内直接定义路由导航守卫(传递给路由配置的)。
-  - `beforeRouteEnter` 守卫**不能**访问 this，因为守卫在导航确认前被调用，因此即将登场的新组件还没被创建。
-    - `beforeRouteEnter` 是支持给 next 传递回调的**唯一守卫**。
-    - 对于 `beforeRouteUpdate` 和 `beforeRouteLeave` 来说，this 已经可用了，所以不支持传递回调。
-  - `beforeRouteLeave` 通常用来预防用户在还未保存修改前突然离开。该导航可以通过返回 false 来取消。
-
-**完整的导航解析流程**
-
-1. 导航被触发。
-2. 在失活的组件里调用 `beforeRouteLeave` 守卫。
-3. 调用全局的 `beforeEach` 守卫。
-4. 在重用的组件里调用 `beforeRouteUpdate` 守卫 (2.2+)。
-5. 在路由配置里调用 `beforeEnter` 。
-6. 解析异步路由组件。
-7. 在被激活的组件里调用 `beforeRouteEnter` 。
-8. 调用全局的 `beforeResolve` 守卫 (2.5+)。
-9. 导航被确认。
-10. 调用全局的 `afterEach` 钩子。
-11. 触发 DOM 更新。
-12. 调用 `beforeRouteEnter` 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。
-
-**`$route`** 是路由**信息**对象，包括 path，params，hash，query，fullPath，matched，name 等路由信息参数。  
-**`$router`** 是路由**实例**对象，包括了路由的跳转方法，钩子函数等。
-
-\rule[0pt]{19.4cm}{0.03em}
-
-**Vuex 是专门为 Vue.js 设计的状态管理库，以利用 Vue.js 的细粒度数据响应机制来进行高效的状态更新。**
-
-每一个 Vuex 应用的核心就是 **store(仓库)**。“store”基本上就是一个容器，它包含着你的应用中大部分的**状态 (state)**。
-
-\textcolor{white}{:}![vuex](./pictures/pictures-vue/vuex-2.png)
-
-- **State**: 定义了应用状态的数据结构，可以在这里设置默认的初始状态。
-- **Getter**: 允许组件从 store 中获取数据，mapGetters 辅助函数仅仅是将 store 中的 getter 映射到局部计算属性。
-- **Mutation**: 是唯一更改 store 中状态的方法，里面存的就是一些操作数据的方法，且必须是同步函数。
-- **Action**: 用于提交 mutation，而不是直接变更状态，可以包含任意异步操作。
-  - Action 通过 `store.dispatch` 方法触发
-  - 例如 `this.$store.dispatch('login', this.loginForm)` 来调取 `store` 里的 `user.js` 的 `login` 方法
-- **Module**: 允许将单一的 store 拆分为多个 store 且同时保存在单一的状态树中。
-
-**vuex 原理**: **通过全局注入 store 对象，来实现组件间的状态共享。**
-
-- _因为 vuex 生成了一个 store 实例，并且把这个实例挂在了所有的组件上，所有的组件引用的都是同一个 store 实例。_
-- store 实例上有数据，有方法。方法改变的都是 store 实例上的数据。
-- 由于其他组件引用的是同样的实例，所以一个组件改变了 store 上的数据，导致另一个组件上的数据也会改变，**就像是一个对象的引用**。
-
-**Axios** 是一个**基于 promise** 网络请求库，作用于 node.js 和浏览器中。
-
-- 它是 isomorphic 的(即同一套代码可以运行在浏览器和 node.js 中)。
-- 在**服务端**它使用原生 node.js **http 模块**, 而在**客户端** (浏览端) 则使用 **XMLHttpRequests**。特性有:
-  - 从浏览器创建 XMLHttpRequests、 从 node.js 创建 http 请求、 支持 Promise API
-  - 拦截请求和响应、 转换请求和响应数据、 取消请求、 自动转换 JSON 数据、 客户端支持防御 XSRF
-
-vue-cli-service中**只有`NODE_ENV`/`BASE_URL` 和以`VUE_APP_`开头的变量将通过 `webpack.DefinePlugin` 静态地嵌入到客户端侧的代码中。**使用vite时，为了防止意外地将一些环境变量泄漏到客户端，只有以 **`VITE_`** 为前缀的变量才会暴露给经过 vite 处理的代码。 
-
-**`assets`** 中的文件在运行`npm run build`的时候**会打包**。打包之后也会放到 `static` 中。`static` 中的文件则不会被打包。
-
-\newpage
-
-# [vue 响应式原理](https://tsejx.github.io/vue-guidebook/infrastructure/vue2/reactivity)
-
-## vue 双向绑定
-
-**`MVVM`模型** 简单讲`Model`指的是后端传递的数据;`View`指的是所看到的页面;`ViewModel` 是`MVVM`模式的核心，连接 View 和 Model 的桥梁。
-
-- 将 Model 转化成 View，即将后端传递的数据转化成所看到的页面。实现方式：**数据绑定**
-- 将 View 转化成 Model，即将所看到的页面转化成后端的数据。实现方式：**DOM 事件监听**
-- 这两个方向都实现的，称之为数据的**双向绑定**
-
-在 MVVM 框架下 View 和 Model 是不能直接通信的，它们通过 ViewModel 来通信:
-
-- ViewModel 通常要实现一个 Observer 观察者，
-- 当*数据发生变化*，ViewModel 能够监听到数据的这种变化，然后*通知*对应的*视图做自动更新*，
-- 而当*用户操作视图*，ViewModel 也能监听到视图的变化，然后*通知数据做改动*，这实际上就实现了数据的双向绑定。
-- 并且 MVVM 中的 View 和 ViewModel 可以互相通信。
-
-**发布订阅模式**主要包含:
-
-- 发布函数：发布的时候执行相应的回调
-- 订阅函数：添加订阅者，传入发布时要执行的函数，可能会携额外参数
-- 一个缓存订阅者以及订阅者的回调函数的列表
-- 取消订阅
-
-JavaScript 中事件模型，在 DOM 节点上绑定事件函数（addEventListener），触发的时候执行就是应用了发布-订阅模式。
-
-**实现 MVVM 的双向绑定，就必须要实现以下几点**：
-
-- **Compile**: 指令解析系统，_对**每个元素节点的指令**进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数_
-- **Observer**: 数据监听系统，能够对数据对象的**所有属性**进行监听，如有变动可拿到最新值并通知订阅者
-  - Observer 类用于附加到每个被观察的对象。一旦附加后，观察者会将目标对象的 Property 键使用 `Object.definProperty`转换成用于**收集依赖**以及**调度更新**的 `getters` 和 `setters`(相当于数据劫持)。
-    - Observer：附加至每个被观察对象的*观察者类*，一旦被添加，观察者会将目标对象进行响应式化
-    - observe：用于*观察对象的方法*，返回 Observer 类的实例对象
-  - 通过向 observe 方法传入需要双向绑定的数据对象。
-    - 如果观察数据为数组类型，将会修改该该数据类型原型上 7 个原生数组方法，并遍历数组对数组每个成员进行观察，达到监听数组数据变化响应的效果。
-    - 如果观察数据为对象类型，则使用 `walk` 方法遍历对象中每对键值，并触发 `defineReactive` 进行双向绑定。
-      - defineReactive 内部的 `Object.defineProperty` 的 getter 将会实例化一个订阅者类 Dep，并通过闭包的方式将实例对象 dep 用于收集以及缓存订阅者。而其 setter 将会通过 `dep.notify` 通知所有观察者，进行派发更新。
-      - `getter`：正确地`返回属性值`以及`收集依赖`
-      - `setter`：正确地为属性`设置新值`以及`触发相应的依赖`（不存在添加属性的情况，添加属性请用 Vue.set）
-- **Dep`+`Watcher**: 发布订阅模型，作为连接 Observer 和 Compile 的桥梁，能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图。
-  - **Dep 是发布订阅者模型中的发布者**: get 数据时收集订阅者，触发 Watcher 的依赖收集；set 数据时发布更新，通知 Watcher 。
-    - 一个 Dep 实例对应一个对象属性或一个被观察的对象，用来收集订阅者和在数据改变时发布更新。
-    - 订阅者 Dep 类主要作用是用于存放 Watcher 观察者对象
-      - 用 addSub 方法可以在目前 Dep 对象中增加一个 Watcher 的订阅操作
-      - 用 notify 方法通知目前 Dep 对象的 subs 中的所有 Watcher 对象触发更新操作
-  - **Watcher 是发布订阅者模型中的订阅者**: 订阅的数据改变时执行相应的回调函数（更新视图或表达式的值）。
-    - 只有在这四种场景中，Watcher 才会收集依赖，更新模版或表达式，否则，_数据变更后无法通知依赖这个数据的模版或表达式_：
-      - 第一种：观察`模版中的数据`，如 HTML 模板中用到的 `{{test}}`，
-      - 第二种：观察创建 vue 实例时 `watch` 选项中的数据
-      - 第三种：观察创建 vue 实例时 `computed` 选项里的数据
-      - 第四种：调用 `$watch` API 观察的数据或表达式
-    - Watcher 对象通过调用 `updateComponent` 方法达到更新视图的目的。
-      - Watcher 并不实时更新视图，在实例化 vue 构造函数时默认会将 Watcher 对象存在一个队列中，在下个 Tick 时更新异步更新视图，完成了性能优化。
-- **依赖收集**: 依赖收集就是*订阅数据变化的 watcher 的收集*。_前提条件_: 触发 get 方法,新建一个 Watcher 对象
-  - *依赖收集的目的*是为了当这些响应式数据发生变化时，触发它们的 setter 的时候，能知道应该通知哪些订阅者去做相应的逻辑处理
-
-**响应式原理概述**
-
-**vue2** 通过[数据劫持]和[观察-订阅者模式]来实现 MVVM 双向绑定，也就是响应式。其中，
-
-- `数据劫持`使用了`Object.definProperty`将组件实例的`data`对象转换成用于收集依赖的 getter 和触发更新的 setter。
-- `Dep 和 Watcher`作为了发布订阅模型。
-  - Dep: 发布者，用于收集当前响应式对象的依赖关系，主要作用存放 Watcher 观察者对象。
-    - 触发 getter 时，收集依赖，使用`addSub`添加一个对应 watcher 订阅者；
-    - 触发 setter 时，用 `notify` 方法通知目前 Dep 对象中的所有相关依赖的 Watcher 对象触发更新操作。
-  - Watcher: 订阅者，订阅的数据改变时执行相应的回调函数，更新视图或表达式的值。
-    - **watcher 可订阅的只有四种数据：模板中的数据、watch 选项的数据、computed 选项的数据、调用`$watch` API 的数据**。
-    - 有数据改变后触发相应的回调函数，就重新渲染视图。
-
-一言以蔽之，通过`数据劫持`得到了 getter、setter，触发 getter 时会添加一个订阅者，触发 setter 时会发布通知，所有关联的订阅者进行数据更新。
-
-![vue2中mvvm双向绑定的实现](./pictures/pictures-vue/vue2中mvvm双向绑定的实现.jpg)
-
-**vue 3** 实现响应式类似，本质上是通过 Proxy API 劫持了**数据对象**的读写:
-当我们访问数据时，会触发 getter 执行依赖收集；修改数据时，会触发 setter 派发通知。
-
-常见的响应式副作用的用例:更新 DOM、添加 DOM 事件监听器或者请求数据。[每个组件实例创建一个响应式副作用来渲染和更新 DOM](https://cn.vuejs.org/guide/extras/reactivity-in-depth.html#how-reactivity-works-in-vue)。
-
-_vue 通过一个副作用（effect）函数来跟踪_ **当前正在运行的函数**。
-副作用是一个函数包裹器，在函数被调用前就启动跟踪，而 vue 在派发更新时就能准确的找到这些被收集起来的副作用函数，**当数据发生更新时再次执行它**。
-
-一些当状态改变时需要执行的行为就是[副作用](https://cn.vuejs.org/guide/extras/reactivity-in-depth.html)，比如在每次 msg 变量改变时我需要重新打印它，那么这个打印行为就可以说是一个副作用。
-
-1. 通过 `state = reactive(target)`来定义响应式数据（这里基于 Proxy 实现，按属性转换成 getter、setter）。
-2. 通过 `effect` 声明`依赖响应式数据的函数cb`(例如视图渲染函数 render 函数)，并执行 cb 函数，执行过程中，会触发响应式数据 getter。
-3. 在响应式数据 getter 中进行 `track` 依赖收集：存储响应式数据与更新函数 cb 的映射关系，存储于 `targetMap`。
-4. 当变更响应式数据时(触发了 setter 捕获器)，触发 `trigger`，根据 targetMap 找到关联的 cb 并执行。
-
-<!-- ![vue3响应式原理](./pictures/pictures-vue/vue3响应式原理-5.png) -->
-
-\rule[0pt]{19.4cm}{0.03em}
-
-![vue3响应式原理-1.jpg](./pictures/pictures-vue/vue3响应式原理-1-2.jpg){width=100%}\textcolor{white}{.}
-
-类比(但不一样): targetMap - Dep，响应式函数 cb - watcher，track - addSub，trigger - notify。
-
-\newpage
-
-## ref()、reactive()、nextTick()
-
-**ref()**: 接受一个*内部值*，返回一个响应式的、可更改的 ref 对象，此对象只有一个指向其内部值的属性 `.value`。
-
-- ref 对象是可更改的，也就是说可以为 `.value` 赋予新的值。
-  - 它也是响应式的，即所有对 `.value` 的操作都将被追踪，并且写操作会触发与之相关的副作用。
-- _如果将一个对象赋值给 ref，那么这个对象将通过 `reactive()` 转为具有深层次响应式的对象。_
-  - 这也意味着如果对象中包含了嵌套的 ref，它们将被深层地解包。若要避免这种深层次的转换，请使用 `shallowRef()` 来替代。
-
-**reactive()**: 返回一个*对象*的响应式代理。
-
-- 响应式转换是“深层”的：它**会影响到所有嵌套的属性**。一个响应式对象也将深层地解包任何 ref 属性，同时保持响应性。
-- 值得注意的是，当访问到某个响应式数组或 Map 这样的原生集合类型中的 ref 元素时，不会执行 ref 的解包。
-- 若要避免深层响应式转换，只想保留对这个对象顶层次访问的响应性，请使用 `shallowReactive()` 作替代。
-- 返回的对象以及其中嵌套的对象都会通过 ES Proxy 包裹，因此**不等于**源对象，_建议只使用响应式代理，避免使用原始对象。_
-- reactive() API 有两条限制：
-  - 仅对对象类型有效（对象、数组和 Map、Set 这样的集合类型），而对 string、number 和 boolean 这样的原始类型无效(会报警告)。
-  - 因为 vue 的响应式系统是通过属性访问进行追踪的，因此我们必须始终保持对该响应式对象的相同引用。
-    - 这意味着我们不可以随意地“替换”一个响应式对象，因为这将导致对初始引用的响应性连接丢失。
-    - 同时这也意味着当我们将响应式对象的属性赋值或解构至本地变量时，或是将该属性传入一个函数时，我们会失去响应性。
-
-**toRef()**: 基于响应式对象上的**一个属性**创建一个对应的 ref。这样创建的 ref 与其源属性保持同步:_改变源属性的值将更新 ref 的值，反之亦然_。
-
-**toRefs()**: 将**一个响应式对象**转换为一个*每个属性都是指向源对象相应属性的 ref*的普通对象。每个单独的 ref 都是使用 toRef() 创建的。
-
-- 当从组合式函数中返回响应式对象时，toRefs 相当有用。使用它，消费者组件可以解构/展开返回的对象而不会失去响应性。
-- toRefs 在调用时只会为源对象上可以枚举的属性创建 ref。如果要**为可能还不存在的属性创建 ref，请改用 toRef**。
-
-**nextTick 的使用与原理**
-
-**nextTick()**:在下次`DOM`更新循环结束之后执行延迟回调，就可以拿到更新后的`DOM`相关信息(等待下一次`DOM`更新刷新的工具方法)。
-
-- 当在 vue 中更改响应式状态时最终的 DOM 更新并**不是同步生效的**，而是由 vue 将它们**缓存在一个队列中**，直到下一个“tick”才一起执行。
-  - 这样是为了确保每个组件无论发生多少状态改变，都仅执行一次更新。
-- `nextTick()` 可以*在状态改变后立即使用，以等待 DOM 更新完成*。你可以传递一个回调函数作为参数，或者 await 返回的 Promise。
-
-_前置知识: JS 执行机制事件循环(EventLoop)_
-
-- (1) 执行宏任务(一开始的代码块也是一个宏任务)，同步代码正常输出;
-- (2) 然后执行该宏任务产生的微任务，若微任务在执行过程中产生了新的微任务，则继续执行微任务;
-- (3) 微任务执行完毕后，再回到宏任务中进行下一轮循环。
-
-JS 常见的同步异步任务:
-
-- 同步任务：指排队在主线程上依次执行的任务
-- 异步任务：不进入主线程，而进入任务队列的任务，又分为宏任务和微任务
-  - 宏任务：渲染事件、请求、`script`、`setTimeout`、`setInterval`、Node 中的 `setImmediate` 等
-  - 微任务：`Promise.then`、`MutationObserver`(监听 DOM)、Node 中的 `Process.nextTick` 等
-
-_nextTick 用一句话总结就是『利用 Event loop 事件线程去异步操作』。**本质上**就是注册异步任务来对任务进行处理。就是创建一个异步任务，那么它自然要等到同步任务执行完成后才执行。_ **基本原理**:
-
-- vue 实现了一个 nextTick 函数，如果传入一个 cb，这个 cb 会被存储到一个队列中，在下一个 tick 时触发队列中的所有 cb 事件。
-- 因为目前浏览器平台并没有实现 nextTick 方法，所以 vue 使用 Promise、setTimeout、setImmediate 等方式在 microtask（或是 task）中创建一个事件，目的是在当前调用栈执行完毕以后（不一定立即）才会去执行这个事件。
-
-[vue2 nextTick 源代码](https://github.com/vuejs/vue/blob/main/src/core/util/next-tick.ts#L94) 分为为两部分: **一是判断当前环境能使用的最合适的 API 并保存异步函数，二是调用异步函数 执行回调队列**。
-
-- 环境判断: 判断用哪个宏任务或微任务，因为*宏任务耗费的时间是大于微任务*的，**所以先使用微任务**，判断顺序
-  - Promise、MutationObserver、setImmediate、setTimeout
-  - 环境判断结束就会得到一个延迟回调函数 timerFunc
-- 环境判断完之后运行核心的 nextTick 方法，**主要逻辑**:
-  - 把传入的回调函数放进回调队列 callbacks
-  - 执行保存的异步任务 timeFunc，就会遍历 callbacks 执行相应的回调函数了
-  - 最后有返回一个 Promise 是可以让我们在不传参的时候用的
-
-[vue3 nextTick 源码](https://github.com/vuejs/core/blob/main/packages/runtime-core/src/scheduler.ts#L53) 里这一块有大改，不过事件循环的原理还是一样，只是加了几个专门维护队列的方法，以及关联到 effect。
-
-- **核心 nextTick 接受一个函数为参数，同时会创建一个微任务；页面调用 nextTick 的时候，会执行该函数，把我们的参数 fn 赋值给 `p.then(fn)`，在队列的任务完成后，fn 就执行了。**
-- 几个维护队列的方法，执行顺序是这样的: `queueJob -> queueFlush -> flushJobs -> nextTick参数的 fn`
-  - `queueJob()`方法负责*维护主任务队列，接受一个函数作为参数，为待入队任务，会将参数 push 到 queue 队列中，有唯一性判断*。会在当前宏任务执行结束后，清空队列
-  - `queueFlush()`方法负责尝试创建微任务，等待任务队列执行
-  - `flushJobs()` 方法负责处理队列任务，**主要逻辑**如下：
-    - 1 先处理*前置任务队列* 2 根据 Id 排队队列 3 遍历执行队列任务 4 执行完毕后清空并重置队列 5 执行*后置队列任务* 6 _如果还有就递归继续执行_
-    - 调用 `flushPreFlushCbs()` 方法负责执行前置任务队列
-    - 调用 `flushPostFlushCbs()` 方法负责执行后置任务队列
-
-\newpage
-
-## computed() 、watch()
-
-**computed()**: _接受一个 getter 函数，返回一个只读的响应式 ref 对象_。该 ref 通过 `.value` 暴露 getter 函数的返回值。它也可以接受一个带有 get 和 set 函数的对象来创建一个可写的 ref 对象。
-
-- **计算属性的结果会被缓存**，除非依赖的响应式 property 变化才会重新计算。
-  - 注意，如果某个依赖 (比如非响应式 property) 在该实例范畴之外，则计算属性是**不会**被更新的。
-  - 缓存的作用，避免重复计算，加大性能消耗。_确定不需要缓存，那么也可以使用方法调用。_
-- `与方法的区别`:_将同样的函数定义为一个方法_，在**结果上是完全相同的**。但计算属性会**缓存**，方法调用**总是**会在重渲染发生时再次执行函数。
-  - 绑定在表达式中的方法在*组件每次更新时都会被重新调用*，因此*不应该产生任何副作用*，比如改变数据或触发异步操作。
-- _计算属性默认是只读的_。可以通过同时提供 getter 和 setter 来创建可读可写的计算属性。
-- 最佳实践: **getter 不应有副作用**,不要在 getter 中做异步请求或者更改 DOM。**避免直接修改计算属性值。**
-  - 一个*计算属性*的声明中描述的*是如何根据其他值派生一个值*。因此 getter 的职责应该仅为计算和返回该值。
-  - 从计算属性返回的值类似一个“临时快照”，每当源状态发生变化时，就会创建一个新的快照。更改快照是没有意义的。
-  - _**计算属性的返回值应该被视为只读的，应该更新它所依赖的源状态以触发新的计算**_。
-
-```js
-const count = ref(1)
-const plusOne = computed({get: () => count.value + 1,set: (val) => { count.value = val - 1 }})
-plusOne.value = 1; console.log(count.value) // 0
-// 选项式API
-export default {
-    data() {return { a: 1 }},
-    computed:{aDouble(){return this.a*2},/*只读*/
-        aPlus:{get(){return this.a+1},set(v){this.a=v-1}} /*可写*/    },
-    created() {console.log(this.aDouble); /* 2*/ console.log(this.aPlus); /* 2*/
-        this.aPlus = 3; console.log(this.a); /* 2*/ console.log(this.aDouble); /* 4 */  } }
-```
-
-**watch()**: _侦听一个或多个响应式数据源，并在数据源变化时调用所给的回调函数。返回值是一个**用来停止该副作用的函数**_。
-
-- watch() 默认是懒侦听的，即**仅在侦听源发生变化时才执行回调函数。**
-- _第一个参数是侦听器的源_。这个来源可以是:**一个函数，返回一个值;一个 ref;一个响应式对象;或是由前诉类型的值组成的数组。**
-  - 当使用 getter 函数作为源时，回调只在此函数的*返回值变化时才会触发*。
-- _第二个参数是在发生变化时要调用的回调函数_。这个回调函数接受三个参数: **新值、旧值，以及一个用于注册副作用清理的回调函数。**
-  - 该回调函数会在副作用下一次重新执行前调用，可以用来清除无效的副作用，例如等待中的异步请求。
-  - 当侦听多个来源时，回调函数接受两个数组，分别对应来源数组中的新值和旧值。
-- _第三个可选的参数是一个对象_，支持以下这些选项:
-  - `immediate`: 在侦听器创建时*立即触发回调*。第一次调用时旧值是 undefined。 - `flush`: 调整回调函数的刷新时机。
-  - `deep`: 如果源是对象，_强制深度遍历_，以便在深层级变更时触发回调。 - `onTrack/onTrigger`: 调试侦听器的依赖。
-- 与 watchEffect() 相比可以:懒执行副作用；更加明确是应该由哪个状态触发侦听器重新执行；可以访问所侦听状态的前一个值和当前值。
-
-```js
-const state = reactive({ count: 0 })
-watch(() => state,(newValue, oldValue) => { /**do something */ },{ deep: true })
-/**侦听多个源 */ watch([fooRef, barRef], ([foo, bar], [prevFoo, prevBar]) => {  /* ... */})
-export default { // 选项式API使用
-  watch: {
-    someObject: {
-      handler(newVal, oldVal) {/*在嵌套的变更中，只要没有替换对象本身，那么这里的newVal和oldVal相同*/},
-      deep: true
-    },
-    valA(val, oldVal) {console.log(`new: ${val}, old: ${oldVal}`)}, // 侦听根级属性
-    'valB.b': function (val, oldVal) {/* do something*/}, // 侦听单个嵌套属性
-  }}
-```
-
-**watchEffect()**: _立即运行一个函数_，同时响应式地追踪其依赖(会先执行一次用来自动收集依赖)，并在依赖更改时重新执行。
-
-- _第一个参数就是要运行的副作用函数_。这个副作用函数的参数也是一个函数，用来注册清理回调。**依赖源同时是回调函数。**
-  - 清理回调会在该副作用下一次执行前被调用，可以用来清理无效的副作用。
-- _第二个参数是一个可选的选项_，可以用来调整副作用的刷新时机或调试副作用的依赖。
-  - _默认情况下，`flush:'pre'`,侦听器将在组件渲染之前执行_。设置`flush:'post'`将会**使侦听器延迟到组件渲染*之后*再执行。**
-  - 在某些特殊情况下(例如要使缓存失效)，可以通过设置`flush:'sync'`来实现在**响应式依赖发生改变时*立即*触发侦听器。**
-- _返回值是一个用来停止该副作用的函数_。**不需要手动传入依赖；无法获取到变化前的值， 只能获取变化后的值**。
-- _可以简单理解为同一个功能的两种不同形态，底层的实现是一样的。类似 watch 设置了选项`immediate:true`的效果_。
-
-```js
-watch( () => {/*依赖源收集函数*/}, () => {/*依赖源改变时的回调函数*/});
-watchEffect(() => { /*依赖源同时是回调函数*/});
-/* watchEffect(() => { document.body.innerHTML = `计数：${count.value}`}) */
-/* 以下两种用法在行为上基本等价*/ watchEffect(() => console.log(counter.value));
-watch(() => counter.value, () => console.log(counter.value), { immediate: true });
-```
-
-**watchPostEffect()**: watchEffect() 使用 `flush: 'post'` 选项时的别名。
-
-**watchSyncEffect()**: watchEffect() 使用 `flush: 'sync'` 选项时的别名。
-
-\newpage
-
-## vue 的模板语法
-
-vue 使用一种基于 HTML 的模板语法，使我们能够声明式地将其组件实例的数据绑定到呈现的 DOM 上。  
-所有的 vue 模板都是语法层面合法的 HTML，可以被符合规范的浏览器和 HTML 解析器解析。
-
-**文本插值**: `<span>Message: {{ msg }}</span>`
-
-**原始`HTML`**:双大括号会将数据解释为纯文本。想插入 HTML，需要使用 v-html 指令。
-
-```html
-<p>Using text interpolation: {{ rawHtml }}</p>
-<p>Using v-html directive: <span v-html="rawHtml"></span></p>
-```
-
-在网站上动态渲染任意`html`是非常危险的，非常容易造成`XSS`漏洞。仅在内容安全可信时再使用`v-html`,且永远不要使用用户提供的`html`内容
-
-**Attribute 绑定**: 双大括号*不能在 HTML attributes 中使用*。想要响应式地绑定一个 attribute，应该使用 v-bind 指令，可简写为`:`。
-
-```html
-<div :id="dynamicId"></div>
-```
-
-**使用 JavaScript 表达式**:vue 实际上在所有的数据绑定中都支持完整的 JavaScript 表达式。
-
-```html
-{{ number + 1 }} {{ ok ? 'YES' : 'NO' }} {{ message.split('').reverse().join('')}}
-<div :id="`list-${id}`"></div>
-```
-
-- **仅支持表达式**: 每个绑定仅支持*单一表达式*，也就是一段能够被求值的 JavaScript 代码。
-- **调用函数**: 可以在绑定的表达式中使用一个组件暴露的方法。`<span :title="getDate(date)">{{formatDate(date)}}</span>`
-  - **绑定在表达式中的方法在组件每次更新时都会被重新调用**，因此不应该产生任何副作用，比如改变数据或触发异步操作。
-- **受限的全局访问**: 模板中的表达式将被沙盒化，仅能够访问到[有限的全局对象列表](https://github.com/vuejs/core/blob/main/packages/shared/src/globalsWhitelist.ts#L3)。该列表中会暴露常用的内置全局对象，比如 Math 和 Date。
-  ```js
-  // vuejs/core/packages/shared/src/globalsWhitelist.ts 中允许访问的`有限全局对象列表`
-  const GLOBALS_WHITE_LISTED =
-    "Infinity,undefined,NaN,isFinite,isNaN,parseFloat,parseInt,decodeURI," +
-    "decodeURIComponent,encodeURI,encodeURIComponent,Math,Number,Date,Array," +
-    "Object,Boolean,String,RegExp,Map,Set,JSON,Intl,BigInt";
+  ```cs
+  const uniqueArray = [...new Set([1, 1, 2, 3, 5, 5, 1])]; // [1, 2, 3, 5]
+  // 截取数组，slice()的运行速度比重新定义数组的 length 属性快
+  let array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; array.length = 4; console.log(array); // [ 0, 1, 2, 3 ]
+  console.log([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].slice(0, 4)); // [ 0, 1, 2, 3 ]
+  console.log([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].slice(-4)); // [ 6, 7, 8, 9 ]
   ```
 
-**指令 Directives**: 指令是带有 `v-` 前缀的特殊 attribute。vue 提供了许多内置指令。
-`<p v-if="seen">Now you see me</p>`
+  - **在循环中缓存数组长度**
 
-- 指令 attribute 的期望值为一个 JavaScript 表达式 (除了少数几个例外，v-for、v-on 和 v-slot)。
-- **一个指令的任务是在其表达式的值变化时响应式地更新 DOM**。
-- 指令的完整语法：`名称:参数.修饰符(可多个)=值`（`name:argument.modifiers=value`）。
+  ```cs
+  // 从性能方面来看，即使数组变得很大，也不需要花费额外的运行时重复计算 array.length。
+  for (let i = 0, length = array.length; i < length; i++) {...}
+  ```
 
-![vue的完整directive语法](./pictures/pictures-vue/vue的完整directive语法.png){width=60%}
+  - **使用 Boolean 过滤数组中的所有假值**
 
-**模板编译和渲染大概流程:`template -> ast -> render 函数 -> 创建虚拟dom -> diff 算法更新虚拟dom -> 产生、更新真实dom`**
+  ```cs
+  const compact = (arr) => arr.filter(Boolean);
+  compact([0, 1, false, 2, "", 3, "a", "e" * 23, NaN, "s", 34]); // 结果值为: [ 1, 2, 3, 'a', 's', 34 ]
+  ```
 
-- template → parse 模版基础编译 → optimize 优化 AST → generate 生成 JS 字符串 → render 函数
+  - **数组元素转化为数字**
 
-\textcolor{white}{--}![“教科书”式的编译模型与vue的模板编译.png](./pictures/pictures-additions/“教科书”式的编译模型与vue的模板编译.png){width=95%}
+  ```cs
+  const array2 = ["12", "1", "3.1415", "-10.01"];
+  console.log(array2.map(Number)); // [12, 1, 3.1415, -10.01]
+  ```
+
+  - **将数组平铺到指定深度**
+
+  ```cs
+  const flatten = (arr, depth = 1) =>
+      depth != 1
+          ? arr.reduce((a, v) => a.concat(Array.isArray(v) ? flatten(v, depth - 1) : v), [])
+          : arr.reduce((a, v) => a.concat(v), []);
+  console.log(flatten([1, [2], 3, 4]));                         // [1, 2, 3, 4]
+  console.log(flatten([1, [2, [3, [4, 5], 6], 7], 8], 2));      // [1, 2, 3, [4, 5], 6, 7, 8]
+  ```
+
+  - **返回数组中最大值**
+
+  ```cs
+  const maxElementFromArray = (array, number = 1) => [...array].sort((x, y) => y - x).slice(0, number)
+  console.log(maxElementFromArray([1, 4, 3, 6, 7]), maxElementFromArray([7, 8, 9, 9, 9])) // [7] [9]
+  ```
+
+- **2. 字符串相关**
+
+  - 数字转换成字符串: `strval = numval + ""`； 字符串转成数字: `~~strnum`，一个波浪号表示**按位取反**操作，`~15` 等于`-16`。
+
+  ```cs
+  console.log(+"15", typeof +"15") // 输出: 15 number
+  // 在某些情况下，+运算符会被解析成连接操作，而不是加法操作。对于这种情况，可以使用两个波浪号：~~
+  console.log(~15, ~"15", ~~"15", typeof ~~"15"); // 输出都是number类型: -16 -16 15 number
+  ```
+
+  - **格式化 JSON.stringify() 输出的字符串**
+
+  该方法接受两个额外的参数，一个是函数，用于过滤要显示的 JSON；另一个是空格个数，也可以是一个字符串。
+
+  ```cs
+  console.log(JSON.stringify({ alpha: "A", beta: "B" })); // 挤在了一行输出
+  console.log(JSON.stringify({ alpha: "A", beta: "B" }, null, "\t")); // 有格式的输出
+  ```
+
+  - **string 强制转换为数字**
+
+  用`*1`来转化为数字(实际上是调用`.valueOf` 方法)，也可以使用`+`来转化字符串为数字。
+
+  ```cs
+  console.log('32'*1, 'ds'*1, null*1, undefined*1, 1*{ valueOf: () => '3' }) // 32 NaN 0 NaN 3
+  console.log(+'123', +'ds', +'', +null, +undefined, +{ valueOf: () => '3' }) // 123 NaN 0 0 NaN 3
+  ```
+
+  - **字符串反转**
+
+  ```cs
+  const reverseStr = (string) => [...string].reverse().join("");
+  console.log(reverseStr("hello"), reverseStr("1234")); // "olleh" "4321"
+  ```
+
+- **3. 对象等结构相关**
+
+  - **object 强制转化为 string**
+
+  使用 `字符串 + Object` 的方式来转化对象为字符串，也可以覆盖对象的 toString 和 valueOf 方法来自定义对象的类型转换。
+
+  ```cs
+  // 输出: Math转字符串:[object Math] JSON字符串:[object JSON]
+  console.log('Math转字符串:' + Math, 'JSON字符串:' + JSON)
+  console.log(2 * { valueOf: () => '3' }, 'J' + { toString: () => 'S' }) // 输出: 6 "JS"
+  ```
+
+  - **对象动态声明属性**
+
+  ```cs
+  const dynamic = 'color';
+  let item = {brand: 'Ford', [dynamic]: 'Blue'}
+  console.log(item); // { brand: "Ford", color: "Blue" }
+  ```
+
+- **4. 语法相关**
+
+  - **短路求值**: `||`
+
+  ```cs
+  let one = 1, two = 2, three = 3; console.log(one && two && three); // 3
+  console.log(0 && null); // 0
+  ```
+
+  - 转换成布尔值: **使用`!`**
+
+  在 JavaScript 中，除了 0、空字符串、null、undefined、NaN 和 false 是假值之外，其他的都是真值。
+
+  ```cs
+  console.log(!"hello", !0, typeof true, !typeof true); // false true "boolean" false
+  ```
+
+  - 快速幂运算`**`，比使用`Math.pow()`更快: `console.log(Math.pow(2, 3) == 2 ** 3) // true`
+
+  - 快速取整: **使用位或运算符 `|`** 比 Math.floor()、Math.ceil()或 Math.round()更快。
+
+  ```cs
+  console.log(23.9 | 0, -23.9 | 0); // 位运算符，正数向下取整，负数向上取整，输出: 23 -23
+  console.log(Math.floor(23.9), Math.ceil(-23.9)); // 输出: 23 -23
+  console.log(1553 / 100, (1553 / 100) | 0); // // 移除整数尾部数字,输出: 15.53, 15
+  ```
+
+  - **判断奇偶数 `& 1`**
+
+  ```cs
+  const num = 3; console.log(!!(num & 1), !!(num % 2)); // true true
+  ```
+
+  - **给多个变量赋值**
+
+  ```cs
+  let [a, b, c] = [5, 8, 12]; console.log(a, b, c) // 5 8 12
+  ```
+
+  - **交换两个变量**
+
+  ```cs
+  let x = 'Hello', y = 55; console.log(x, y); // Hello 55
+  [x, y] = [y, x]; console.log(x, y); // 55 Hello
+  ```
+
+  - **多条件检查**
+
+  对于多个值匹配，我们可以将所有的值放到数组中，然后使用 indexOf() 或 includes() 方法。
+
+  ```cs
+  if (value === 1 || value === "one" || value === 2 || value === "two") {...}
+  if ([1, "one", 2, "two"].indexOf(value) >= 0) {  ...}
+  if ([1, "one", 2, "two"].includes(value)) {...}
+  ```
+
+  - **仅在变量为 true 的情况下才调用函数**，则可以使用 `&&` 运算符
+
+  ```cs
+  if (test1) { callMethod(); }
+  test1 && callMethod();
+  ```
+
+  - **在 return 语句中使用比较**
+
+  ```cs
+  function checkReturn() { return test || callMe('test'); }
+  ```
+
+- **5. 工具方法**
+
+  - **数组洗牌**
+
+  ```cs
+  const shuffleArray = (arr) => arr.sort(() => Math.random() - 0.5);
+  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  console.log(shuffleArray(arr)); // 每次输出都不一样
+  ```
+
+  - **生成随机颜色字符串**
+
+  ```cs
+  const generateRandomHexColor = () => `#${Math.floor(Math.random() * 0xffffff).toString(16)}`;
+  console.log(generateRandomHexColor()) // 输出类似: #7a40e7
+  ```
+
+  - **缩短 console.log()**
+
+  ```cs
+  // 在nodejs使用 globalThis，看环境使用window、document等
+  const cc = console.log.bind(globalThis);
+  cc(996, "hello world", new Date); // 996 hello world 2022-12-15T07:02:08.567Z
+  ```
 
 \newpage
 
-## diff 算法简述
-
-**\textcolor{brown}{简单 diff 算法简单总结}**
-
-*遍历*新旧两组子节点中数量*较少*的那一组，并逐个调用 patch 函数进行打补丁，然后*比较新旧两组子节点的数量*，*如果新的*一组子节点数量更*多*，说明有新子节点*需要挂载*；*否则*说明在旧的一组子节点中，有节点*需要卸载*。
-
-_简单 Diff 算法的**核心逻辑**_ 是，拿新的一组子节点中的节点去旧的一组子节点中寻找可复用的节点。如果找到了，则记录该节点的位置索引。我们把这个位置索引称为最大索引。在整个更新过程中，如果一个节点的索引值小于最大索引，则说明该节点对应的真实 DOM 元素需要移动。
-
-**\textcolor{brown}{双端 diff 算法简单总结}**: 使用了 4 个指针分别指向了新旧子节点序列的首尾，在遍历过程中逐渐向中间移动，直到尾指针小于头指针。
-
-需要将更新逻辑封装到一个 while 循环。由于在*每一轮更新完成之后*，紧接着都会更新四个索引中*与当前更新轮次相关联的索引*，所以整个 while 循环执行的条件是：_头部索引值要小于等于尾部索引值_。
-
-- 在双端比较中，**每一轮**比较都分为四个步骤(就是双端比较时，每次移动指针，需要比较 4 次)
-  - 第一步：比较**旧的**一组子节点中的**第一个**子节点与**新的**一组子节点中的**第一**个子节点，看看它们是否相同。
-  - 第二步：比较**旧的**一组子节点中的**最后一个**子节点与**新的**一组子节点中的**最后一个**子节点，看看它们是否相同。
-  - 第三步：比较**旧的**一组子节点中的**第一个**子节点与**新的**一组子节点中的**最后一个**子节点，看看它们是否相同。
-  - 第四步：比较**旧的**一组子节点中的**最后一个**子节点与**新的**一组子节点中的**第一个**子节点，看看它们是否相同。
-
-1. **理想情况下找头尾节点可复用**，在上述四步中找到了相同的节点，即可复用；如果不同则需要看第五步的情况。
-
-- 头头和尾尾节点相同时，不需要移动，只需要更新索引移动一步。头尾节点相同，则需要移动真实 dom 的该节点到头或者尾去。
-
-2. 如果头尾没有可复用的节点，就**尝试看看非头部、非尾部的节点能否复用**(相当于第五步)。_具体做法是，拿新的一组子节点中的头部节点去旧的一组子节点中寻找_。
-
-- **如果新节点在旧节点序列中能找到**，说明可以复用，需要**移动该节点**。用 idxInOld 记录该节点在旧节点序列中的位置。
-  - 首先，在移动节点之前不要忘记调用 patch 函数进行打补丁(**找到并更新变更点**,挂载动作也是一种特殊的打补丁)
-    - 渲染器会使用 newVNode 与上一次渲染的 oldVNode 进行比较，试图找到并更新变更点。这个过程叫作“打补丁”(patch)。
-  - 接着，调用 insert 函数在对应真实 DOM 节点中进行移动。(**节点移动**)
-  - 然后，因为旧节点 idxInOld 处的数据处理过了，就将其置为 undefined。(**旧节点置为 undefined**)
-    - 这里置为 undefined 之后，需要在遍历旧节点序列时跳过 undefined 的节点。
-  - 最后，将遍历新节点序列的下一个节点，即 newStartIdx 索引前进到下一个位置。(**索引更新**)
-- **如果新节点在旧节点数组中不存在**，需要**新增该节点**，此时 idxInOld `>` 0 不成立，找不到对应的索引。
-  - 注意，需要*在 while 循环结束后*，多一个 if 判断，如果`oldEndIdx < oldStartIdx && newStartIdx <= newEndIdx`成立说明新的一组子节点中有遗留的节点需要作为新节点挂载。
-  - _索引值位于 newStartIdx 和 newEndIdx 这个区间内的节点都是新节点_。开启一个 for 循环来遍历这个区间内的节点并逐一挂载。
-- **如果旧节点在新节点数组中不存在**，则需要**删除该节点**。
-  - 需要*在 while 循环结束后*，继续多一个 else if 判断，如果`newEndIdx < newStartIdx && oldStartIdx <= oldEndIdx`成立，需要卸载已经不存在的节点。
-  - 索引值位于 oldStartIdx 和 oldEndIdx 这个区间内的节点都应该被卸载，于是我们开启一个 for 循环将它们逐一卸载。
-
-相比简单 Diff 算法，双端 Diff 算法的**优势**在于，对于同样的更新场景，执行的 DOM 移动操作次数更少。
-
-**\textcolor{brown}{快速 diff 算法简单总结}**:先预处理寻找相同的前置和后置节点，此时若新旧节点组有遍历完的，可以通过卸载或挂载完成更新。没能通过卸载和挂载完成更新，再根据剩下的节点的索引关系，构建新节点组的最长子序列索引数据，其指向的节点不需要移动。剩下的节点再根据情况挂载或移动。
-
-**1. 预处理**
-
-- 前置节点通过建立索引 j，从 0 开始，使用 while 循环递增 j 遍历新旧节点序列，直到遇到不相同的节点。
-- 后置节点通过建立索引 newEnd 和 oldEnd，指向新旧两个节点序列的最后一个节点，使用 while 从后往前遍历，直到遇到不相同的节点。
-- 判断**新**节点**没有**遍历完且**旧**节点**遍历完**，即`oldEnd < j && newEnd >= j`，从 j 到 newEnd 的节点都依次**挂载**(调用 patch 函数)。
-- 判断**旧**节点**没有**遍历完且**新**节点**遍历完**，即`newEnd < j && oldEnd >= j`，从 j 到 oldEnd 的节点都依次**卸载**(调用 unmount 函数)。
-- 判断 **新旧节点都没遍历完**，则进行比较第二步部分，判断是否需要进行 DOM 的移动。
-
-**2. 判断是否需要进行 DOM 的移动**
-
-- 构建一个 source 数组，用于存放**新节点对应旧节点组中的索引**。长度为`newEnd - j + 1`，初始化全部 `fill(-1)`。
-  - 遍历*新节点组*，将其 `el.key` 作为`[key]`，`index` 作为 `[value]` 保存为一个**索引表**
-  - 遍历*旧节点组*，在索引表中找相同的 `el.key`
-    - 没找到，该节点已经不存在于新子节组中了，调用 unmount 函数**卸载**该节点
-    - 找到了，**将其在旧节点中的索引放入索引的 source** 中。如果在遍历过程中遇到的**索引值呈现递增趋势**，则说明**不需要移动**节点。
-  - 其中新增了 moved 代表是否需要移动节点，初始为 false；pos 代表遍历旧节点组的过程中遇到的最大索引值 k，初始为 0； patched 代表更新过的节点数量,每更新一个节点，都将 patched 变量 `+1` 。
-    - 在第二个 for 循环内，通过比较变量 k 与变量 pos 的值来判断是否需要移动节点。`if(k<pos){moved=true} else{pos=k}`。
-    - 如果*已经更新过*的节点数量 patched**大于** *需要更新*的节点数量 `newEnd-j+1`，则调用 unmount 函数**卸载**多余的节点。
-
-**3. 移动元素**
-
-- 通过 source 数组计算出**最长递增子序列的索引信息数组 seq**(source 数组的长度是去除了相同前后置节点的新节点组长度)。
-  - 例如 seq 的值为`[0, 1]`的含义: 在新子节点序列中，重新编号后索引值为 0 和 1 的这两个节点在更新前后顺序没有发生变化。
-- 用索引 **i** 指向**新节点组中的最后一个节点**，用索引 _s_ 指向最长递增子序列中的*最后一个元素*，_循环使 i 递减，从下向上移动_
-  - 第一步: 判断表达式 `source[i]===-1`是否成立
-    - _成立_，说明索引为 i 的节点是*全新的节点*。找到真实索引位置的下一个节点处，调用 patch**挂载**节点。_不成立_，继续下一步。
-  - 第二步: 判断表达式 `i !== seq[s]` 是否成立
-    - _成立_，说明该节点*需要移动*。找到该节点在新节点组中的真实位置作为锚点，调用 insert **移动**节点
-  - 第三步: 第一步和第二步中的条件*都不成立*
-    - 说明该节点*不需要移动*，但仍然需要让索引 s 的值递减，即 `s--`
-
-\newpage
-
-# vuejs 设计与实现总结
-
-## 一：框架设计概览
-
-### 1 权衡的艺术
-
-**命令式和声明式这两种范式的差异**，其中命令式更加关注过程，而声明式更加关注结果。
-
-- *命令式*在理论上可以做到极致优化，但是用户要承受巨大的心智负担；
-- *声明式*能够有效减轻用户的心智负担，但是性能上有一定的牺牲，框架设计者要想办法尽量使性能损耗最小化。
-
-**虚拟 DOM 的性能**，并给出了一个公式： _声明式的更新性能消耗 `=` 找出差异的性能消耗 `+` 直接修改的性能消耗_ 。
-
-- 虚拟 DOM 的意义就在于使 _`找出差异的性能消耗`最小化_。
-  - 用原生 js 操作`DOM`的方法(如 document.createElement)、虚拟`DOM`和`innerHTML`三者操作页面的性能，不可以简单地下定论:
-    - 这与**页面大小**、**变更部分的大小**都有关系，除此之外，与**创建页面**还是**更新页面**也有关系。
-    - 选择哪种更新策略，需要结合**心智负担**、**可维护性**等因素综合考虑。
-- 一番权衡之后，发现虚拟 DOM 是个还不错的选择。
-
-**运行时和编译时**的相关知识，了解纯运行时、纯编译时以及两者都支持的框架各有什么特点(Vue.js 3 是一个`编译时+运行时`的框架):
-
-- **纯运行时**: 用户为 Render 函数提供一个树型结构的数据对象，然后 Render 函数会根据该对象递归地将数据渲染成 DOM 元素。
-- **编译时`+`运行时**: 用户使用 Compiler 的程序把 HTML 字符串编译成树型结构的数据对象，再使用 Render 函数渲染成 DOM 元素。
-- **纯编译时**: Compiler 把 HTML 字符串直接编译成命令式代码。
-
-### 2 框架设计的核心要素
-
-**提升用户的开发体验**。框架设计中关于开发体验的内容，开发体验是衡量一个框架的重要指标之一。
-
-- **框架提供友好的警告信息**至关重要。大多数情况下框架要比开发者更清楚问题出在哪里，因此其抛出有意义的警告有助于开发者快速定位问题。
-
-**控制框架代码的体积**。但提供的警告信息越详细，就意味着框架体积越大。
-
-- 因此，_为了框架体积不受警告信息的影响_，需要利用 Tree-Shaking 机制，配合构建工具预定义常量的能力，
-  - 例如预定义 `__DEV__` 常量，从而实现仅在开发环境中打印警告信息，
-  - 而生产环境中则不包含这些用于提升开发体验的代码，从而实现线上代码体积的可控性。
-
-**Tree-Shaking** 是一种排除 dead code 的机制，框架中会内建多种能力，例如 Vue.js 内建的组件等。
-
-- 对于用户可能用不到的能力，可以利用 Tree-Shaking 机制使最终打包的代码体积最小化。
-- _Tree-Shaking 本身基于 ESM_，并且 JavaScript 是一门动态语言，通过纯静态分析的手段进行 Tree-Shaking 难度较大，因此大部分工具能够识别`/*#__PURE__*/`注释(不会产生副作用)，在编写框架代码时可以利用`/*#__PURE__*/`来辅助构建工具进行 Tree-Shaking。
-
-**框架的输出产物**，不同类型的产物是为了满足不同的需求。
-
-- 为了让用户能够通过 `<script>` 标签直接引用并使用，需要*输出 IIFE 格式*的资源，即立即调用的函数表达式。
-- 为了让用户能够通过 `<script type="module">` 引用并使用，需要*输出 ESM 格式*的资源。
-  - 这里需要注意的是，ESM 格式的资源有两种：用于浏览器的 esm-browser.js 和用于打包工具的 esm-bundler.js。
-    - 它们的区别在于对预定义常量`__DEV__`的处理，前者直接将`__DEV__`常量替换为字面量 true 或 false，
-    - 后者则将 `__DEV__ `常量替换为`process.env.NODE_ENV !== 'production'` 语句。
-
-**特性开关**，框架会提供多种能力或功能。 有时出于灵活性和兼容性的考虑，对于同样的任务，框架提供了两种解决方案，例如:
-
-- vue 中的选项对象式`API`和组合式`API`都能用来完成页面的开发，两者虽然不互斥，但从框架设计的角度看完全是基于兼容性考虑的。
-- 有时用户明确知道自己仅会使用组合式 API，而不会使用选项对象式 API，这时用户可以通过特性开关关闭对应的特性，这样在打包的时候，用于实现关闭功能的代码将会被 Tree-Shaking 机制排除。
-
-**框架的错误处理**做得好坏直接决定了用户应用程序的健壮性，同时还决定了用户开发应用时处理错误的心智负担(`app.config.errorHandler`)。
-
-- 框架需要为用户提供统一的错误处理接口，这样用户可以通过注册自定义的错误处理函数来处理全部的框架异常。
-
-**一个常见的认知误区**，即“使用 TS 编写框架和框架对 TS 类型支持友好是两件完全不同的事”。
-
-- 有时候为了让框架提供更加友好的类型支持，甚至要花费比实现框架功能本身更多的时间和精力。
-
-### 3 vue3 的设计思路
-
-**声明式地描述 UI** 的概念
-
-- Vue.js 是一个声明式的框架。声明式的好处在于，它直接描述结果，用户不需要关注过程。
-- Vue.js 采用模板的方式来描述 UI，但它同样支持使用虚拟 DOM 来描述 UI。
-- 虚拟 DOM 要比模板更加灵活，但模板要比虚拟 DOM 更加直观。
-
-**最基本的渲染器的实现**
-
-- 渲染器的**作用**是，把虚拟 DOM 对象渲染为真实 DOM 元素。
-- 它的**工作原理**是，递归地遍历虚拟 DOM 对象，并调用原生 DOM API 来完成真实 DOM 的创建。
-- 渲染器的**精髓**在于后续的更新，它会通过 Diff 算法找出变更点，并且只会更新需要更新的内容。
-
-**组件的本质**。组件其实就是一组虚拟 DOM 元素的封装。
-
-- 它可以是一个*返回虚拟 DOM 的函数*，也可以是*一个对象*，但这个对象下必须要有一个函数用来产出组件要渲染的虚拟 DOM。
-- 渲染器在渲染组件时会**先执行组件的渲染函数并得到其返回值**，称之为 subtree，最后再**递归地调用渲染器将 subtree 渲染**出来即可。
-
-**模板的工作原理**。Vue.js 的模板会被一个叫作编译器的程序编译为渲染函数。**Vue.js 是各个模块组成的有机整体**。
-
-- 组件的实现依赖于 _渲染器_ ，模板的编译依赖于 _编译器_ ，并且编译后生成的代码是根据渲染器和虚拟 DOM 的设计决定的。
-
-## 二：响应系统
-
-### 4 响应系统的作用与实现
-
-**副作用函数和响应式数据**的概念，以及它们之间的关系。
-
-- effect 函数的执行*会直接或间接影响其他函数的执行*，这时 effect 函数产生了**副作用**(例如:添加 DOM 事件监听器或者请求数据)。
-- 一个**响应式数据**最基本的实现依赖于对`读取`和`设置`操作的拦截，从而在副作用函数与响应式数据之间建立联系(**响应系统的根本实现原理**)。
-  - 当“读取”操作发生时，将当前执行的副作用函数存储到“桶”(一个 Set 实例)中；
-  - 当“设置”操作发生时，再将副作用函数从“桶”里取出并执行。
-
-一个**相对完善的响应系统**。使用 WeakMap 配合 Map 构建了新的“桶”结构，从而能够在响应式数据与副作用函数之间建立更加精确的联系。
-
-- WeakMap 与 Map 这两个数据结构之间的区别:
-  - `WeakMap`是弱引用的，不影响垃圾回收器的工作。当用户代码对一个对象没有引用关系时，`WeakMap`不会阻止垃圾回收器回收该对象。
-
-**分支切换导致的冗余副作用**的问题，这个问题会导致副作用函数进行不必要的更新。为了解决这个问题:
-
-- 需要*在每次副作用函数重新执行之前，清除上一次建立的响应联系*，而*当副作用函数重新执行后，会再次建立新的响应联系*。
-  - 新的响应联系中不存在冗余副作用问题，从而解决了问题。
-- 但在此过程中，还遇到了**遍历 Set 数据结构导致无限循环**的新问题，该问题产生的原因可以从 ECMA 规范中得知:
-  - 即“在调用 forEach 遍历 Set 集合时，如果一个值已经被访问过了，但这个值被删除并重新添加到集合，如果此时 forEach 遍历没有结束，那么这个值会重新被访问。”
-    ```txt
-    const set = new Set([1,2]);
-    set.forEach(item => {set.delete(1);set.add(1);console.log('遍历中');}) // 无限循环
-    ```
-  - 解决方案是建立一个新的 Set 数据结构用来遍历。
-    ```txt
-    const set = new Set([1,2]);
-    const newSet = new Set(set); // newSet 和set结构一样，地址不一样: Set(2) { 1, 2 }
-    newSet.forEach((item) => {set.delete(1);set.add(1);console.log("遍历中");});
-    ```
-
-**嵌套的副作用函数**的问题
-
-- 在实际场景中，嵌套的副作用函数发生在*组件嵌套的场景中*，即父子组件关系。
-  - 这时为了避免在响应式数据与副作用函数之间建立的响应联系发生错乱，需要使用**副作用函数栈**来存储不同的副作用函数。
-  - 当一个副作用函数执行完毕后，将其从栈中弹出。
-  - 当读取响应式数据的时候，被读取的响应式数据只会与当前栈顶的副作用函数建立响应联系，从而解决问题。
-- 关于**副作用函数无限递归地调用自身，导致栈溢出的问题**。
-  - 该问题的根本原因在于，_对响应式数据的读取和设置操作发生在同一个副作用函数内_。
-  - 解决办法很简单，_如果 trigger 触发执行的副作用函数与当前正在执行的副作用函数相同，则不触发执行_ 。
-
-**响应系统的可调度性**
-
-- 所谓可调度，指的是*当 trigger 动作触发副作用函数重新执行时，有能力决定副作用函数执行的时机、次数以及方式*。
-- 为了实现调度能力为 effect 函数增加了第二个选项参数，可以通过 scheduler 选项指定调用器，这样用户可以通过调度器自行完成任务的调度。
-- 如何通过调度器实现任务去重: 即通过一个微任务队列对任务进行缓存，从而实现去重。
-
-**计算属性**，即 computed。计算属性实际上是一个懒执行的副作用函数，通过 lazy 选项使得副作用函数可以懒执行。
-
-- 被标记为懒执行的副作用函数可以通过手动方式让其执行。
-  - 利用这个特点设计了计算属性，当读取计算属性的值时，只需要手动执行副作用函数即可。
-- 当计算属性依赖的响应式数据发生变化时，会通过 scheduler 将 dirty 标记设置为 true，代表“脏”。这样，下次读取计算属性的值时，会重新计算真正的值。
-
-**watch 的实现原理**。它本质上利用了副作用函数重新执行时的可调度性。
-
-- 一个 watch 本身会创建一个 effect，当这个 effect 依赖的响应式数据发生变化时，会执行该 effect 的调度器函数，即 scheduler。
-  - 这里的 scheduler 可以理解为“回调”，所以只需要在 scheduler 中执行用户通过 watch 函数注册的回调函数即可。
-- 通过添加新的 immediate 选项来实现立即执行回调的 watch。
-- 通过 flush 选项来指定回调函数具体的执行时机，本质上是利用了调用器和异步的微任务队列。
-
-**过期的副作用函数，它会导致竞态问题**
-
-- 为了解决这个问题，Vue.js 为 watch 的回调函数设计了第三个参数，即 onInvalidate。它是一个函数，用来注册过期回调。
-- 每当 watch 的回调函数执行之前，会优先执行用户通过 onInvalidate 注册的过期回调。
-- 这样，用户就有机会在过期回调中将上一次的副作用标记为“过期”，从而解决竞态问题。
-
-### 5 非原始值的响应式方案
-
-**Proxy 与 Reflect**
-
-- Vue.js 3 的响应式数据是基于 Proxy 实现的，Proxy 可以为其他对象创建一个代理对象。
-  - 所谓代理，指的是对一个对象 **基本语义** 的代理。它允许**拦截**并**重新定义**对一个对象的基本操作。
-- 在实现代理的过程中遇到了访问器属性的 this 指向问题，这需要使用 `Reflect.*` 方法并指定正确的 receiver 来解决。
-
-**JavaScript 中对象的概念，以及 Proxy 的工作原理**
-
-- 在 ECMAScript 规范中，JavaScript 中有两种对象，其中一种叫作常规对象(ordinary object)，另一种叫作异质对象(exotic object)。
-  - 满足以下三点要求的对象就是*常规对象*：
-    - 对于`[[Get]]`、`[[Set]]`等 11 个必要的内部方法，必须使用[规范 10.1.x](https://262.ecma-international.org/#sec-ordinary-object-internal-methods-and-internal-slots) 节给出的定义实现；
-    - 对于内部方法 `[[Call]]`，必须使用[规范 10.2.1](https://262.ecma-international.org/#sec-ecmascript-function-objects-call-thisargument-argumentslist) 节给出的定义实现（对象是函数）；
-    - 对于内部方法 `[[Construct]]`，必须使用[规范 10.2.2](https://262.ecma-international.org/#sec-ecmascript-function-objects-construct-argumentslist-newtarget) 节给出的定义实现（对象是构造函数）。
-  - 而所有不符合这三点要求的对象都是*异质对象*。 Proxy 是一个异质对象。
-- 一个对象是函数(必须部署内部方法`[[Call]]`,普通对象则没有)还是其他对象，是由部署在该对象上的内部方法和内部槽决定的。
-
-**`关于对象 Object 的代理`**
-
-- _代理对象的本质，就是查阅规范并找到可拦截的基本操作的方法_。
-- 有一些操作并不是基本操作而是复合操作，这需查阅规范了解它们都依赖哪些基本操作，从而通过基本操作的拦截方法间接地处理复合操作。
-- 还详细分析了添加、修改、删除属性对 for...in 操作的影响:
-  - 添加和删除属性都会影响`for...in`循环的执行次数，当这些操作发生时，需要触发与`ITERATE_KEY`相关联的副作用函数重新执行。
-  - 而修改属性值则不影响 for...in 循环的执行次数，因此无须处理。
-- 还讨论了*如何合理地触发副作用函数重新执行*，包括对 NaN 的处理，以及访问原型链上的属性导致的副作用函数重新执行两次的问题:
-  - 对于 NaN，主要注意的是 `NaN === NaN`永远等于 false。
-  - 对于原型链属性问题，需要查阅规范定位问题的原因。
-- 由此可见，想要基于 Proxy 实现一个相对完善的响应系统，免不了去了解 ECMAScript 规范。
-
-**深响应与浅响应，以及深只读与浅只读**
-
-- 这里的深和浅指的是对象的层级，浅`响应(或只读,下同)`代表仅代理一个对象的第一层属性，即只有对象的第一层属性值是`响应(只读)`的。
-- 深响应(或只读)则恰恰相反，为了实现深响应(或只读)需要在返回属性值之前对值做一层包装，将其包装为响应式(或只读)数据后再返回。
-
-**`关于数组的代理`**
-
-- _数组是一个异质对象_，因为数组对象部署的*内部方法 **`[[DefineOwnProperty]]`** 不同于常规对象*。
-  - 通过索引为数组设置新的元素，可能会隐式地改变数组 length 属性的值。
-  - 对应地，修改数组 length 属性的值，也可能会间接影响数组中的已有元素。所以在触发响应的时候需要额外注意。
-- 如何拦截 for...in 和 for...of 对数组的遍历操作。
-  - 使用 for...in 循环遍历数组与普通对象区别不大，唯一需要注意的是当追踪 for...in 操作时应该使用**数组的 length 作为追踪的 key**。
-  - for...of 基于迭代协议工作，数组内建了`Symbol.iterator`方法。
-    - 根据[规范的 23.1.5.1 节](https://262.ecma-international.org/#sec-createarrayiterator)可知，数组迭代器执行时，会读取数组的 length 属性或数组的索引。
-    - 因此*不需要做其他额外的处理*，就能够实现对 for...of 迭代的响应式支持。
-
-**数组的查找方法**。如 includes、indexOf 以及 lastIndexOf 等。
-
-- 对于数组元素的查找，用户既可能使用代理对象进行查找，也可能使用原始对象进行查找。为了支持这两种形式需要*重写数组的查找方法*。
-- 原理很简单，当用户使用这些方法查找元素时，可以**先去代理对象**中查找，如果找不到，**再去原始数组**中查找。
-
-**会隐式修改数组长度的原型方法**，即 push、pop、shift、unshift 以及 splice 等方法。
-
-- 调用这些方法会间接地读取和设置数组的 length 属性，
-  - 因此，_在不同的副作用函数内对同一个数组执行上述方法，会导致多个副作用函数之间循环调用，最终导致调用栈溢出。_
-- 为了解决这个问题，使用一个标记变量 shouldTrack 来代表*是否允许进行追踪*，然后重写了上述这些方法.
-  - 目的是，当这些方法间接读取 length 属性值时，会先将 shouldTrack 的值设置为 false，即禁止追踪。
-  - 这样就可以断开 length 属性与副作用函数之间的响应联系，从而避免循环调用导致的调用栈溢出。
-
-**`关于集合类型数据的响应式方案`**。集合类型指 Set、Map、WeakSet 以及 WeakMap。
-
-- _使用 Proxy 为集合类型创建代理对象的一些注意事项_:
-  - *集合类型*不同于普通对象，它*有特定的数据操作方法*。当使用 Proxy 代理集合类型的数据时要格外注意。
-    - 例如，集合类型的 size 属性是一个访问器属性，当通过代理对象访问 size 属性时，由于代理对象本身并没有部署`[[SetData]]`这样的内部槽，所以会发生错误。
-  - 另外，通过代理对象执行集合类型的操作方法时，要*注意这些方法执行时的 this 指向*，需要在 get 拦截函数内通过 `.bind` 函数为这些方法绑定正确的 this 值。
-- _集合类型响应式数据的实现_:
-  - 需要**通过“重写”集合方法的方式来实现自定义的能力**，当 Set 集合的 add 方法执行时，需要调用 trigger 函数触发响应。
-- *数据污染*:**把响应式数据设置到原始数据上的行为**称为数据污染。它导致用户可以通过原始数据执行响应式相关操作，这不是所期望的。
-  - 为了避免这类问题发生，_通过响应式数据对象的 **raw 属性**来访问对应的**原始数据对象**_，后续操作使用原始数据对象就可以了。
-- _关于集合类型的遍历_，即 forEach 方法。集合的 forEach 方法与对象的 for...in 遍历类似，最大的不同体现在:
-  - 当使用 for...in 遍历对象时，**只关心对象的键是否变化**，而不关心值；
-  - 但使用 forEach 遍历集合时，**既关心键的变化，也关心值的变化**。
-
-### 6 原始值的响应式方案
-
-**ref 的概念**。ref 本质上是一个“包裹对象”。
-
-- 因为 JavaScript 的 Proxy 无法提供对原始值的代理，所以需要使用一层对象作为包裹，间接实现原始值的响应式方案。
-- 由于“包裹对象”本质上与普通对象没有任何区别，因此为了区分 ref 与普通响应式对象，还为“包裹对象”定义了一个值为 true 的属性，即`__v_isRef`，用它作为 ref 的标识。它的值为 true，代表这个对象是一个 ref，而非普通对象。
-
-ref 除了能够用于原始值的响应式方案之外，还能用来**解决响应丢失问题**(普通对象不具有响应能力)。
-
-- 为了解决该问题，实现了 toRef 以及 toRefs 这两个函数。它们本质上是对响应式数据做了一层包装，或者叫作“访问代理”。
-- toRef 函数接收两个参数(一个响应式数据，对象的一个键)，返回一个类似于 ref 结构的 wrapper 对象。toRefs 函数为批量地完成转换。
-
-**自动脱 ref 的能力**（在模板可以直接访问一个 ref 的值而无须通过 `.value` 属性来访问的原因）。
-
-- 为了减轻用户的心智负担，自动对暴露到模板中的响应式数据进行脱 ref 处理。用户在模板中使用响应式数据时就无须关心一个值是不是 ref 。
-
-## 三：渲染器(renderer)
-
-### 7 渲染器的设计
-
-**渲染器与响应系统的关系**
-
-- 利用响应系统的能力，可以做到，当响应式数据变化时自动完成页面更新（或重新渲染），这与渲染器的具体实现无关。
-- 一个极简的渲染器，它只能利用 innerHTML 属性将给定的 HTML 字符串内容设置到容器中。
-
-**与渲染器相关的基本名词和概念**
-
-- *渲染器(renderer)*的作用是把虚拟 DOM 渲染为特定平台上的真实元素。
-- _虚拟 DOM_ 通常用英文 virtual DOM 来表达，有时会简写成 vdom 或 vnode。
-- 渲染器会执行挂载和打补丁操作:
-
-  - 对于新的元素，渲染器会将它挂载到容器(container)内；渲染器把虚拟 DOM 节点渲染为真实 DOM 节点的过程叫作**挂载(mount)**
-  - 对于新旧 vnode 都存在的情况，渲染器则会执行打补丁操作，即对比新旧 vnode，只更新变化的内容。
-    - **渲染器会使用`newVNode`与上一次渲染的`oldVNode`进行比较，试图找到并更新变更点**。这个过程叫作**打补丁(patch)**或更新。
-    - patch 函数不仅可以用来完成打补丁(例如更新虚拟节点所对应的真实`DOM`的文本内容，从 hi 改为 hello)，也可以用来执行挂载。
-
-一个运行时渲染器将会遍历整个虚拟`DOM`树，并据此构建真实的`DOM`树。这个过程被称为`挂载`。
-
-假如有两份虚拟`DOM`树，渲染器将会**有比较地遍历**它们，**找出**它们之间的**区别**，并**应用**这其中的**变化到真实的`DOM`上**。这个过程被称为`打补丁`。
-
-**自定义渲染器的实现**
-
-- 在浏览器平台上，渲染器可以利用 DOM API 完成 DOM 元素的创建、修改和删除。
-  - 为了让渲染器不直接依赖浏览器平台特有的 API，将这些用来创建、修改和删除元素的操作抽象成可配置的对象。
-  - 用户可以在调用 createRenderer 函数创建渲染器的时候指定自定义的配置对象，从而实现自定义的行为。
-- 还实现了一个用来打印渲染器操作流程的自定义渲染器，它不仅可以在浏览器中运行，还可以在 Node.js 中运行。
-
-### 8 挂载与更新
-
-**如何挂载子节点，以及节点的属性**
-
-- 对于子节点，只需要递归地调用 patch 函数完成挂载即可。
-- 而节点的属性比想象中的复杂，它涉及两个重要的概念：HTML Attributes 和 DOM Properties。
-  - 为元素设置属性时，不能总是使用 setAttribute 函数，也不能总是通过元素的 DOM Properties 来设置。
-  - 至于如何正确地为元素设置属性，取决于被设置属性的特点。
-    - 例如，表单元素的 el.form 属性是只读的，因此只能使用 setAttribute 函数来设置。
-
-**特殊属性的处理**
-
-- 以 class 为例，Vue.js 对 class 属性做了增强，它允许为 class 指定不同类型的值。但在把这些值设置给 DOM 元素之前，要对值进行正常化。
-- 为元素设置 class 的三种方式及其性能情况:
-  - 在浏览器中为一个元素设置 class 有三种方式，即使用 `setAttribute`、`el.className` 或 `el.classList`。
-  - 其中，**`el.className` 的性能最优**，所以选择在 patchProps 函数中使用 el.className 来完成 class 属性的设置。
-- 除了 class 属性之外，Vue.js 也对 style 属性做了增强，所以 style 属性也需要做类似的处理。
-
-**卸载(unmount)操作**
-
-- 一开始，直接使用 innerHTML 来清空容器元素，但是这样存在诸多问题。
-  - 容器的内容可能是由某个或多个组件渲染的，当卸载操作发生时，应该正确地调用这些组件的 beforeUnmount、unmounted 等生命周期函数。
-  - 即使内容不是由组件渲染的，有的元素存在自定义指令，应该在卸载操作发生时正确地执行对应的指令钩子函数。
-  - 使用 innerHTML 清空容器元素内容的另一个缺陷是，它不会移除绑定在 DOM 元素上的事件处理函数。
-- 因此，_不能直接使用 innerHTML 来完成卸载任务_。 为了解决这些问题，**封装了 unmount 函数**。
-  - 该函数是以一个 vnode 的维度来完成卸载的，它会根据 vnode.el 属性取得该虚拟节点对应的真实 DOM，然后调用原生 DOM API 完成 DOM 元素的卸载。
-  - 这样做还有两点额外的好处。
-    - 在 unmount 函数内，有机会调用绑定在 DOM 元素上的指令钩子函数，例如 beforeUnmount、unmounted 等。
-    - 当 unmount 函数执行时，有机会检测虚拟节点 vnode 的类型。如果该虚拟节点描述的是组件，则也有机会调用组件相关的生命周期函数。
-
-**vnode 类型的区分**
-
-- _渲染器在执行更新时，需要优先检查新旧 vnode 所描述的内容是否相同。只有当它们所描述的内容相同时，才有打补丁的必要。_
-- 即使它们描述的内容相同，也需要进一步检查它们的类型，即检查 `vnode.type` 属性值的类型，据此判断它描述的具体内容是什么。
-  - 如果类型是**字符串**，则它描述的是**普通标签元素**，这时会调用 mountElement 和 patchElement 来完成挂载和打补丁；
-  - 如果类型是**对象**，则它描述的是**组件**，这时需要调用 mountComponent 和 patchComponent 来完成挂载和打补丁。
-
-**事件的处理**
-
-- _如何在虚拟节点中描述事件_，把`vnode.props`对象中以字符串`on`开头的属性当作事件对待。
-- _如何绑定和更新事件_:
-  - 在更新事件的时候，为了提升性能，伪造了`invoker`函数，并把真正的事件处理函数存储在`invoker.value`属性中，
-  - 当事件需要更新时，只更新`invoker.value`的值即可，这样可以避免一次`removeEventListener`函数的调用。
-- _如何处理事件与更新时机的问题_: 利用事件处理函数被绑定到 DOM 元素的时间与事件触发时间之间的差异。
-  - 需要**屏蔽所有绑定时间晚于事件触发时间的事件处理函数的执行** 。
-- _子节点的更新_: 对虚拟节点中的 children 属性进行了规范化，规定`vnode.children`属性只能有如下三种类型:
-  - `字符串类型`：代表元素具有文本子节点。`数组类型`：代表元素具有一组子节点。`null`：代表元素没有子节点。
-  - 在更新时，新旧 vnode 的子节点都有可能是以上三种情况之一，所以在执行更新时一共要考虑九种可能，即下面所展示的那样。
-    - 但落实到代码中，并不需要罗列所有情况:
-      ```txt
-         新子节点     旧子节点      新子节点      旧子节点      新子节点     旧子节点
-        -----------------------------------------------------------------------
-                    没有子节点                 没有子节点                没有子节点
-        没有子节点    文本子节点    文本子节点     文本子节点    一组子节点    文本子节点
-                    一组子节点                 一组子节点                一组子节点
-      ```
-  - 另外，当新旧 vnode 都具有一组子节点时，采用了比较笨的方式来完成更新，即`卸载所有旧子节点，再挂载所有新子节点`。
-  - **更好的做法**是通过 Diff 算法比较新旧两组子节点，试图最大程度复用 DOM 元素。
-
-**如何使用虚拟节点来描述文本节点和注释节点**
-
-- 利用了 symbol 类型值的唯一性，为文本节点和注释节点分别创建唯一标识，并将其作为 `vnode.type `属性的值。
-
-**Fragment 及其用途**
-
-- Vue.js 3 支持多根节点模板。Vue.js 3 使用 Fragment(一个新的 vnode 类型)来描述多根节点模板。
-- 当渲染器渲染 Fragment 类型的虚拟节点时，由于**Fragment 本身并不会渲染任何内容**，所以渲染器只会渲染 Fragment 的子节点。
-- 当卸载 Fragment 类型的虚拟节点时，同样只需要遍历它的 children 数组，并将其中的节点逐个卸载即可。
-
-### 9 简单 Diff 算法
-
-**Diff 算法的作用**: Diff 算法用来计算两组子节点的差异，并试图最大程度地复用 DOM 元素。
-
-- 之前的方法`卸载所有旧子节点，再挂载所有新子节点`无法对 DOM 元素进行复用，需要大量的 DOM 操作才能完成更新，非常消耗性能。
-- *改进后的方案*是，遍历新旧两组子节点中*数量较少的那一组*，并逐个调用 patch 函数进行打补丁(节点有差异就更新差异，没有就不变化)，然后比较新旧两组子节点的数量，如果新的一组子节点数量更多，说明有新子节点需要挂载；否则说明在旧的一组子节点中，有节点需要卸载。
-
-**虚拟节点中 key 属性的作用**，它就像虚拟节点的“身份证号”。
-
-- 只要两个*虚拟节点的 type 属性值和 key 属性值都相同，那么就认为它们是相同的*，即可以进行 **DOM 的复用**。
-- 在更新时渲染器通过 key 属性找到可复用的节点，然后尽可能地通过`DOM`移动操作来完成更新，避免过多地对`DOM`元素进行销毁和重建。
-
-**简单 Diff 算法是如何寻找需要移动的节点的**。简单 Diff 算法的**核心逻辑**:
-
-- 拿**新一组**子节点中的节点去旧一组子节点中寻找可复用的节点。如果找到则记录该节点的位置索引并保持最大值。这个位置索引称为**最大索引**。
-- 在整个更新过程中，如果**一个节点的索引值小于最大索引**，则说明该节点对应的真实 DOM 元素需要**移动**。
-  - 取新一组 children 遍历时，新节点在旧 children 中寻找具有相同 key 值节点的过程中，遇到的最大索引值(初始为 0)。
-  - 如果在后续寻找的过程中，存在索引值比当前遇到的最大索引值还要小的节点，则意味着该节点需要移动。
-
-### 10 双端 Diff 算法
-
-双端 Diff 算法的原理及其优势:
-
-- 顾名思义，双端 Diff 算法指的是，_在新旧两组子节点的四个端点之间分别进行比较，并试图找到可复用的节点_。
-- 相比简单 Diff 算法，双端 Diff 算法的*优势在于，对于同样的更新场景，执行的 DOM 移动操作次数更少*。
-
-### 11 快速 Diff 算法
-
-[快速 Diff 算法](https://github.com/vuejs/core/blob/da2ced15339b6fdb7a1459fa359bb79346a82bc2/packages/runtime-core/src/renderer.ts#L1747)在实测中性能最优:
-
-- 它借鉴了文本 Diff 中的预处理思路，先处理新旧两组子节点中*相同的前置节点和相同的后置节点*。
-- 当前置节点和后置节点全部处理完毕后，如果无法简单地通过挂载新节点或者卸载已经不存在的节点来完成更新，则需要*根据节点的索引关系，构造出一个最长递增子序列*。**最长递增子序列所指向的节点即为不需要移动的节点**。
-
-无论是简单 Diff 算法，还是双端 Diff 算法，抑或快速 Diff 算法，它们都遵循同样的处理规则：
-
-- 1 判断是否有节点需要移动，以及应该如何移动；2 找出那些需要被添加或移除的节点。
-
-**最原始**: 当新旧 vnode 都具有一组子节点时，采用了比较笨的方式来完成更新，即"卸载所有旧子节点，再挂载所有新子节点"。
-**简单 Diff 算法**: 利用虚拟节点的 key 属性，尽可能地复用 DOM 元素，并通过移动 DOM 的方式来完成更新，从而减少不断地创建和销毁 DOM 元素带来的性能开销。
-**双端 Diff 算法**: 同时对新旧两组子节点的两个端点进行比较，比较四次(新首旧首，新尾旧尾，新首旧尾，新尾旧首)，如果首尾没有可复用的，尝试看看非头部、非尾部的节点能否复用。复用了双端节点，减少了 DOM 的移动操作。
-**快速 Diff 算法**: 包含预处理步骤，相同的前置元素和后置元素不需要核心 Diff 算法。剩余部分子节点构建 source 数组 和最长连续子序列 seq(不需要移动)，判断 source 对应索引值是否为-1(挂载新节点)，或者 source 的索引对应的 seq 位置的值是否相等(不相等则需要移动节点)
-
-## 四：组件化
-
-### 12 组件的实现原理
-
-**如何使用虚拟节点来描述组件**。(一个组件必须包含一个渲染函数，即 render 函数，并且渲染函数的返回值应该是虚拟 DOM)
-
-- 使用虚拟节点的 vnode.type 属性来存储组件对象(例如值是 div、Text)，**渲染器根据虚拟节点的该属性的类型来判断它是否是组件**。
-  - 不同类型的节点，需要采用不同的处理方法来完成挂载和更新。_虚拟节点的 vnode.type 属性值为对象，该虚拟节点为组件的描述_。
-  - 如果是组件，则渲染器会使用 mountComponent 和 patchComponent 来完成组件的挂载和更新。
-
-**组件的自更新**
-
-- _在组件**挂载阶段**，会为组件创建一个用于渲染其内容的**副作用函数**。该副作用函数会与组件自身的响应式数据建立响应联系_。
-- 当组件自身的**响应式数据发生变化时，会触发渲染副作用函数重新执行，即重新渲染**。
-- 但由于默认情况下重新渲染是同步执行的，这导致无法对任务去重，因此在创建渲染副作用函数时，指定了自定义的调用器:
-  - 该调度器的作用是，_当组件自身的响应式数据发生变化时，将渲染副作用函数缓冲到微任务队列中_。
-    - 调度器的本质上是利用了**微任务的异步执行机制**，实现对副作用函数的缓冲。
-  - 有了缓冲队列，即可实现对渲染任务的*去重*，从而避免无用的重新渲染所导致的额外性能开销。
-
-**组件实例**:本质上是一个对象，包含了组件运行过程中的状态。
-
-- 对象包含的组件运行状态例如组件是否挂载、组件自身的响应式数据、组件所渲染的内容(即 subtree)等:
-  - state：组件自身的状态数据，即 data。
-  - isMounted：一个布尔值，用来表示组件是否被挂载。
-  - subTree：存储组件的渲染函数返回的虚拟 DOM，即组件的子树（subTree）
-  - 实际上，可以在需要的时候，任意地在组件实例 instance 上添加需要的属性。但应该尽可能保持组件实例轻量，以减少内存占用。
-- 有了组件实例后，在**渲染副作用函数内**，就可以**根据**组件实例上的**状态标识**，来**决定**应该进行全新的挂载，还是应该打补丁。
-  - 例如组件实例的 instance.isMounted 属性可以用来区分组件的挂载和更新。同理可以在合适的时机调用组件对应的其他**生命周期钩子**。
-
-**组件的 props 与组件的被动更新**
-
-- **props** 本质上是父组件的数据，当 props 发生变化时，会触发父组件重新渲染。
-  - 响应式数据变化后，父组件的渲染函数会重新执行副作用函数进行自更新；
-  - 自更新过程中发现父组件的 subTree 包含组件类型的虚拟节点，所以会调用 patchComponent 函数完成子组件的更新。
-- 副作用自更新所引起的子组件更新叫作子组件的**被动更新**。发生被动更新时，需要:
-  - 检测子组件是否真的需要更新，因为子组件的 props 可能是不变的；如果需要更新，则更新子组件的 props、slots 等内容。
-- **渲染上下文对象**(renderContext)，它实际上是组件实例的代理对象。它的意义在于:
-  - 拦截数据状态的读取和设置操作，每当在渲染函数或生命周期钩子中通过 this 来读取数据时，**都会优先从组件的自身状态中读取**，
-    - 如果组件本身并没有对应的数据，则再从 props 数据中读取。
-  - 在渲染函数内访问组件实例所暴露的数据都是通过该代理对象实现的。
-
-**setup 函数** 是为了组合式 API 而生的，所以要避免将其与 Vue.js 2 中的“传统”组件选项混合使用。
-
-- setup 函数的**返回值**两种类型:如果返回**函数**，则将该函数作为组件的渲染函数；如果返回**数据对象**，则将该对象中包含的数据暴露给模板使用。
-- setup 函数接收两个参数:第一个参数是 props 数据对象，第二个参数是 setupContext 对象(保存着与组件接口相关的数据和方法):
-  - slots(非响应式对象)、emit 触发事件(函数)、attrs(没有显式地声明为 props 的属性,非响应式对象)、expose 暴露公共属性(函数)
-
-**emit 函数**包含在 setupContext 对象中，可以通过 emit 函数发射组件的自定义事件。
-
-- 通过 `v-on` 指令为组件绑定的事件在经过编译后，会以 `onXxx` 的形式存储到 props 对象中。
-- 当 emit 函数执行时，会在 props 对象中寻找对应的事件处理函数并执行它。
-
-**组件的插槽**，指组件会预留一个槽位，该槽位具体要渲染的内容由用户插入.
-
-- 它借鉴了 Web Component 中`<slot>` 标签的概念。插槽内容会被编译为插槽函数，插槽函数的返回值就是向槽位填充的内容。
-- `<slot>`标签则会被编译为**插槽函数的调用**,通过执行对应的插槽函数,得到外部向槽位填充的内容`虚拟DOM`,最后将该内容渲染到槽位中。
-
-**onMounted 等用于注册生命周期钩子函数的方法的实现**:
-
-- _通过 onMounted 注册的生命周期函数会被注册到当前组件实例的 instance.mounted 数组中_。
-  - 每当初始化组件并执行组件的 setup 函数之前，先将 currentInstance 设置为当前组件实例，再执行组件的 setup 函数，这样就可以通过 currentInstance 来获取当前正在被初始化的组件实例，从而将那些通过 onMounted 函数注册的钩子函数与组件实例进行关联。
-- 为了维护当前正在初始化的组件实例，定义了全局变量 currentInstance，以及用来设置该变量的 setCurrentInstance 函数。
-
-### 13 异步组件与函数式组件
-
-**异步组件要解决的问题**。异步组件在页面性能、拆包以及服务端下发组件等场景中尤为重要。
-
-- 从根本上来说，异步组件的实现可以完全在用户层面实现，而无须框架支持。但一个完善的异步组件仍需要考虑诸多问题，例如：
-  - 允许用户指定加载出错时要渲染的组件；
-  - 允许用户指定 Loading 组件，以及展示该组件的延迟时间；
-  - 允许用户设置加载组件的超时时长；
-  - 组件加载失败时，为用户提供重试的能力。
-- 因此，框架有必要内建异步组件的实现。Vue.js 3 提供了 defineAsyncComponent 函数，用来定义异步组件。
-
-**异步组件的加载超时问题**，以及**当加载错误发生时，如何指定 Error 组件**
-
-- 通过为 defineAsyncComponent 函数指定选项参数，允许用户通过 timeout 选项设置超时时长。
-- 当加载超时后，会触发加载错误，这时会渲染用户通过 errorComponent 选项指定的 Error 组件。
-
-**在加载异步组件的过程中，受网络状况的影响较大**。当网络状况较差时，加载过程可能很漫长。
-
-- 为了提供更好的用户体验，需要在加载时展示 loading 组件。vue 设计了 loadingComponent 选项以允许用户配置自定义的 loading 组件
-- 为了避免 Loading 组件导致的闪烁问题，还需要设计一个接口，让用户能指定延迟展示 Loading 组件的时间，即 delay 选项。
-
-**在加载组件的过程中，发生错误的情况非常常见**。所以，vue 设计了组件加载发生错误后的重试机制(当加载出错时有能力重新发起加载组件的请求)。
-
-- 异步组件的重试加载机制与接口请求发生错误时的重试机制，两者的思路类似。
-
-**函数式组件**。它本质上是一个函数，其内部实现逻辑可以复用有状态组件的实现逻辑。
-
-- 为了给函数式组件定义 props，允许开发者在函数式组件的主函数上添加静态的 props 属性。
-- **函数式组件没有自身状态，也没有生命周期的概念**。所以在初始化函数式组件时，需要选择性地复用有状态组件的初始化逻辑。
-
-\newpage
-
-### 14 内建组件和模块
-
-**Vue.js 内建的三个组件**，即 KeepAlive 组件、Teleport 组件和 Transition 组件。
-
-- 它们的共同特点是，与渲染器的结合非常紧密，因此需要框架提供底层的实现与支持。
-
-**KeepAlive 组件**(在多个组件间动态切换时**缓存**被移除的组件实例)的作用类似`HTTP`中的持久链接,它可以避免组件实例不断地被销毁和重建。
-
-- KeepAlive 的*基本实现*并不复杂。
-  - 当被 KeepAlive 的组件“卸载”时，渲染器并不会真的将其卸载掉，而是将其搬运到一个隐藏容器中，使得组件可以维持当前状态。
-  - 当被 KeepAlive 的组件“挂载”时，渲染器也不会真的挂载它，而是将它从隐藏容器搬运到原容器。
-- KeepAlive 的*其他能力*，如*匹配策略和缓存策略*。
-  - include 和 exclude 这两个选项用来指定哪些组件需要被 KeepAlive，哪些组件不需要被 KeepAlive。
-    - 默认情况下，include 和 exclude 会匹配组件的 name 选项。但是在具体实现中可以扩展匹配能力。
-  - 对于缓存策略，Vue.js 默认采用“最新一次访问”。为了让用户能自行实现缓存策略，还介绍了正在讨论中的提案。
-
-**Teleport 组件**(*将一个组件内部的一部分模板“传送”到该组件的 DOM 结构外层的位置去*)所要解决的问题和它的实现原理。
-
-- Teleport 组件可以跨越 DOM 层级完成渲染，这在很多场景下非常有用。
-- 在实现 Teleport 时，将 Teleport 组件的渲染逻辑从渲染器中分离出来，这么做有两点好处：
-  - 可以避免渲染器逻辑代码“膨胀”；
-  - 可以利用 Tree-Shaking 机制在最终的 bundle 中删除 Teleport 相关的代码，使得最终构建包的体积变小。
-- Teleport 组件是一个特殊的组件。
-  - 与普通组件相比，它的组件选项非常特殊，例如 `__isTeleport` 选型和 process 选项等。
-  - 这是因为 Teleport 本质上是渲染器逻辑的合理抽象，它完全可以作为渲染器的一部分而存在。
-
-**Transition 组件**的原理与实现:`<Transition>` 会在*一个元素或组件进入和离开 DOM 时应用动画*。
-
-- 从原生 DOM 过渡开始，讲解了如何使用 JavaScript 为 DOM 元素添加进场动效和离场动效。
-- 在此过程中，将实现动效的过程分为多个阶段，即 beforeEnter、enter、leave 等。
-- Transition 组件的实现原理与为原生 DOM 添加过渡效果的原理类似，将过渡相关的钩子函数定义到虚拟节点的 vnode.transition 对象中。
-- 渲染器在执行挂载和卸载操作时，会优先检查该虚拟节点是否需要进行过渡，
-- 如果需要，则会在合适的时机执行 vnode.transition 对象中定义的过渡相关钩子函数。
-
-## 五：编译器(compiler)
-
-### 15 编译器核心技术概览
-
-**Vue.js 模板编译器的工作流程**。Vue.js 的模板编译器用于把模板编译为渲染函数。它的工作流程大致分为三个步骤:
-
-- (1) 分析模板，将其解析为模板 AST。(解析器 parser 的功能)
-- (2) 将模板 AST 转换为用于描述渲染函数的 JavaScript AST。(转换器 transformer 的功能)
-- (3) 根据 JavaScript AST 生成渲染函数代码。(生成器 generator 的功能)
-
-**解析器(parser) 的实现原理**，以及如何用有限状态自动机构造一个词法分析器。
-
-- *词法分析*的过程就是状态机在不同状态之间迁移的过程。在此过程中，状态机会产生一个个 Token，形成一个 Token 列表。
-  - 将使用该 Token 列表来构造用于描述模板的 AST。具体做法是:
-    - 扫描 Token 列表并维护一个开始标签栈。每当扫描到一个开始标签节点，就将其压入栈顶。栈顶的节点始终作为下一个扫描的节点的父节点。这样，当所有 Token 扫描完毕后，即可构建出一棵树型 AST。
-
-**AST 的转换与插件化架构**。
-
-- AST 是树型数据结构，为了访问 AST 中的节点，采用深度优先的方式对 AST 进行遍历。
-  - 在遍历过程中，可以对 AST 节点进行各种操作，从而实现对 AST 的转换。
-- 为了解耦节点的访问和操作，设计了插件化架构，将节点的操作封装到独立的转换函数中。
-  - 这些转换函数可以通过 `context.nodeTransforms` 来注册。这里的 context 称为转换上下文。
-    - 上下文对象中通常会维护程序的当前状态，例如当前访问的节点、当前访问的节点的父节点、当前访问的节点的位置索引等信息。
-    - 有了上下文对象及其包含的重要信息后，即可轻松地实现节点的替换、删除等能力。
-- **有时当前访问节点的转换工作依赖于其子节点的转换结果**，所以为了优先完成子节点的转换，将整个转换过程分为“进入阶段”与“退出阶段”。
-  - 每个转换函数都分两个阶段执行，这样就可以实现更加细粒度的转换控制。
-
-**如何将模板 AST 转换为用于描述渲染函数的 JavaScript AST**
-
-- 模板 AST 用来描述模板，类似地，JavaScript AST 用于描述 JavaScript 代码。
-- 需要将模板编译为渲染函数。而渲染函数是由 JavaScript 代码来描述的。
-  - 因此只有把模板 AST 转换为 JavaScript AST 后，才能据此生成最终的渲染函数代码。
-
-**渲染函数代码的生成工作**
-
-- *代码生成*是模板编译器的最后一步工作，生成的代码将作为组件的渲染函数。
-- _代码生成的过程就是字符串拼接的过程_。需要为不同的 AST 节点编写对应的代码生成函数。
-- 为了让生成的代码具有更强的可读性，还讨论了如何对生成的代码进行缩进和换行。
-  - 将用于缩进和换行的代码封装为工具函数，并且定义到代码生成过程中的上下文对象中。
-
-### 16 解析器(parser)
-
-**解析器的文本模式及其对解析器的影响**
-
-- 文本模式指的是解析器在工作时所进入的一些特殊状态，如[RCDATA](https://html.spec.whatwg.org/#rcdata-state)模式、`CDATA`模式、`RAWTEXT`模式，以及初始的`DATA`模式等。
-- 在不同模式下，解析器对文本的解析行为会有所不同。
-
-**如何使用递归下降算法构造模板 AST**
-
-- 在 parseChildren 函数运行的过程中，为了处理标签节点，会调用 parseElement 解析函数，这会间接地调用 parseChildren 函数，并产生一个新的状态机。
-- 随着标签嵌套层次的增加，新的状态机也会随着 parseChildren 函数被递归地调用而不断创建，这就是“递归下降”中 **“递归”** 二字的含义。
-- 而上级 parseChildren 函数的调用用于构造上级模板 AST 节点，被递归调用的下级 parseChildren 函数则用于构造下级模板 AST 节点。
-- 最终会构造出一棵树型结构的模板 AST，这就是“递归下降”中 **“下降”** 二字的含义。
-- _在解析模板构建 AST 的过程中，parseChildren 函数是核心_。
-  - 每次调用 parseChildren 函数，就意味着新状态机的开启。状态机的结束时机有两个:
-    - 第一个停止时机是当模板内容被解析完毕时。
-    - 第二个停止时机则是遇到结束标签时，
-      - 这时解析器会取得父级节点栈栈顶的节点作为父节点，检查该结束标签是否与父节点的标签同名，如果相同，则状态机停止运行。
-
-**文本节点的解析**
-
-- 解析文本节点本身并不复杂，它的复杂点在于，**需要对解析后的文本内容进行 HTML 实体的解码工作**。
-- [WHATWG 规范](https://whatwg-cn.github.io/html/#data-state)中也定义了解码 HTML 实体过程中的状态迁移流程。
-- HTML 实体类型有两种，分别是*命名字符引用*和*数字字符引用*。
-  - 命名字符引用的解码方案可以总结为两种:当*存在分号*时：执行完整匹配。当*省略分号*时：执行最短匹配。
-  - 对于数字字符引用，则需要按照 WHATWG 规范中定义的规则逐步实现。
-
-### 17 编译优化
-
-Vue.js 3 在**编译优化**方面所做的努力。
-
-- 编译优化指的是通过编译的手段提取关键信息，并以此指导生成最优代码的过程。
-- 具体来说，Vue.js 3 的编译器会充分分析模板，提取关键信息并将其附着到对应的虚拟节点上。
-- 在运行时阶段，渲染器通过这些关键信息执行“快捷路径”，从而提升性能。
-
-编译优化的核心在于，**区分动态节点与静态节点**。
-
-- Vue.js 3 会为动态节点打上补丁标志，即 patchFlag。
-- Vue.js 3 还提出了 Block 的概念，一个 Block 本质上也是一个虚拟节点，但与普通虚拟节点相比，会多出一个 dynamicChildren 数组。
-  - 该数组用来收集所有动态子代节点，这利用了 createVNode 函数和 createBlock 函数的层层嵌套调用(由内向外的方式执行)的特点
-  - 再配合一个用来临时存储动态节点的节点栈，即可完成动态子代节点的收集。
-- 由于 **Block 会收集所有动态子代节点**，所以*对动态节点的比对操作是忽略 DOM 层级结构的*。
-  - 这会带来额外的问题，即 v-if、v-for 等结构化指令会影响 DOM 层级结构，使之不稳定。这会间接导致基于 Block 树的比对算法失效。
-  - 而解决方式很简单，只需要让带有 v-if、v-for 等指令的节点也作为 Block 角色即可。
-
-除了 Block 树以及补丁标志之外，Vue.js 3 在编译优化方面还做了**其他努力**，具体如下:
-
-- _静态提升_：能够减少更新时创建虚拟 DOM 带来的性能开销和内存占用。
-- _预字符串化_：在静态提升的基础上，对静态节点进行字符串化。这样做能够减少创建虚拟节点产生的性能开销以及内存占用。
-- _缓存内联事件处理函数_：避免造成不必要的组件更新。
-- _`v-once` 指令_：缓存全部或部分虚拟节点，能够避免组件更新时重新创建虚拟 DOM 带来的性能开销，也可以避免无用的 Diff 操作。
-
-## 六：服务端渲染
-
-### 18 同构渲染
-
-Vue.js 的三种渲染方式:CSR、SSR 和同构渲染
-
-- **客户端渲染**(client-side rendering,CSR): Vue.js 可以用于构建客户端应用程序，组件的代码在浏览器中运行，并输出 DOM 元素。
-- **服务端渲染**(server-side rendering,SSR): Vue.js 还可以在 Node.js 环境中运行，它可以将同样的组件渲染为字符串并发送给浏览器。
-- Vue.js 作为现代前端框架，不仅能够独立地进行 CSR 或 SSR，还能够将两者结合，形成所谓的**同构渲染**(isomorphic rendering)。
-
-_服务端渲染_(在服务端完成模板和数据的融合)的工作流程:
-
-1. 用户通过浏览器请求站点。
-2. 服务器请求 API 获取数据。
-3. 接口返回数据给服务器。
-4. 服务器根据模板和获取的数据拼接出最终的 HTML 字符串。
-5. 服务器将 HTML 字符串发送给浏览器，浏览器解析 HTML 内容并渲染。
-
-_客户端渲染_(在浏览器中完成模板与数据的融合，并渲染出最终的 HTML 页面)的工作流程:
-
-- 客户端向服务器或 CDN 发送请求，获取静态的 HTML 页面。
-  - 注意，此时获取的 HTML 页面通常是空页面。在 HTML 页面中，会包含 `<style>`、`<link>` 和 `<script>` 等标签
-- 虽然 HTML 页面是空的，但浏览器仍然会解析 HTML 内容。
-  - 因为存在`<style>`、`<link>` 和 `<script>` 等标签，所以会加载这些引用资源。
-- 服务器或 CDN 会将相应的资源返回给浏览器，浏览器对 CSS 和 JavaScript 代码进行解释和执行。
-  - 因为页面的渲染任务是由 JavaScript 来完成的，所以当 JavaScript 被解释和执行后，才会渲染出页面内容，即“白屏”结束。
-  - 但初始渲染出来的内容通常是一个“骨架”，因为还没有请求 API 获取数据。
-- 客户端再通过 AJAX 技术请求 API 获取数据，一旦接口返回数据，客户端就会完成动态内容的渲染，并呈现完整的页面。
-
-_同构渲染_(“同构”指的是同样的代码既能在服务端运行，也能在客户端运行)的工作机制:
-
-- 同构渲染中的首次渲染与 SSR 的工作流程是一致的。
-  - 当首次访问或者刷新页面时，整个页面的内容是在服务端完成渲染的，浏览器最终得到的是渲染好的 HTML 页面。
-  - 该页面是纯静态的，这意味着用户还不能与页面进行任何交互，因为整个应用程序的脚本还没有加载和执行。
-  - 该静态的 HTML 页面中也会包含` <link>`、`<script> `等标签。
-  - **同构渲染**所产生的 **HTML 页面**与 SSR 所产生的 HTML 页面有一点最大的不同，即前者**会包含当前页面所需要的初始化数据**。
-- 浏览器接收到初次渲染的静态 HTML 页面后会解析并渲染该页面。
-  - 在解析过程中，浏览器发现`HTML`代码中存在`<link>`和`<script>`标签，于是会从`CDN`或服务器获取相应的资源，与 CSR 一致。
-  - 当 JavaScript 资源加载完毕后，会进行激活操作(在 Vue.js 中常说的 “hydration”)。激活包含两部分工作内容:
-    - Vue.js 在当前页面已经渲染的 DOM 元素以及 Vue.js 组件所渲染的虚拟 DOM 之间建立联系。
-    - Vue.js 从 HTML 页面中提取由服务端序列化后发送过来的数据，用以初始化整个 Vue.js 应用程序。
-- 激活完成后，整个应用程序已经完全被 Vue.js 接管为 CSR 应用程序了。后续操作都会按照 CSR 应用程序的流程来执行。
-  - 当然，如果刷新页面，仍然会进行服务端渲染，然后再进行激活，如此往复。
-
-CSR、SSR 和同构渲染的各自的优缺点。具体可以总结为下表(为应用程序选择渲染架构时，需要结合软件的需求及场景，选择合适的渲染方案):
-
-        |                | SSR  | CSR    | 同构渲染 |
-        | -------------- | ---- | ------ | -------- |
-        | SEO            | 友好 | 不友好 | 友好     |
-        | 白屏问题       | 无   | 有     | 无       |
-        | 占用服务端资源 | 多   | 少     | 中       |
-        | 用户体验       | 差   | 好     | 好       |
-
-**Vue.js 是如何把虚拟节点渲染为字符串的**。以普通标签节点为例，在将其渲染为字符串时，要考虑以下内容:
-
-- 自闭合标签的处理。对于自闭合标签，无须为其渲染闭合标签部分，也无须处理其子节点。
-- 属性名称的合法性，以及属性值的转义。
-- 文本子节点的转义。HTML 转义指的是将特殊字符转换为对应的 HTML 实体，这对于防御 XSS 攻击至关重要。
-  - 具体的转义规则如下:
-    - 对于普通内容，应该对文本中的以下字符进行转义:
-      - 将字符 `&` 转义为实体 `&amp;`。
-      - 将字符 `<` 转义为实体 `&lt;`。
-      - 将字符 `>` 转义为实体 `&gt;`。
-    - 对于属性值，除了上述三个字符应该转义之外，还应该转义下面两个字符:
-      - 将字符 `"` 转义为实体 `&quot;`。
-      - 将字符 `'` 转义为实体 `&#39;`。
-
-**如何将组件渲染为 HTML 字符串**
-
-- 在服务端渲染组件与渲染普通标签并没有本质区别:
-  - 只需要通过执行组件的 render 函数，得到该组件所渲染的 subTree(本身可能是任意类型的虚拟节点)并将其渲染为`HTML`字符串即可。
-- 另外，在渲染组件时，需要考虑以下几点:
-  - _服务端渲染不存在数据变更后的重新渲染_，所以无须调用 reactive 函数对 data 等数据进行包装，也无须使用 shallowReactive 函数对 props 数据进行包装。正因如此，也无须调用 beforeUpdate 和 updated 钩子。
-  - _服务端渲染时，由于不需要渲染真实 DOM 元素_，所以无须调用组件的 beforeMount 和 mounted 钩子。
-
-**客户端激活的原理**
-
-- 在同构渲染过程中，组件的代码会分别在服务端和浏览器中执行一次。
-  - 在*服务端*，组件会被渲染为静态的`HTML`字符串，并发送给浏览器。
-  - *浏览器*则会渲染由服务端返回的静态`HTML`内容并下载打包在静态资源中的组件代码。当下载完毕后浏览器会解释并执行该组件代码。
-- 当组件代码在客户端执行时，由于页面中已经存在对应的 DOM 元素，所以渲染器并不会执行创建 DOM 元素的逻辑，而是会执行激活操作。
-- 激活操作可以总结为两个步骤:
-  - 在虚拟节点与真实 DOM 元素之间建立联系，即 `vnode.el=el`。这样才能保证后续更新程序正确运行。
-  - 为 DOM 元素添加事件绑定。
-
-**如何编写同构的组件代码**:由于组件代码既运行于服务端，也运行于客户端，所以编写组件代码时要额外注意。具体可以总结为以下几点:
-
-- **注意组件的生命周期**。beforeUpdate、updated、beforeMount、mounted、beforeUnmount、unmounted 等生命周期钩子函数不会在服务端执行。
-- **使用跨平台的 API**。由于组件的代码既要在浏览器中运行，也要在服务器中运行，所以编写组件代码时，要额外注意代码的跨平台性。
-  - 通常在选择第三方库的时候，会选择支持跨平台的库，例如使用 Axios 作为网络请求库。
-- **特定端的实现**。无论在客户端还是在服务端，都应该保证功能的一致性。
-  - 例如，组件需要读取 cookie 信息。在客户端，可以通过 document.cookie 来实现读取；而在服务端，则需要根据请求头来实现读取。
-  - 所以，很多功能模块需要为客户端和服务端分别实现。
-- **避免交叉请求引起的状态污染**。状态污染既可以是应用级的，也可以是模块级的。
-  - 对于应用，应该为每一个请求创建一个独立的应用实例。这是为了避免不同请求共用同一个应用实例所导致的状态污染。
-  - 对于模块，应该避免使用模块级的全局变量。因为在不做特殊处理的情况下，多个请求会共用模块级的全局变量，造成请求间的交叉污染。
-- **仅在客户端渲染组件中的部分内容**。这需要自行封装`<ClientOnly>` 组件，被该组件包裹的内容仅在客户端才会被渲染。
-
-\newpage
-
-**Angular** 是一个基于 TypeScript 构建的**开发平台**。它包括：
-
-- 一个基于组件的**框架**，用于构建可伸缩的 Web 应用
-- 一组完美集成的**库**，涵盖各种功能，包括路由、表单管理、客户端-服务器通信等
-- 一套**开发工具**，可帮助你开发、构建、测试和更新代码
-
-![angular-overview](./pictures/pictures-vue/angular/overview2.png){width=80%}
-
-Angular 基础知识:
-
-- **组件 Components**
-  - 组件是 Angular 应用的主要构造块。每个组件包括如下部分：
-    - 一个 HTML 模板，用于声明页面要渲染的内容
-    - 一个用于定义行为的 TypeScript 类
-    - 一个 CSS 选择器，用于定义组件在模板中的使用方式
-    - （可选）要应用在模板上的 CSS 样式
-- **模板 Templates**
-  - 在 Angular 中，模板就是一块 HTML。你可以在模板中通过一种特殊的语法来使用 Angular 的诸多特性。
-    - **插值** (`<p>{{title}}</p>`)
-      - 插值是指将表达式嵌入到被标记的文本中。默认情况下，插值使用双花括号 {{ 和 }} 作为定界符。
-    - **属性(Property)绑定** (`[src]="itemImageUrl"`)
-      - Angular 中的属性绑定可帮助你设置 HTML 元素或指令的属性值。使用属性绑定，可以执行诸如切换按钮、以编程方式设置路径，以及在组件之间共享值之类的功能。
-    - **属性(Attribute)绑定** (`[attr.aria-label]="actionName"`)
-      - 使用 Attribute 绑定，你可以提升无障碍性、动态设置应用程序样式以及同时管理多个 CSS 类或样式。
-    - **类和样式绑定** (`[class]="classExpression"`)
-      - 使用类和样式绑定从元素的 class 属性中添加和删除 CSS 类名，以及动态设置样式。
-    - **事件绑定** (`(click)="onSave()"`)
-      - 通过事件绑定，你可以侦听并响应用户操作，比如按键、鼠标移动、点击和触摸。
-    - **模板引用变量** (`#phoneNumber`)
-      - 模板变量可以帮助你在模板的另一部分使用这个部分的数据。使用模板变量，你可以执行某些任务，比如响应用户输入或微调应用的表单。
-    - **内置指令**
-      - 指令是为 Angular 应用程序中的元素添加额外行为的类。使用 Angular 的内置指令，你可以管理表单、列表、样式以及要让用户看到的任何内容。
-        - **组件**: 带有模板的指令。这种指令类型是最常见的指令类型。
-        - **属性型指令**: 更改元素、组件或其他指令的外观或行为的指令。(`NgClass NgStyle NgModel` 等)
-        - **结构型指令**: 通过添加和删除 DOM 元素来更改 DOM 布局。(`NgIf NgFor NgSwitch` 等)
-    - **输入属性与输出属性**
-      - Angular 中的一个常见模式就是在父组件和一个或多个子组件之间共享数据。可以用 `@Input()` 和 `@Output()` 来实现这个模式。
-    - **双向绑定** (`[(size)]="fontSizePx"`)
-      - 使用双向绑定绑定来侦听事件并在父组件和子组件之间同步更新值。
-- **指令 Directives** - 参看上方"内置指令"
-- **依赖注入 Dependency injection**
-  - 依赖项是指某个类执行其功能所需的服务或对象。依赖项注入（DI）是一种设计模式，在这种设计模式中，类会从外部源请求依赖项而不是创建它们。
-  - Angular 的 DI 框架会在实例化某个类时为其提供依赖。可以使用 Angular DI 来提高应用程序的灵活性和模块化程度。
-  - 使用 `@Injectable` 标记一个类可确保编译器将在注入类时生成必要的元数据，以创建类的依赖项。
-
-\newpage
-
-# nodejs FAQs
-
-**Nodejs 是什么**: 作为一个异步事件驱动的 JavaScript 运行时，Node.js 被设计用来构建可扩展的网络应用。(**单线程、非阻塞 IO、事件驱动**)
-
-**阻塞/非阻塞、同步/异步**
-
-- 同步异步说的是被调用者结果返回时通知进程的一种**通知机制**，阻塞非阻塞说的是调用结果返回前**进程的状态**，是挂起还是继续处理其他任务。
-- 阻塞与非阻塞是**调用方**决定的，在等待结果的过程中，是否还可以干其他事。
-- 同步与异步是**被调用方**决定的，决定是马上给你答案，还是过会儿通知你，给你答案。
-- 在 Node.js 中，JavaScript 由于**执行 CPU 密集型操作**，而不是等待一个非 JavaScript 操作（例如 I/O）而**表现不佳**通常**不被称为阻塞**。
-- 代码比较: 阻塞方法同步执行，非阻塞方法异步执行。
-
-**Nodejs 中的异步**
-
-- 异步函数的“异步”是指**在结果出现之前有一段不可预知的时间**。这样的函数需要一个回调函数来处理错误和处理结果。
-- 异步函数嵌套的层级太多，就会出现 `回调地狱` 。
-- Node.js 中核心库 API 函数一般包含同步和异步两种。
-- JavaScript 语言本身可以使用 `async/await`。 `promise` 对象和 `async/await` 语法糖都是异步编程的一种解决方法。
-
-**并发 (Concurrent) 与并行 (Parallel)**
-
-- 并发：多个任务在**同一个 CPU 核**上按细分的时间片轮流 (交替) 执行，从逻辑上来看那些任务是同时执行。
-- 并行：区别与串行，多个任务真正的分配到**不同的 CPU 内核**上去执行的，它们是真正的同时执行。
-  - 类似*并发是四辆汽车在同一个车道上跑; 并行是单向四车道，四辆车在各自的车道跑，彼此不受影响。*
-- 串行：是指多个任务时，各个任务按顺序执行，完成一个之后才能进行下一个。
-
-**进程 (process) 与线程 (thread)**
-
-- 进程：是*操作系统*（OS）进行资源（CPU、内存、磁盘、IO、带宽等）分配的*最小单位*；
-- 线程：是 _CPU_ 调度和分配的*基本单位*。
-- _进程与线程类比火车与车厢_:
-  - **一个进程可由多个线程的执行单元组成**，每个线程都运行在同一进程的上下文中，共享同样的代码和全局数据。(一辆火车可以有多节车厢)
-  - **每个进程至少有一个主执行线程**。(一辆火车至少一节车厢)
-  - **进程间不会相互影响，一个线程挂掉将导致整个进程挂掉。**(一辆火车出事不影响其他火车，一节车厢着火，整辆火车都得停)
-- 进程、线程是操作系统调度的，**进程本身不会负责调度线程**。
-- **单线程**就是进程中只有一个线程。**多线程**就是进程有多个线程。
-- 在 Node.js 中 JavaScript 的执行是单线程的，_因此**并发性** 是指事件循环在完成其他工作后执行 JavaScript **回调函数**的能力。_
-  - _js 执行线程是单线程，但把需要做的 I/O 操作交给 libuv。_
-
-**事件驱动编程**: 在一个事件驱动的应用程序中，通常有**一个主循环**来监听事件，然后在检测到其中一个事件时**触发**一个回调函数。
-
-- 事件驱动的本质：**通过主循环加事件触发的方式来运行程序。**
-
-**nodejs 体系架构**
-
-Node.js 主要分为四大部分，Node Standard Library，Node Bindings，V8，Libuv，架构图如下：
-
-![nodejs-architecture.jpeg](./pictures/pictures-node/nodejs-architecture.jpeg){width=55%}
-
-- Node Standard Library: 是我们每天都在用的标准库，如 Http, Buffer 模块。
-- Node Bindings: 是沟通 JS 和 C++的桥梁，封装 V8 和 Libuv 的细节，向上层提供基础 API 服务。
-- 最底层是支撑 Node.js 运行的关键，由 C/C++ 实现。
-  - `V8`： 是 Google 开发的 JavaScript 引擎，提供 JavaScript 运行环境，可以说它就是 Node.js 的发动机。
-  - `Libuv`： 是专门为 Node.js 开发的一个封装库，**提供跨平台的异步 I/O 能力**。
-  - `C-ares`：提供了异步处理 DNS 相关的能力。
-  - `http_parser`、`OpenSSL`、`zlib` 等：提供包括 http 解析、SSL、数据压缩等其他的能力。
-
-事件循环、观察者、请求对象和执行回调是整个异步 I/O 的四个基本要素。
-
-\newpage
-
-**nodejs 单线程如何处理并发 (事件循环)**
-
-![event-loop](./pictures/pictures-node/event-loop.png){width=85%}
-
-当 Node.js 启动后，它会初始化事件循环，处理已提供的输入脚本，它可能会调用一些异步的 API、调度定时器，或者调用 `process.nextTick()`，然后开始处理事件循环。
-
-**错误优先回调**: 在 Node.js 的**所有异步方法**都使用这个模式。
-
-- 任何异步方法都希望其中一个参数是一个回调。完整的**回调参数**列表取决于调用者方法，但**第一个参数总是一个错误对象或空**。
-- 使用异步方法时，在函数执行过程中抛出的异常**不能**在 `try/catch` 语句中检测到(因为错误在回调函数的第一个参数)。
-
-**nodejs 利用多核处理器资源**
-
-- 由于 Node.js 默认是一个单线程应用程序，它将在单个处理器核心上运行，**不会充分利用多核心资源**。
-- Node.js 提供了在多核系统上部署的支持，以更好地利用硬件。`cluster`模块是允许运行多个 Node.js 工作进程，它们将共享同一个端口。
-
-**JIT**:为了获得速度，V8 将 js 代码翻译成**更有效的机器代码**(通过 JIT 编译器,**不产生字节码或任何中间代码**)，而不是使用一个解释器。
-
-\rule[0pt]{19.4cm}{0.03em}
-
-**REST** 是 REpresentational State Transfer(表现层状态转换) 的缩写。REST 是基于网络标准的架构，使用 HTTP 协议。
-
-API 要被视为 RESTful API，**必须遵循以下标准**:
-
-- `Client-Server` 客户端-服务器架构由客户端、服务器和资源组成，并且通过 HTTP 管理请求。
-- `Stateless` 无状态客户端-服务器通信，即 get 请求间隔期间，不会存储任何客户端信息，并且每个请求都是独立的，互不关联。
-- `Cacheable` 可缓存性数据：可简化客户端-服务器交互。
-- `Uniform Interface` 组件间的统一接口：使信息以标准形式传输。这要求：
-  - 所请求的资源可识别并与发送给客户端的表述分离开。
-  - 客户端可通过接收的表述操作资源，因为表述包含操作所需的充足信息。
-  - 返回给客户端的自描述消息包含充足的信息，能够指明客户端应该如何处理所收到的信息。
-  - 超文本/超媒体可用，是指在访问资源后，客户端应能够使用超链接查找其当前可采取的所有其他操作。
-- `Layered System` 组织各种类型服务器（负责安全性、负载平衡等的服务器）的分层系统会参与将请求的信息检索到对客户端不可见的层次结构中。
-- `Code on Demand(optional)` 按需编码（可选）：能够根据请求将可执行代码从服务器发送到客户端，从而扩展客户端功能。
-
-\rule[0pt]{19.4cm}{0.03em}
-
-**Express** (是一个) 高度包容、快速而极简的 Node.js Web 框架。
-
-使用**生成器工具**将创建一个*具有清晰层次结构的应用程序文件夹*，以帮助你管理图片、前端静态 JavaScript 文件、样式文件和 HTML 模板文件。
-
-**路由**用于确定应用程序如何响应对特定端点的客户机请求，包含一个 URI（或路径）和一个特定的 HTTP 请求方法（GET、POST 等）。
-
-- 每个路由可以具有一个或多个处理程序函数，这些函数在路由匹配时执行。
-- 路由定义采用以下结构： `app.method(path, handler)` ，其中：
-  - • app 是 express 的实例。• method 是 http 请求方法。• path 是服务器上的路径。• handler 是在路由匹配时执行的函数。
-
-使用 Express 中的 **`express.static` 内置中间件函数**，去提供诸如图像、CSS 文件和 JavaScript 文件之类的**静态文件**。
-
-**通用错误处理**一般要放在所有路由之后，例如`app.use(function (err, req, res, next) {/* error handler */}`
-
-**中间件**
-
-中间件函数能够访问`请求对象req`、`响应对象res`以及应用程序的请求/响应循环中的`下一个中间件函数`(通常用`next`变量来表示)。
-
-如果当前中间件函数**没有结束**请求/响应循环，那么它**必须调用 next()**，以将控制权传递给下一个中间件函数。否则，请求将保持挂起状态。
-
-从 Express 5 开始，返回 Promise 的中间件函数在拒绝或抛出错误时将调用 `next(value)`。next 将被调用，并带有拒绝值或抛出的 Error。
-
-**express 中间件分类**
-
-- 应用层中间件: 使用 `app.use()` 和 `app.METHOD()` 函数将应用层中间件绑定到应用程序对象的实例。
-- 路由器层中间件: 与应用层中间件基本相同，差异之处在于它 **绑定到 `express.Router()` 的实例**。
-- 错误处理中间件: 与其他中间件函数基本相同，差别在于错误处理函数有四个自变量 (err, req, res, next)。
-- 内置中间件: Express 中唯一内置的中间件函数是 `express.static`，负责提供 Express 应用程序的静态资源。
-- 第三方中间件: 安装具有所需功能的 Node.js 模块，然后在应用层或路由器层的应用程序中将其加装入。
-  - `cookie-parser`、`body-parser`、`http-errors`、`multer`、`cors`、更多[Express middleware](http://expressjs.com/en/resources/middleware.html)
-
-![express-middleware](./pictures/pictures-node/express-mw-cn.png){width=60%}
-
-**Koa** 是一个新的 web 框架，**通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。Koa 并没有捆绑任何中间件。**
-
-**Koa 应用程序**是一个包含一组中间件函数的对象，它是按照类似堆栈的方式组织和执行的。`app.context` 是从其创建 ctx 的原型。您可以通过编辑 `app.context` 为 ctx 添加其他属性。
-
-**Koa Context** 将 node 的 request 和 response 对象封装到单个对象中，为编写 Web 应用程序和 API 提供了许多有用的方法。每个请求都将创建一个 Context，并在中间件中作为接收器引用，或者 ctx 标识符。
-
-**Koa Request 对象**是在 node 的原生**请求对象**之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。
-
-**Koa Response 对象**是在 node 的原生响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。
-
-```js
-const Koa = require("koa");
-const app = new Koa(); // koa应用
-app.context.db = db(); // 要从 ctx 添加对数据库的引用
-app.use(async (ctx) => {
-  ctx; // 这是 Context
-  ctx.request; // 这是 koa Request
-  ctx.response; // 这是 koa Response
-  ctx.body = "Hello World";
-});
-app.listen(3000);
-```
-
-- **应用(Application)为 `app`** , 它上面也有 koa 很多实例属性和方法，
-  - 例如`app.env`、`app.use(function)`等。
-- **上下文(Context)为 `ctx`** , 它上面有很多 koa content 的示实例属性和方法，
-  - 例如`ctx.req`，`ctx.throw([status],[msg],[properties])`等。
-- **koa 的请求(Request)对象为 `ctx.request`** ,它上面就是很多 http 请求的属性和方法，
-  - 例如`ctx.request.ip`，`ctx.request.is(types...)`等。
-- **koa 的响应(Response)对象为 `ctx.response`** ,它上面就是很多 http 响应的属性和方法，
-  - 例如`ctx.response.message`，`ctx.response.set(field, value)`等。
-- 因为 koa 的请求和响应是非常常用的，所以*很多属性方法有 koa 上下文的别名*。
-  - 例如`ctx.ip`为`ctx.request.ip`的别名，`ctx.message`为`ctx.response.message`的别名等。
-
-**常用的中间件**: `koa-router`、`koa-static`、`koa-session`、`koa-multer`、`koa-bodyparser`、[更多](https://github.com/koajs/koa/wiki)
-
-**洋葱模型**: Koa 的**路由执行顺序**与 Express 有所不同，Koa 选择了洋葱圈模型，即*最先访问的路由里的 `next()` 后面的代码最后响应*。
-
-**[nodejs web 安全指南](https://www.51cto.com/article/644029.html)**
-
-1 数据验证,永远不要信任你的用户 2. 预防 SQL 注入攻击(使用模板、类型转换等) 3. 应用程序认证和授权(密码哈希、密码存储、认证和授权)  
-4 暴力攻击防护(失败次数过多暂停(节流)、屏蔽无效登录请求的 IP) 5 HTTPS 安全传输 6 会话劫持保护 7 跨站点请求伪造攻击(CSRF)防护  
-8 尽可以预防`拒绝服务`或`DOS攻击` 9 依赖关系验证 10 HTTP 安全头信息
-
-- 函数防抖(debounce):在事件被触发`n`秒后再执行回调，如果在这`n`秒内又被触发，则重新计时。即*当一个动作连续触发只执行最后一次*。
-- 函数节流(throttle):限制一个函数在一定时间内只能执行一次。
-
-**解决未处理的异常**: `process.on("uncaughtException", (err)=> {/*error handler*/});`
-
-**npm** 是 JavaScript 世界的包管理工具，并且是 Node.js 平台的默认包管理工具。通过 npm 可以安装、共享、分发代码，管理项目依赖关系。
-
-**yarn**: 快速、可靠、安全的依赖管理工具
-
-- 速度超快。Yarn 缓存了每个下载过的包，所以再次使用时无需重复下载。 同时利用并行下载以最大化资源利用率，因此安装速度更快。
-- 超级安全。在执行代码之前，Yarn 会通过算法校验每个安装包的完整性。
-- 超级可靠。使用详细、简洁的锁文件格式和明确的安装算法，Yarn 能够保证在不同系统上无差异的工作。
-
-**JSON 网络令牌**（JWT）是一个*开放的标准*，它定义了一种紧凑和独立的方式，以 JSON 对象的形式在各方之间安全地传输信息。这种信息可以被验证和信任，因为它是经过数字签名的。
-
-JSON 网络令牌(jwt)由`Header.Payload.Signature`三部分组成，用点（.）隔开。
-
-- Header: 由两部分组成：令牌的类型（即 JWT）和签名算法（即 HS512）。
-- Payload: 包含提供已被验证的用户信息的声明 (claims)，以及如令牌到期时间等其他信息。
-- Signature: 包裹在编码头和有效载荷中的令牌的最后部分，同时还有加密算法和一个秘钥。
-
-\newpage
-
-# rxjs7 overview
-
-**响应式编程**（英語：Reactive programming）是一种面向数据串流和变化传播的声明式编程范式。
-
-- _命令式编程 Imperative_ 的主要思想是关注计算机执行的步骤，即**一步一步告诉计算机先做什么再做什么**。
-- _声明式编程 Declarative_ 是以数据结构的形式来表达程序执行的逻辑。它的主要思想是**告诉计算机应该做什么，但不指定具体要怎么做**。
-- _函数式编程 Functional_ 最重要的基础是 lambda 演算，主要思想是把**运算过程尽量写成一系列嵌套的函数调用**。
-
-**流 (Stream) 的特点**
-
-- 一个流就是一个不间断的按照时间排序的序列。它产生三种不同类型事件: 值，错误，完成的信号。对这三个定义事件处理函数，就可以异步的捕获这些事件。
-- 每个 stream 有多个方法，调用时会基于原来的流返回一个新的流，原来的流不做修改，保证不可变性
-- 数据流支持链式调用，你可以组合不同的函数来处理流，创建和过滤不同的流。
-
-**发布-订阅模式**:发布者和订阅者不知道对方的存在。需要一个第三方组件，叫做信息中介，它将订阅者和发布者串联起来并过滤和分配所有输入的消息。
-
-**RxJS** 是一个使用可观察序列编写异步和基于事件的程序的库。
-
-**RxJS 有一个核心和三个重点，一个核心是 Observable 再加上相关的 Operators，三个重点分别是 Observer、Subject、Schedulers。**
-
-RxJS 中解决异步事件管理的基本概念有：
-
-- **Observable**: 可观察对象，代表了一个*可调用的未来值或事件的集合*的概念。
-- **Observer**: 观察者，是一个**回调集合**，知道如何监听由 Observable 传递的值。
-- **Subscription**: 订阅，表示一个*可观察对象的执行*，主要用于**取消执行**。
-- **Operators**: 操作符，是纯函数，可以用*函数式编程风格处理集合的操作*，如 `map、filter、concat、reduce` 等等。
-- **Subject**: 主体，相当于一个 EventEmitter，是将一个值或事件广播给多个观察者的唯一途径(_多播唯一途径_)。
-  - BehaviorSubject: 它有一个 **当前值**的概念。它保存了发送给消费者的最新值。并且当有新的观察者订阅时，会立即从 `BehaviorSubject` 那接收到 **当前值**。
-  - ReplaySubject: **记录** Observable 执行中的**多个值并将其回放**给新的订阅者，可指定回放值的数量。
-  - AsyncSubject: 只有当 `Observable` **执行完成时**(执行 `complete`())，它才会将执行的**最后一个值**发送给观察者。
-- **Schedulers**: 调度器，是*控制并发的集中化调度器*，允许我们在计算发生在例如 setTimeout、requestAnimationFrame 或其他情况时进行协调。
-
-**Observable**
-
-- 在**拉取体系**(Pull systems)中，**由消费者来决定何时从生产者那里接收数据**。生产者本身不知道数据是何时交付到消费者手中的。
-- 在**推送体系**(Push systems)中，**由生产者来决定何时把数据发送给消费者**。消费者本身不知道何时会接收到数据。
-  - Observables ，一个新的 JavaScript 推送体系
-- Observable 和函数有什么区别？**Observables 可以随着时间的推移“返回”多个值，而函数不能。**函数只能返回一个值。
-  - 函数和 Observable 都是惰性计算的，函数不调用或者 Observables 不订阅，就不会执行。
-  - `func.call()`意思是“**同步给我一个值**”;`observable.subscribe()`的意思是“**给我任意数量的值，无论是同步的还是异步的**”。
-- 创建: `new Observable(subscribe函数)`或者创建型操作符 `of、from、interval` 等
-- 订阅: 订阅 Observable 就像调用一个函数，其参数是要传过去数据的回调函数。`observable.subscribe((x) => console.log(x));`
-- 执行: Observable 执行可以传递三种类型的值：(在用 new Observable()时`subscribe函数`就得注意提供这些执行)
-  - “Next(下一个)” 通知：发送数值、字符串、对象等。**代表要传递给订阅者的实际数据**。
-  - “Error(出错)” 通知：发送 JavaScript 错误或异常。
-  - “Complete(完成)” 通知：不发送值。**“Error”和“Complete”通知可能只发生一次，并且只能有其中之一。**
-  - _在 Observable 执行中，可能会传递**零个到无限个 Next 通知**。如果发送了出错或完成通知，则之后将无法发送任何其它通知。_
-- 取消: _当你订阅时，你会得到一个 Subscription，它代表正在进行的执行。只需调用`sub1.unsubscribe()`即可取消执行。_
-
-**Observer**
-
-- **Observer** 是 Observable 传递的各个值的消费者。
-  - **Observer 只是一组回调**，对应于 Observable 传递的每种类型的通知：next、error 和 complete。
-  - _Observer 只是具有三个回调的对象，分别用于 Observable 可能传递的每种类型的通知。_
-- Observer 也可能是**部分**的。如果你不提供其中一个回调，Observable 的执行仍然会正常进行(例如只提供 next 和 error)。
-  - `const observer = {next:(x) => /**/, error:(err) => /**/,}; observable.subscribe(observer);`
-
-**Operators**
-
-RxJS 的*操作符是纯函数*。操作符是能让你以声明方式轻松组合复杂异步代码的基本构造块。有两种操作符:`可联入管道的操作符`和`创建操作符`。
-
-- **可联入管道的操作符**(Pipeable Operators) 是一个**以 Observable 作为输入并返回另一个 Observable** 的函数。这是一个纯操作：之前的 Observable 保持不变。
-- **创建操作符** (Creation Operators) 可用于根据一些常见预定义行为或联合其它 Observable 来**创建一个 Observable**的函数。
-- **高阶 Observables**: 发送 Observables 的 Observable。_产生的数据依然是 Observable 的 Observable_。
-  - 将高阶 Observable 转换为一阶 Observable 常用操作符:`concatAll()`、`mergeAll()`、`switchAll()`、`exhaustAll()`。
-- 纯函数为符合下列条件的函数(wiki):
-  - 此函数**在相同的输入值时，需产生相同的输出**。函数的输出和输入值以外的其他隐藏信息或状态无关，也和由 I/O 设备产生的外部输出无关。
-  - 该函数**不能有语义上可观察的函数副作用**，诸如“触发事件”，使输出设备输出，或更改输出值以外物件的内容等。
-
-**Subscription**
-
-- 订阅是一个表示可释放资源的对象，通常是 Observable 的一次执行。
-- **Subscription 本质上只有一个 unsubscribe() 函数来释放资源或取消 Observable 的执行过程。**
-- 可以通过将一个订阅“添加”到另一个订阅中，以便调用一个订阅的 `unsubscribe()` 就可以退订多个订阅。
-
-**Subject**
-
-- RxJS Subject 是一种特殊类型的 Observable，它**允许将值多播到多个 Observer**。
-  - 虽然普通的 Observable 是单播的（每个订阅的 Observer 都拥有 Observable 的独立执行），但 Subjects 是多播的。
-- **每个 Subject 既是 Observable，又是 Observer。**
-- _多播的 Observable 在底层使用 Subject 来让多个 Observer 看到相同的 Observable 执行过程。_
-  - 普通的“单播 Observable”仅向单个 Observer 发送通知。
-- **引用计数**: _refCount 能使多播的 Observable 在第一个订阅者抵达时自动开始执行，并在最后一个订阅者离开时停止执行。_
-  - `refCount()` 方法只存在于 ConnectableObservable 上，它返回一个 Observable，而不是另一个 ConnectableObservable。
-- **`BehaviorSubject`**: 需要一个初始值并会在订阅时发送其**当前值**。
-  - _对于表示“随时间变化的值”很有用_。`const subject = new BehaviorSubject(0);`
-- **`ReplaySubject`**: 通过在新订阅者首次订阅时发送**旧值**来“重播”旧值。
-  - _会记录来自 Observable 执行的多个值，并将它们重播给新订阅者_。
-  - 可以指定要重播的值的**数量**，和一个以毫秒为单位的**窗口时间**，`const subject = new ReplaySubject(100, 500);`
-- **`AsyncSubject`**: 只会在完成时发送一个值。完成后，它将向所有 Observer 发送其**最新值**。
-  - AsyncSubject 类似于`last()`操作符，因为它会等待 complete 通知以传递单个值。`const subject = new AsyncSubject();`
-- `Void subject`: 有时，发出值这个**事件本身**比所发出的值更重要。
-  - 通过声明一个 void 主体，你可以表明该值是无所谓的。只有事件本身才重要。`const subject = new Subject<void>();`
-- 产生多播 Observable 的操作符例如: `share`、`connect`
-
-**Scheduler**
-
-- **调度器控制某个订阅何时开始以及何时传递通知**。它由三个部件组成:**调度器是一种数据结构、是一个执行上下文、有一个（虚拟）时钟。**
-  - _调度器允许你定义 Observable 将在什么执行上下文中向其 Observer 传递通知。_
-- 调度器类型: 调度器 和 用途
-  - null 不传递任何调度器，通知将以同步和递归方式传递。要把它用于恒定时间操作或尾递归操作。
-  - queueScheduler 在当前事件框架（蹦床调度器）中的队列上调度。将其用于迭代操作。
-  - asapScheduler 在微任务队列上调度，这与用于 Promise 的队列相同。在当前工作之后，但在下一个工作之前。这些将用于异步转换。
-  - asyncScheduler 使用 setInterval 的调度器。将此用于基于时间的操作。
-  - animationFrameScheduler 调度将在下一次浏览器内容重绘之前发生的任务。可用于创建流畅的浏览器动画。
-- 使用调度器:
-  - **所有处理并发的 Observable 操作符都有可选的调度器**。如果你不提供调度器，RxJS 会根据最少并发的原则选择一个默认的调度器。
-    - 会选择引入满足操作符需求的**最少并发量**的调度器。
-  - 静态创建操作符通常以某个 Scheduler 作为参数。
-    - 例如，`from(array, scheduler)`允许你指定在传递从 array 转换出来的每个通知时要使用的调度器。
-  - 使用`subscribeOn`来安排`subscribe()`在什么上下文中发生调用。
-    - 例如`merge(of(1,2,3).pipe(subscribeOn(asyncScheduler)),of(4,5)).subscribe(console.log);//45123`
-  - 使用 `observeOn` 来安排在什么上下文中发送通知。
-    - 例如`intervals.pipe(observeOn(animationFrameScheduler)).subscribe(val => { /* */ });`
-  - 实例操作符可以将调度器作为参数。
-    - 与时间相关的操作符例如`delay`、`timeout`都将 Scheduler 作为最后一个参数，否则默认在`asyncScheduler`上运行。
-
-**Cold &Hot Observable**
-
-- Cold Observable：在**每次订阅时，完整的数据流会重新产生**；数据流与订阅者是一对一的关系。(点播)
-- Hot Observable：在订阅前数据流已开始，**每个订阅者订阅的都是同一个资料流**；数据流与订阅者是一对多的关系。(直播)
-  - `Observable()`是单播, cold, 只是 Producer;`Subject()`及其变体是多播, hot, 既是 Producer 又是 Consumer。
-
-\newpage
-
-# TypeScript
-
-基础特性: 静态类型检查、类型工具、tsc、报错时仍产出文件、显式类型、可擦除类型、降级、严格性……
-
-- 常见类型: 【简单部分】原始数据类型(string, number, boolean)、数组、any、函数、匿名函数、对象类型、枚举……
-- 其他类型: (1)联合类型: `(id: number | string)`,
-  - (2)类型别名:`type ID = number | string;` (3)接口:`interface Point {x: number; y: number;}`,
-    - **类型别名本身无法添加新的属性，而接口是可以扩展的。**
-  - (4)类型断言:`(<string>someValue).length`或者`(someValue as string).length`,
-  - (5)字面类型:结合联合类型`(s: string, alignment: "left" | "right" | "center")`,
-  - (6)null 和 undefined,(7)枚举:`enum Direction {Up,Down,Left,Right,}`,(8)bigInt、symbol……
-
-**TypeScript 类型收缩的几种方式**：
-
-- **`typeof` 类型守护** - 根据`typeof`操作符返回的类型字符串做对应的操作
-- **真值收缩** - 个人理解类似 js 中的隐式转型的使用。
-  - 利用类似`if(str)`的语句去消除 str 为 `null`、`undefined` 或者空字串等情况，避免在 ts 类型检查时出现错误。
-- **等值收缩** - 与真值收缩类似，通过判等相关操作(如相等运算符、switch 操作等)对类型进行收缩。
-- **`in` 操作符收缩** - in 操作符可以判断一个对象是否有对应的属性名。 - 可选的属性在收缩时会同时出现在两个分支中。
-- **`instanceof`收缩** - 在 TypeScript 也可以通过识别 `instanceof` 正确的类型收窄
-- **赋值语句** - TypeScript 可以根据赋值语句的右值，正确的收窄左值。
-- **控制流程分析**
-  - 例如if、while等，如果在一个分支代码块中有返回了，对于剩下的函数体对应的类型就会剔除已达部分(已经被 if 过滤)的类型。
-  - 这种基于**可达性**的代码分析称为“控制流分析”。在遇到类型保护和赋值语句的时候，TypeScript 会使用这种流分析去收缩类型。
-- **使用类型谓词/判断式**
-  - 类型谓词(type predicates)的形式是 **`paramenterName is Type`**,但 `parameterName` 必须是当前函数的参数名。
-  - 就是直接判断当前参数是否为某种类型，然后对其进行类型收缩。
-- **可辨识联合**
-  - 当联合类型中的每个类型都包含一个与字面类型相同的属性时，TypeScript 认为这是一个可辨识联合，并且可以缩小联合的成员。
-- **`never`类型**
-  - 当进行收窄的时候，如果你把所有可能的类型都穷尽了，TypeScript 会使用一个 `never` 类型来表示一个不可能存在的状态。
-- **穷举检查**
-  - **never 类型可以分配给每个类型；但是，没有任何类型可以分配给 never（除了 never 本身）。**
-  - 这意味着可以使用缩小并依靠 never 的出现在 switch 语句中做详尽的检查。
-
-**函数**
-
-**函数类型表达式**: 在 TypeScript 的*类型定义*中， **`=>` 用来表示函数的定义，_左边是输入类型_，需要用括号括起来，_右边是输出类型_。**
-一个函数参数的类型并没有明确给出，它会被隐式设置为 `any`。
-
-_函数类型表达式: `(a: string) => void`; 和函数签名: `(someArg: number): boolean`;_
-
-```js
-// 声明函数: greeter()接收一个函数作为参数，还函数需要传入一个string，没有返回值
-function greeter(fn: (a: string) => void) { fn("Hello, World");}
-// 使用类型别名声明
-type GreetFunction = (a: string) => void;
-function greeter2(fn: GreetFunction) {fn("Hello, World");}
-// 声明另一个函数
-function printToConsole(s: string) { console.log(s);}
-// 调用该函数作为geeter()的参数
-greeter(printToConsole); // "Hello, World"
-greeter2(printToConsole); // "Hello, World"
-```
-
-函数类型表达式**并不能**支持声明属性，如果我们**想描述一个带有属性的函数**，我们可以**在一个对象类型中写一个调用签名**（call signature）。
-
-```js
-// 使用类型别名定义类型
-type DescribableFunction = {
- (someArg: number): boolean; /*函数签名，在前面加new变成构造签名*/
-  description: string; /*额外的字串属性*/
-  isEven: (num: number) => boolean; // 额外的函数属性
-};
-
-// 实例化顶上那个类型
-const myfun: DescribableFunction = (num: number) => num > 12;
-// 给该实例赋值
-myfun.description = "123";myfun.isEven = (num: number) => num % 2 == 1;
-// 声明一个函数，参数为上面那个类型
-function doSomething(fn: DescribableFunction) {console.log(fn.description + " returned " + fn(6));}
-// 调用上述函数
-doSomething(myfun); /*输出 123 returned false*/  
-console.log(myfun.isEven(11)); /*输出 true*/
-```
-
-**构造签名**，在调用签名前面加一个 new 关键词。
-
-**泛型函数**: 函数的*输出类型依赖函数的输入类型*，或者两个输入的类型以某种形式相互关联。代码的复用，减少代码量。
-
-- 泛型约束实战: _函数理应返回与传入参数相同类型的对象，而不仅仅是符合约束的对象_。
-- _编写优秀泛型函数的准则_: 类型参数下移,使用更少的类型参数,类型参数应该出现两次……
-  - (个人理解:类型参数就是指代类型的那个尖括号里的 T、Type 之类的，**将类型参数化**，通常就在泛型中使用)
-  - _类型参数_：声明泛型类、接口或方法时在尖括号中申明的类型参数，如 List 的 E
-  - _泛型类_：声明了类型参数的类、接口和方法分别称为泛型类、泛型接口和泛型方法。
-  - _参数化类型_：在使用泛型类时指定了具体的类型后称为参数化类型，如 List
-  - _原始类型_：参数化类型的泛型类的 Class，如 List 的原始类型为 List，List[]的原始类型也为 List
-
-```js
-// 带约束的泛型函数示例:
-function longest<Type extends { length: number }>(a: Type, b: Type) {
-  if (a.length >= b.length) {return a;} else {return b;} }
-console.log(longest("alice", "bob")); /*"alice"*/ console.log(longest([1, 2], [1, 2, 3])); /* [1, 2, 3]*/
-```
-
-**可选参数**: 使用问号 `?` 修饰的参数。
-
-**函数重载**: 函数名称一样，传入的参数数量、类型不同。_需要写多个函数签名_。**在可能的情况下，请始终使用联合类型参数。**
-
-**其他类型**: void、object、unknow、never、Function
-
-**形参和实参的展开语法**: `...`
-
-**参数解构**: [js 的结构赋值](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)可以将属性/值从对象/数组中取出，赋值给其他变量。
-
-**函数的可赋值性**: 返回值类型为 void 的**上下文类型**并不会强迫函数不返回任何东西。(虽是 void，但可以有返回值)。但当某个**字面量函数定义**的返回值为 void 的时候，该函数不能返回任何东西。
-
-```js
-type voidFunc = () => void;
-const f1: voidFunc = () => true;  console.log(f1()); // true
-function f2(): void {return true; /*报错：Type 'boolean' is not assignable to type 'void'.*/}
-```
-
-**对象类型**
-
-**构建对象类型**
-
-```js
-// 匿名的对象类型
-function greet(person: { name: string; age: number }) {return "Hello " + person.name;}
-// 使用 interface 命名的对象类型
-interface Person1 { name: string;  age: number;}
-function greet1(person: Person1) {return "Hello " + person.name;}
-/* 使用 type 别名的对象类型*/ type Person2 = {name: string;age: number;};
-function greet2(person: Person2) {  return "Hello " + person.name;}
-```
-
-**属性修饰符**: 对象类型中的每个属性都可以指定一些东西：属性类型、属性是否可选，属性是否可写。
-
-- **可选属性** : 属性名后加`?` **只读属性** : 属性名称前面加 `readonly`。
-  - readonly 仅仅表明属性本身是不能被重新写入的。readonly 的值是可以通过别名修改的。
-- **索引签名** (Index Signatures) 思想是在**只知道键和值类型的情况下对结构未知的对象进行类型划分**。
-  - 一个索引签名的属性类型必须是 string 或者是 number，_数字索引的返回类型一定要是字符索引返回类型的子类型_。
-
-```js
-// 2 此索引签名所描述的类型本身是各个属性类型的联合类型，那么就允许出现不同类型的属性
-interface Options {
-  // 索引签名。Options这个类的属性key为字符串格式，值value为string、number、boolean中一个
-  [key: string]: string | number | boolean;
-  timeout: number;// 也有确定的属性timeout，其值value必须为number类型
-}
-const options: Options = {
-  // Options的对象key是string，值为string、number、boolean其中一种，这3个都满足
-  timeout: 1000,timeoutMessage: "The request timed out!",isFileUpload: false,
-  hehe: {}, /** 报错:Type '{}' is not assignable to type 'string | number | boolean'. */
-};
-```
-
-**拓展类型**: extends 关键字:`interface ColorfulCircle extends Colorful, Circle {}`  
-**交叉类型**: _组合现有的对象类型_。通过 `&` 操作符可以定义一个交叉类型。`type ColorfulCircle = Colorful & Circle;`  
-上述两者功能类似，主要区别在于**处理冲突的方式**。_接口继承如果重写类型会导致编译错误;交叉类型不会报错，但类型取自各自的交集_。
-
-**泛型对象**: 类似接口`interface Box<Type> {contents:Type;}` 或别名 `type NewBox<T> = {contents:T;};`
-
-- **数组类型**:`Array`本身就是一个泛型类型`Array<Type>`。`number[]`和`string[]`是`Array<number>`和`Array<string>` 的缩写。
-  - 类似的 js 其他通用的数据结构，比如`Map<K, V>`, `Set<T>`, 和`Promise<T>`。
-- **只读数组类型**: 描述数组不能被改变,主要是用来做意图声明。没有可用的构造函数(就是不能 new)。
-  - 可以把一个常规数组赋值给 ReadonlyArrays，**反之不行**。`ReadonlyArray<Type>` 提供了更简短的写法 `readonly Type[]`。
-- **元组类型**: 允许表示一个已知元素数量和类型的数组，**各元素的类型不必相同**。
-  - 越界会报错。组解构和数组一致。也有可选属性(在类型后加`?`)，但会影响其长度(length)。也可以使用展开运算符。
-- **只读元组类型**: 简写语法和只读数组类型类似。例如: `readonly [string, number]`
-
-**类型操作**
-
-TypeScript 的类型系统非常强大，因为它**允许我们用其它类型去表示新的类型。**可以从现有类型中创建更多类型的方法:
-
-- **泛型**: 可以接受参数的类型 - 泛型是指在定义函数、接口或类的时候，_不预先指定具体的类型，而在使用的时候再指定类型的一种特性_。
-  - 示例: `/*一个泛型函数*/ function identity<Type>(arg: Type): Type {return arg;}`
-- **keyof 类型操作符**: 使用 `keyof` 操作符创建新类型 - _接收一个对象类型，返回该对象属性名组成的一个字符串或者数字字面量的**联合类型**_。
-  - 示例:`type Point={x: number;y: number;}; type P=keyof Point;/*P为联合类型"x"|"y"*/ let a:P="x"`
-- **typeof 类型操作符**: 使用 `typeof` 操作符创建新类型 - _可以获取到基本类型数据、函数(配合 ts 内嵌 ReturnType)的类型_。
-  - `let s = "hello"; /* n的类型为: string*/ let n: typeof s="world";`
-- **按索引访问类型**: 使用 `Type['a']` 语法访问某个类型的某个子集 - _通过访问某个类型上的特定属性，从而获取该属性的类型_。
-  - `type Person={age: number; name: string;};/*Age 的类型为number*/ type Age=Person["age"];`
-- **条件类型**: 该类型的行为类似于类型系统中的 if 语句 - _描述输入类型和输出类型之间的关系_。语法类似 js 的三元表达式。
-  - 两个基本接口`interface IdLabel {id: number};interface NameLabel {name: string ; }`
-  - 使用条件类型简化掉函数重载`type NameOrId<T extends number|string>=T extends number?IdLabel:NameLabel;`
-
-```js
-/*两个基本接口*/ interface IdLabel {id: number}; interface NameLabel {name: string;}
-/*使用条件类型简化函数重载*/ type NameOrId<T extends number|string>=T extends number?IdLabel:NameLabel;
-function createLabel2<T extends number|string>(idOrName: T): NameOrId<T> {throw "unimplemented";}
-let a1=createLabel2("ts");/*a1的类型NameLabel*/let a2=createLabel2(2.8); /*a2的类型IdLabel*/
-```
-
-- **映射类型**: 通过映射已有类型的每个属性去创建类型 - _一个类型需要基于另外一个类型，但是你又不想拷贝一份时可以考虑使用_。
-
-```js
-/* 定义一个映射类型  OptionsFlags 会遍历 Type 所有的属性，然后设置为布尔类型*/
-type OptionsFlags<Type> = { [Property in keyof Type]: boolean /* 索引签名 */ };
-/* 已有的类型*/type FeatureFlags = {darkMode: () => void;newUserProfile: () => void;name: string;};
-/*使用映射类型后获取新的类型*/type FeatureOptions = OptionsFlags<FeatureFlags>;
-    /* 现在FeatureOptions的类型是{darkMode: boolean;newUserProfile: boolean;name: boolean;}*/
-/*使用该映射类型*/const fo: FeatureOptions = {darkMode:false, newUserProfile:false, name:false,};
-```
-
-- **模板字面量类型**: 通过模板字面量字符串改变属性的映射类型 - 以[字符串字面量](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types)类型为基础，可以通过*联合类型扩展成多个字符串*。
-
-```js
-type Flag = "ok" | "bad"; type Lang = "en" | "cn";
-type LangFlags = `${Lang}_${Flag}`; // 2*2, 4个值的联合类型: "en_ok" | "en_bad" | "cn_ok" | "cn_bad"
-```
-
-**类**
-
-**类成员**: 属性/字段、方法、构造器、代码块、访问器……
-
-- **字段** (Fields): 声明字段相当于是给类添加了一个公共的、可写的属性。字段需要在构造器自身内部进行初始化。
-  - 字段可以加上 readonly 修饰符作为前缀，以防止在构造器外面对字段进行赋值。
-- **类的构造函数**跟函数非常类似，你可以使用带类型注解的参数、默认值、重载等。**类的构造器签名**和函数签名的区别: _构造器不能使用类型参数_: 类型参数(回忆泛型那个 T)属于外层类声明的部分;_构造器不能给返回值添加类型注解_: 它返回的类型始终是类实例的类型。
-- 如果你有一个基类，你需要在使用任何 `this.` 成员之前，先在构造函数里调用 **super()**。
-- 类中的函数属性被称为**方法**。方法跟函数、构造函数一样，使用相同的**类型注解(即说明参数类型是啥，返回类型是啥)。**
-- **getter/setter 访问器**: 如果 get 存在而 set 不存在，那么属性会自动成为*只读属性*; 如果*没有指定 setter* 参数的类型，那么会*基于 getter* 返回值的类型去*推断参数类型*; getter 和 setter 必须具备*相同的成员可见性*。
-- 类可以声明**索引签名**，它和对象类型的索引签名是一样的。通常最好将索引数据存储在另一个位置，而不是类实例本身。
-
-**类继承**: (implements/extends) **类可以实现(implements)多个接口**。例如：`class C implements A, B {..}`
-
-- **`implements` 子句只是用于检查类是否可以被视为某个接口类型，它完全不会改变类的类型或者它的方法。**
-- **类可以继承(extends)自某个基类。派生类拥有基类的所有属性和方法，同时也可以定义额外的成员。**
-  - 派生类也可以重写基类的字段或者属性。你可以使用 `super.` 语法访问基类的方法。**派生类会遵循基类的约束**
-  - 可以写 `declare` 来向 TypeScript 表示这个字段声明不应该有运行时的影响。
-- **初始化顺序**: 初始化基类的字段; 执行基类的构造器; 初始化派生类的字段; 执行派生类的构造器
-  - 这意味着**基类构造器执行的时候派生类的字段尚未进行初始化。**
-- 多态（Polymorphism）由继承而产生了相关的不同的类，对同一个方法可以有不同的行为。
-
-**成员可见性**: **public**公有成员随处可以访问。 **protected**受保护成员只在类的子类中可见。**private** 的私有成员即使在派生类中也无法被访问到,但 ts 允许跨实例访问私有成员。
-
-- **`private` 和 `protected` 只在类型检查期间生效。**private 允许在类型检查的时候，通过*方括号语法*进行访问。
-- **TypeScript 的这些`private` 和 `protected`字段是“弱私有的”**，无法保证严格意义上的私有性。
-- **JavaScript 的私有字段**（`#`）即便是编译后依然保留私有性，不提供方括号获取的方法，**强私有**。
-
-类可以拥有**静态（static）成员**。这些成员和类的特定实例无关，我们可以*通过类构造器对象本身访问*到它们。
-
-- 静态成员也可以使用 public、protected 和 private 等可见性修饰符。静态成员也可以被继承。
-- 类本身是函数，而覆写 Function 原型上的属性通常认为是不安全的，因此不能使用一些固定的静态名称，_函数属性像 name、length、call 不能被用来定义 static 成员_。即不能在类中使用类似`static name = "S!";`
-- **没有静态类**因为 TypeScirpt 语言*不要求所有的数据和函数必须放在一个类中*。但 `java`/`c#` 等则不同，所以他们有静态类。
-- **静态块**允许你编写一系列声明语句，它们拥有自己的作用域，并且可以访问包含类中的私有字段。类中使用`static {/* */}`。
-
-**泛型类**: 类和接口一样，也可以使用泛型。当用 new 实例化一个泛型类的时候，它的类型参数的推断跟函数调用是同样的方式。
-
-- _类型在编译后总是会被完全抹除的_! **泛型类的静态成员永远都不能引用类的类型参数。**
-
-**类的运行时 `this`**: ts 并不会更改 js 运行时的行为,**默认情况下，函数中 `this` 的值取决于函数是如何被调用的。**
-
-在类中，有一个特殊的名为 **`this` 的类型**，会动态的引用当前类的类型。可用于*基于 this 的类型保护*。
-
-- 可以在类和接口的方法返回的位置，使用 `this is Type` 。当搭配使用类型收窄，目标对象的类型会被收窄为更具体的 Type。
-- 基于 this 的类型保护的常见用例是允许特定字段的延迟验证。
-
-**参数属性**: _将构造器参数转化为具有相同名字和值的类属性_。
-
-- 实现方式是在构造器参数前面加上 public 、 private 、 protected 或者 readonly 等其中一种可见性修饰符作为前缀。最终的字段将会获得这些修饰符。
-
-```js
-class Params {
-    // Params 类没有声明属性，只有一个构造函数，但是构造函数中使用了" 参数属性" 语法，构建了与之同名、同类型的类属性
-    constructor(public readonly x: number, protected y: number, private z: number) {
-      /*没有必要编写构造器的函数体*/ }}
-const a = new Params(1, 2, 3); console.log(a.x); // 1
-```
-
-**类表达式**跟类声明非常类似，唯一不同的是*类表达式不需要一个名字*。
-
-```js
-// 类声明
-class SomeClass<T> { content: T; constructor(value: T) { this.content = value; } }
-// 类表达式
-const someClass2 = class <Type> { content: Type; constructor(value: Type) { this.content = value; } };
-
-const n = new SomeClass("Hello, n1"); // const n: SomeClass<string>
-console.log(n); //  SomeClass: {"content": "Hello, n1"}
-const n2 = new someClass2("Hello, n2"); // const n2: someClass2<string>
-console.log(n2); //  someClass2: {"content": "Hello, n2"}
-```
-
-**抽象类和成员**:_抽象方法或者抽象字段在类中**没有对应的实现**。抽象类的角色是充当一个基类，让其子类去实现所有的抽象成员。_
-
-**抽象构造签名**希望接受*传入可以继承一些抽象类*产生一个类的实例的类构造函数，该函数接受传入一个*构造签名*才不会报错。
-
-**类之间的联系**: *结构一样的不同两个类，实际上是可以相互替换的。*即使没有显式声明继承关系类和类之间也可以存在子类联系。**空类没有成员**。
-
-**模块导出导入**
-
-在 TypeScript 中，就像在 ECMAScript 2015 中 ，任何*包含了一个顶层 import 或者 export 的文件*会被认为是一个**模块**。  
-模块会在它*自己的作用域*。在一个模块中声明的变量、函数、类等，对于*模块之外的代码都是不可见*的，除非你显示的导出这些值。  
-相应的没有顶层导入和导出声明的文件会被认为是一个**脚本**，它的内容会在*全局范围内可用*。
-
-```js
-// ********导出、导入*
-export var pi = 3.14;export let squareTwo = 1.41;export const phi = 1.61;// 导出多个
-export default class RandomNumberGenerator {} // 导出多个也可以有一个默认的
-export function absolute(num) {  if (num < 0) return num * -1;  return num;}
-
-import { pi, phi, absolute } from "./maths.js"; // 导入多个
-import { pi as pie } from "./maths.js"; // 别名
-import RandomNumberGenerator, { pi as pie } from "./maths.js"; // 混用导入默认导出和其他变量别名导出
-import * as math from "./maths.js"; // 导出所有对象
-import "./maths.js"; // 导入整个文件（被导入的文件中的代码会执行）
-
-/** ts 为 import 语法拓展了两个用途，让它可以声明类型导入。*/
-// 1 import type , 只能导入类型：
-// @filename: animal.ts
-export type Cat = { breed: string; yearOfBirth: number };
-export type Dog = { breeds: string[]; yearOfBirth: number };
-export const createCatName = () => "fluffy";
-// @filename: valid.ts
-import type { Cat, Dog } from "./animal.js"; // 官方示例中问.js后缀
-export type Animals = Cat | Dog;
-// @filename: app.ts
-import type { createCatName } from "./animal.js";
-// error: "createCatName" 是使用 "import type" 导入的，因此不能用作值。
-const name = createCatName();
-
-// 2 内联type导入。ts4.5 也允许单个导入使用type前缀表明导入的引用是一个类型。
-// 上面例子简单修改导入: @filename: app.ts
-import { createCatName, type Cat, type Dog } from "./animal.js";
-export type Animals = Cat | Dog;
-const name = createCatName();
-```
-
-\newpage
-
-# dart
-
-**重要概念**
-
-- **Dart 是一种真正面向对象的语言**。所有变量引用的都是**对象**，每个对象都是一个**类** 的实例。
-  - 数字、函数以及 null 都是对象。_除去 null 以外（如果你开启了 空安全(Null safety)）, 所有的类都继承于 Object 类_。
-- 尽管 Dart 是强类型语言，但是在声明变量时指定类型是可选的，因为 Dart 可以进行**类型推断**。
-- 如果开启了 **空安全**，变量在未声明为可空类型时不能为 null。
-  - 可以通过在类型后加上问号 (`?`) 将类型声明为可空。例如，int? 类型的变量可以是整形数字或 null。
-  - 如果 **明确知道** 一个表达式不会为空，但 Dart 不这么认为时，你可以在表达式后添加 `!` 来断言表达式不为空（为空时将抛出异常）。
-    例如：`int x = nullableButNotNullInt!`
-- 如果想要**显式地声明允许任意类型**，使用`Object?`（如果开启了空安全）、`Object`或者特殊类型`dynamic`将检查延迟到运行时进行。
-- Dart 支持**泛型**: 比如 `List<int>`（表示一组由 int 对象组成的列表）或 `List<Object>`（表示一组由任何类型对象组成的列表）。
-- Dart 支持**顶级函数**（例如 main 方法），还支持**定义属于类或对象的函数**（即*静态*和*实例方法*）。还可以在**函数中定义函数**（*嵌套*或*局部函数*）。
-- Dart 支持**顶级变量**，以及定义**属于类或对象的变量**（静态和实例变量）。*实例变量*有时称之为*域*或*属性*。
-- Dart **没有**类似 public、protected 和 private 的成员访问限定符。如果一个标识符*以下划线 (`_`) 开头*则表示该标识符*在库内是私有的*。
-- _标识符_ 可以以字母或者下划线 (`_`) 开头，其后可跟字符和数字的组合。
-- Dart 中**表达式**和**语句**是有区别的，**表达式有值而语句没有。**
-  - 比如条件*表达式* `expression condition ? expr1 : expr2` 中含有值 expr1 或 expr2。
-  - 作为对比，if-else 分支*语句*则没有值。 **if 语句中的条件必须是布尔值而不能为其它类型**。
-  - _一个语句通常包含一个或多个表达式，但是一个表达式不能只包含一个语句_。
-- Dart 工具可以显示**警告**和**错误**两种类型的问题。
-  - 警告表明代码可能有问题但*不会阻止其运行*。
-  - 错误分为编译时错误和运行时错误: - 编译时错误代码*无法运行*； - 运行时错误会在代码运行时导致*异常*。
-
-**变量**: 由于其支持类型推断，因此大多数变量*不需要显式地指定类型*。**变量仅存储对象的引用**。 通过`var`声明*局部变量*而非使用指定的类型。
-
-- 在 Dart 中，未初始化以及可空类型的变量拥有一个默认的初始值 null。
-- `late` 声明一个不可为空的变量，并在声明后被初始化。例如 `late String description;`
-- _一个 `final` 变量只可以被赋值一次；一个 `const` 变量是一个编译时常量（const 变量同时也是 final 的）。_
-  - 顶层的 final 变量或者类的 final 变量在其第一次使用的时候被初始化。_不能修改一个 final 变量的值_。
-  - **编译时常量**指的就是程序在编译时就能确定这个常量的具体值。
-  - 使用 const 修饰类中的变量，则必须加上 static 关键字，即 `static const aa=...` （译者注：顺序不能颠倒）
-  - const 关键字不仅仅可以用来定义常量，还可以用来创建常量值，该常量值可以赋予给任何变量。_常量的值不可以被修改_。
-  - **实例变量可以是 final 的但不可以是 const。**
-- 可以*在常量中使用*类型检查和强制类型转换 (`is` 和 `as`)、 集合中的 `if` 以及 展开操作符 (`...` 和 `...?`)。
-
-**内置类型**
-
-- Numbers: 包含 `int` (长度不超过 64 位的整数) 和 `float`(64 位的双精度浮点数字，符合 IEEE 754 标准)。
-- Strings: `String` 包含了 UTF-16 编码的字符序列。单/双引号创建。**在字符串中，请`${表达式}`的形式使用表达式**。_只要是编译时常量 (null、数字、字符串、布尔) 都可以作为字符串字面量的插值表达式。_
-- Booleans: `bool`类型只包含`true`和`false`两个对象。Dart 的类型安全不允许使用类似`if(boolVal)`或者`assert(boolVal)`这样的代码检查布尔值。应该**总是显示地检查布尔值**。
-- Arrays: 数组由 `List` 对象表示。扩展操作符 **`...`** 和空感知扩展操作符 **`...?`** 提供了一种将多个元素插入集合的简洁方法。还同时引入了**集合中的 `if`**和**集合中的 `for` 操作**，在构建集合时，可以使用条件判断 (`if`) 和循环 (`for`)。以下`Set`和`Map`也支持扩展运算符和集合中 `if`、`for`。更多查看[List API](https://api.dart.cn/stable/2.16.2/dart-core/List-class.html)
-- Sets:在 Dart 中，`Set` 是*一组特定元素的无序集合*。更多查看[Set API](https://api.dart.cn/stable/2.16.2/dart-core/Set-class.html)
-- Maps: `Map` 是用来关联 keys 和 values 的对象。其中键(需要不重复)和值都可以是任何类型的对象。不建议使用`new Map()`。
-- Symbols: _可以使用在标识符前加`#`前缀来获取 Symbol。_ 代码压缩后，尽管标识符的名称会改变，但是它们的 Symbol 会保持不变。
-
-```dart
-var hex=0xDEADBEEF;/*定义整数字面量*/  var y=1.1;/*定义浮点数字面量*/ var s='字符串插值';/*创建字符串*/
-var unicorn; assert(unicorn == null); /*显示地检查布尔值,Check for null*/
-var list = [1, 2, 3];/*列表字面量创建列表*/ var halogens = {'ok', 'bad'};/* Set 字面量来创建 Set 集合*/
-var gifts = {'first': 'ok', 'second': 'bad',};/*Map 字面量创建 Map*/
-var ints = [2, 3];var strs = ['#0', for (var i in ints) '#$i']; print(strs); // [#0,#2, #3]
-#radix /*标识符前加 # 前缀来获取 Symbol。Symbol 字面量是编译时常量。*/
-```
-
-**函数**: _函数也是对象并且类型为 Function_，这意味着函数可以被赋值给变量或者作为其它函数的参数。
-
-- **参数**: 必要参数和可选参数(*命名参数*`{参数1, 参数2, …}`、可选的*位置参数*(用`[]`将一系列参数包裹起来)、*默认参数值*(用 `=` 为函数的命名参数和位置参数定义默认值))。
-  - 可选位置参数和可选命名参数不能混合在一起使用，因为可选参数列表只能位于整个函数形参列表的最后。
-
-```js
-// from、msg 为必要参数。 device、action 为可选参数，
-//    其中action为默认参数,都没有用{}指定命名参数，所以都是位置参数
-String say(String from, String msg, [String? device, String? action = "Smile"]) {
-  var result = '$from says $msg';
-  if (device != null) {result = '$result with a $device action is $action';} return result;
-}
-```
-
-- 每个 Dart 程序都必须有一个 **`main()`顶级函数**作为程序的入口，其返回值为`void`并且有一个`List<String>`类型的可选参数。
-- 函数是一级对象,可以将函数作为参数传递给另一个函数 (例如 forEach 的参数)。也可以将函数赋值给一个变量。
-- 创建一个没有名字的函数，称之为**匿名函数**、Lambda 表达式或 Closure 闭包 。_函数体内只有一行返回语句时可以使用胖箭头缩写法_。
-- Dart 是*词法有作用域*语言，**变量的作用域在写代码的时候就确定了**，_大括号内定义的变量只能在大括号内访问_，与 Java 类似。
-- **闭包**即一个函数对象，即使函数对象的调用在它原始作用域之外，依然能够访问在它词法作用域内的变量。(与 js 类似)
-- _所有的函数都有**返回值** _。没有显示返回语句的函数最后一行默认为执行 `return null;` 。
-
-**运算符**: 算术运算符(加减乘除)、关系运算符(相等不等)、类型判断运算符(是不是指定类型`as`、`is`、`is!`)、赋值运算符(`=`、`??=`等)、逻辑运算符(与或非)、按位和移位运算符(仅适用于整数)、条件表达式(三元和`??`)、级联运算符(`..`和`?..`)、其他运算符(`()`、`[]`、`?[]`、`.`、`?.`、`!`)
-
-```js
-b ??= value; // b为null则赋值为value，否则还是b (??= 赋值运算符)
-String myName(String? name) => name ?? 'Guest'; //条件表达式:如果name为非null则返回其值，否则返回Guest。
-querySelector('#confirm') // Get an object.
-  ?..text = 'Confirm' // Use its members. (.. / ?.. 级联操作符：同一个对象上连续调用多个对象的变量或方法)
-  ..classes.add('important')..onClick.listen((e) => window.alert('Confirmed!')) // 胖箭头缩写匿名函数
-  ..scrollIntoView();
-foo?.bar // 如果 foo 为 null 则返回 null ，否则返回 foo的bar属性 (?. 条件访问成员)
-foo!.bar // 如果 foo 为 null，则抛出运行时异常 (! 空断言操作符)
-```
-
-**控制流程语句**: if else、for、for in、forEach、while、break 和 continue、switch 和 case、assert、异常(try on catch finally)。
-
-**类**
-
-Dart 是支持基于 mixin 继承机制的面向对象语言，所有对象都是一个类的实例，而除了 Null 以外的所有的类都继承自 `Object` 类。  
-**基于 mixin 的继承**意味着尽管每个类（top class `Object?` 除外）_都只有一个超类_，一个类的代码可以在其它多个类继承中*重复使用*。  
-*扩展方法*是一种在不更改类或创建子类的情况下向类添加功能的方式。
-
-**使用类的成员**:_对象的成员由函数和数据（即方法和实例变量）组成_。方法的*调用*要通过对象来完成，这种方式可以访问对象的函数和数据。
-
-- 使用`.`来访问对象的实例变量或方法，使用`?.`代替`.`可以避免因为左边表达式为 null 的问题。`var a=p?.y;`(见运算符节)
-
-_**使用构造函数**来创建一个对象_。构造函数的命名方式可以为`类名`或`类名 .标识符` 的形式。类似`Point() 和 Point.fromJson()`
-
-- 一些类提供了 _常量构造函数_ 。使用常量构造函数，在构造函数名之前加 `const` 关键字，来创建编译时常量时。
-- 在 _常量上下文_ 场景中，你可以省略掉构造函数或字面量前的 const 关键字。
-- 如果无法根据上下文判断是否可以省略 const，则不能省略掉 const 关键字，否则将会创建一个 **非常量对象**。(回想 flutter 创建组件)
-
-**获取对象的类型**:使用 `Object 对象的 runtimeType 属性`在运行时获取一个对象的类型。类似`a.runtimeType`。
-
-**实例变量**:类似`class Point {double? x;double? y;double z=0;} // 声明了xyz实例变量，xy初始值null，z初始值0`。
-
-- **所有未初始化的实例变量其值均为 `null`。**- **所有实例变量均会隐式地声明一个 `Getter` 方法。**
-- **非终值(non-final)的实例变量和 `late final` 声明但未声明初始化的实例变量还会隐式地声明一个 `Setter` 方法。**
-- _如果实例变量是 `final` 的，那就必须初始化。_
-- 在声明时，使用构造函数参数或使用构造函数的初始化器列表初始化 `final`、`non-late` 实例变量。
-
-**构造函数**声明一个与类名一样的函数即可声明一个构造函数。
-
-- 对于**命名式构造函数**,还可以添加额外的标识符。- 大部分的构造函数形式是**生成式构造函数**，**其用于创建一个类的实例**。
-- **终值(final)初始化**: 构造中初始化的参数可以用于初始化非空或 final 修饰的变量，它们都必须被初始化或提供一个默认值。
-- **重定向构造函数**:有时候*类中的构造函数仅用于调用类中其它的构造函数*，需在函数签名后使用`:`指定需要重定向到的其它构造函数。
-
-```js
-import 'dart:math';
-void main() {
-  var a = Point.origin();  print(a.x); /* 3.6 */  var b = Point(5, 8);  print(b.x);/* 5 */
-  var c = Point.alongXAxis(12);print(c.x); /*12*/ print(a.distanceTo(b)); // 2.4413111231467406
-}
-const double xOrigin = 3.6; const double yOrigin = 6; // 用作命名构造函数初始化Point的初始值
-class Point { // 声明一个Point类
-  double x = 0;  double y = 0;// 类的实例变量，初始值为0
-  /* Point(double x, double y) {this.x = x;this.y = y;  } // 使用 this 关键字引用当前实例 */
-  Point(this.x, this.y);// 语法糖方式的构造函数，对上一行更简洁的初始化实例变量
-  Point.origin(): x = xOrigin,y = yOrigin;  // 命名构造函数
-  Point.alongXAxis(double x) : this(x, 0); // 重定向构造函数, Delegates(委托) to the main constructor.
-  // distanceTo() 方法就是一个实例方法
-  double distanceTo(Point other) {var dx=x-other.x;var dy=y-other.y;return sqrt(dx*dx + dy*dy);}
-}
-```
-
-- 如果你没有声明构造函数，那么 Dart 会自动生成一个**无参数的构造函数**并且该构造函数*会调用其父类的无参数构造方法*。
-  - _子类不会继承父类的构造函数_，如果子类没有声明构造函数，那么只会有一个默认无参数的构造函数。
-  - **调用父类非默认构造函数**顺序:子类构造函数初始化列表 `->` 父类的无参数构造函数 `->` 当前类的构造函数。
-  - _如果父类没有匿名无参数构造函数，那么子类必须调用父类的其中一个构造函数_，只需在构造函数体前使用（`:`）指定。
-  - 除了调用父类构造函数之外，还可以*在构造函数体执行之前*初始化实例变量。每个实例变量之间使用逗号分隔。
-- **常量构造函数**: 如果类生成的对象都是不变的，可以在*生成这些对象时*就将其变为编译时常量。在类的构造函数前加上 `const` 并确保所有实例变量均为 `final` 。
-- 使用 `factory` 关键字标识类的构造函数将会令该构造函数变为**工厂构造函数**，这将意味着*使用该构造函数构造类的实例时并非总是会返回新的实例对象*。在工厂构造函数中无法访问 `this`。
-
-**方法**是为对象提供行为的函数 (Methods are functions that provide behavior for an object.)。
-
-- 对象的**实例方法**可以访问实例变量和 this。上例中的`distanceTo()`。
-- 使用 `operator` 标识来进行标记**重写操作符**。
-- 可以使用 `get` 和 `set` 关键字为额外的属性添加 `Getter` 和 `Setter` 方法(一对用来读写对象属性的特殊方法)。
-- **抽象方法**就是以 `abstract` 修饰的方法，_只声明返回的数据类型、方法名称和所需的参数，没有方法体_，即**只需要声明而不需要实现**。
-  - _当一个方法为抽象方法时，意味着这个方法必须被子类的方法所重写，否则其子类的该方法仍然是 `abstract` 的，而这个子类也必须是抽象的_，即声明为 `abstract` 。
-  - 实例方法、`Getter` 方法以及 `Setter` 方法*都可以*是抽象的，定义一个接口方法而不去做具体的实现让实现它的类去实现该方法。
-  - **抽象方法只能存在于*抽象类*中**, 直接使用分号（`;`）替代方法体即可声明一个抽象方法。
-
-**抽象类**: 使用关键字 `abstract` 标识类可以让该类成为 **抽象类**，_抽象类将无法被实例化_。
-
-**隐式接口**: 每一个类都隐式地定义了一个接口并实现了该接口，这个接口包含所有这个类的实例成员以及这个类所实现的其它接口。
-
-- 一个类可以通过关键字 `implements` 来实现一个或多个接口并实现每个接口定义的 API；实现多个类接口需要使用逗号分割每个接口类。
-
-**扩展一个类**: 使用 `extends` 关键字来创建一个子类，并可使用 `super` 关键字引用一个父类。**Dart 支持单继承**。
-
-- _重写类成员_: 子类可以重写父类的实例方法（包括操作符）、 Getter 以及 Setter 方法。使用 `@override` 注解来表示重写的成员。
-- 一个重写方法的*声明必须*与它所重写的方法*匹配*以下内容:
-  - 返回类型相同（或为其子类型）。参数类型相同（或者是超类型）。位置参数的个数。泛型方法或非泛型方法重写后依旧是泛型或非泛型。
-- _如果重写 `==` 操作符，必须同时重写对象 hashCode 的 Getter 方法。_
-- 如果调用了对象上*不存在的方法或实例变量*将会触发 `noSuchMethod` 方法。
-  - 除非重写 `noSuchMethod`，否则使用不存在的成员会导致 `NoSuchMethodError`。
-
-**枚举类型**: 使用关键字 `enum` 来定义*简单的枚举类型和枚举值*: `enum Color { red, green, blue }`
-
-- 可以使用与定义*类*类似的语句来定义**增强的枚举**，但有一些限制条件:
-
-  - 1 实例的字段必须是 final，包括由 mixin 混入的字段。2 所有的 实例化构造 必须以 const 修饰。3 工厂构造 只能返回已知的一个枚举实例。4 由于 Enum 已经自动进行了继承，所以枚举类不能再继承其他类。5 不能重载 `index`、`hashCode` 和比较操作符 `==`。
-  - 6 不能声明 `values` 字段，否则它将与枚举本身的静态 `values` getter 冲突。7 在进行枚举定义时，所有的实例都需要首先进行声明，且至少要声明一个枚举实例。
-
-- **使用枚举**: 像访问 静态变量 一样访问枚举值:`final favoriteColor = Color.blue;`
-
-**Mixin** 是一种*在多重继承中复用某个类中代码的方法模式*。（dart 是单继承多实现，使用 mixin 可以多重继承）。使用 `with` 关键字并在其后跟上 Mixin 类的名字来使用 Mixin 模式。`class Maestro extends Person with Musical, Aggressive, Demented{/* */}`
-
-- 想要实现一个 Mixin，_使用`with`创建一个继承自 Object 且未声明构造函数的类_。关键字 `on` 指定*哪些类可以使用*该 Mixin 类。
-- `mixin MusicalPerformer on Musician {/* */}`: 需要先 `extends` Musician 才能使用 MusicalPerformer 类。
-- 不用`mixin`关键字而是`class`就变成了一个普通的类一样可以被正常地使用。
-
-**类变量和方法**: 使用关键字 `static` 可以声明类变量或类方法(静态变量或静态方法)，**在其首次被使用的时候才被初始化**。
-
-**泛型**: 例如数组 List 的实际类型为 `List<E>`:`<…>` 符号表示数组是一个`泛型`(或`参数化类型`）。**通常使用一个字母来代表类型参数**。
-
-- 泛型常用于需要**要求类型安全**的情况: 适当地指定泛型可以更好地帮助代码生成。使用泛型可以减少代码重复。
-- List、Set 以及 Map 字面量也可以是参数化的。Set 类似`var uniqueNames = <String>{'Seth', 'Kathy', 'Lars'};`
-- 在*调用构造方法时使用泛型*，只需在*类名后用尖括号(`<...>`)将一个或多个类型包裹*:`var nameSet = Set<String>.from(names);`
-- **Dart 的泛型类型是固化的**(reified)，这意味着即便**在运行时也会保持类型信息**，Java 中的泛型是类型*擦除* (erasure) 的。
-- **限制参数化类型**: 使用泛型时，参数必须是指定类型的子类，这时候**可以使用 `extends` 关键字**。
-- 在方法上使用泛型，称之为**泛型方法**:`T first<T>(List<T> ts) {T tmp = ts[0]; return tmp;}`
-  - `first`方法的返回值类型、参数 List 类型、局部变量`tmp`的类型都可使用泛型 T。
-
-**库和可见性**:`import` 和 `library` 关键字用于创建一个模块化和可共享的代码库。以下划线（`_`）开头的成员仅在代码库中可见。**每个 Dart 程序都是一个库**，即便没有使用关键字 library 指定。
-
-- 使用 `import` 来指定命名空间以便其它库可以访问，唯一参数是用于指定代码库的 URI。例如`import 'dart:html';`
-  - URI 代表统一资源标识符。URL（统一资源定位符）是一种常见的 URI。
-- 使用`as`关键字指定前缀，使用`show`(只导入 show 指定的)或`hide`(导入除了 hide 指定的其他所有)导入代码库的部分。
-- 使用 `deferred as` 关键字来标识需要延时加载的代码库。例如`import 'package:greetings/hello.dart' deferred as hello;`
-
-**异步支持**: Dart 代码库中有大量返回 `Future` 或 `Stream` 对象的函数，这些函数都是 **异步** 的， 它们会在*耗时操作（比如 I/O）执行完毕前直接返回而不会等待耗时操作执行完毕*。`async` 和 `await` 关键字用于实现异步编程，并且让代码看起来就像是同步的一样。
-
-- 使用 `async` 和 `await`或 `Future API`获得 `Future` 执行完成的结果。
-  - `await`表达式的返回值通常是一个`Future`对象。`Future`对象代表一个“promise”，`await`表达式会阻塞直到需要的对象返回。
-- 使用 `async` 关键字和一个 `异步循环`（使用 `await for` 关键字标识）或 `Stream API`从 `Stream` 中获取值。
-  - 使用 `break` 和 `return` 语句可以停止接收 Stream 数据，这样就跳出了循环并取消注册监听 Stream。
-
-需要延迟地生成一连串的值时，可以考虑使用**生成器函数**,Dart 内置支持两种形式的生成器方法:
-
-- **同步** 生成器：返回一个 Iterable 对象。在函数上加 `sync*` 关键字并将返回值类型设为 `Iterable`，在函数中使用 `yield` 语句来传递值。
-- **异步** 生成器：返回一个 Stream 对象。异步生成器函数与同步类似，只不过关键字为 `async*` 并且返回值为 `Stream`。
-
-**可调用类**: 通过实现类的 `call()` 方法，允许使用类似函数调用的方式来使用该类的实例。
-
-**隔离区(Isolates)**: 为了解决多线程带来的并发问题，Dart 使用 `isolate` 替代线程，_所有的 Dart 代码均运行在一个 `isolate` 中。\_每一个 `isolate` 有它自己的堆内存以确保其状态不被其它 `isolate` 访问。_
-
-**类型别名**是引用某一类型的简便方法，使用关键字 `typedef`。例如`typedef IntList=List<int>; IntList il=[1,2,3];`
-
-使用**元数据**可以为代码增加一些额外的信息，形式为`@xxx`。Dart 中`@deprecated @Deprecated @override`。也可以自定义元数据注解。
-
-\newpage
-
-# flutter
-
-Flutter 为软件开发行业带来了革新：**只要一套代码库，即可构建、测试和发布适用于移动、Web、桌面和嵌入式平台的精美应用。**
-
-- 快速: Flutter 代码可以直接编译成 ARM 或 Intel 平台的机器代码，以及 js 代码，确保了 Flutter 应用能够拥有原生平台的性能表现。
-- 高效: 使用热重载 (Hot Reload) 快速构建和迭代你的产品，更新代码后即刻看到变化，也不会丢失应用状态。
-- 灵活: 屏幕上的每个像素都由你来把握，尽情去创造不被定义、不受局限、彰显品牌的完美体验吧，这个舞台专属于你。
-
-在*开发中*，Flutter 应用会*在一个 VM（程序虚拟机）中运行*，从而可以在保留状态且无需重新编译的情况下，*热重载*相关的更新。  
-对于*发行版* (release) ，Flutter 应用程序会*直接编译为机器代码*（Intel x64 或 ARM 指令集），*或*者针对 Web 平台的*JavaScript*。
-
-**Flutter 被设计为一个可扩展的分层系统**。它可以被看作是各个独立的组件的系列合集，上层组件各自依赖下层组件。  
-组件无法越权访问更底层的内容，并且框架层中的各个部分都是可选且可替代的。
-
-![archdiagram](./pictures/pictures-flutter/flutter-system-overview.png){width=62%}
-
-**嵌入层**: 对于底层操作系统而言，Flutter 应用程序的包装方式与其他原生应用相同。_在每一个平台上，会包含一个特定的**嵌入层** _，从而提供一个程序入口，程序由此可以与底层操作系统进行协调，访问诸如 surface 渲染、辅助功能和输入等服务，并且管理事件循环队列。Flutter 代码可以通过嵌入层，以模块方式集成到现有的应用中，也可以作为应用的主体。
-
-**Flutter 引擎** 毫无疑问是 Flutter 的核心，它主要使用 C++ 编写，并提供了 Flutter 应用所需的原语。_当需要绘制新一帧的内容时，引擎将负责对需要合成的场景进行栅格化_。它提供了 Flutter 核心 API 的底层实现，包括图形（通过 **Skia**）、文本布局、文件及网络 IO、辅助功能支持、插件架构和 Dart 运行环境及编译环境的工具链。_引擎将底层 C++ 代码包装成 Dart 代码，通过 `dart:ui` 暴露给 Flutter 框架层_。该库暴露了最底层的原语，包括用于驱动输入、图形、和文本渲染的子系统的类。
-
-开发者可以通过 **Flutter 框架层** 与 Flutter 交互，该框架提供了*以 Dart 语言编写的现代响应式框架*。它包括由*一系列层组成的一组丰富的平台，布局和基础库*。Flutter 框架相对较小，因为*一些开发者可能会使用到的更高层级的功能已经被拆分到不同的软件包中*，使用 Dart 和 Flutter 的核心库实现。Flutter 框架从下层到上层，依次有：
-
-- 基础的 **foundational** 类及一些基层之上的构建块服务，如 animation、 painting 和 gestures，它们可以*提供上层常用的抽象*。
-- **渲染层** 用于提供操作布局的抽象。有了渲染层，可以*构建一棵可渲染对象的树*。动态更新这些对象时，渲染树也会自动根据变更来更新布局。
-- **widget 层**是一种组合的抽象。_每一个渲染层中的渲染对象，都在 widgets 层中有一个对应的类_。此外，widgets 层让你可以*自由组合你需要复用的各种类*。响应式编程模型就在该层级中被引入。
-- **Material 和 Cupertino 库**提供了*全面的 widgets 层的原语组合*，这套组合分别实现了 Material 和 iOS 设计规范。
-
-\rule[0pt]{19.4cm}{0.03em}
-
-**响应式用户界面**: 在 Flutter 里，widgets 是用来配置对象树的不可变类。这些 widgets 会管理单独的布局对象树，接着参与管理合成的布局对象树。 _Flutter 的核心就是一套高效的遍历树的变动的机制_，它会将对象树转换为更底层的对象树，并在树与树之间传递更改。
-
-**Widgets** 是构建 Flutter 应用界面的基础块，_每个 widget 都是一部分不可变的 UI 声明_。Widgets 通过布局组合形成一种层次结构关系。_每个 Widget 都嵌套在其父级的内部，并可以通过父级接收上下文_。从根布局（托管 Flutter 应用的容器，通常是 MaterialApp 或 CupertinoApp）开始，自上而下都是这样的结构。
-
-应用会根据事件交互（例如用户操作），通知框架替换层级中的旧 widget 为新 widget，然后*框架会比较新旧 widgets，高效地更新用户界面*。Flutter 拥有其自己的 UI 控制实现，而不是由系统自带的方法进行托管。
-
-- **组成**: Widgets 通常由更小的且用途单一的 widgets 组合而成，提供更强大的功能。
-- **构建 widgets**:_通过重写 `build()` 方法，返回一个新的元素树，来定义视觉展示_。Widget 的 build 方法应该是没有副作用的。每个渲染帧，Flutter 都可以根据变化的状态，调用 `build()` 方法重建部分 UI。因此，保证 build 方法轻量且能快速返回 widget 是非常关键的，繁重的计算工作应该通过一些异步方法完成，并存储在状态中，在 build 方法中使用。
-- **Widget 的状态**: 框架包含两种核心的 widget 类：有状态的 和 无状态的 widget。
-  - 大部分 widget 都没有需要变更的状态：它们并**不包含随时变化的属性**（例如图标或者标签）。这些 widget 会继承 `StatelessWidget`。
-  - 当 widget 拥有**需要根据用户交互或其他因素而变化的特有属性**就是*有状态的* 。当值变化时 widget 需要被重建以更新相关的 UI。这些 widget 会继承 `StatefulWidget`，并且「可变的」状态会保存在继承 `State` 的另一个子类中(因为 widget 本身是不可变的)。
-    - `StatefulWidget` 自身没有 `build()` 方法，而在其对应的 `State` 对象中。
-    - 每当你更改 `State` 对象时（例如计数增加），你需要调用 `setState()` 来告知框架，再次调用 `State` 的构建方法来更新 UI。
-    - 将状态和 widget 对象分离，可以使其他 widget 无差异地看待无状态和有状态 widget，而不必担心丢失状态。
-- **状态管理**: `InheritedWidget` 提供了一种从共同的祖先节点获取数据的简易方法。库`provider、flutter_hooks`也可以状态管理。
-
-**Flutter 的渲染模型**
-
-通常来说，跨平台框架都会在 Android 和 iOS 的 UI 底层库上创建一层抽象，该抽象层尝试抹平各个系统之间的差异。
-
-**Flutter 通过绕过系统 UI 组件库，使用自己的 widget 内容集，削减了抽象层的开销。**用于绘制 Flutter 图像内容的 Dart 代码被编译为机器码，并使用 Skia 进行渲染。 Flutter 同时也嵌入了自己的 Skia 副本，让开发者能在设备未更新到最新的系统时，也能跟进升级自己的应用，保证稳定性并提升性能。
-
-对于 Flutter 的渲染机制而言，首要原则是 **简单快速**。 Flutter 为数据流向系统提供了直通的管道:
-
-![render-pipeline](./pictures/pictures-flutter/render-pipeline2.png){width=65%}
-
-Flutter 四棵树(subtree of widgets、element tree、 render tree、layer tree)构建过程:
-
-- 当 Flutter 需要绘制某段 widget 层次结构代码片段时，框架会调用 build() 方法，返回一棵基于当前应用状态来绘制 UI 的 **`widget子树`**。
-- 在构建阶段,Flutter 会将代码中描述的 widgets 转换成对应的 **`Element 树`**，_每一个 Widget 都有一个对应的 Element_。
-- 在构建阶段,Flutter 会为 Element 树中的每个 RenderObjectElement 创建或更新其对应的一个从 RenderObject 继承的对象/**`渲染树`**。
-  - 在渲染树中，每个节点的基类都是 RenderObject，该基类为布局和绘制定义了一个抽象模型。
-  - 每一个 RenderObject 都了解其父节点的信息，但对于其子节点，除了如何*访问*和*获得他们的布局约束*，并没有更多的信息。
-- 在进行布局的时候，Flutter 会以 DFS（深度优先遍历）方式遍历渲染树，并**将限制以自上而下的方式**从父节点传递给子节点，生成 **`Layer树`**。
-  - 在遍历完一次树后，每个对象都通过父级约束而拥有了明确的大小，随时可以通过调用 `paint()` 进行渲染生成 layer 树。
-  - 所有 `RenderObject` 的根节点是 `RenderView`，代表了渲染树的总体输出。
-    - 当平台需要渲染新的一帧内容时，会调用一次 `compositeFrame()` 方法，它是 `RenderView` 的一部分。
-    - 该方法会创建一个 `SceneBuilder` 来触发当前画面的更新。
-    - 当画面更新完毕，`RenderView` 会将合成的画面传递给 `dart:ui` 中的 `Window.render()` 方法，控制 GPU 进行渲染。
-
-Widget 和 Element 是一一对应的，但并不和 RenderObject 一一对应。渲染树在上屏前会生成一棵 Layer 树。  
-比如 StatelessWidget 和 StatefulWidget 都没有对应的 RenderObject。  
-真正的布局和渲染逻辑在 Render 树中，Element 是 Widget 和 RenderObject 的粘合剂，可以理解为一个中间代理。
-
-![render-pipeline-trees](./pictures/pictures-flutter/render-pipeline-trees2.png){width=90%}
-
-大部分的 Flutter widget 是由一个继承了 RenderBox 的子类的对象渲染的，RenderBox 提供了**盒子限制模型**。  
-盒子限制模型十分强大，它的对象布局的时间复杂度是 `O(n)`：
-
-- _父节点可以通过设定最大和最小的尺寸限制，决定其子节点对象的大小。_
-- _父节点可以决定子节点的宽度_，而让子节点灵活地自适应布局高度（或决定高度而自适应宽度）。
-- 也适用于子节点对象需要知道有多少可用空间渲染其内容的场景，通过使用`LayoutBuilder`widget，子节点可以得到从上层传递下来的约束
-
-**Flutter 与 React Native 的对比**: _性能_: 都赶不上原生，但 Flutter 要稍好点，高帧更流畅。- _生态_: Google 和 Facebook，pub.dev 和 npm，github 中 Flutter 的 issue 更多 ( 202208 10k vs 1.9k)。- _语言_: dart 和 JavaScript。- _社区_: Flutter 文档更好、Stackoverflow 等讨论较多、市场占有率逐步提升。
-
-\newpage
-
-# tables
+## 4 JS 对象的方法表格
 
 **以下全是 JavaScript 的对象属性方法**
 
@@ -3177,448 +968,657 @@ Widget 和 Element 是一一对应的，但并不和 RenderObject 一一对应�
 
 \newpage
 
-# SQL NoSQL NewSQL
+## 5 rxjs7 Overview
 
-![sql-nosql-newsql.png](./pictures/pictures-others/sql-nosql-newsql.png){width=80%}
+**响应式编程**（英語：Reactive programming）是一种面向数据串流和变化传播的声明式编程范式。
 
-**ACID 规则**:
+- _命令式编程 Imperative_ 的主要思想是关注计算机执行的步骤，即**一步一步告诉计算机先做什么再做什么**。
+- _声明式编程 Declarative_ 是以数据结构的形式来表达程序执行的逻辑。它的主要思想是**告诉计算机应该做什么，但不指定具体要怎么做**。
+- _函数式编程 Functional_ 最重要的基础是 lambda 演算，主要思想是把**运算过程尽量写成一系列嵌套的函数调用**。
 
-- A (Atomicity) **原子性**: 原子性是说事务里的所有操作要么全部做完，要么都不做，事务成功的条件是事务里的所有操作都成功，只要有一个操作失败，整个事务就失败，需要回滚。
-- C (Consistency) **一致性**: 一致性是说数据库要一直处于一致的状态，事务的运行不会改变数据库原本的一致性约束。
-- I (Isolation) **隔离性**: 隔离性是指并发的事务之间不会互相影响，如果一个事务要访问的数据正在被另外一个事务修改，只要另外一个事务未提交，它所访问的数据就不受未提交事务的影响。
-- D (Durability) **持久性**: 持久性是指一旦事务提交后，它所做的修改将会永久的保存在数据库上，即使出现宕机也不会丢失。
+**流 (Stream) 的特点**
 
-第一范式：1NF 是对**属性的原子性**约束，要求属性具有原子性，不可再分解；  
-第二范式：2NF 是对**记录的惟一性**约束，要求记录有惟一标识，即实体的惟一性；  
-第三范式：3NF 是对**字段冗余性**的约束，即任何字段不能由其他字段派生出来，它要求字段没有冗余。
+- 一个流就是一个不间断的按照时间排序的序列。它产生三种不同类型事件: 值，错误，完成的信号。对这三个定义事件处理函数，就可以异步的捕获这些事件。
+- 每个 stream 有多个方法，调用时会基于原来的流返回一个新的流，原来的流不做修改，保证不可变性
+- 数据流支持链式调用，你可以组合不同的函数来处理流，创建和过滤不同的流。
 
-**CAP 定理（CAP theorem）** 指出对于一个分布式计算系统来说，不可能同时满足以下三点:
+**发布-订阅模式**:发布者和订阅者不知道对方的存在。需要一个第三方组件，叫做信息中介，它将订阅者和发布者串联起来并过滤和分配所有输入的消息。
 
-- 一致性(Consistency): 所有节点在同一时间具有相同的数据
-- 可用性(Availability): 保证每个请求不管成功或者失败都有响应
-- 分区容错性(Partition tolerance): 系统中任意信息的丢失或失败不会影响系统的继续运作
+**RxJS** 是一个使用可观察序列编写异步和基于事件的程序的库。
 
-根据 CAP 原理将 NoSQL 数据库分成了满足 CA 原则、满足 CP 原则和满足 AP 原则三大类：
+**RxJS 有一个核心和三个重点，一个核心是 Observable 再加上相关的 Operators，三个重点分别是 Observer、Subject、Schedulers。**
 
-- CA - 单点集群，满足一致性，可用性的系统，通常在**可扩展性上不太强大**。
-- CP - 满足一致性，分区容错性的系统，通常**性能不是特别高**。
-- AP - 满足可用性，分区容错性的系统，通常可能**对一致性要求低一些**。
+RxJS 中解决异步事件管理的基本概念有：
 
-![oltp-olap简单对比.png](./pictures/pictures-others/oltp-olap简单对比.png){width=80%}
+- **Observable**: 可观察对象，代表了一个*可调用的未来值或事件的集合*的概念。
+- **Observer**: 观察者，是一个**回调集合**，知道如何监听由 Observable 传递的值。
+- **Subscription**: 订阅，表示一个*可观察对象的执行*，主要用于**取消执行**。
+- **Operators**: 操作符，是纯函数，可以用*函数式编程风格处理集合的操作*，如 `map、filter、concat、reduce` 等等。
+- **Subject**: 主体，相当于一个 EventEmitter，是将一个值或事件广播给多个观察者的唯一途径(_多播唯一途径_)。
+  - BehaviorSubject: 它有一个 **当前值**的概念。它保存了发送给消费者的最新值。并且当有新的观察者订阅时，会立即从 `BehaviorSubject` 那接收到 **当前值**。
+  - ReplaySubject: **记录** Observable 执行中的**多个值并将其回放**给新的订阅者，可指定回放值的数量。
+  - AsyncSubject: 只有当 `Observable` **执行完成时**(执行 `complete`())，它才会将执行的**最后一个值**发送给观察者。
+- **Schedulers**: 调度器，是*控制并发的集中化调度器*，允许我们在计算发生在例如 setTimeout、requestAnimationFrame 或其他情况时进行协调。
 
-**索引**是关系数据库中对某一列或多个列的值进行预排序的数据结构。通过使用索引，可以让数据库系统不必扫描整个表，而是直接定位到符合条件的记录，这样就**大大加快了查询速度。**建立*唯一性索引*，可以保证数据库表中*每一行数据的唯一性*。
+**Observable**
 
-**不利的方面**: 建立索引和维护索引要耗费时间，索引需要占物理空间，索引也要动态的维护。
+- 在**拉取体系**(Pull systems)中，**由消费者来决定何时从生产者那里接收数据**。生产者本身不知道数据是何时交付到消费者手中的。
+- 在**推送体系**(Push systems)中，**由生产者来决定何时把数据发送给消费者**。消费者本身不知道何时会接收到数据。
+  - Observables ，一个新的 JavaScript 推送体系
+- Observable 和函数有什么区别？**Observables 可以随着时间的推移“返回”多个值，而函数不能。**函数只能返回一个值。
+  - 函数和 Observable 都是惰性计算的，函数不调用或者 Observables 不订阅，就不会执行。
+  - `func.call()`意思是“**同步给我一个值**”;`observable.subscribe()`的意思是“**给我任意数量的值，无论是同步的还是异步的**”。
+- 创建: `new Observable(subscribe函数)`或者创建型操作符 `of、from、interval` 等
+- 订阅: 订阅 Observable 就像调用一个函数，其参数是要传过去数据的回调函数。`observable.subscribe((x) => console.log(x));`
+- 执行: Observable 执行可以传递三种类型的值：(在用 new Observable()时`subscribe函数`就得注意提供这些执行)
+  - “Next(下一个)” 通知：发送数值、字符串、对象等。**代表要传递给订阅者的实际数据**。
+  - “Error(出错)” 通知：发送 JavaScript 错误或异常。
+  - “Complete(完成)” 通知：不发送值。**“Error”和“Complete”通知可能只发生一次，并且只能有其中之一。**
+  - _在 Observable 执行中，可能会传递**零个到无限个 Next 通知**。如果发送了出错或完成通知，则之后将无法发送任何其它通知。_
+- 取消: _当你订阅时，你会得到一个 Subscription，它代表正在进行的执行。只需调用`sub1.unsubscribe()`即可取消执行。_
 
-**适合建立索引的字段**: 经常需要搜寻的列，作为主键的列，经常用在联机的列，经常需要根据范围进行搜寻的列，经常需要排序的列，经常使用在`where`子句中的列。  
-`select` 的条件是 `where f1 and f2`，那么如果我们在字段 `f1`*或*字段 `f2` 上建立索引是*没有用*的，只有在字段 `f1` **和** `f2` 上同时建立索引才有用等。
+**Observer**
 
-**不适合建立索引的字段**: 查询中很少使用或者参考的列，只有很少数据值的列，定义为 text、image 和 bit 数据型别的列，当修改效能远远大于检索效能时。
+- **Observer** 是 Observable 传递的各个值的消费者。
+  - **Observer 只是一组回调**，对应于 Observable 传递的每种类型的通知：next、error 和 complete。
+  - _Observer 只是具有三个回调的对象，分别用于 Observable 可能传递的每种类型的通知。_
+- Observer 也可能是**部分**的。如果你不提供其中一个回调，Observable 的执行仍然会正常进行(例如只提供 next 和 error)。
+  - `const observer = {next:(x) => /**/, error:(err) => /**/,}; observable.subscribe(observer);`
 
-**索引优化使用原则**
+**Operators**
 
-1. 选择**唯一性索引**
-2. 为经**常需要排序、分组和联合操作的字段建立索引**。ORDER BY、GROUP BY、DISTINCT 和 UNION 等操作的字段，
-3. 为**常作为查询条件的字段建立索引**
-4. **限制索引的数目**
-5. 尽量**使用数据量少的索引**（char10 建索引比 char100 在检索时耗时更少，效率更高）
-6. 尽量**使用前缀来索引**
-7. **删除不再使用或者很少使用的索引**
-8. **最左前缀匹配原则**，非常重要的原则。
-9. **`=`和`in`可以乱序**。如`a=1 and b=2 and c=3`建立(a,b,c)索引可以任意顺序，mysql 的查询优化器会帮你优化成索引可以识别的形式
-10. 尽量**选择区分度高的列作为索引**。 区分度公式`count(distinct col)/count(*)`，表示字段不重复的比例，比例越大扫描的记录数越少。
-11. **索引列不能参与计算，保持列“干净”**。b+树中存的都是数据表中的字段值，但进行检索时，需要把所有元素都应用函式才能比较成本太大。
-12. **尽量的扩充套件索引，不要新建索引。** 比如表中已经有 a 的索引，现在要加(a,b)的索引，那么只需要修改原来的索引即可
+RxJS 的*操作符是纯函数*。操作符是能让你以声明方式轻松组合复杂异步代码的基本构造块。有两种操作符:`可联入管道的操作符`和`创建操作符`。
 
-**SQL 注入**是*用户输入的数据，在拼接 SQL 语句的过程中，超越了数据本身，成为了 SQL 语句查询逻辑的一部分*，然后这样被拼接出来的 SQL 语句被数据库执行，产生了开发者预期之外的动作。
+- **可联入管道的操作符**(Pipeable Operators) 是一个**以 Observable 作为输入并返回另一个 Observable** 的函数。这是一个纯操作：之前的 Observable 保持不变。
+- **创建操作符** (Creation Operators) 可用于根据一些常见预定义行为或联合其它 Observable 来**创建一个 Observable**的函数。
+- **高阶 Observables**: 发送 Observables 的 Observable。_产生的数据依然是 Observable 的 Observable_。
+  - 将高阶 Observable 转换为一阶 Observable 常用操作符:`concatAll()`、`mergeAll()`、`switchAll()`、`exhaustAll()`。
+- 纯函数为符合下列条件的函数(wiki):
+  - 此函数**在相同的输入值时，需产生相同的输出**。函数的输出和输入值以外的其他隐藏信息或状态无关，也和由 I/O 设备产生的外部输出无关。
+  - 该函数**不能有语义上可观察的函数副作用**，诸如“触发事件”，使输出设备输出，或更改输出值以外物件的内容等。
 
-1. 代码层防止 sql 注入攻击的最佳方案就是 **sql 预编译**
-2. 确认每种数据的类型，比如是数字，数据库则必须使用 int 类型来存储
-3. 规定数据长度，能在一定程度上防止 sql 注入
-4. **严格限制数据库权限**，能最大程度减少 sql 注入的危害
-5. 避免直接响应一些 sql 异常信息，sql 发生异常后，**自定义异常进行响应**
-6. **过滤参数**中含有的一些数据库关键词
+**Subscription**
 
-**优化数据库的方法**:
+- 订阅是一个表示可释放资源的对象，通常是 Observable 的一次执行。
+- **Subscription 本质上只有一个 unsubscribe() 函数来释放资源或取消 Observable 的执行过程。**
+- 可以通过将一个订阅“添加”到另一个订阅中，以便调用一个订阅的 `unsubscribe()` 就可以退订多个订阅。
 
-- （1）选取最适用的字段属性，尽可能减少定义字段宽度，尽量把字段设置 NOT NULL，例如"省份"、"性别"最好适用 ENUM
-- （2）使用连接(JOIN)来代替子查询（3）适用联合(UNION)来代替手动创建的临时表（4）事务处理
-- （5）锁定表、优化事务处理（6）适用外键，优化锁定表（7）建立索引（8）优化查询语句(explain)
+**Subject**
 
-**SQL 语句优化**:
+- RxJS Subject 是一种特殊类型的 Observable，它**允许将值多播到多个 Observer**。
+  - 虽然普通的 Observable 是单播的（每个订阅的 Observer 都拥有 Observable 的独立执行），但 Subjects 是多播的。
+- **每个 Subject 既是 Observable，又是 Observer。**
+- _多播的 Observable 在底层使用 Subject 来让多个 Observer 看到相同的 Observable 执行过程。_
+  - 普通的“单播 Observable”仅向单个 Observer 发送通知。
+- **引用计数**: _refCount 能使多播的 Observable 在第一个订阅者抵达时自动开始执行，并在最后一个订阅者离开时停止执行。_
+  - `refCount()` 方法只存在于 ConnectableObservable 上，它返回一个 Observable，而不是另一个 ConnectableObservable。
+- **`BehaviorSubject`**: 需要一个初始值并会在订阅时发送其**当前值**。
+  - _对于表示“随时间变化的值”很有用_。`const subject = new BehaviorSubject(0);`
+- **`ReplaySubject`**: 通过在新订阅者首次订阅时发送**旧值**来“重播”旧值。
+  - _会记录来自 Observable 执行的多个值，并将它们重播给新订阅者_。
+  - 可以指定要重播的值的**数量**，和一个以毫秒为单位的**窗口时间**，`const subject = new ReplaySubject(100, 500);`
+- **`AsyncSubject`**: 只会在完成时发送一个值。完成后，它将向所有 Observer 发送其**最新值**。
+  - AsyncSubject 类似于`last()`操作符，因为它会等待 complete 通知以传递单个值。`const subject = new AsyncSubject();`
+- `Void subject`: 有时，发出值这个**事件本身**比所发出的值更重要。
+  - 通过声明一个 void 主体，你可以表明该值是无所谓的。只有事件本身才重要。`const subject = new Subject<void>();`
+- 产生多播 Observable 的操作符例如: `share`、`connect`
 
-- （1）where 子句中：where 表之间的连接必须写在其他 where 条件之前，那些可以过滤掉最大数量记录的条件必须写在 where 子句的末尾。where高于having，能写在where限定的条件就不要去having限定了。（2）避免在索引列上使用计算。
-- （3）用 `EXISTS` 替代 `IN`、用 `NOT EXISTS` 替代 `NOT IN`。（4）避免在索引列上使用 `IS NULL` 和 `IS NOT NULL`。
-- （5）对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。
-- （6）应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描。
-- （7）应尽量避免在 where 子句中对字段进行表达式操作，这将导致引擎放弃使用索引而进行全表扫描。
+**Scheduler**
 
-**脏读**(Dirty Read): 读取未提交的数据。**一个事务中访问到了另外一个事务未提交的数据**。  
-**不可重复读**NonRepeatable Read:前后数据多次读取结果集内容不一致。**一个事务读取同一条记录 2 次得到的结果不一致(主要update导致)**   
-**幻读**(Phantom Read): 前后数据多次读取，结果集数量不一致。**一个事务读取 2 次，得到的记录条数不一致(主要 insert 导致)**。
+- **调度器控制某个订阅何时开始以及何时传递通知**。它由三个部件组成:**调度器是一种数据结构、是一个执行上下文、有一个（虚拟）时钟。**
+  - _调度器允许你定义 Observable 将在什么执行上下文中向其 Observer 传递通知。_
+- 调度器类型: 调度器 和 用途
+  - null 不传递任何调度器，通知将以同步和递归方式传递。要把它用于恒定时间操作或尾递归操作。
+  - queueScheduler 在当前事件框架（蹦床调度器）中的队列上调度。将其用于迭代操作。
+  - asapScheduler 在微任务队列上调度，这与用于 Promise 的队列相同。在当前工作之后，但在下一个工作之前。这些将用于异步转换。
+  - asyncScheduler 使用 setInterval 的调度器。将此用于基于时间的操作。
+  - animationFrameScheduler 调度将在下一次浏览器内容重绘之前发生的任务。可用于创建流畅的浏览器动画。
+- 使用调度器:
+  - **所有处理并发的 Observable 操作符都有可选的调度器**。如果你不提供调度器，RxJS 会根据最少并发的原则选择一个默认的调度器。
+    - 会选择引入满足操作符需求的**最少并发量**的调度器。
+  - 静态创建操作符通常以某个 Scheduler 作为参数。
+    - 例如，`from(array, scheduler)`允许你指定在传递从 array 转换出来的每个通知时要使用的调度器。
+  - 使用`subscribeOn`来安排`subscribe()`在什么上下文中发生调用。
+    - 例如`merge(of(1,2,3).pipe(subscribeOn(asyncScheduler)),of(4,5)).subscribe(console.log);//45123`
+  - 使用 `observeOn` 来安排在什么上下文中发送通知。
+    - 例如`intervals.pipe(observeOn(animationFrameScheduler)).subscribe(val => { /* */ });`
+  - 实例操作符可以将调度器作为参数。
+    - 与时间相关的操作符例如`delay`、`timeout`都将 Scheduler 作为最后一个参数，否则默认在`asyncScheduler`上运行。
 
-**设置数据库隔离级别**:隔离级别越高，所需要消耗的MySQL性能越大(如事务并发严重性))，为了平衡二者，一般建议设置的隔离级别为**可重复读**。
+**Cold &Hot Observable**
 
-| 隔离级别                     | 脏读   | 不可重复读 | 幻读   |
-| ---------------------------- | ------ | ---------- | ------ |
-| 未提交读（Read uncommitted） | 可能   | 可能       | 可能   |
-| 已提交读（Read committed）   | 不可能 | 可能       | 可能   |
-| 可重复读（Repeatable read）  | 不可能 | 不可能     | 可能   |
-| 可串行化（Serializable ）    | 不可能 | 不可能     | 不可能 |
-
-
-**【单体】**应用由传统的三层架构组成，即数据库、用户界面和服务器端应用程序。
-
-**【分布式服务】**顾名思义服务是分散部署在**不同的机器**上的，一个服务可能负责几个功能，是一种面向 SOA 架构的，服务之间也是通过 rpc 来交互或者是 webservice 来交互的。当计算机的程序和数据通过网络分布在多于一个的计算机上时，计算就成为**分布式的**。
-
-**【微服务】**的意思也就是将模块拆分成一个独立的服务单元通过接口来实现数据的交互。可能是同一个机器上。
-
-**分布式：分散压力。微服务：分散能力。** \textcolor{brown}{将一套系统拆分成不同子系统部署在不同服务器上叫}**\textcolor{brown}{分布式}**。 \textcolor{brown}{部署多个相同的子系统在不同的服务器上叫}**\textcolor{brown}{集群}**。\textcolor{brown}{部署在不同服务器上的同一个子系统需要做}**\textcolor{brown}{负载均衡处理}**。
-
-**【Serverless(无服务器架构)】** 指的是由开发者实现的服务端逻辑运行在无状态的计算容器中，它*由事件触发，完全被第三方管理*，其业务层面的状态则被开发者使用的数据库和存储资源所记录。六个特质(trait):入门门槛低（Low barrier-to-entry），无主机（Hostless），无状态（Stateless），弹性（Elasticity），分布式（Distributed），事件驱动（Event-driven）。
-
-**缓存雪崩**(在某一时间大量缓存同时失效，请求全部转发到 DB。可能导致 DB 瞬时压力过重而崩溃)
-
-- 将缓存失效时间分散开，比如在原有的失效时间基础上增加一个随机值(比如 1-5 分钟)，避开集体失效的事件。
-
-**缓存击穿/失效**(缓存中热点数据在高并发请求时过期，导致访问直接转到 DB，DB 崩溃。与雪崩的区别在于 key 的一个与多个)
-
-- 永远不过期:过期时间设置为不过气，或者检测到即将过期时重新获取(后台的异步线程进行缓存)。
-
-**缓存穿透**(缓存中不存在,DB 中也不存在。每次查询都会直接查询 DB，失去缓存的意义。流量大可能导致 DB 崩溃)
-
-- 查询结果为空也一样缓存，只不过时间设置相对较短。或者布隆过滤器
-
-\newpage
-
-# ES6 以来的新特性关键字
-
-内容都应该属于基本知识了，但有些人就直接来问一句“你知道 ES6 有哪些新特性吗？”就很烦人。少量可能有补充说明。
-
-如果 ECMAScript® 2015 称为 ES6 的话，到现在(2022-12-15)正式版本已经到 ECMAScript 2023(December 15, 2022)
-
-**ES2015(ES6)**
-
-- **声明命令**: let、块级作用域、const、globalThis 顶层对象。ES6 声明变量的六种方法: var、function、let、const、import、class
-- **变量的解构赋值**: 数组、对象、字符串、数值和布尔值、函数参数
-  - 应用场景: 交换变量值，从函数返回多个值，定义函数参数，提取 JSON 数据，函数参数的默认值，遍历 Map 结构，输入模块的指定方法
-- **字符串的扩展**: 大括号包含表示 Unicode 字符(`\u{0xXX}`或`\u{0XXX}`)；字符串遍历`for of`；模板字符串；标签模板
-  - 标签模板:“标签”指的就是函数，紧跟在后面的模板字符串就是它的参数，模板字符里面有变量，则先先处理成多个参数，再调用函数。
-    ```js
-    console.log`hello`  等价于  console.log(['hello']) // 都输出 [ 'hello' ]
-    let a = 5; let b = 10;
-    tag`Hello ${ a + b } world ${ a * b }`; // 等同于
-    tag(['Hello ', ' world ', ''], 15, 50); // 注意参数的位置和数量
-    ```
-- **字符串的新增方法**:
-  - 静态方法: `String.fromCodePoint()`从 Unicode 码点返回对应字符；`String.raw()`返回一个斜杠都被转义的字符串。
-  - 实例方法: codePointAt()、normalize()、repeat()、matchAll()、 includes()、startsWith()、endsWith()
-- **正则的扩展**:
-  - 变更 RegExp 构造函数入参：允许首参数为正则对象，尾参数为正则修饰符(返回的正则表达式会忽略原正则表达式的修饰符)
-  - 字符串的实例方法 match()、replace()、search()和 split()在语言内部全部调用 RegExp 的实例方法
-  - 正则表达式添加了 `u` 修饰符，含义为“Unicode 模式”，用来正确处理大于`\uFFFF` 的 Unicode 字符
-  - [`y`修饰符](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags): 与 g 修饰符类似也是全局匹配，执行“粘性 (sticky)”搜索，匹配从目标字符串的当前位置开始。
-- **数值的扩展**: 二进制和八进制表示法(前缀`0b`和`0o`)
-  - Number 对象新增方法: isFinite()、isNaN()、parseInt()、parseFloat()、isInteger()、isSafeInteger()
-    - 一个极小的常量`Number.EPSILON`，**js 能够表示的最小精度**。误差如果小于这个值，可以认为已经没有意义，即不存在误差。
-    - `Number.MAX_SAFE_INTEGER === Math.pow(2, 53)-1` 和 `Number.MIN_SAFE_INTEGER === -(2^53-1)`
-  - Math 对象新增方法: ES6 在 Math 对象上新增了 17 个与数学相关的方法，trunc()、sign()、cbrt()等
-- **函数的扩展**: 参数默认值(指定了默认值后，函数的 length 属性将失真)；rest 参数`...`；函数的 name 属性；箭头函数；尾调用尾递归。
-  - 只要函数参数使用了默认值、解构赋值、或者扩展运算符，那么函数内部就不能显式设定为严格模式，否则会报错。
-- **数组的扩展**: 扩展运算符`...`，应用于复制数组、合并数组、与解构赋值结合、字符串转字符数组、实现了 Iterator 接口的对象。
-  - 静态方法: `Array.from()`类数组和可迭代对象转数组；`Array.of()`将一组值转数组。
-  - 实例方法: copyWithin()、find()，findIndex()，findLast() 和 findLastIndex()、fill()、entries()，keys() 和 values()、flat() 和 flatMap()。ES5 对空位的处理很不一致，大多数情况下会忽略空位。ES6 则是明确将数组空位转为 undefined。别有空位。
-- **对象的扩展**: 对象属性、方法可简写；用表达式作为对象的属性名；方法的 name 属性；属性的可枚举性和遍历；super 关键字。
-  - 静态方法:is()、assign()、setPrototypeOf()、getPrototypeOf()、Object.keys()、fromEntries()
-- **新的原始数据类型 Symbol**: 表示独一无二的值，通过 Symbol()函数生成。不支持语法`new Symbol()`。
-- **新的数据结构 Set、WeakSet、Map、WeakMap**；
-- **新的对象 Proxy、Reflect、Promise**
-- **迭代器 Iterator 和 for...of 循环**: 迭代器为各种不同的数据结构提供统一的访问机制。
-- **Generator 对象**: 生成器函数，用`function*`声明，返回一个 Generator 对象。是一种异步编程解决方案。
-
-  - 形式上，Generator 函数是一个普通函数，但是有两个特征。
-    - 一是，function 关键字与函数名之间有一个星号；二是，函数体内部使用 yield 表达式，定义不同的内部状态。
-
-- **Class 类**: 定义、原理、方法和关键字、属性、静态属性和方法、继承、super、实例、表达式、this 指向、`new.target`
-- **Module**: export、import 命令；ES6 的模块自动采用严格模式。
-  - ES6 模块与 CommonJS 模块三个重大差异:
-    - CommonJS 模块输出的是一个**值的拷贝**，ES6 模块输出的是**值的引用**。
-    - CommonJS 模块是**运行时加载**，ES6 模块是**编译时输出接口**。
-    - CommonJS 模块的 require()是**同步加载**模块，ES6 模块的 import 命令是**异步加载**，有一个独立的模块依赖的解析阶段。
-      - 语法上: CommonJS 模块使用 `require()`和 `module.exports`，ES6 模块使用 `import` 和 `export`。
-      - node13.2 版本开始默认打开 ES6 模块支持(模块采用`.mjs`后缀文件名或项目 package.json 指定`"type":"module"`)
-
-**ES2016**
-
-- **数组扩展**: 实例方法 `includes()`；**指数运算符** `**`(可与其他某些运算符一起用)
-
-**ES2017**
-
-- **字符串扩展**: padStart()、padEnd()；**对象扩展**: Object.getOwnPropertyDescriptors()、Object.values()、Object.entries()
-- **函数扩展**: 允许函数最后一个参数有尾逗号；**引入 SharedArrayBuffer**，允许 Worker 线程与主线程共享同一块内存。
-- **引入了 `async` 函数**，使得异步操作变得更加方便。是 Generator 函数的语法糖，返回一个 Promise 对象。
-  - 正常情况下，`await` 命令后面是一个 Promise 对象，返回该对象的结果。如果不是 Promise 对象，就直接返回对应的值。
-
-**ES2018**
-
-- **字符串扩展**: 放松对标签模板里字符串转义的限制：遇到不合法的字符串转义返回 undefined，并且从 raw 上可获取原字符串。
-- **对象扩展**: 扩展运算符`...`：转换对象为用逗号分隔的参数序列`{ ...obj }`。
-- **正则扩展**: s 修饰符、dotAll、后行断言、后行否定断言、Unicode 属性转义、具名组匹配(为每组匹配指定名字)。
-- **Promise 扩展**: 实例方法`finally()`：指定不管最后状态如何都会执行的回调函数。
-- **async 扩展**: 异步迭代器`for-await-of`：循环等待每个 Promise 对象变为 resolved 状态才进入下一步。
-
-**ES2019**
-
-- **字符串扩展**: 直接输入`U+2028`和`U+2029`；`JSON.stringify()`改造；实例方法`trimStart()`、`trimEnd()`。
-- **对象扩展**: `Object.fromEntries()`：返回以键和值组成的对象(`Object.entries()`的逆操作)。
-- **数组扩展**: `sort()`排序默认要稳定实现。实例方法`flat()`、`flatMap()`。
-- **函数扩展**: `toString()`改造，返回函数原始代码；`catch()`中的参数可省略。
-- **Symbol 扩展**: 实例属性`description`，返回 Symbol 值的描述。
-
-**ES2020**
-
-- **声明**: `globalThis`，作为顶层对象，指向全局环境下的 this。浏览器是`window`，nodejs 是`global`，webworker 是`self`。
-- **数值扩展**: `BigInt` 是一种内置对象(数据类型)，表示大于`2^53-1`的整数，表示任意大的整数。定义方式: 整数字面量后面加 `n`。
-  - 该对象有静态方法`asIntN()`、`asUintN()`，实例方法`toLocaleString()`、`toString()`、`valueOf()`。
-  - 全局方法`parseInt()` 会将 BigInt 转换为 Number，并在这个过程中失去了精度(因为拖尾的非数字值，包括 "n"，会被丢弃)。
-- **对象扩展**: 链判断操作符`?.`是否存在对象属性，不存在返回 undefined；空判断操作符`??`是否值为 undefined 或 null，是则使用默认值。
-- **正则扩展**: `matchAll()`：返回所有匹配的遍历器。
-- **Module**: `import()`函数，动态加载模块(返回 Promise)。
-- **Iterator**: `for-in`遍历顺序，不同的引擎已就如何迭代属性达成一致，从而使行为标准化。
-  **Promise 扩展**: `Promise.allSettled()`参数数组的*所有 Promise 对象都发生状态变更*，返回的 Promise 对象才会发生状态变更。
-
-**ES2021**
-
-- **字符串扩展**: `String.prototype.replaceAll()`；
-- **逻辑赋值运算符** `||=`、`&&=`、`??=`。例如`opts.baz ?? (opts.baz = 'qux');  简写->  opts.baz ??= 'qux';`
-- **数字分隔符** 是一个有用的工具，它在数字中用下划线 (`_`)分隔数字，从而使长数字文字更具可读性。
-- **Promise 扩展**: `Promise.any()`接受一个可迭代的 Promise 对象数组，在数组中任意一个 Promise resolve 时，即 resolve。
-  - 如果所有 Promise 都没有 resolve，则会抛出一种新类型的异常 `AggregateError`，将错误以对象数组的形式组合为一个错误数组。
-- **弱引用 WeakRef**: `WeakRef`直接创建对象的弱引用；
-- **FinalizationRegistry** 对象可以让你在对象被垃圾回收时请求一个回调。
-
-**ES2022**
-
-- **Class 类**: 类字段只能在构造函数之外声明；使用`#`声明私有字段和成员；为类声明静态字段和静态私有方法；允许在创建类时定义只执行一次的静态块；支持使用 in 运算符检查一个对象中是否有一个特定的私有字段；
-- **Top-level `await`**(不限定只在 async 中使用)；
-- 数组，字符串和 TypedArray 对象现在也有 **`at()`** 方法，访问末尾的第 N 个元素。
-- **RegExp 匹配索引**: 指定一个 `d`修饰符标志，来获取匹配开始和结束的两个索引。
-- **Object.hasOwn()** 方法，如果指定的属性是对象的直接属性，则返回 true。否则返回 false。
-- **错误原因**: Error 对象新增了 `cause` 属性表示错误原因
-
-**ES2023**
-
-- **数组扩展**: `findLast()` 和 `findLastIndex()` 方法； **Hashbang Grammar**
+- Cold Observable：在**每次订阅时，完整的数据流会重新产生**；数据流与订阅者是一对一的关系。(点播)
+- Hot Observable：在订阅前数据流已开始，**每个订阅者订阅的都是同一个资料流**；数据流与订阅者是一对多的关系。(直播)
+  - `Observable()`是单播, cold, 只是 Producer;`Subject()`及其变体是多播, hot, 既是 Producer 又是 Consumer。
 
 \newpage
 
-# js 常用技巧
+# TypeScript 基础知识
 
-- **1. 数组相关**
+## 1 TS 手册
 
-  - **数组去重**: ES6 引入了 Set 对象和延展（spread）语法`…`
+基础特性: 静态类型检查、类型工具、tsc、报错时仍产出文件、显式类型、可擦除类型、降级、严格性……
 
-  ```cs
-  const uniqueArray = [...new Set([1, 1, 2, 3, 5, 5, 1])]; // [1, 2, 3, 5]
-  // 截取数组，slice()的运行速度比重新定义数组的 length 属性快
-  let array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; array.length = 4; console.log(array); // [ 0, 1, 2, 3 ]
-  console.log([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].slice(0, 4)); // [ 0, 1, 2, 3 ]
-  console.log([0, 1, 2, 3, 4, 5, 6, 7, 8, 9].slice(-4)); // [ 6, 7, 8, 9 ]
-  ```
+- 常见类型: 【简单部分】原始数据类型(string, number, boolean)、数组、any、函数、匿名函数、对象类型、枚举……
+- 其他类型: (1)联合类型: `(id: number | string)`,
+  - (2)类型别名:`type ID = number | string;` (3)接口:`interface Point {x: number; y: number;}`,
+    - **类型别名本身无法添加新的属性，而接口是可以扩展的。**
+  - (4)类型断言:`(<string>someValue).length`或者`(someValue as string).length`,
+  - (5)字面类型:结合联合类型`(s: string, alignment: "left" | "right" | "center")`,
+  - (6)null 和 undefined,(7)枚举:`enum Direction {Up,Down,Left,Right,}`,(8)bigInt、symbol……
 
-  - **在循环中缓存数组长度**
+**TypeScript 类型收缩的几种方式**：
 
-  ```js
-  // 从性能方面来看，即使数组变得很大，也不需要花费额外的运行时重复计算 array.length。
-  for (let i = 0, length = array.length; i < length; i++) {...}
-  ```
+- **`typeof` 类型守护** - 根据`typeof`操作符返回的类型字符串做对应的操作
+- **真值收缩** - 个人理解类似 js 中的隐式转型的使用。
+  - 利用类似`if(str)`的语句去消除 str 为 `null`、`undefined` 或者空字串等情况，避免在 ts 类型检查时出现错误。
+- **等值收缩** - 与真值收缩类似，通过判等相关操作(如相等运算符、switch 操作等)对类型进行收缩。
+- **`in` 操作符收缩** - in 操作符可以判断一个对象是否有对应的属性名。 - 可选的属性在收缩时会同时出现在两个分支中。
+- **`instanceof`收缩** - 在 TypeScript 也可以通过识别 `instanceof` 正确的类型收窄
+- **赋值语句** - TypeScript 可以根据赋值语句的右值，正确的收窄左值。
+- **控制流程分析**
+  - 例如 if、while 等，如果在一个分支代码块中有返回了，对于剩下的函数体对应的类型就会剔除已达部分(已经被 if 过滤)的类型。
+  - 这种基于**可达性**的代码分析称为“控制流分析”。在遇到类型保护和赋值语句的时候，TypeScript 会使用这种流分析去收缩类型。
+- **使用类型谓词/判断式**
+  - 类型谓词(type predicates)的形式是 **`paramenterName is Type`**,但 `parameterName` 必须是当前函数的参数名。
+  - 就是直接判断当前参数是否为某种类型，然后对其进行类型收缩。
+- **可辨识联合**
+  - 当联合类型中的每个类型都包含一个与字面类型相同的属性时，TypeScript 认为这是一个可辨识联合，并且可以缩小联合的成员。
+- **`never`类型**
+  - 当进行收窄的时候，如果你把所有可能的类型都穷尽了，TypeScript 会使用一个 `never` 类型来表示一个不可能存在的状态。
+- **穷举检查**
+  - **never 类型可以分配给每个类型；但是，没有任何类型可以分配给 never（除了 never 本身）。**
+  - 这意味着可以使用缩小并依靠 never 的出现在 switch 语句中做详尽的检查。
 
-  - **使用 Boolean 过滤数组中的所有假值**
+**函数**
 
-  ```js
-  const compact = (arr) => arr.filter(Boolean);
-  compact([0, 1, false, 2, "", 3, "a", "e" * 23, NaN, "s", 34]); // 结果值为: [ 1, 2, 3, 'a', 's', 34 ]
-  ```
+**函数类型表达式**: 在 TypeScript 的*类型定义*中， **`=>` 用来表示函数的定义，_左边是输入类型_，需要用括号括起来，_右边是输出类型_。**
+一个函数参数的类型并没有明确给出，它会被隐式设置为 `any`。
 
-  - **数组元素转化为数字**
+_函数类型表达式: `(a: string) => void`; 和函数签名: `(someArg: number): boolean`;_
 
-  ```js
-  const array2 = ["12", "1", "3.1415", "-10.01"];
-  console.log(array2.map(Number)); // [12, 1, 3.1415, -10.01]
-  ```
+```cs
+// 声明函数: greeter()接收一个函数作为参数，还函数需要传入一个string，没有返回值
+function greeter(fn: (a: string) => void) { fn("Hello, World");}
+// 使用类型别名声明
+type GreetFunction = (a: string) => void;
+function greeter2(fn: GreetFunction) {fn("Hello, World");}
+// 声明另一个函数
+function printToConsole(s: string) { console.log(s);}
+// 调用该函数作为geeter()的参数
+greeter(printToConsole); // "Hello, World"
+greeter2(printToConsole); // "Hello, World"
+```
 
-  - **将数组平铺到指定深度**
+函数类型表达式**并不能**支持声明属性，如果我们**想描述一个带有属性的函数**，我们可以**在一个对象类型中写一个调用签名**（call signature）。
 
-  ```cs
-  const flatten = (arr, depth = 1) =>
-      depth != 1
-          ? arr.reduce((a, v) => a.concat(Array.isArray(v) ? flatten(v, depth - 1) : v), [])
-          : arr.reduce((a, v) => a.concat(v), []);
-  console.log(flatten([1, [2], 3, 4]));                         // [1, 2, 3, 4]
-  console.log(flatten([1, [2, [3, [4, 5], 6], 7], 8], 2));      // [1, 2, 3, [4, 5], 6, 7, 8]
-  ```
+```cs
+// 使用类型别名定义类型
+type DescribableFunction = {
+ (someArg: number): boolean; /*函数签名，在前面加new变成构造签名*/
+  description: string; /*额外的字串属性*/
+  isEven: (num: number) => boolean; // 额外的函数属性
+};
+// 实例化顶上那个类型
+const myfun: DescribableFunction = (num: number) => num > 12;
+// 给该实例赋值
+myfun.description = "123";myfun.isEven = (num: number) => num % 2 == 1;
+// 声明一个函数，参数为上面那个类型
+function doSomething(fn: DescribableFunction) {console.log(fn.description + " returned " + fn(6));}
+// 调用上述函数
+doSomething(myfun); /*输出 123 returned false*/
+console.log(myfun.isEven(11)); /*输出 true*/
+```
 
-  - **返回数组中最大值**
+**构造签名**，在调用签名前面加一个 new 关键词。
 
-  ```cs
-  const maxElementFromArray = (array, number = 1) => [...array].sort((x, y) => y - x).slice(0, number)
-  console.log(maxElementFromArray([1, 4, 3, 6, 7]), maxElementFromArray([7, 8, 9, 9, 9])) // [7] [9]
-  ```
+**泛型函数**: 函数的*输出类型依赖函数的输入类型*，或者两个输入的类型以某种形式相互关联。代码的复用，减少代码量。
 
-- **2. 字符串相关**
+- 泛型约束实战: _函数理应返回与传入参数相同类型的对象，而不仅仅是符合约束的对象_。
+- _编写优秀泛型函数的准则_: 类型参数下移,使用更少的类型参数,类型参数应该出现两次……
+  - (个人理解:类型参数就是指代类型的那个尖括号里的 T、Type 之类的，**将类型参数化**，通常就在泛型中使用)
+  - _类型参数_：声明泛型类、接口或方法时在尖括号中申明的类型参数，如 List 的 E
+  - _泛型类_：声明了类型参数的类、接口和方法分别称为泛型类、泛型接口和泛型方法。
+  - _参数化类型_：在使用泛型类时指定了具体的类型后称为参数化类型，如 List
+  - _原始类型_：参数化类型的泛型类的 Class，如 List 的原始类型为 List，List[]的原始类型也为 List
 
-  - 数字转换成字符串: `strval = numval + ""`； 字符串转成数字: `~~strnum`，一个波浪号表示**按位取反**操作，`~15` 等于`-16`。
+```cs
+// 带约束的泛型函数示例:
+function longest<Type extends { length: number }>(a: Type, b: Type) {
+  if (a.length >= b.length) {return a;} else {return b;} }
+console.log(longest("alice", "bob")); /*"alice"*/ console.log(longest([1, 2], [1, 2, 3])); /* [1, 2, 3]*/
+```
 
-  ```cs
-  console.log(+"15", typeof +"15") // 输出: 15 number
-  // 在某些情况下，+运算符会被解析成连接操作，而不是加法操作。对于这种情况，可以使用两个波浪号：~~
-  console.log(~15, ~"15", ~~"15", typeof ~~"15"); // 输出都是number类型: -16 -16 15 number
-  ```
+**可选参数**: 使用问号 `?` 修饰的参数。
 
-  - **格式化 JSON.stringify() 输出的字符串**
+**函数重载**: 函数名称一样，传入的参数数量、类型不同。_需要写多个函数签名_。**在可能的情况下，请始终使用联合类型参数。**
 
-  该方法接受两个额外的参数，一个是函数，用于过滤要显示的 JSON；另一个是空格个数，也可以是一个字符串。
+**其他类型**: void、object、unknow、never、Function
 
-  ```js
-  console.log(JSON.stringify({ alpha: "A", beta: "B" })); // 挤在了一行输出
-  console.log(JSON.stringify({ alpha: "A", beta: "B" }, null, "\t")); // 有格式的输出
-  ```
+**形参和实参的展开语法**: `...`
 
-  - **string 强制转换为数字**
+**参数解构**: [js 的结构赋值](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)可以将属性/值从对象/数组中取出，赋值给其他变量。
 
-  用`*1`来转化为数字(实际上是调用`.valueOf` 方法)，也可以使用`+`来转化字符串为数字。
+**函数的可赋值性**: 返回值类型为 void 的**上下文类型**并不会强迫函数不返回任何东西。(虽是 void，但可以有返回值)。但当某个**字面量函数定义**的返回值为 void 的时候，该函数不能返回任何东西。
 
-  ```cs
-  console.log('32'*1, 'ds'*1, null*1, undefined*1, 1*{ valueOf: () => '3' }) // 32 NaN 0 NaN 3
-  console.log(+'123', +'ds', +'', +null, +undefined, +{ valueOf: () => '3' }) // 123 NaN 0 0 NaN 3
-  ```
+```cs
+type voidFunc = () => void;
+const f1: voidFunc = () => true;  console.log(f1()); // true
+function f2(): void {return true; /*报错：Type 'boolean' is not assignable to type 'void'.*/}
+```
 
-  - **字符串反转**
+**对象类型**
 
-  ```js
-  const reverseStr = (string) => [...string].reverse().join("");
-  console.log(reverseStr("hello"), reverseStr("1234")); // "olleh" "4321"
-  ```
+**构建对象类型**
 
-- **3. 对象等结构相关**
+```cs
+// 匿名的对象类型
+function greet(person: { name: string; age: number }) {return "Hello " + person.name;}
+// 使用 interface 命名的对象类型
+interface Person1 { name: string;  age: number;}
+function greet1(person: Person1) {return "Hello " + person.name;}
+/* 使用 type 别名的对象类型*/ type Person2 = {name: string;age: number;};
+function greet2(person: Person2) {  return "Hello " + person.name;}
+```
 
-  - **object 强制转化为 string**
+**属性修饰符**: 对象类型中的每个属性都可以指定一些东西：属性类型、属性是否可选，属性是否可写。
 
-  使用 `字符串 + Object` 的方式来转化对象为字符串，也可以覆盖对象的 toString 和 valueOf 方法来自定义对象的类型转换。
+- **可选属性** : 属性名后加`?` **只读属性** : 属性名称前面加 `readonly`。
+  - readonly 仅仅表明属性本身是不能被重新写入的。readonly 的值是可以通过别名修改的。
+- **索引签名** (Index Signatures) 思想是在**只知道键和值类型的情况下对结构未知的对象进行类型划分**。
+  - 一个索引签名的属性类型必须是 string 或者是 number，_数字索引的返回类型一定要是字符索引返回类型的子类型_。
 
-  ```cs
-  // 输出: Math转字符串:[object Math] JSON字符串:[object JSON]
-  console.log('Math转字符串:' + Math, 'JSON字符串:' + JSON)
-  console.log(2 * { valueOf: () => '3' }, 'J' + { toString: () => 'S' }) // 输出: 6 "JS"
-  ```
+```cs
+// 2 此索引签名所描述的类型本身是各个属性类型的联合类型，那么就允许出现不同类型的属性
+interface Options {
+  // 索引签名。Options这个类的属性key为字符串格式，值value为string、number、boolean中一个
+  [key: string]: string | number | boolean;
+  timeout: number;// 也有确定的属性timeout，其值value必须为number类型
+}
+const options: Options = {
+  // Options的对象key是string，值为string、number、boolean其中一种，这3个都满足
+  timeout: 1000,timeoutMessage: "The request timed out!",isFileUpload: false,
+  hehe: {}, /** 报错:Type '{}' is not assignable to type 'string | number | boolean'. */
+};
+```
 
-  - **对象动态声明属性**
+**拓展类型**: extends 关键字:`interface ColorfulCircle extends Colorful, Circle {}`  
+**交叉类型**: _组合现有的对象类型_。通过 `&` 操作符可以定义一个交叉类型。`type ColorfulCircle = Colorful & Circle;`  
+上述两者功能类似，主要区别在于**处理冲突的方式**。_接口继承如果重写类型会导致编译错误;交叉类型不会报错，但类型取自各自的交集_。
 
-  ```cs
-  const dynamic = 'color';
-  let item = {brand: 'Ford', [dynamic]: 'Blue'}
-  console.log(item); // { brand: "Ford", color: "Blue" }
-  ```
+**泛型对象**: 类似接口`interface Box<Type> {contents:Type;}` 或别名 `type NewBox<T> = {contents:T;};`
 
-- **4. 语法相关**
+- **数组类型**:`Array`本身就是一个泛型类型`Array<Type>`。`number[]`和`string[]`是`Array<number>`和`Array<string>` 的缩写。
+  - 类似的 js 其他通用的数据结构，比如`Map<K, V>`, `Set<T>`, 和`Promise<T>`。
+- **只读数组类型**: 描述数组不能被改变,主要是用来做意图声明。没有可用的构造函数(就是不能 new)。
+  - 可以把一个常规数组赋值给 ReadonlyArrays，**反之不行**。`ReadonlyArray<Type>` 提供了更简短的写法 `readonly Type[]`。
+- **元组类型**: 允许表示一个已知元素数量和类型的数组，**各元素的类型不必相同**。
+  - 越界会报错。组解构和数组一致。也有可选属性(在类型后加`?`)，但会影响其长度(length)。也可以使用展开运算符。
+- **只读元组类型**: 简写语法和只读数组类型类似。例如: `readonly [string, number]`
 
-  - **短路求值**: `||`
+**类型操作**
 
-  ```cs
-  let one = 1, two = 2, three = 3; console.log(one && two && three); // 3
-  console.log(0 && null); // 0
-  ```
+TypeScript 的类型系统非常强大，因为它**允许我们用其它类型去表示新的类型。**可以从现有类型中创建更多类型的方法:
 
-  - 转换成布尔值: **使用`!`**
+- **泛型**: 可以接受参数的类型 - 泛型是指在定义函数、接口或类的时候，_不预先指定具体的类型，而在使用的时候再指定类型的一种特性_。
+  - 示例: `/*一个泛型函数*/ function identity<Type>(arg: Type): Type {return arg;}`
+- **keyof 类型操作符**: 使用 `keyof` 操作符创建新类型 - _接收一个对象类型，返回该对象属性名组成的一个字符串或者数字字面量的**联合类型**_。
+  - 示例:`type Point={x: number;y: number;}; type P=keyof Point;/*P为联合类型"x"|"y"*/ let a:P="x"`
+- **typeof 类型操作符**: 使用 `typeof` 操作符创建新类型 - _可以获取到基本类型数据、函数(配合 ts 内嵌 ReturnType)的类型_。
+  - `let s = "hello"; /* n的类型为: string*/ let n: typeof s="world";`
+- **按索引访问类型**: 使用 `Type['a']` 语法访问某个类型的某个子集 - _通过访问某个类型上的特定属性，从而获取该属性的类型_。
+  - `type Person={age: number; name: string;};/*Age 的类型为number*/ type Age=Person["age"];`
+- **条件类型**: 该类型的行为类似于类型系统中的 if 语句 - _描述输入类型和输出类型之间的关系_。语法类似 js 的三元表达式。
+  - 两个基本接口`interface IdLabel {id: number};interface NameLabel {name: string ; }`
+  - 使用条件类型简化掉函数重载`type NameOrId<T extends number|string>=T extends number?IdLabel:NameLabel;`
 
-  在 JavaScript 中，除了 0、空字符串、null、undefined、NaN 和 false 是假值之外，其他的都是真值。
+```cs
+/*两个基本接口*/ interface IdLabel {id: number}; interface NameLabel {name: string;}
+/*使用条件类型简化函数重载*/ type NameOrId<T extends number|string>=T extends number?IdLabel:NameLabel;
+function createLabel2<T extends number|string>(idOrName: T): NameOrId<T> {throw "unimplemented";}
+let a1=createLabel2("ts");/*a1的类型NameLabel*/let a2=createLabel2(2.8); /*a2的类型IdLabel*/
+```
 
-  ```js
-  console.log(!"hello", !0, typeof true, !typeof true); // false true "boolean" false
-  ```
+- **映射类型**: 通过映射已有类型的每个属性去创建类型 - _一个类型需要基于另外一个类型，但是你又不想拷贝一份时可以考虑使用_。
 
-  - 快速幂运算`**`，比使用`Math.pow()`更快: `console.log(Math.pow(2, 3) == 2 ** 3) // true`
+```cs
+/* 定义一个映射类型  OptionsFlags 会遍历 Type 所有的属性，然后设置为布尔类型*/
+type OptionsFlags<Type> = { [Property in keyof Type]: boolean /* 索引签名 */ };
+/* 已有的类型*/type FeatureFlags = {darkMode: () => void;newUserProfile: () => void;name: string;};
+/*使用映射类型后获取新的类型*/type FeatureOptions = OptionsFlags<FeatureFlags>;
+    /* 现在FeatureOptions的类型是{darkMode: boolean;newUserProfile: boolean;name: boolean;}*/
+/*使用该映射类型*/const fo: FeatureOptions = {darkMode:false, newUserProfile:false, name:false,};
+```
 
-  - 快速取整: **使用位或运算符 `|`** 比 Math.floor()、Math.ceil()或 Math.round()更快。
+- **模板字面量类型**: 通过模板字面量字符串改变属性的映射类型 - 以[字符串字面量](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types)类型为基础，可以通过*联合类型扩展成多个字符串*。
 
-  ```js
-  console.log(23.9 | 0, -23.9 | 0); // 位运算符，正数向下取整，负数向上取整，输出: 23 -23
-  console.log(Math.floor(23.9), Math.ceil(-23.9)); // 输出: 23 -23
-  console.log(1553 / 100, (1553 / 100) | 0); // // 移除整数尾部数字,输出: 15.53, 15
-  ```
+```cs
+type Flag = "ok" | "bad"; type Lang = "en" | "cn";
+type LangFlags = `${Lang}_${Flag}`; // 2*2, 4个值的联合类型: "en_ok" | "en_bad" | "cn_ok" | "cn_bad"
+```
 
-  - **判断奇偶数 `& 1`**
+**类**
 
-  ```cs
-  const num = 3; console.log(!!(num & 1), !!(num % 2)); // true true
-  ```
+**类成员**: 属性/字段、方法、构造器、代码块、访问器……
 
-  - **给多个变量赋值**
+- **字段** (Fields): 声明字段相当于是给类添加了一个公共的、可写的属性。字段需要在构造器自身内部进行初始化。
+  - 字段可以加上 readonly 修饰符作为前缀，以防止在构造器外面对字段进行赋值。
+- **类的构造函数**跟函数非常类似，你可以使用带类型注解的参数、默认值、重载等。**类的构造器签名**和函数签名的区别: _构造器不能使用类型参数_: 类型参数(回忆泛型那个 T)属于外层类声明的部分;_构造器不能给返回值添加类型注解_: 它返回的类型始终是类实例的类型。
+- 如果你有一个基类，你需要在使用任何 `this.` 成员之前，先在构造函数里调用 **super()**。
+- 类中的函数属性被称为**方法**。方法跟函数、构造函数一样，使用相同的**类型注解(即说明参数类型是啥，返回类型是啥)。**
+- **getter/setter 访问器**: 如果 get 存在而 set 不存在，那么属性会自动成为*只读属性*; 如果*没有指定 setter* 参数的类型，那么会*基于 getter* 返回值的类型去*推断参数类型*; getter 和 setter 必须具备*相同的成员可见性*。
+- 类可以声明**索引签名**，它和对象类型的索引签名是一样的。通常最好将索引数据存储在另一个位置，而不是类实例本身。
 
-  ```cs
-  let [a, b, c] = [5, 8, 12]; console.log(a, b, c) // 5 8 12
-  ```
+**类继承**: (implements/extends) **类可以实现(implements)多个接口**。例如：`class C implements A, B {..}`
 
-  - **交换两个变量**
+- **`implements` 子句只是用于检查类是否可以被视为某个接口类型，它完全不会改变类的类型或者它的方法。**
+- **类可以继承(extends)自某个基类。派生类拥有基类的所有属性和方法，同时也可以定义额外的成员。**
+  - 派生类也可以重写基类的字段或者属性。你可以使用 `super.` 语法访问基类的方法。**派生类会遵循基类的约束**
+  - 可以写 `declare` 来向 TypeScript 表示这个字段声明不应该有运行时的影响。
+- **初始化顺序**: 初始化基类的字段; 执行基类的构造器; 初始化派生类的字段; 执行派生类的构造器
+  - 这意味着**基类构造器执行的时候派生类的字段尚未进行初始化。**
+- 多态（Polymorphism）由继承而产生了相关的不同的类，对同一个方法可以有不同的行为。
 
-  ```cs
-  let x = 'Hello', y = 55; console.log(x, y); // Hello 55
-  [x, y] = [y, x]; console.log(x, y); // 55 Hello
-  ```
+**成员可见性**: **public**公有成员随处可以访问。 **protected**受保护成员只在类的子类中可见。**private** 的私有成员即使在派生类中也无法被访问到,但 ts 允许跨实例访问私有成员。
 
-  - **多条件检查**
+- **`private` 和 `protected` 只在类型检查期间生效。**private 允许在类型检查的时候，通过*方括号语法*进行访问。
+- **TypeScript 的这些`private` 和 `protected`字段是“弱私有的”**，无法保证严格意义上的私有性。
+- **JavaScript 的私有字段**（`#`）即便是编译后依然保留私有性，不提供方括号获取的方法，**强私有**。
 
-  对于多个值匹配，我们可以将所有的值放到数组中，然后使用 indexOf() 或 includes() 方法。
+类可以拥有**静态（static）成员**。这些成员和类的特定实例无关，我们可以*通过类构造器对象本身访问*到它们。
 
-  ```js
-  if (value === 1 || value === "one" || value === 2 || value === "two") {...}
-  if ([1, "one", 2, "two"].indexOf(value) >= 0) {  ...}
-  if ([1, "one", 2, "two"].includes(value)) {...}
-  ```
+- 静态成员也可以使用 public、protected 和 private 等可见性修饰符。静态成员也可以被继承。
+- 类本身是函数，而覆写 Function 原型上的属性通常认为是不安全的，因此不能使用一些固定的静态名称，_函数属性像 name、length、call 不能被用来定义 static 成员_。即不能在类中使用类似`static name = "S!";`
+- **没有静态类**因为 TypeScirpt 语言*不要求所有的数据和函数必须放在一个类中*。但 `java`/`c#` 等则不同，所以他们有静态类。
+- **静态块**允许你编写一系列声明语句，它们拥有自己的作用域，并且可以访问包含类中的私有字段。类中使用`static {/* */}`。
 
-  - **仅在变量为 true 的情况下才调用函数**，则可以使用 `&&` 运算符
+**泛型类**: 类和接口一样，也可以使用泛型。当用 new 实例化一个泛型类的时候，它的类型参数的推断跟函数调用是同样的方式。
 
-  ```cs
-  if (test1) { callMethod(); }
-  test1 && callMethod();
-  ```
+- _类型在编译后总是会被完全抹除的_! **泛型类的静态成员永远都不能引用类的类型参数。**
 
-  - **在 return 语句中使用比较**
+**类的运行时 `this`**: ts 并不会更改 js 运行时的行为,**默认情况下，函数中 `this` 的值取决于函数是如何被调用的。**
 
-  ```cs
-  function checkReturn() { return test || callMe('test'); }
-  ```
+在类中，有一个特殊的名为 **`this` 的类型**，会动态的引用当前类的类型。可用于*基于 this 的类型保护*。
 
-- **5. 工具方法**
+- 可以在类和接口的方法返回的位置，使用 `this is Type` 。当搭配使用类型收窄，目标对象的类型会被收窄为更具体的 Type。
+- 基于 this 的类型保护的常见用例是允许特定字段的延迟验证。
 
-  - **数组洗牌**
+**参数属性**: _将构造器参数转化为具有相同名字和值的类属性_。
 
-  ```js
-  const shuffleArray = (arr) => arr.sort(() => Math.random() - 0.5);
-  const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  console.log(shuffleArray(arr)); // 每次输出都不一样
-  ```
+- 实现方式是在构造器参数前面加上 public、 private、protected 或者 readonly 等其中一种可见性修饰符作为前缀。最终的字段将会获得这些修饰符。
 
-  - **生成随机颜色字符串**
+```cs
+class Params {
+    // Params 类没有声明属性，只有一个构造函数，但是构造函数中使用了" 参数属性" 语法，构建了与之同名、同类型的类属性
+    constructor(public readonly x: number, protected y: number, private z: number) {
+      /*没有必要编写构造器的函数体*/ }}
+const a = new Params(1, 2, 3); console.log(a.x); // 1
+```
 
-  ```cs
-  const generateRandomHexColor = () => `#${Math.floor(Math.random() * 0xffffff).toString(16)}`;
-  console.log(generateRandomHexColor()) // 输出类似: #7a40e7
-  ```
+**类表达式**跟类声明非常类似，唯一不同的是*类表达式不需要一个名字*。
 
-  - **缩短 console.log()**
+```cs
+// 类声明
+class SomeClass<T> { content: T; constructor(value: T) { this.content = value; } }
+// 类表达式
+const someClass2 = class <Type> { content: Type; constructor(value: Type) { this.content = value; } };
 
-  ```cs
-  // 在nodejs使用 globalThis，看环境使用window、document等
-  const cc = console.log.bind(globalThis);
-  cc(996, "hello world", new Date); // 996 hello world 2022-12-15T07:02:08.567Z
-  ```
+const n = new SomeClass("Hello, n1"); // const n: SomeClass<string>
+console.log(n); //  SomeClass: {"content": "Hello, n1"}
+const n2 = new someClass2("Hello, n2"); // const n2: someClass2<string>
+console.log(n2); //  someClass2: {"content": "Hello, n2"}
+```
+
+**抽象类和成员**: _抽象方法或者抽象字段在类中**没有对应的实现**。抽象类的角色是充当一个基类，让其子类去实现所有的抽象成员。_
+
+**抽象构造签名**希望接受*传入可以继承一些抽象类*产生一个类的实例的类构造函数，该函数接受传入一个*构造签名*才不会报错。
+
+**类之间的联系**: *结构一样的不同两个类，实际上是可以相互替换的。*即使没有显式声明继承关系类和类之间也可以存在子类联系。**空类没有成员**。
+
+**模块导出导入**
+
+在 TypeScript 中，就像在 ECMAScript 2015 中 ，任何*包含了一个顶层 import 或者 export 的文件*会被认为是一个**模块**。  
+模块会在它*自己的作用域*。在一个模块中声明的变量、函数、类等，对于*模块之外的代码都是不可见*的，除非你显示的导出这些值。  
+相应的没有顶层导入和导出声明的文件会被认为是一个**脚本**，它的内容会在*全局范围内可用*。
+
+```cs
+// ********导出、导入*
+export var pi = 3.14; export let squareTwo = 1.41; export const phi = 1.61;// 导出多个
+export default class RandomNumberGenerator {} // 导出多个也可以有一个默认的
+export function absolute(num) {  if (num < 0) return num * -1;  return num;}
+
+import { pi, phi, absolute } from "./maths.js"; // 导入多个
+import { pi as pie } from "./maths.js"; // 别名
+import RandomNumberGenerator, { pi as pie } from "./maths.js"; // 混用导入默认导出和其他变量别名导出
+import * as math from "./maths.js"; // 导出所有对象
+import "./maths.js"; // 导入整个文件（被导入的文件中的代码会执行）
+
+/** ts 为 import 语法拓展了两个用途，让它可以声明类型导入。*/
+// 1 import type , 只能导入类型：
+// @filename: animal.ts
+export type Cat = { breed: string; yearOfBirth: number };
+export type Dog = { breeds: string[]; yearOfBirth: number };
+export const createCatName = () => "fluffy";
+// @filename: valid.ts
+import type { Cat, Dog } from "./animal.js"; // 官方示例中问.js后缀
+export type Animals = Cat | Dog;
+// @filename: app.ts
+import type { createCatName } from "./animal.js";
+// error: "createCatName" 是使用 "import type" 导入的，因此不能用作值。
+const name = createCatName();
+
+// 2 内联type导入。ts4.5 也允许单个导入使用type前缀表明导入的引用是一个类型。
+// 上面例子简单修改导入: @filename: app.ts
+import { createCatName, type Cat, type Dog } from "./animal.js";
+export type Animals = Cat | Dog;
+const name = createCatName();
+```
 
 \newpage
 
-# CSS、HTMP 与页面布局
+# Node.js 基础知识
 
-## CSS、HTML 等杂项内容(持续补充)
+## 1 Nodejs FAQs
+
+**Nodejs 是什么**: 作为一个异步事件驱动的 JavaScript 运行时，Node.js 被设计用来构建可扩展的网络应用。(**单线程、非阻塞 IO、事件驱动**)
+
+**阻塞/非阻塞、同步/异步**
+
+- 同步异步说的是被调用者结果返回时通知进程的一种**通知机制**，阻塞非阻塞说的是调用结果返回前**进程的状态**，是挂起还是继续处理其他任务。
+- 阻塞与非阻塞是**调用方**决定的，在等待结果的过程中，是否还可以干其他事。
+- 同步与异步是**被调用方**决定的，决定是马上给你答案，还是过会儿通知你，给你答案。
+- 在 Node.js 中，JavaScript 由于**执行 CPU 密集型操作**，而不是等待一个非 JavaScript 操作（例如 I/O）而**表现不佳**通常**不被称为阻塞**。
+- 代码比较: 阻塞方法同步执行，非阻塞方法异步执行。
+
+**Nodejs 中的异步**
+
+- 异步函数的“异步”是指**在结果出现之前有一段不可预知的时间**。这样的函数需要一个回调函数来处理错误和处理结果。
+- 异步函数嵌套的层级太多，就会出现 `回调地狱` 。
+- Node.js 中核心库 API 函数一般包含同步和异步两种。
+- JavaScript 语言本身可以使用 `async/await`。 `promise` 对象和 `async/await` 语法糖都是异步编程的一种解决方法。
+
+**并发 (Concurrent) 与并行 (Parallel)**
+
+- 并发：多个任务在**同一个 CPU 核**上按细分的时间片轮流 (交替) 执行，从逻辑上来看那些任务是同时执行。
+- 并行：区别与串行，多个任务真正的分配到**不同的 CPU 内核**上去执行的，它们是真正的同时执行。
+  - 类似*并发是四辆汽车在同一个车道上跑; 并行是单向四车道，四辆车在各自的车道跑，彼此不受影响。*
+- 串行：是指多个任务时，各个任务按顺序执行，完成一个之后才能进行下一个。
+
+**进程 (process) 与线程 (thread)**
+
+- 进程：是*操作系统*（OS）进行资源（CPU、内存、磁盘、IO、带宽等）分配的*最小单位*；
+- 线程：是 _CPU_ 调度和分配的*基本单位*。
+- _进程与线程类比火车与车厢_:
+  - **一个进程可由多个线程的执行单元组成**，每个线程都运行在同一进程的上下文中，共享同样的代码和全局数据。(一辆火车可以有多节车厢)
+  - **每个进程至少有一个主执行线程**。(一辆火车至少一节车厢)
+  - **进程间不会相互影响，一个线程挂掉将导致整个进程挂掉。**(一辆火车出事不影响其他火车，一节车厢着火，整辆火车都得停)
+- 进程、线程是操作系统调度的，**进程本身不会负责调度线程**。
+- **单线程**就是进程中只有一个线程。**多线程**就是进程有多个线程。
+- 在 Node.js 中 JavaScript 的执行是单线程的，_因此**并发性** 是指事件循环在完成其他工作后执行 JavaScript **回调函数**的能力。_
+  - _js 执行线程是单线程，但把需要做的 I/O 操作交给 libuv。_
+
+**事件驱动编程**: 在一个事件驱动的应用程序中，通常有**一个主循环**来监听事件，然后在检测到其中一个事件时**触发**一个回调函数。
+
+- 事件驱动的本质：**通过主循环加事件触发的方式来运行程序。**
+
+**nodejs 体系架构**
+
+Node.js 主要分为四大部分，Node Standard Library，Node Bindings，V8，Libuv，架构图如下：
+
+![nodejs-architecture.jpeg](./pictures/pictures-node/nodejs-architecture.jpeg){width=50%}
+
+- Node Standard Library: 是我们每天都在用的标准库，如 Http, Buffer 模块。
+- Node Bindings: 是沟通 JS 和 C++的桥梁，封装 V8 和 Libuv 的细节，向上层提供基础 API 服务。
+- 最底层是支撑 Node.js 运行的关键，由 C/C++ 实现。
+  - `V8`： 是 Google 开发的 JavaScript 引擎，提供 JavaScript 运行环境，可以说它就是 Node.js 的发动机。
+  - `Libuv`： 是专门为 Node.js 开发的一个封装库，**提供跨平台的异步 I/O 能力**。
+  - `C-ares`：提供了异步处理 DNS 相关的能力。
+  - `http_parser`、`OpenSSL`、`zlib` 等：提供包括 http 解析、SSL、数据压缩等其他的能力。
+
+事件循环、观察者、请求对象和执行回调是整个异步 I/O 的四个基本要素。
+
+\newpage
+
+**nodejs 单线程如何处理并发 (事件循环)**
+
+![event-loop](./pictures/pictures-node/event-loop.png){width=85%}
+
+当 Node.js 启动后，它会初始化事件循环，处理已提供的输入脚本，它可能会调用一些异步的 API、调度定时器，或者调用 `process.nextTick()`，然后开始处理事件循环。
+
+**错误优先回调**: 在 Node.js 的**所有异步方法**都使用这个模式。
+
+- 任何异步方法都希望其中一个参数是一个回调。完整的**回调参数**列表取决于调用者方法，但**第一个参数总是一个错误对象或空**。
+- 使用异步方法时，在函数执行过程中抛出的异常**不能**在 `try/catch` 语句中检测到(因为错误在回调函数的第一个参数)。
+
+**nodejs 利用多核处理器资源**
+
+- 由于 Node.js 默认是一个单线程应用程序，它将在单个处理器核心上运行，**不会充分利用多核心资源**。
+- Node.js 提供了在多核系统上部署的支持，以更好地利用硬件。`cluster`模块是允许运行多个 Node.js 工作进程，它们将共享同一个端口。
+
+**JIT**:为了获得速度，V8 将 js 代码翻译成**更有效的机器代码**(通过 JIT 编译器,**不产生字节码或任何中间代码**)，而不是使用一个解释器。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**REST** 是 REpresentational State Transfer(表现层状态转换) 的缩写。REST 是基于网络标准的架构，使用 HTTP 协议。
+
+API 要被视为 RESTful API，**必须遵循以下标准**:
+
+- `Client-Server` 客户端-服务器架构由客户端、服务器和资源组成，并且通过 HTTP 管理请求。
+- `Stateless` 无状态客户端-服务器通信，即 get 请求间隔期间，不会存储任何客户端信息，并且每个请求都是独立的，互不关联。
+- `Cacheable` 可缓存性数据：可简化客户端-服务器交互。
+- `Uniform Interface` 组件间的统一接口：使信息以标准形式传输。这要求：
+  - 所请求的资源可识别并与发送给客户端的表述分离开。
+  - 客户端可通过接收的表述操作资源，因为表述包含操作所需的充足信息。
+  - 返回给客户端的自描述消息包含充足的信息，能够指明客户端应该如何处理所收到的信息。
+  - 超文本/超媒体可用，是指在访问资源后，客户端应能够使用超链接查找其当前可采取的所有其他操作。
+- `Layered System` 组织各种类型服务器（负责安全性、负载平衡等的服务器）的分层系统会参与将请求的信息检索到对客户端不可见的层次结构中。
+- `Code on Demand(optional)` 按需编码（可选）：能够根据请求将可执行代码从服务器发送到客户端，从而扩展客户端功能。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**Express** (是一个) 高度包容、快速而极简的 Node.js Web 框架。
+
+使用**生成器工具**将创建一个*具有清晰层次结构的应用程序文件夹*，以帮助你管理图片、前端静态 JavaScript 文件、样式文件和 HTML 模板文件。
+
+**路由**用于确定应用程序如何响应对特定端点的客户机请求，包含一个 URI（或路径）和一个特定的 HTTP 请求方法（GET、POST 等）。
+
+- 每个路由可以具有一个或多个处理程序函数，这些函数在路由匹配时执行。
+- 路由定义采用以下结构： `app.method(path, handler)` ，其中：
+  - • app 是 express 的实例。• method 是 http 请求方法。• path 是服务器上的路径。• handler 是在路由匹配时执行的函数。
+
+使用 Express 中的 **`express.static` 内置中间件函数**，去提供诸如图像、CSS 文件和 JavaScript 文件之类的**静态文件**。
+
+**通用错误处理**一般要放在所有路由之后，例如`app.use(function (err, req, res, next) {/* error handler */}`
+
+**中间件**
+
+中间件函数能够访问`请求对象req`、`响应对象res`以及应用程序的请求/响应循环中的`下一个中间件函数`(通常用`next`变量来表示)。
+
+如果当前中间件函数**没有结束**请求/响应循环，那么它**必须调用 next()**，以将控制权传递给下一个中间件函数。否则，请求将保持挂起状态。
+
+从 Express 5 开始，返回 Promise 的中间件函数在拒绝或抛出错误时将调用 `next(value)`。next 将被调用，并带有拒绝值或抛出的 Error。
+
+**express 中间件分类**
+
+- 应用层中间件: 使用 `app.use()` 和 `app.METHOD()` 函数将应用层中间件绑定到应用程序对象的实例。
+- 路由器层中间件: 与应用层中间件基本相同，差异之处在于它 **绑定到 `express.Router()` 的实例**。
+- 错误处理中间件: 与其他中间件函数基本相同，差别在于错误处理函数有四个自变量 (err, req, res, next)。
+- 内置中间件: Express 中唯一内置的中间件函数是 `express.static`，负责提供 Express 应用程序的静态资源。
+- 第三方中间件: 安装具有所需功能的 Node.js 模块，然后在应用层或路由器层的应用程序中将其加装入。
+  - `cookie-parser`、`body-parser`、`http-errors`、`multer`、`cors`、更多[Express middleware](http://expressjs.com/en/resources/middleware.html)
+
+![express-middleware](./pictures/pictures-node/express-mw-cn.png){width=60%}
+
+**Koa** 是一个新的 web 框架，**通过利用 async 函数，Koa 帮你丢弃回调函数，并有力地增强错误处理。Koa 并没有捆绑任何中间件。**
+
+**Koa 应用程序**是一个包含一组中间件函数的对象，它是按照类似堆栈的方式组织和执行的。`app.context` 是从其创建 ctx 的原型。您可以通过编辑 `app.context` 为 ctx 添加其他属性。
+
+**Koa Context** 将 node 的 request 和 response 对象封装到单个对象中，为编写 Web 应用程序和 API 提供了许多有用的方法。每个请求都将创建一个 Context，并在中间件中作为接收器引用，或者 ctx 标识符。
+
+**Koa Request 对象**是在 node 的原生**请求对象**之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。
+
+**Koa Response 对象**是在 node 的原生响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。
+
+```cs
+const Koa = require("koa");
+const app = new Koa(); // koa应用
+app.context.db = db(); // 要从 ctx 添加对数据库的引用
+app.use(async (ctx) => {
+  ctx; // 这是 Context
+  ctx.request; // 这是 koa Request
+  ctx.response; // 这是 koa Response
+  ctx.body = "Hello World";
+});
+app.listen(3000);
+```
+
+- **应用(Application)为 `app`** , 它上面也有 koa 很多实例属性和方法，
+  - 例如`app.env`、`app.use(function)`等。
+- **上下文(Context)为 `ctx`** , 它上面有很多 koa content 的示实例属性和方法，
+  - 例如`ctx.req`，`ctx.throw([status],[msg],[properties])`等。
+- **koa 的请求(Request)对象为 `ctx.request`** ,它上面就是很多 http 请求的属性和方法，
+  - 例如`ctx.request.ip`，`ctx.request.is(types...)`等。
+- **koa 的响应(Response)对象为 `ctx.response`** ,它上面就是很多 http 响应的属性和方法，
+  - 例如`ctx.response.message`，`ctx.response.set(field, value)`等。
+- 因为 koa 的请求和响应是非常常用的，所以*很多属性方法有 koa 上下文的别名*。
+  - 例如`ctx.ip`为`ctx.request.ip`的别名，`ctx.message`为`ctx.response.message`的别名等。
+
+**常用的中间件**: `koa-router`、`koa-static`、`koa-session`、`koa-multer`、`koa-bodyparser`、[更多](https://github.com/koajs/koa/wiki)
+
+**洋葱模型**: Koa 的**路由执行顺序**与 Express 有所不同，Koa 选择了洋葱圈模型，即*最先访问的路由里的 `next()` 后面的代码最后响应*。
+
+**[nodejs web 安全指南](https://www.51cto.com/article/644029.html)**
+
+1 数据验证,永远不要信任你的用户 2. 预防 SQL 注入攻击(使用模板、类型转换等) 3. 应用程序认证和授权(密码哈希、密码存储、认证和授权)  
+4 暴力攻击防护(失败次数过多暂停(节流)、屏蔽无效登录请求的 IP) 5 HTTPS 安全传输 6 会话劫持保护 7 跨站点请求伪造攻击(CSRF)防护  
+8 尽可以预防`拒绝服务`或`DOS攻击` 9 依赖关系验证 10 HTTP 安全头信息
+
+- 函数防抖(debounce):在事件被触发`n`秒后再执行回调，如果在这`n`秒内又被触发，则重新计时。即*当一个动作连续触发只执行最后一次*。
+- 函数节流(throttle):限制一个函数在一定时间内只能执行一次。
+
+**解决未处理的异常**: `process.on("uncaughtException", (err)=> {/*error handler*/});`
+
+**npm** 是 JavaScript 世界的包管理工具，并且是 Node.js 平台的默认包管理工具。通过 npm 可以安装、共享、分发代码，管理项目依赖关系。
+
+**yarn**: 快速、可靠、安全的依赖管理工具
+
+- 速度超快。Yarn 缓存了每个下载过的包，所以再次使用时无需重复下载。 同时利用并行下载以最大化资源利用率，因此安装速度更快。
+- 超级安全。在执行代码之前，Yarn 会通过算法校验每个安装包的完整性。
+- 超级可靠。使用详细、简洁的锁文件格式和明确的安装算法，Yarn 能够保证在不同系统上无差异的工作。
+
+**JSON 网络令牌**（JWT）是一个*开放的标准*，它定义了一种紧凑和独立的方式，以 JSON 对象的形式在各方之间安全地传输信息。这种信息可以被验证和信任，因为它是经过数字签名的。
+
+JSON 网络令牌(jwt)由`Header.Payload.Signature`三部分组成，用点（.）隔开。
+
+- Header: 由两部分组成：令牌的类型（即 JWT）和签名算法（即 HS512）。
+- Payload: 包含提供已被验证的用户信息的声明 (claims)，以及如令牌到期时间等其他信息。
+- Signature: 包裹在编码头和有效载荷中的令牌的最后部分，同时还有加密算法和一个秘钥。
+
+\newpage
+
+# CSS、HTML 与页面布局
+
+## 4.1 CSS、HTML 等基础知识杂项内容(持续补充)
 
 **HTML Attributes 和 DOM Properties 之间的差异和关联**
 
@@ -3632,7 +1632,7 @@ Widget 和 Element 是一一对应的，但并不和 RenderObject 一一对应�
 
 _当浏览器解析这段 HTML 代码后，会创建一个与之相符的 DOM 元素对象_，可以通过 JavaScript 代码来读取该 DOM 对象：
 
-```js
+```cs
 const el = document.querySelector("#my-input"); // el是一个HTMLInputElement DOM对象
 ```
 
@@ -3691,7 +1691,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 
 \newpage
 
-## CSS 页面布局技术
+## 4.2 CSS 页面布局技术
 
 在 MDN 的 CSS 布局中，有介绍以下几种布局方式，先了解一些基本前置概念:
 
@@ -3837,7 +1837,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 
 \newpage
 
-## 响应式设计
+## 4.3 响应式网页设计
 
 **响应式网页设计** (responsive web design，RWD) 指的是**允许 Web 页面适应不同屏幕宽度因素等，进行布局和外观的调整**的一系列实践。
 
@@ -3903,7 +1903,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 
 \newpage
 
-# [CSS 预处理器 Sass/SCSS](https://sass-lang.com/guide)
+## 4.4 [CSS 预处理器 Sass/SCSS](https://sass-lang.com/guide)
 
 **变量声明**: 使用`$`符号,以`空格`或`逗号`分割的多个属性值，变量名可用`中划线`或`下划线`连接:`$basic-border: 1px solid black;`
 
@@ -3911,7 +1911,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 
 **简单的嵌套**:可以像俄罗斯套娃那样在规则块中嵌套规则块,避免重复书写。
 
-```scss
+```cs
 #content { article {h1 { color: #333 } p { margin-bottom: 1.4em } } aside { background-color: #EEE } }
 ```
 
@@ -3966,332 +1966,1529 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 
 \newpage
 
-# webpack 相关
+# Vue 相关
 
-**名词解释**(webpack 编译过程都是围绕着这些关键对象(特指加粗部分，其他为补充)展开)入口、输出、loader、插件、模式、浏览器兼容性、环境
+## 1 Vue FAQs
 
-- _(webpack)_ 是一个用于现代 JavaScript 应用程序的*静态模块打包工具*。当 webpack 处理应用程序时，它会在内部从一个或多个入口点构建一个**依赖图**，然后将项目中所需的*每一个模块组合成一个或多个 bundles*，它们均为静态资源，用于展示你的内容。
-- _依赖图(dependency graph)_: _每当一个文件依赖另一个文件时，webpack 都会将文件视为直接存在 **依赖关系** _。这使得 webpack 可以获取非代码资源，如 images 或 web 字体等。并会把它们作为**依赖**提供给应用程序。
-  - 当 webpack 处理应用程序时，它会根据命令行参数中或配置文件中定义的模块列表开始处理。 从 _入口_ 开始，webpack 会递归的构建一个 **依赖关系图**，这个依赖图包含着应用程序中所需的每个模块，然后将所有模块打包为少量的 bundle，通常只有一个，可由浏览器加载。
-  - _对于 HTTP/1.1 的应用程序，webpack 构建的 bundle 非常强大。当浏览器发起请求时，能最大程度的减少应用的等待时间。_
-  - _对于 HTTP/2 来说，还可以使用代码分割进行进一步优化。_
-- **`entry`**：编译入口，webpack 编译的起点(指示 webpack _应该使用哪个模块来作为构建其内部依赖图的开始_)
-- _(output)_ 属性告诉 webpack _在哪里输出它所创建的 bundle，以及如何命名这些文件_。
-- **`compiler`**：编译管理器，webpack 启动后会创建 compiler 对象，该对象一直存活直到结束退出。
-- **`compilation`**：单次编译过程的管理器。
-  - 比如 `watch = true` 时，运行过程中只有一个 compiler 但每次文件变更触发重新编译时，都会创建一个新的 compilation 对象。
-- **`dependence`**：依赖对象，webpack 基于该类型记录模块间依赖关系。
-- **`module`**：webpack 内部所有资源都会以“module”对象形式存在，所有关于资源的操作、转译、合并都是以 “module” 为基本单位进行的。
-  - module 是 webpack 资源处理的基本单位，可以认为 webpack 对资源的路径解析、读入、转译、分析、打包输出，所有操作都是围绕着 module 展开的。
-  - Webpack 天生支持如下模块类型：ECMAScript 模块(import 语句)、CommonJS 模块(require()语句)、AMD 模块(define 和 require 语句)、Assets、WebAssembly 模块。
-- **`chunk`**：编译完成准备输出时，webpack 会将 module 按特定的规则组织成一个一个的 chunk。
-  - 这些 chunk 某种程度上跟最终输出一一对应。
-- **`loader`**：资源内容转换器，其实就是实现从内容 A 转换 B 的转换器。(用于转换某些类型的模块)
-- **`plugin`**：webpack 构建过程中，会在特定的时机广播对应的事件，插件监听这些事件，在特定时间点介入编译过程。
-  - 用于打包优化，资源管理，注入环境变量等
-- _(configuration)_:webpack 的配置文件是 JavaScript 文件，文件内导出了一个 webpack 配置的对象，webpack 会根据该配置定义的属性进行处理。遵循 CommonJS 模块规范。
-- _(tapable)_: 是一个小型的 webpack 核心工具库，以提供类似的插件接口。 它对外暴露了 tap，tapAsync 和 tapPromise 等方法， 插件可以使用这些方法向 webpack 中注入自定义构建的步骤，这些步骤将在构建过程中触发。**本质上是为我们更方便创建自定义事件和触发自定义事件的库**，类似于 Nodejs 中的 EventEmitter Api。
-- _(mode)_:使用 development, production(默认值) 或 none 之中的一个来设置 mode 参数，可以启用 webpack 内置在相应环境下的优化。
-- _(浏览器兼容性)_:webpack 支持所有符合 ES5 标准的浏览器(不支持 IE8 及以下)。webpack 的 `import()` 和 `require.ensure()` 需要 Promise。旧版本浏览器可能需要提前加载 polyfill。
-- _(environment)_:Webpack 5 运行于 Node.js v10.13.0+ 的版本。
+**vue 生命周期及生命周期函数**
 
-**compiler**: 对象代表了完整的 webpack 环境配置。
+vue 的生命周期就是 vue 实例从创建到销毁/卸载的过程(括号内为对应 Options API)。
 
-- compiler 模块是 webpack 的主要引擎，它通过 CLI 或者 Node API 传递的所有选项创建出一个 compilation 实例。
-- 它扩展（extends）自 Tapable 类，_用来注册和调用插件。_ 大多数面向用户的插件会首先在 Compiler 上注册。
-- _Compiler 支持可以监控文件系统的监听(watching)机制，并且在文件修改时重新编译。_
-- 当处于监听模式(watch mode)时， compiler 会触发诸如 `watchRun`, `watchClose` 和 `invalid` 等额外的事件。
-- 通常在 开发环境 中使用，也常常会在 `webpack-dev-server` 这些工具的底层调用， 由此开发人员无须每次都使用手动方式重新编译。
-- 还可以通过 CLI 进入监听模式。
+- **创建** — 在组件创建时执行 (beforeCreate/created)
+- **挂载** — DOM 被挂载时执行 (beforeMount/mounted)
+- **更新** — 当响应数据被修改时执行 (beforeUpdate/updated)
+- **销毁/卸载** — 在元素被销毁之前立即运行 (beforeDestroy/destroyed 或 vue3 的 beforeUnmount/unmounted)
+  - 其他生命周期函数
+    - 被 `keep-alive` 缓存的组件激活/停用时调用 (activated/deactivated)。
+    - 在捕获一个来自后代组件的错误时被调用 (errorCaptured)
 
-**compilation**: 对象代表了一次资源版本构建。
+_是在使用**组合式 API** 时，可以理解为 beforecate 和 created 被 setup() 方法本身所取代。_  
+其他生命周期函数在组合式 API 表现类似: onBeforeMount()、onMounted()、onBeforeUpdate()、onUpdated() ……
 
-- compilation 模块会被 Compiler 用来创建新的 compilation 对象（或新的 build 对象）。
-- compilation 实例能够访问所有的模块和它们的依赖（大部分是循环依赖）。
-- _它会对应用程序的依赖图中所有模块， 进行字面上的编译(literal compilation)_。
-- _在编译阶段，模块会被加载(load)、封存(seal)、优化(optimize)、 分块(chunk)、哈希(hash)和重新创建(restore)。_
-- compilation 类继承自 tapable， 可以按照 compiler 钩子的相同方式来调用 tap，也可以在某些钩子上访问 tapAsync 和 tapPromise
+生命周期的实现原理:
 
-## Webpack5 特性
-
-1. 编译缓存: webpack5 统一了持久化缓存的方案，有效降低了配置的复杂性.
-2. 长效缓存: 长效缓存指的是能充分利用浏览器缓存，尽量减少由于模块变更导致的构建文件 hash 值的改变，从而导致文件缓存失效。增加了确定的 moduleId，chunkId 的支持。
-3. Node Polyfill 脚本被移除: webpack5 将不会自动为 Node.js 模块添加 polyfill，而是更专注的投入到前端模块的兼容中。
-4. 更优的 tree-shaking
-5. Module Federation: 相当于 webpack 提供了线上 runtime 的环境，多个应用利用 CDN 共享组件或应用，不需要本地安装 npm 包再构建了，这就有点云组件的概念了.
-
-\newpage
-
-## Webpack 性能优化
-
-- 1 [编译日志分析](https://mp.weixin.qq.com/s/A0udBhvNoA0o-kX1B0rt9A)：Webpack Analysis、Webpack Bundle Analyzer、WebpackDashboard、UnusedWebpackPlugin
-- 2 产物优化: tree-shaking 3 编译优化: cache、并行编译(happy-oack,thread-loader)
-
-4 个方向：构建速度优化、代码体积优化、持久化缓存优化、Module Federation
-
-[**webpack5 优化方向**](https://heapdump.cn/article/3466991)
-
-- 分离配置文件
-- 打包性能分析: 分析打包后的依赖包大小`webpack-bundle-analyzer`,友好的编译进度提示`webpackbar`
-- **打包优化**
-  - **去掉大的库中没有用到的代码**
-  - **缩小文件搜索范围**
-    - 优化 loader 配置: 由于 Loader 对文件的转换操作很耗时，需要让尽可能少的文件被 Loader 处理
-    - 优化 `resolve.modules` 配置: 用于配置 Webpack 去哪些目录下寻找第三方模块
-    - 优化 `resolve.mainFields` 配置: `resolve.mainFields` 用于配置第三方模块使用哪个入口文件。
-    - 优化 `resolve.alias` 配置: `resolve.alias` 配置项通过别名来把原导入路径映射成一个新的导入路径。
-    - 优化 `resolve.extensions` 配置: `resolve.extensions` 用于配置在尝试过程中用到的后缀列表。
-    - 优化 `module.noParse` 配置: `module.noParse` 配置项可以让 Webpack 忽略对部分没采用模块化的文件的递归解析处理，这样做的好处是能提高构建性能。
-- **保持最新的版本**
-- **减少辅助程序**: 尽可能少地使用 loader 和插件。
-- **开发环境优化**
-  - **开启缓存**: 缓存生成的 webpack 模块和块，以提高构建速度，推荐在开发环境开启，生产环境关闭。
-  - **Devtool**: 注意不同 devtool 设置之间的性能差异
-  - **避免使用生产环境下才需要用的工具**(例如压缩代码、输出随机字符串的文件名等)
-  - **最小的入口 chunk**
-  - **避免额外的优化步骤**: webpack 做了额外的算法工作来优化输出的大小和加载性能。这些优化适用于较小的代码库，但在较大的代码库中可能代价高昂。
-  - **输出不带路径信息**
-  - **TypeScript Loader**: 在使用 ts-loader 时要**提高构建速度**，启用 transpileOnly 加载器选项为 true。该选项**关闭了类型检查**。
-    - 再次进行类型检查，使用 `ForkTsCheckerWebpackPlugin`。这可以通过将 TypeScript 类型检查和 ESLint lint 移动到单独的进程来加速它们。
-- **生产环境优化**
-  - **并行构建**: 多页应用,使用 `parallel-webpack` 进行并行构建，它充分利用了 CPU 的多核特性
-  - **Source Maps**
-  - **Tree Shaking**: 可以用来剔除 JavaScript 中用不上的死代码。
-  - **压缩 CSS**: 插件`css-minimizer-webpack-plugin`
-  - **提取 CSS**: 使用 `optimization.splitChunks.cacheGroups` 将 CSS 提取到一个单独的文件中
-- 其它优化
-  - **图片优化**
-- [代码分离(把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件)的三种常用方式]
-  - 1 **入口起点**：使用 entry 配置手动地分离代码。2 **动态导入**：通过模块的内联函数调用来分离代码。
-  - 3 **防止重复**：使用 Entry dependencies 或者 SplitChunksPlugin 去重和分离 chunk。
-
-**webpack 的`loader`和`plugin`**: _loader 是一个转换器_，将 A 文件进行编译成 B 文件; _plugin 是一个扩展器_，它丰富了 webpack 本身。
-
-\newpage
-
-## Webpack 核心流程
-
-Webpack 最核心的功能: 将各种类型的资源，包括图片、css、js 等，转译、组合、拼接、生成 JS 格式的 bundler 文件。
-
-**webpack5 核心流程解析**(2022-11-30部分方法或类在源码中都搜不到了，所以仅供理清流程的参考)
-
-**初始化阶段**: 在真正构建入口模块之前的这一阶段
-
-- 初始化参数：将用户传入配置与默认配置结合得到最终配置参数；
-- 创建编译器对象：根据配置参数创建 `Compiler` 实例对象(从创建 compiler 实例到调用 make 钩子，逻辑链路很长)；
-- 初始化编译环境：注册用户配置插件及内置插件；
-- 运行编译：执行 `compiler.run` 方法；
-- 确定入口：根据配置 `entry` 找寻所有入口文件，并转换为 `dependence` 对象，等待执行 `compilation.addEntry` 编译工作。
-
-**构建阶段（make）**，`hooks.make` 是触发入口模块编译的开始
-
-- 构建阶段从 entry 开始递归解析资源与资源的依赖，在 `compilation` 对象内逐步构建出 module 集合以及 module 之间的依赖关系。
-- 调用 `handleModuleCreate` ，根据文件类型构建 module 子类
-- 调用 [loader-runner](https://www.npmjs.com/package/loader-runner) 仓库的 `runLoaders` 转译 module 内容，通常是从各类资源类型转译为 JavaScript 文本
-- 调用 [acorn](https://www.npmjs.com/package/acorn) 将 JS 文本解析为 AST(Webpack 读出 AST 之后仅遍历 AST 集合；babel 则对源码做等价转换)。
-- 遍历 AST，触发各种钩子
-  - 在 `HarmonyExportDependencyParserPlugin` 插件监听 `exportImportSpecifier` 钩子，解读 JS 文本对应的资源依赖
-  - 调用 module 对象的 `addDependency` 将依赖对象加入到 module 依赖列表中
-- AST 遍历完毕后，调用 `module.handleParseResult` 处理模块依赖
-- 对于 module 新增的依赖，调用 `handleModuleCreate` ，控制流回到第一步
-- 所有依赖都解析完毕后，构建阶段结束
-
-**生成阶段（seal）**：构建阶段围绕 module 展开，生成阶段则围绕 chunks 展开。webpack 得到足够的*模块内容与模块关系信息*，接下来开始生成最终资源了。代码层面，就是开始执行 `compilation.seal` 函数。_seal 函数主要完成从 module 到 chunks 的转化_，核心流程：
-
-- 构建本次编译的 `ChunkGraph` 对象；
-- 遍历 `compilation.modules` 集合，将 module 按 `entry/动态引入` 的规则分配给不同的 Chunk 对象(生成阶段的关键逻辑)；
-  - entry 及 entry 触达到的模块，组合成一个 chunk
-  - 使用动态引入语句引入的模块，各自组合成一个 chunk
-- `compilation.modules` 集合遍历完毕后，得到完整的 chunks 集合对象，调用 `createXxxAssets` 方法
-- `createXxxAssets` 遍历 module/chunk ，调用 `compilation.emitAssets` 方法将资 assets 信息记录到 `compilation.assets` 对象中
-- 触发 `seal` 回调，控制流回到 compiler 对象
-  - _chunk 是输出的基本单位，默认情况下这些 chunks 与最终输出的资源一一对应，那按上面的规则大致上可以推导出一个 entry 会对应打包出一个资源，而通过动态引入语句引入的模块，也对应会打包出相应的资源。_
-
-**输出阶段（emit）**
-
-- 经过`make`阶段处理后，`compilation`会获知**资源模块的内容与依赖关系**，也就知道“输入”是什么；
-- 经过`seal`阶段处理后，`compilation`则获知**资源输出的图谱**，也就是知道怎么“输出”:哪些模块跟哪些模块“绑定”在一起输出到哪里。
-- seal 结束之后，紧接着调用`compiler.emitAssets`函数，函数内部调用`compiler.outputFileSystem.writeFile`方法将 assets 集合写入文件系统
-
-各个阶段一句话说明:
-
-1. 初始化: 收集处理各部分的参数、创建编译器对象、初始化编译环境(注册用户配置插件及内置插件)、运行编译(compiler.run)、确认入口
-2. 构建(make)阶段: 模块路径解析、模块内容解析、AST 遍历处理、依赖解析(构建 ModuleDependencyGraph，依赖递归处理)
-3. 生成(seal)阶段: entry _生成 chunk_、异步模块生成 chunk、[optional] runtime 生成 chunk、_构建 ChunkGraph_
-4. 输出(emit)阶段: _合并 chunk、写出 assets_
-
-<!-- \rule[0pt]{19.4cm}{0.01em}
-
-从**资源形态流转**角度重新考察整个过程: -->
-
-![webpack资源形态流传的运行过程](./pictures/pictures-additions/webpack资源形态流传的运行过程.png){width=66%}
-
-\newpage
-
-## Plugin 解析
-
-_核心原理：何时启动、如何介入编译流程、插件开发（识别钩子运行时机、识别钩子类型、识别钩子参数）_  
-webpack 的钩子体系是一种强耦合架构，它在特定时机触发钩子时会附带上足够的上下文信息，插件定义的钩子回调中，能也只能与这些上下文背后的数据结构、接口交互产生 side effect，进而影响到编译状态和后续流程。
-
-**\textcolor{brown}{【什么是插件】}**: 从形态上看，插件通常是一个带有 apply 函数的类。`class SomePlugin { apply(compiler) {} }`
-
-**apply 函数运行时会得到参数 compiler ，以此为起点可以调用 hook 对象注册各种钩子回调**。  
-例如:`compiler.hooks.make.tapAsync()`，这里面 make 是钩子名称，tapAsync 定义了钩子的调用方式。  
-webpack 的插件架构基于这种模式构建而成，插件开发者可以使用这种模式在钩子回调中，插入特定代码。
-
-webpack 各种内置对象都带有 hooks 属性，比如 compilation 对象：
-
-```js
-class SomePlugin {
-  apply(compiler) {
-    compiler.hooks.thisCompilation.tap("SomePlugin", (compilation) => {
-      compilation.hooks.optimizeChunkAssets.tapAsync("SomePlugin", () => {});
-    });
-  }
-}
-```
-
-钩子的核心逻辑定义在 [Tapable](https://github.com/webpack/tapable) 仓库，内部定义了如下类型的钩子:
-
-```js
-const {SyncHook,SyncBailHook,SyncWaterfallHook,SyncLoopHook,AsyncParallelHook,AsyncParallelBailHook,
-  AsyncSeriesHook,AsyncSeriesBailHook,AsyncSeriesWaterfallHook,} = require("tapable");
-```
-
-**\textcolor{brown}{【什么时候会触发钩子】}**: 钩子的三个源码学习要素：触发时机、传递参数、示例代码。几个例子：
-
-`compiler.hooks.compilation`  
-时机：启动编译创建出 compilation 对象后触发;参数：当前编译的 compilation 对象;示例：很多插件基于此事件获取 compilation 实例.  
-`compiler.hooks.make`  
-时机：正式开始编译时触发;参数：当前编译的 compilation 对象;示例：webpack 内置的 EntryPlugin 基于此钩子实现 entry 模块的初始化.  
-`compilation.hooks.optimizeChunks`  
-时机： seal 函数中 chunk 集合构建完毕后触发;参数：chunks 集合与 chunkGroups 集合;示例：SplitChunksPlugin 插件基于此钩子实现 chunk 拆分优化.  
-`compiler.hooks.done`  
-时机：编译完成后触发;参数：stats 对象，包含编译过程中的各类统计信息;示例：webpack-bundle-analyzer 插件基于此钩子实现打包分析.
-
-webpack 会在什么时间节点触发什么钩子？钩子的触发时机与 webpack 工作过程紧密相关，大体上从启动到结束。参看[API](https://webpack.docschina.org/api/compiler-hooks/)。
-
-**apply 虽然是一个函数，但是从设计上就只有输入，webpack 不关心输出，所以在插件中只能通过调用类型实体的各种方法来或者更改实体的配置信息，变更编译行为。**例如：
-
-- compilation.addModule：添加模块，可以在原有的 module 构建规则之外，添加自定义模块
-- compilation.emitAsset：直译是“提交资产”，功能可以理解将内容写入到特定路径
-
-**\textcolor{brown}{【如何影响编译状态】}**:webpack 的插件体系与平常所见的 订阅/发布 模式差别很大，是一种非常强耦合的设计，**hooks 回调由 webpack 决定何时，以何种方式执行；而在 hooks 回调内部可以通过修改状态、调用上下文 api 等方式对 webpack 产生 [side effect]**。
-
-webpack 会将上下文信息以参数或 this (compiler 对象) 形式传递给钩子回调，在回调中可以调用上下文对象的方法或者直接修改上下文对象属性的方式，对原定的流程产生 side effect。所以想纯熟地编写插件，除了要理解调用时机，还需要了解我们可以用哪一些 api，例如：
-
-- compilation.addModule：添加模块，可以在原有的 module 构建规则之外，添加自定义模块
-- compilation.emitAsset：直译是“提交资产”，功能可以理解将内容写入到特定路径
-- compilation.addEntry：添加入口，功能上与直接定义 entry 配置相同
-- module.addError：添加编译错误信息
-
-[常用 plugin](https://webpack.docschina.org/plugins/)
-
-- `html-webpack-plugin`: 轻松地创建 HTML 文件 - `clean-webpack-plugin`: 每次打包都清除之前打包的文件
-- `mini-css-extract-plugin`: 分离样式文件的插件 - `css-minimizer-webpack-plugin`: 压缩 css 的插件
-- `terser-webpack-plugin`: 使用 Terser 对项目中的 JS 进行最小化 - `DllPlugin`: 为了极大减少构建时间，进行分离打包
-- `webpack-bundle-analyzer`: 直观的看到打包结果中，文件的体积大小、各模块依赖关系、文件是够重复等问题
-
-## Loader 介绍
-
-_核心原理：运行顺序、同步 loader、异步 loader、pitcher、raw、行内路径的处理、类型(pre、normal、post、inline)_  
-在【构建阶段】有一过程，调用 [loader-runner](https://www.npmjs.com/package/loader-runner) 仓库的 `runLoaders` 转译 module 内容，通常是从各类资源类型转译为 JavaScript 文本。  
-_`runLoaders`会调用用户所配置的 loader 集合读取、转译各种类型的资源。_ 转译之后理论上应该输出标准 js 文本或者 AST 对象，webpack 才能继续处理模块依赖。
-
-[常用 loader](https://webpack.docschina.org/loaders/)(分类: 文件、JSON、语法转换、模板、样式、框架等)
-
-- `vue-loader`：加载并编译 vue 组件 - `css-loader`：加载 CSS 文件并解析 import 的 CSS 文件，最终返回 CSS 代码
-- `babel-loader`：使用 Babel 加载 ES2015+ 代码并将其转换为 ES5。
-- `posthtml-loader`：使用 PostHTML 加载并转换 HTML 文件。 - `postcss-loader`：使用 PostCSS 加载并转换 CSS/SSS 文件
-- `ts-loader`：像加载 JavaScript 一样加载 TypeScript 2.0+ - `thread-loader`: 开启多进程打包
-
-dependence 和 dependency 意思差不多，dependence 是抽象的， dependency 是更具体的.
-
-## 主流构建工具对比
-
-_构建工具指能自动对代码执行检验、转换、压缩等功能的工具_。常见功能包括：代码转换、代码打包、代码压缩、HMR、代码检验。
-
-**browserify**: 1 预编译模块化方案（文件打包工具）。2 Browserify 基于流方式干净灵活。3 遵循 commonJS 规范打包 JS。4 可引入插件打包 CSS 等其他资源（非原生能力）。  
-**gulp**: 1 基于流的自动化构建工具（工程化）。2 配置复杂度高，偏向编程式，需要定义 task 处理构建。3 支持监听读写文件。4 可搭配 Browserify 等模块化工具来使用。  
-**parcel**: 1 极速打包（工程化：极速 0 配置）。2 零配置，但造成了配置不灵活，内置常见场景的构建方案及其依赖，无需再次安装（babel 等）。3 以 html 入口，自动检测和打包依赖。4 不支持
-SourceMap。5 无法 Tree-shaking。  
-**webpack**: 1 预编译模块化方案（工程化：大而全）。2 通过配置文件达到一站式配置。3 loader 进行资源转换，功能全面（css+js+icon+front）。4 插件丰富，灵活扩展。5 社群庞大。6 大型项目构建慢。  
-**rollup**: 1 基于 ES6 打包（模块打包工具）。2 Tree-shaking。3 打包文件小且干净，执行效率更高。4 更专注于 JS 打包。  
-**snowpack**: 1 基于 ESM 运行时编译（工程化：ESM 运行时）。2 无需递归循环依赖组装依赖树。3 默认输出单独的构建模块（未打包），可选择不同打包器（webpack、rollup 等）。  
-**vite**: 1 基于 ESM 运行时打包。2 借鉴了 Snowpack。3 生产环境使用 Rollup，集成度更高，相比 Snowpack 支持多页面、库模式、动态导入自动 polyfill 等。
+- 2.x 当创建组件实例的过程中会调用相应的钩子方法。内部会对钩子进行处理，将钩子函数维护成数组的形式。
+- 3.x 就是把各个生命周期的函数挂载或者叫注册到组件的实例上，然后等到组件运行到某个时刻，再去组件实例上把相应的生命周期的函数取出来执行。
 
 \rule[0pt]{19.4cm}{0.03em}
 
-**gulp** 是基于 Nodejs 的自动任务运行器。
+**vue 响应式**
 
-- 它能自动化地完成 javascript、sass、less、html/image、css 等文件的测试、检查、合并、压缩、格式化、浏览器自动刷新、部署文件生成，并监听文件在改动后重复指定的这些步骤。
-  - 它借鉴了 Unix 操作系统的管道（pipe）思想，前一级的输出，直接变成后一级的输入，使得在操作上非常简单。
-- gulp 主要用到 node 中的两个模块，fileSystem 和 stream，
-  - 文件系统可以对文件进行操作，比如读取文件、写入文件、创建文件、修改文件名、删除文件等；
-  - 而数据流主要分为读取流、写入流和双工流；
-  - 这里还有一个管道 pipe 的概念，管道可以使文件对象从一个流安全的流入到另一个流。
-- gulp 就是先创建一个读取流、一个写入流，在创建若干个双工流，对双工流进行数据的处理，比如去空字符，然后通过管道将读取流、不同功能的双工流、写入流依次连接起来，从而实现对文件的操作处理。
+**数据响应式**就是能够使数据变化可以被检测并对这种变化做出响应的机制。
 
-**Babel** 是一个 JavaScript 编译器，是一个工具链，主要用于将采用 ECMAScript 2015+ 语法编写的代码**转换为向后(或向下、回溯)兼容**的 JavaScript 语法，以便能够**运行在当前和旧版本**的浏览器或其他环境中。
+**vue 中响应式的实现**
 
-Babel 本质上就是在*操作 AST 来完成代码的转译* 。AST 是抽象语法树（Abstract Syntax Tree, AST）。
+- 2.x: 把一个普通的 js 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 `Object.defineProperty()` 把这些 property 全部转为 `getter/setter` (数据劫持)。每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把“接触(touch)”过的数据 property 记录为依赖。之后当依赖项的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染。
+  - 不足: 不能检测数组和对象的变化。由于 Vue 不允许动态添加根级响应式 property，所以必须在初始化实例前声明所有根级响应式 property，哪怕只是一个空值。
+  - 应对: 使用 `Vue.set(object, propertyName, value)` 全局方法或者 `vm.$set()` 实例方法向嵌套对象添加响应式 property。
+- 3.x: 主要把数据劫持这部分改为**使用 Proxy 来创建响应式对象**，将 `getter/setter` 用于 ref。**即 组合式 API reactive() 用于对象类型， ref() 用于基础数据类型。**
+  - 改进: Proxy 不仅可以代理对象，还可以代理数组。还可以代理动态增加的属性。（但旧版本浏览器可能不支持 ES 新语法）
+  - `reactive()` 返回一个对象的响应式代理。
+  - `ref()` 接受一个内部值，返回一个响应式的、可更改的 ref 对象，此对象只有一个指向其内部值的属性 `.value`。
+    - 如果将一个对象赋值给 ref，那么这个对象将通过 `reactive()` 转为具有深层次响应式的对象。这也意味着如果对象中包含了嵌套的 ref，它们将被深层地解包。
 
-大多数编译器的工作过程可以分为解析(Parse)、转换(Transform)、生成(Generate)三部分。
+**vue 双向绑定**(和上面一个意思)
 
-<!-- - **解析**（Parse）
-  - 将源代码转换成更加抽象的表示方法（例如抽象语法树）。包括词法分析和语法分析。
-  - 词法分析主要把字符流源代码（Char Stream）转换成令牌流（ Token Stream）。
-  - 语法分析主要是将令牌流转换成抽象语法树（Abstract Syntax Tree，AST）。
-- **转换**（Transform）
-  - 通过 Babel 的插件能力，对AST做一些特殊处理，将高版本语法的 AST 转换成支持低版本语法的 AST。让它符合编译器的期望。
-  - 当然在此过程中也可以对 AST 的 Node 节点进行优化操作，比如添加、更新以及移除节点等。
-- **生成**（Generate）: 将 AST 转换成字符串形式的低版本代码，同时也能创建 Source Map 映射。 -->
+- 两大核心: 数据劫持、发布订阅模式
+- 核心组成部分: 监听器 Observer(数据劫持)、订阅者容器(监听器监听到数据变动时，遍历订阅者容器发布消息)、Compile(解析模板指令)、Watcher(连接 Observe 和 Compile 的桥梁)
+  - Vue 双向绑定原理是采用发布订阅者模式，在初始化时劫持数据的各个属性的 setter/getter，在数据变动时发布消息给订阅者，触发响应的监听回调。
+  - 而每个组件都对应一个 Watcher 实例，它会在组件渲染的过程中把接触过的数据记录为依赖，当依赖的 setter 出发时，会通知 Watcher，从而使组件重新渲染。
 
-webpack 流程中 babel：
+\rule[0pt]{19.4cm}{0.03em}
 
-- webpack 读取 `webpack.config.js` 配置之后，加载 module.rules 中的配置
-- 加载 js 文件得到 source(即 js 代码)，如果配置了 babel-loader，则将 source 传给 babel-loader
-- 通过 `@babel/parse` 把代码转成 AST 语法树
-- 遍历 plugins，然后执行，装语法转换成对应的语法
-- 通过 `@babel/generator` 再把 AST 语法树转成 js 代码
-- 再将 source 返回给 webpack
+**虚拟 DOM**是一种编程概念，意为将目标所需的 UI 通过数据结构“虚拟”地表示出来，保存在内存中，然后将真实的 DOM 与之保持同步。
 
-**vite** 是一种新型前端构建工具，能够显著提升前端开发体验。它主要由两部分组成：
+**VNode** 虚拟节点，可以理解成节点描述对象，它描述了应该怎样去创建真实的 DOM 节点。
 
-- 一个开发服务器，它基于 **原生 ES 模块** 提供了 丰富的内建功能，如速度快到惊人的 模块热更新（HMR）。
-- 一套构建指令，它使用 **Rollup** 打包你的代码，并且它是预配置的，可输出用于生产环境的高度优化过的静态资源。
+**Virtual DOM** 其实就是一棵以 VNode 节点作为基础的树，用对象属性来描述节点，实际上它只是一层对真实 DOM 的抽象。最终可以通过一系列操作使这棵树映射到真实环境上。(**虚拟 DOM 简单说就是用 JS 对象来模拟 DOM 结构。**)
 
-vite 意在提供开箱即用的配置，同时它的 插件 API 和 JavaScript API 带来了高度的可扩展性，并有完整的类型支持。
+**引入虚拟 DOM 的目的**: vdom 把渲染过程抽象化了，从而使得组件的抽象能力也得到提升，并且可以适配 DOM 以外的渲染目标。
 
-传统打包工具的一些问题：
+虚拟 DOM 在 Vue.js 主要做了两件事：
 
-- **缓慢的服务器启动**: 当冷启动开发服务器时，基于打包器的方式启动必须优先抓取并构建你的整个应用，然后才能提供服务。
-- **缓慢的更新**: 基于打包器启动时，重建整个包的效率很低。原因显而易见：因为这样更新速度会随着应用体积增长而直线下降。
-  - 即使采用了 HMR (动态模块热替换)模式，其热更新速度也会随着应用规模的增长而显著下降。
+- (1) 提供与真实 DOM 节点所对应的虚拟节点 vnode。(2) 将虚拟节点 vnode 和旧虚拟节点 oldVnode 进行对比，然后更新视图。
 
-解决问题的前置条件：_**浏览器开始原生支持 ES 模块，且越来越多 JavaScript 工具使用编译型语言编写**_。
+**使用虚拟 DOM 的好处**:
 
-**`生产环境仍需打包`**: 尽管原生 ESM 现在得到了广泛支持，但**由于嵌套导入会导致额外的网络往返**，在生产环境中发布未打包的 ESM 仍然效率低下（即使使用 HTTP/2）。为了在生产环境中获得最佳的加载性能，**最好还是将代码进行 tree-shaking、懒加载和 chunk 分割（以获得更好的缓存）**。
+- (vue3 官网)虚拟 DOM 带来的主要收益是它赋予了开发者编程式地、声明式地创建、审查和组合所需 UI 结构的能力，而把直接与 DOM 相关的操作交给了渲染器。
+- 具备跨平台的优势、操作 DOM 慢，但 js 运行效率高，提高效率、提升渲染性能。(**组件抽象化、提高性能、跨平台**)
 
-vite 的**基本实现原理**，就是启动一个 koa 服务器拦截由浏览器请求 ESM 的请求。通过请求的路径找到目录下对应的文件做一定的处理最终以 ESM 的格式返回给客户端。
+**使用虚拟 DOM 的不足**:
 
-vite 通过在一开始将应用中的模块区分为 **依赖** 和 **源码** 两类，`改进了开发服务器启动时间`:
+- 创建 dom 依赖创建函数
+- 当节点数量非常庞大时，其自身的各种判断和计算会将自己击溃
+- 单从创建 dom 的角度出发，它的创建速度比原生的慢
+- 无法进行极致优化(毕竟始终是隔了一层)
 
-- **依赖: 大多为在开发时不会变动的纯 JavaScript**。一些较大的依赖(eg 多模块组件库)处理的代价也很高。依赖也通常会存在多种模块化格式（例如 ESM 或者 CommonJS）。_vite 将会使用 esbuild 预构建依赖_。
-- **源码: 通常包含一些并非直接是 JavaScript 的文件，需要转换（例如 JSX，CSS 或者 vue/Svelte 组件），时常会被编辑**。同时，并不是所有的源码都需要同时被加载（例如基于路由拆分的代码模块）。_vite 以 原生 ESM 方式提供源码_。让浏览器接管了打包程序的部分工作：vite 只需要在浏览器请求源码时进行转换并按需提供源码。根据情景动态导入代码，即只在当前屏幕上实际使用时才会被处理。
+**虚拟 dom 原理流程**: 构建虚拟 DOM 树、找出新旧两个虚拟 DOM 树的差异、将查询渲染到真实 DOM 上。
 
-webpack 会先打包，然后启动开发服务器，请求服务器时直接给予打包结果。
+- 1 用 JavaScript 对象模拟真实 DOM 树，对真实 DOM 进行抽象；
+- 2 比较两棵虚拟 DOM 树的差异 (diff 算法)；
+- 3 将两个虚拟 DOM 对象的差异应用到真正的 DOM 树 (patch 算法)。
 
-vite 是直接启动开发服务器，请求哪个模块再对该模块进行实时编译。由于现代浏览器本身就支持 ES Module，会自动向依赖的 Module 发出请求。  
-当浏览器请求某个模块时再根据需要对模块内容进行编译。这种按需动态编译的方式极大的缩减了编译时间，项目越复杂模块越多，vite优势越明显。
+**diff 算法**
 
-在热更新方面，当改动了一个模块后，仅需让浏览器重新请求该模块即可，不像 webpack 那样需要把该模块的相关依赖模块全部编译一次，效率更高。
+v3 版文档所说：_如果我们有两份虚拟 DOM 树，渲染器将会有比较地遍历它们，找出它们之间的区别，并应用这其中的变化到真实的 DOM 上。这个过程被称为修补 (patch)，又被称为“比较差异(diffing)”或“协调 (reconciliation)”_
+
+一般步骤:
+
+- 同级比较，再比较子节点
+- 先判断一方有子节点一方没有子节点的情况 (如果新的 children 没有子节点，将旧的子节点移除)
+- 比较都有子节点的情况 (核心 diff)
+- 递归比较子节点
+- 正常 Diff 两个树的时间复杂度是 O(n^3) ，实际情况下很少会进行跨层级的移动 DOM，所以 Vue 将 Diff 进行了优化，从`O(n^3)->O(n)`。
+- 只有当新旧 children 都为多个子节点时才需要用核心的 Diff 算法进行同层级比较。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**MVVM 相关**
+
+\textcolor{white}{:}![mvvm相关图示](./pictures/pictures-vue/mvvm相关图示.png)
+
+- MVC
+  - 模型层（Model）：是应用程序中独立于用户界面的动态数据结构；它直接管理应用程序的数据，逻辑和规则。
+  - 视图层（View）：用户界面，用来展示信息。
+  - 控制层（Controller）：**接收输入事件**，操控 model 或 view。
+- MVP
+  - Model 定义用户界面所需要被显示的资料模型，一个模型包含着相关的业务逻辑（在实际开发中，数据相关的业务逻辑都会放到服务器）。
+  - View 视图为呈现用户界面的终端，用以表现来自 Model 的资料，和用户命令路由再经过 Presenter 对事件处理后的资料。
+  - Presenter **包含着组件的事件处理**，负责检索 Model 获取资料，和将获取的资料经过格式转换与 View 进行沟通。
+- MVVM
+  - Model 定义用户界面所需要被显示的资料模型，一个模型包含着相关的业务逻辑（在实际开发中，数据相关的业务逻辑都会放到服务器）。
+  - View 视图为呈现用户界面的终端，用以表现来自 Model 的资料，和用户命令路由再经过 Presenter 对事件处理后的资料。
+  - ViewModel 在原有 Controller 层的基础上，**将业务逻辑封和组件进行双向绑定**(data-binding)，达到同步更新的目的。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**key 的作用**: key 这个特殊的 attribute 主要作为 Vue 的虚拟 DOM 算法提示，在比较新旧节点列表时用于识别 vnode。  
+**尽量不要采用索引 (index) 作为 key**: 在一个数组中间插入某个元素，用 index 做 key，直接导致我们插入的元素到后面的全部元素，对应的位置关系都发生了变更，所以**全部都会执行更新操作**。
+
+**渐进式(progressive)的含义**: 没有多做职责之外的事，只做了自己该做的事，没有做不该做的事，仅此而已。
+
+**vue 的优缺点**: 看到一句比较有意思的话：_任何框架都没有缺点，一切缺点都是特性。只不过有些框架的优点是，支持很多很多特性。_
+
+**vue3 新特性**
+
+**组合式 API** 是一系列 API 的集合，使我们可以使用函数而不是声明选项的方式书写 Vue 组件(_并不是函数式编程_)。
+
+- 组合式 API 是以 Vue 中数据可变的、细粒度的响应性系统为基础的，而函数式编程更强调数据不可变。
+- 好处: 更好的逻辑复用、更灵活的代码组织、更好的类型推导、生产包体积更小
+- `<script setup>` 是在单文件组件 (SFC) 中使用组合式 API 的编译时语法糖
+
+**vue3 中的树摇**: _在 Vue3.x 中，所有的 API 都通过 ES6 模块化的方式引入_，这样就能让 webpack 或 rollup 等打包工具在打包时对没有用到 API 进行剔除，最小化 bundle 体积。很多打包工具支持 Treeshaking，但 Treeshaking 的前提是所有的东西都需要用 ES6 module 的 import 来写，_vue2 的全局 API 并不能按需导入，但 vue3 支持按需引入。_
+
+**`<Teleport>组件`** 是一个内置组件，它可以将一个组件内部的一部分模板“传送”到该组件的 DOM 结构外层的位置去(如全屏的模态框)。
+
+**新的相关推荐框架工具**: cli 使用 vite，状态管理 vuex `->` pinia， ide 插件 vetur `-> `volar
 
 \newpage
 
-# 前端工程化
+**vue 的模板编译**
 
-## 0. [vue 开发风格指南](https://cn.vuejs.org/style-guide/rules-essential.html)
+**模板编译过程**: Vue 的模板编译过程就是将 template 转化为 render 函数的过程。会经历以下主要分为三个阶段：
+
+- parse 模板编译,将模板代码转化为`AST`;transform 优化`AST`,方便后续虚拟`DOM`更新;codegen 生成代码,将`AST`转化为可执行的代码
+
+**Vue 默认推荐使用模板的几点原因**:
+
+- 模板更贴近实际的 HTML。由于其确定的语法，更容易对模板做静态分析。在实践中，模板对大多数的应用场景都是够用且高效的。
+
+**vue3 渲染管线**
+
+- **编译**：vue 模板被编译成**渲染函数**,即用来返回虚拟`DOM`树的函数。此步骤可以通过构建步骤提前完成,也可通过使用运行时编译器即时完成。
+- **挂载**：运行时渲染器调用渲染函数，遍历返回的虚拟 DOM 树，并基于它创建实际的 DOM 节点。这一步会作为响应式副作用执行，因此它会追踪其中所用到的所有响应式依赖。
+- **更新**：当一个依赖发生变化后，副作用会重新运行，这时候会创建一个更新后的虚拟 DOM 树。运行时渲染器遍历这棵新树，将它与旧树进行比较，然后将必要的更新应用到真实 DOM 上去。
+
+\textcolor{white}{:}![vue3-render-pipeline.png](./pictures/pictures-vue/vue3-render-pipeline-2.png){width=70%}
+
+SPA（single-page application）wiki: 它通过**动态重写当前页面**来与用户交互，而非传统的从服务器重新加载整个新页面。
+
+- 仅在 Web 页面初始化时加载相应的 HTML、JS 和 CSS。一旦页面加载完成，SPA **不会**因为用户的操作而进行**页面的重新加载或跳转**;
+- 取而代之的是利用路由机制实现 HTML 内容的变换，UI 与用户的交互，避免页面的重新加载。
+- **优点**：用户体验好、快；SPA 相对对服务器压力小；前后端职责分离，架构清晰，前端进行交互逻辑，后端负责数据处理。
+- **缺点**：初次加载耗时多；前进后退路由管理，不能使用浏览器的前进后退功能；SEO(搜索引擎优化) 难度较大。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**全局 API** (列式的是 v2 的版本，v3 的形式可能略有不同)
+
+Vue 2 没有`app`的概念，定义的应用只是通过`new Vue()`创建的**根 Vue 实例**。从同一个 Vue 构造函数创建的每个根实例**共享相同的全局配置**。  
+Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp 返回一个**应用实例**，一个 Vue 3 中的新概念。
+
+- v3 新的`createApp()`
+  - 创建一个应用实例。在 v3，**任何全局改变 Vue 行为的 API 现在都会移动到应用实例上**。(类似下面 API 的 `Vue.` 变 `app.`)
+  - `import {createApp} from 'vue';import App from './App.vue';const app = createApp(App);`
+- `Vue.nextTick([callback, context])` / `nextTick()`
+  - 在下次 DOM 更新循环结束之后执行延迟回调。_在修改数据之后立即使用这个方法，获取更新后的 DOM。_
+- v2 的`Vue.set(target, propertyName/index, value)` **v3 已移除**
+  - 向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新。`Vue.delete` 类似。
+- `Vue.mixin(mixin)` / `app.mixin()`
+  - 全局注册一个混入，影响注册之后所有创建的每个 Vue 实例。可以向组件注入自定义的行为。**不推荐在应用代码中使用。**
+- `Vue.use(plugin)` / `app.use()`
+  - 安装 Vue.js 插件。如果插件是一个对象，必须提供 install 方法。需要在调用 new Vue() 之前被调用。对同一个插件多次调用，该插件将只被安装一次。
+- v2.6 以上 `Vue.observable(object)`/ v3 组合式 API `reactive()`
+  - 前者让一个对象可响应。Vue 内部会用它来处理 data 函数返回的对象。_被传入的对象会变更，和被返回的对象是同一个对象。_
+  - 后者返回一个对象的响应式代理。它会影响到**所有嵌套的 property**。_而对源对象直接进行变更仍然是不可响应的。_
+- `Vue.component(id, [definition])` / `app.component()`
+  - 如果**同时**传递一个组件名字符串及其定义，则**注册一个全局组件**；如果**只**传递一个名字，则会返回用该名字注册组件(如果存在的话)。
+- `Vue.directive(id, [definition])` / `app.directive()`
+  - 如果**同时**传递一个名字和一个指令定义，则**注册一个全局指令**；如果**只**传递一个名字，则会返回用该名字注册的指令(如果存在的话)。
+- `Vue.filter(id, [definition])` **v3 已移除**
+  - 注册或获取全局过滤器(用法同上)。在 vue3 里已经移除，推荐使用计算属性代替。
+- `Vue.version` / `app.version`: 提供字符串形式的 Vue 安装版本号。(不传参数，直接使用)
+- `Vue.extend(options)` / **v3 已移除**
+  - 使用基础 Vue 构造器，创建一个“子类”。参数是一个包含组件选项的对象。data 选项是特例，在 `Vue.extend()` 中它必须是函数。
+- `Vue.compile(template)` / _v3 不清楚_: 将一个模板字符串编译成 render 函数。**只在完整版时可用。**
+- v3 `进阶 API` 关于渲染函数中的部分 API:
+  - `h()`: 创建虚拟 DOM 节点 (vnode)。- `mergeProps()`: 合并多个 props 对象，用于处理含有特定的 props 参数的情况。
+  - `cloneVNode()`: 返回一个克隆的 vnode，可在原有基础上添加一些额外的 prop。
+
+**`setup()`钩子**是在组件中使用组合式 API 的入口，通常只在下列情况下使用：1 需要**在非单文件组件中使用组合式 API 时**；2 需要在**基于选项式 API 的组件中集成基于组合式 API 的代码**时。
+
+**其他情况下，都应该优先使用`<script setup>`语法**。优势：1 更小的样板内容，更简洁的代码（不用 return 数据和方法）。2 能够使用纯 ts 声明 props 和自定义事件。3 更好的运行时性能（其模块会被编译成同一作用域内的渲染函数，避免渲染上下文代理对象）4 更好的 IDE 类型推导性能（减少了语言服务器从代码中抽取类型的工作）。
+
+\newpage
+
+**指令**
+
+**vue 常用的修饰符**
+
+- 修饰符要在前面加个`.`点号，例如`<div @click.self="doThat">...</div>; <input v-model.trim="msg" />`
+- 使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。
+- 事件相关: 事件修饰符: stop、prevent、self、once、passive 等;按键修饰符: enter、esc、down、up 等;鼠标修饰符: left、right、middle
+- 表单输入相关: lazy、number、trim
+
+**v-if 和 v-for 不建议一起用**: 二者的优先级不明显
+
+- v-for 基于原始数据**多次渲染**元素或模板块。v-if 基于表达式值的真假性，来**条件性地渲染**元素或者模板片段。
+- **vue2**: 当和 v-if 一起使用时，**v-for** 的优先级比 v-if **更高**。**vue3**: 当它们同时存在于一个节点上时，**v-if** 比 v-for 的优先级**更高**。
+
+**v-if 和 v-show 的区别**
+
+- v-if 基于表达式值的真假性，来条件性地**渲染元素或者模板片段**。v-show 基于表达式值的真假性，来**改变元素的可见性**。
+- 当 v-if 元素被触发，元素及其所包含的指令/组件都会**销毁和重构**。v-show 通过**设置内联样式的 display CSS property 来工作**。
+
+**slot 插槽**
+
+通俗的理解就是“占坑”，在组件模板中占好了位置，当使用该组件标签时候，组件标签里面的内容就会自动填坑（替换组件模板中 slot 位置）并且可以作为承载分发内容的出口。
+
+使用**具名插槽**将多个插槽内容传入到各自目标插槽的插口。  
+在一个组件中多个插槽时，每个插槽`<slot>`元素可以用`name`属性来分配唯一 ID 指定渲染内容，没有提供 name 的`<slot>`插口隐式命名为`default`。
+
+**作用域插槽**在插槽的内容可能想要**同时使用**父组件域内和子组件域内的数据的情况,可以向一个插槽的插口上传递 attribute。
+
+使用: 在父组件使用类似`<slot name="header" message="hello"></slot>`表明这里需要有插槽占位，需要填充。  
+然后子组件使用类似`<template #header="headerProps"> {{ headerProps }} /*更多渲染内容*/ </template>`对其填充。  
+`#header`为`v-slot:header`的简写，此为具名作用域插槽，指定填充名为 header 的插槽接口，接收它传来的 attribute。
+
+**v-model**: 在表单输入元素或组件中**创建双向绑定**。预期：_根据表单输入元素或组件输出的值而变化_。
+
+<!-- 默认情况下，**v-model 是 `@input` 事件侦听器和 `:value` 属性上的语法糖**。仅限`<input> <select> <textarea> components`。 -->
+
+- `<select>` 会绑定 **value** property 并侦听 **change** 事件(`:value`属性和`@change`事件侦听器上的语法糖，下同)。
+- 文本类型的 `<input>` 和 `<textarea>` 元素会绑定 **value** property 并侦听 **input** 事件；
+- `<input type="checkbox">` 和 `<input type="radio">` 会绑定 **checked** property 并侦听 **change** 事件；
+
+**v-on**: Vue 中通过 `v-on` 或其语法糖 `@` 指令来**给元素绑定事件并且提供了事件修饰符**。可绑定多个事件。
+
+内置指令概述
+
+- v-text: 更新元素的文本内容。 `<span v-text="msg"></span>` 等同: `<span>{{msg}}</span>`
+- v-html: 更新元素的 innerHTML。 注意：内容按普通 HTML 插入，不会作为 Vue 模板进行编译。危险，容易被 XSS 攻击。
+- v-show: 基于表达式值的真假改变元素的可见性。通过设置内联样式的`display`来工作，当元素可见时将使用初始`display`值。
+- v-if:当 v-if 元素被触发，元素及其所包含的指令/组件都会销毁和重构。如果初始条件是假，那么其内部的内容根本都不会被渲染。
+- v-else: 前一兄弟元素必须有 `v-if` 或 `v-else-if`
+- v-else-if: 前一兄弟元素必须有 `v-if` 或 `v-else-if`。
+- v-for: 基于原始数据多次渲染元素或模板块。指令值必须使用特殊语法 `alias in expression` 为正在迭代的元素提供一个别名
+  - v-for 的默认方式是尝试就地更新元素而不移动它们
+- **v-on**: Vue 中通过 `v-on` 指令来**给元素绑定事件并且提供了事件修饰符**。可绑定多个事件。缩写为`@`
+- **v-bind**: 动态的绑定一个或多个 attribute，也可以是组件的 prop。缩写为`:` (当使用 `.prop` 修饰符,缩写为`.`)
+- v-model: 在表单输入元素或组件中创建双向绑定。预期：根据表单输入元素或组件输出的值而变化
+- **v-slot**: 用于声明具名插槽或是期望接收 props 的作用域插槽。限用于:`<template>`、组件(用于带有 prop 的单个默认插槽)，缩写为`#`
+- v-pre: 跳过该元素及其所有子元素的编译。所有 Vue 模板语法都会被保留并按原样渲染。
+- v-once:仅渲染元素和组件一次，并跳过之后的更新。在随后的重新渲染，元素/组件及其所有子项将被当作静态内容并跳过渲染。
+- v-cloak 用于隐藏未编译的模板，直到完成。**该指令只在没有构建步骤的环境下需要使用**。
+  - 与像 `[v-cloak] { display: none }` 这样的 CSS 规则结合，它可以隐藏原始模板直到组件编译完毕。
+- v-memo(vue3.2): 缓存一个模板的子树。元素和组件都可以使用。为了实现缓存，该指令期待传入一个定长地依赖值数组进行比较。
+
+**数据/状态 API**: 注意 v3 有部分组合式 API
+
+- computed: 用于声明要在组件实例上暴露的*计算属性*。
+  - 是计算属性，**依赖其它属性值**，只有它依赖的属性值发生改变，下一次获取 computed 的值时才会重新计算 computed 的值；
+  - computed **具有缓存机制**，依赖值不变的情况下其会直接读取缓存进行复用;
+  - computed 不能进行异步操作
+- watch: 用于声明在*数据更改*时调用的*侦听回调*。
+  - 更多的是「观察」的作用，类似于**某些数据的监听回调**，每当监听的数据变化时都会执行回调进行后续操作；
+  - watch 可以进**行异步操作**
+  - _(一般情况下 computed 是多对一，watch 是一对多)_
+- data: 用于声明组件初始响应式状态的**函数**。以 `_` 或 `$` 开头的属性将**不会**被组件实例代理，可能与内置冲突。
+  - _如果 data 仍然是一个纯粹的对象，则所有的实例将共享引用同一个数据对象！_
+  - 通过提供 data 函数，每次创建一个新实例后，我们能够调用 data 函数，从而返回初始数据的**一个全新副本数据对象**。
+- props: 用于声明一个组件的 props。props 可以是**数组或对象**，用于**接收来自父组件的数据**。
+- methods: 用于声明要混入到组件实例中的方法。
+- emits: 用于声明由组件触发的自定义事件。v3
+- expose: 用于声明当组件实例被父组件通过模板引用访问时暴露的公共属性。v3
+
+`<KeepAlive>` 或 `keep-alive` 是一个*内置组件*，它的功能是*在多个组件间动态切换时* **缓存被移除的组件实例**。
+
+**组件传值**
+
+- 父子通信：父向子传递数据是通过`props`，子向父是通过`$emit`。`$refs`也可以访问组件实例。
+- 兄弟通信：`$emit/$on`，vuex。
+- 跨级通信：`$emit/$on`，`provide/inject` API，vuex。
+
+父子组件创建过程自上而下，挂载过程自下而上。`parent created -> child created -> child mounted -> parent mounted`。  
+类似 koa 的洋葱模型，或者 U 型之类的，_父组件创建过程中涉及到子组件，则把子组件处理完之后，再回归父组件的接续处理_。
+
+**单向数据流**: 所有的 prop 都遵循着单向绑定原则，**prop 因父组件的更新而变化，自然地将新的状态向下流往子组件，而不会逆向传递。**
+
+**依赖注入**
+
+- provide(key,val):用于提供可以被后代组件注入的值。inject(key,default_v):用于声明要通过从上层提供方匹配并注入进当前组件的属性。
+- 两者通常成对一起使用，以**允许一个祖先组件向其所有子孙后代注入一个依赖**，不论组件层次有多深，只要他们处于同一条组件链上。
+
+**实例的属性和方法** (v2 的 API 标识为`vm.$xx`,v3 是直接`$xx`,在组件内都`this.$xx`的实例调用)
+
+- `vm.$refs`: 一个包含 DOM 元素和组件实例的对象，通过模板 ref 注册。
+- `模板 ref` 或者说特殊 attribute `ref`: `ref` 被用来给元素或子组件注册引用信息。
+- `vm.$attrs`: 一个包含了组件所有透传 attributes 的对象。
+  - `透传 Attributes` 是指由父组件传入，且没有被子组件声明为 props 或是组件自定义事件的 attributes 和事件处理函数。
+- `vm.$root`: 当前组件树的根组件实例。如果当前实例没有父组件，那么这个值就是它自己。
+- `vm.$parent`: 当前组件可能存在的父组件实例，如果当前组件是顶层组件，则为 null。
+- `vm.$emit()`: 在当前组件触发一个自定义事件。任何额外的参数都会传递给事件监听器的回调函数。
+- `vm.$forceUpdate()`: 强制该组件重新渲染。
+- `vm.$nextTick()`: 绑定在实例上的 `nextTick()` 函数。
+  - 和全局的`nextTick()`的唯一区别就是组件传递给`this.$nextTick()`的回调函数会带上 this 上下文，其绑定了当前组件实例。
+
+**组件的设计原则**:[风格指南](https://v2.cn.vuejs.org/v2/style-guide)、集中/统一的状态管理、更加纯粹的 State 变化、低耦合、辅助代码分离、及时模块化、扁平化面向数据的 state/props
+
+**异步组件**: 在大型项目中，我们可能**需要拆分应用为更小的块，并仅在需要时再从服务器加载相关组件**。v3 的 defineAsyncComponent 方法。
+
+**函数式组件**是**自身没有任何状态**的组件的另一种形式。它们在*渲染过程中不会创建组件实例*，并跳过常规的组件生命周期。
+
+- 函数式组件剩下的唯一应用场景就是简单组件，比如创建动态标题的组件。否则，建议你像平常一样使用有状态组件。
+
+**组件写 name 的好处**: 可以通过名字找到对应的组件（递归组件）;可以通过 name 属性实现缓存功能 (keep-alive);可以通过 name 来识别组件（跨级组件通信时非常重要）。
+
+**组件和插件的区别**: 组件 (Component) 是用来构成你的 App 的业务模块，它的目标是 `App.vue`;插件 (Plugin) 是用来对 Vue 的功能的增强或补充，它的目标是 Vue 本身。
+
+**服务端渲染（Server-Side Rendering）**
+
+SSR 是指由**服务端**完成页面的 HTML 结构拼接的页面处理技术，发送到浏览器，然后为其绑定状态与事件，成为完全可交互页面的过程。  
+与客户端的单页应用 (SPA) 相比，**SSR 的优势**主要在于: 更快的内容到达时间，统一的心智模型，更好的 SEO。  
+不足(权衡考量): 开发中的限制，更多的与构建配置和部署相关的要求，更高的服务端负载。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**vue-router 相关**
+
+**Vue Router** 是 Vue.js 的官方路由。它与 Vue.js 核心深度集成，让用 Vue.js 构建单页应用变得轻而易举。功能包括：
+
+- 嵌套路由映射; 动态路由选择; 模块化、基于组件的路由配置; 路由参数、查询、通配符; 展示由 Vue.js 的过渡系统提供的过渡效果
+- 细致的导航控制; 自动激活 CSS 类的链接; HTML5 history 模式或 hash 模式; 可定制的滚动行为; URL 的正确编码
+
+**vue-router 路由模式**
+
+- v3 配置参数选项为 mode，可选值为"hash"(默认值) | "history" | "abstract"(Node.js 环境)
+  - **"history" 的 url 没有`#`号**，hash 反之。相同的 url，**"history" 会触发添加到浏览器历史记录栈中**，"hash" 不会触发。
+- v4 对应配置选项为 history，可选值为 createWebHashHistory() | createWebHistory() | createMemoryHistory()
+
+**vue-router 动态路由**
+
+- 动态路由匹配
+  - 路径参数用冒号`:`表示。当一个路由被匹配时，它的 params 的值将在每个组件中以 `this.$route.params` 的形式暴露出来。
+- 编程式导航
+  - `router.push` 导航到不同的`url`。这个方法**会**向 history 栈添加一个新的记录，当用户点击浏览器后退按钮时，会回到之前的`url`。
+  - `router.replace`: 替换当前位置, 在导航时**不会**向 history 添加新记录，正如它的名字所暗示的那样,它取代了当前的条目。
+  - `router.go`: 该方法采用一个整数作为参数，表示在历史堆栈中前进或后退多少步，类似于 `window.history.go(n)` 。
+- 响应路由参数变化:
+  - 用 `watch` 监听: `watch: { $route(to, from){ /** */ } }`
+  - 向 `router-view` 组件中添加 key: `<router-view :key="$route.fullPath"></router-view>`
+    - `$route.fullPath` 是完成后解析的 URL，包含其查询参数信息和 hash 完整路径。
+
+**vue-router 的导航守卫 (钩子函数)**
+
+- 1 全局守卫
+  - **全局前置守卫** `router.beforeEach((to, from) =>{/* */ return xxx })` (做权限管理有用到)
+    - 当一个导航触发时，全局前置守卫按照创建顺序调用。守卫是异步解析执行，此时导航在所有守卫 resolve 完之前一直处于*等待中*。
+  - 全局解析守卫 `router.beforeResolve(async to => {/* */ return xxx})`
+    - *每次导航时*都会触发，但是确保在导航被确认之前，**同时在所有组件内守卫和异步路由组件被解析之后，解析守卫就被正确调用**。
+      - **获取数据或执行任何其他操作**（如果用户无法进入页面时你希望避免执行的操作）的理想位置
+  - 全局后置钩子 `router.afterEach((to, from, failure) => {if (!failure) sendToAnalytics(to.fullPath)})`
+    - 和守卫不同的是，这些钩子**不会**接受 next 函数也**不会**改变导航本身。
+    - *对于分析、更改页面标题、声明页面等辅助功能*以及许多其他事情都很有用。
+- 2 路由独享的守卫 `beforeEnter`: **只在进入路由时触发**，不会在 params、query 或 hash 改变时触发。
+- 3 组件内的守卫: 在路由组件内直接定义路由导航守卫(传递给路由配置的)。
+  - `beforeRouteEnter` 守卫**不能**访问 this，因为守卫在导航确认前被调用，因此即将登场的新组件还没被创建。
+    - `beforeRouteEnter` 是支持给 next 传递回调的**唯一守卫**。
+    - 对于 `beforeRouteUpdate` 和 `beforeRouteLeave` 来说，this 已经可用了，所以不支持传递回调。
+  - `beforeRouteLeave` 通常用来预防用户在还未保存修改前突然离开。该导航可以通过返回 false 来取消。
+
+**完整的导航解析流程**
+
+1. 导航被触发。
+2. 在失活的组件里调用 `beforeRouteLeave` 守卫。
+3. 调用全局的 `beforeEach` 守卫。
+4. 在重用的组件里调用 `beforeRouteUpdate` 守卫 (2.2+)。
+5. 在路由配置里调用 `beforeEnter` 。
+6. 解析异步路由组件。
+7. 在被激活的组件里调用 `beforeRouteEnter` 。
+8. 调用全局的 `beforeResolve` 守卫 (2.5+)。
+9. 导航被确认。
+10. 调用全局的 `afterEach` 钩子。
+11. 触发 DOM 更新。
+12. 调用 `beforeRouteEnter` 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。
+
+**`$route`** 是路由**信息**对象，包括 path，params，hash，query，fullPath，matched，name 等路由信息参数。  
+**`$router`** 是路由**实例**对象，包括了路由的跳转方法，钩子函数等。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**Vuex 是专门为 Vue.js 设计的状态管理库，以利用 Vue.js 的细粒度数据响应机制来进行高效的状态更新。**
+
+每一个 Vuex 应用的核心就是 **store(仓库)**。“store”基本上就是一个容器，它包含着你的应用中大部分的**状态 (state)**。
+
+\textcolor{white}{:}![vuex](./pictures/pictures-vue/vuex-2.png)
+
+- **State**: 定义了应用状态的数据结构，可以在这里设置默认的初始状态。
+- **Getter**: 允许组件从 store 中获取数据，mapGetters 辅助函数仅仅是将 store 中的 getter 映射到局部计算属性。
+- **Mutation**: 是唯一更改 store 中状态的方法，里面存的就是一些操作数据的方法，且必须是同步函数。
+- **Action**: 用于提交 mutation，而不是直接变更状态，可以包含任意异步操作。
+  - Action 通过 `store.dispatch` 方法触发
+  - 例如 `this.$store.dispatch('login', this.loginForm)` 来调取 `store` 里的 `user.js` 的 `login` 方法
+- **Module**: 允许将单一的 store 拆分为多个 store 且同时保存在单一的状态树中。
+
+**vuex 原理**: **通过全局注入 store 对象，来实现组件间的状态共享。**
+
+- _因为 vuex 生成了一个 store 实例，并且把这个实例挂在了所有的组件上，所有的组件引用的都是同一个 store 实例。_
+- store 实例上有数据，有方法。方法改变的都是 store 实例上的数据。
+- 由于其他组件引用的是同样的实例，所以一个组件改变了 store 上的数据，导致另一个组件上的数据也会改变，**就像是一个对象的引用**。
+
+**Axios** 是一个**基于 promise** 网络请求库，作用于 node.js 和浏览器中。
+
+- 它是 isomorphic 的(即同一套代码可以运行在浏览器和 node.js 中)。
+- 在**服务端**它使用原生 node.js **http 模块**, 而在**客户端** (浏览端) 则使用 **XMLHttpRequests**。特性有:
+  - 从浏览器创建 XMLHttpRequests、 从 node.js 创建 http 请求、 支持 Promise API
+  - 拦截请求和响应、 转换请求和响应数据、 取消请求、 自动转换 JSON 数据、 客户端支持防御 XSRF
+
+vue-cli-service 中**只有`NODE_ENV`/`BASE_URL` 和以`VUE_APP_`开头的变量将通过 `webpack.DefinePlugin` 静态地嵌入到客户端侧的代码中。**使用 vite 时，为了防止意外地将一些环境变量泄漏到客户端，只有以 **`VITE_`** 为前缀的变量才会暴露给经过 vite 处理的代码。
+
+**`assets`** 中的文件在运行`npm run build`的时候**会打包**。打包之后也会放到 `static` 中。`static` 中的文件则不会被打包。
+
+\newpage
+
+## Vue 的模板语法(应该合并到 FAQ)
+
+vue 使用一种基于 HTML 的模板语法，使我们能够声明式地将其组件实例的数据绑定到呈现的 DOM 上。  
+所有的 vue 模板都是语法层面合法的 HTML，可以被符合规范的浏览器和 HTML 解析器解析。
+
+**文本插值**: `<span>Message: {{ msg }}</span>`
+
+**原始`HTML`**:双大括号会将数据解释为纯文本。想插入 HTML，需要使用 v-html 指令。
+
+```cs
+<p>Using text interpolation: {{ rawHtml }}</p>
+<p>Using v-html directive: <span v-html="rawHtml"></span></p>
+```
+
+在网站上动态渲染任意`html`是非常危险的，非常容易造成`XSS`漏洞。仅在内容安全可信时再使用`v-html`,且永远不要使用用户提供的`html`内容
+
+**Attribute 绑定**: 双大括号*不能在 HTML attributes 中使用*。想要响应式地绑定一个 attribute，应该使用 v-bind 指令，可简写为`:`。
+
+```cs
+<div :id="dynamicId"></div>
+```
+
+**使用 JavaScript 表达式**:vue 实际上在所有的数据绑定中都支持完整的 JavaScript 表达式。
+
+```cs
+{{ number + 1 }} {{ ok ? 'YES' : 'NO' }} {{ message.split('').reverse().join('')}}
+<div :id="`list-${id}`"></div>
+```
+
+- **仅支持表达式**: 每个绑定仅支持*单一表达式*，也就是一段能够被求值的 JavaScript 代码。
+- **调用函数**: 可以在绑定的表达式中使用一个组件暴露的方法。`<span :title="getDate(date)">{{formatDate(date)}}</span>`
+  - **绑定在表达式中的方法在组件每次更新时都会被重新调用**，因此不应该产生任何副作用，比如改变数据或触发异步操作。
+- **受限的全局访问**: 模板中的表达式将被沙盒化，仅能够访问到[有限的全局对象列表](https://github.com/vuejs/core/blob/main/packages/shared/src/globalsWhitelist.ts#L3)。该列表中会暴露常用的内置全局对象，比如 Math 和 Date。
+  ```cs
+  // vuejs/core/packages/shared/src/globalsWhitelist.ts 中允许访问的`有限全局对象列表`
+  const GLOBALS_WHITE_LISTED =
+    "Infinity,undefined,NaN,isFinite,isNaN,parseFloat,parseInt,decodeURI," +
+    "decodeURIComponent,encodeURI,encodeURIComponent,Math,Number,Date,Array," +
+    "Object,Boolean,String,RegExp,Map,Set,JSON,Intl,BigInt";
+  ```
+
+**指令 Directives**: 指令是带有 `v-` 前缀的特殊 attribute。vue 提供了许多内置指令。
+`<p v-if="seen">Now you see me</p>`
+
+- 指令 attribute 的期望值为一个 JavaScript 表达式 (除了少数几个例外，v-for、v-on 和 v-slot)。
+- **一个指令的任务是在其表达式的值变化时响应式地更新 DOM**。
+- 指令的完整语法：`名称:参数.修饰符(可多个)=值`（`name:argument.modifiers=value`）。
+
+![vue的完整directive语法](./pictures/pictures-vue/vue的完整directive语法.png){width=60%}
+
+**模板编译和渲染大概流程:`template -> ast -> render 函数 -> 创建虚拟dom -> diff 算法更新虚拟dom -> 产生、更新真实dom`**
+
+- template → parse 模版基础编译 → optimize 优化 AST → generate 生成 JS 字符串 → render 函数
+
+\textcolor{white}{--}![“教科书”式的编译模型与vue的模板编译.png](./pictures/pictures-additions/“教科书”式的编译模型与vue的模板编译.png){width=95%}
+
+\newpage
+
+## diff 算法简述
+
+**\textcolor{brown}{简单 diff 算法简单总结}**
+
+*遍历*新旧两组子节点中数量*较少*的那一组，并逐个调用 patch 函数进行打补丁，然后*比较新旧两组子节点的数量*，*如果新的*一组子节点数量更*多*，说明有新子节点*需要挂载*；*否则*说明在旧的一组子节点中，有节点*需要卸载*。
+
+_简单 Diff 算法的**核心逻辑**_ 是，拿新的一组子节点中的节点去旧的一组子节点中寻找可复用的节点。如果找到了，则记录该节点的位置索引。我们把这个位置索引称为最大索引。在整个更新过程中，如果一个节点的索引值小于最大索引，则说明该节点对应的真实 DOM 元素需要移动。
+
+**\textcolor{brown}{双端 diff 算法简单总结}**: 使用了 4 个指针分别指向了新旧子节点序列的首尾，在遍历过程中逐渐向中间移动，直到尾指针小于头指针。
+
+需要将更新逻辑封装到一个 while 循环。由于在*每一轮更新完成之后*，紧接着都会更新四个索引中*与当前更新轮次相关联的索引*，所以整个 while 循环执行的条件是：_头部索引值要小于等于尾部索引值_。
+
+- 在双端比较中，**每一轮**比较都分为四个步骤(就是双端比较时，每次移动指针，需要比较 4 次)
+  - 第一步：比较**旧的**一组子节点中的**第一个**子节点与**新的**一组子节点中的**第一**个子节点，看看它们是否相同。
+  - 第二步：比较**旧的**一组子节点中的**最后一个**子节点与**新的**一组子节点中的**最后一个**子节点，看看它们是否相同。
+  - 第三步：比较**旧的**一组子节点中的**第一个**子节点与**新的**一组子节点中的**最后一个**子节点，看看它们是否相同。
+  - 第四步：比较**旧的**一组子节点中的**最后一个**子节点与**新的**一组子节点中的**第一个**子节点，看看它们是否相同。
+
+1. **理想情况下找头尾节点可复用**，在上述四步中找到了相同的节点，即可复用；如果不同则需要看第五步的情况。
+
+- 头头和尾尾节点相同时，不需要移动，只需要更新索引移动一步。头尾节点相同，则需要移动真实 dom 的该节点到头或者尾去。
+
+2. 如果头尾没有可复用的节点，就**尝试看看非头部、非尾部的节点能否复用**(相当于第五步)。_具体做法是，拿新的一组子节点中的头部节点去旧的一组子节点中寻找_。
+
+- **如果新节点在旧节点序列中能找到**，说明可以复用，需要**移动该节点**。用 idxInOld 记录该节点在旧节点序列中的位置。
+  - 首先，在移动节点之前不要忘记调用 patch 函数进行打补丁(**找到并更新变更点**,挂载动作也是一种特殊的打补丁)
+    - 渲染器会使用 newVNode 与上一次渲染的 oldVNode 进行比较，试图找到并更新变更点。这个过程叫作“打补丁”(patch)。
+  - 接着，调用 insert 函数在对应真实 DOM 节点中进行移动。(**节点移动**)
+  - 然后，因为旧节点 idxInOld 处的数据处理过了，就将其置为 undefined。(**旧节点置为 undefined**)
+    - 这里置为 undefined 之后，需要在遍历旧节点序列时跳过 undefined 的节点。
+  - 最后，将遍历新节点序列的下一个节点，即 newStartIdx 索引前进到下一个位置。(**索引更新**)
+- **如果新节点在旧节点数组中不存在**，需要**新增该节点**，此时 idxInOld `>` 0 不成立，找不到对应的索引。
+  - 注意，需要*在 while 循环结束后*，多一个 if 判断，如果`oldEndIdx < oldStartIdx && newStartIdx <= newEndIdx`成立说明新的一组子节点中有遗留的节点需要作为新节点挂载。
+  - _索引值位于 newStartIdx 和 newEndIdx 这个区间内的节点都是新节点_。开启一个 for 循环来遍历这个区间内的节点并逐一挂载。
+- **如果旧节点在新节点数组中不存在**，则需要**删除该节点**。
+  - 需要*在 while 循环结束后*，继续多一个 else if 判断，如果`newEndIdx < newStartIdx && oldStartIdx <= oldEndIdx`成立，需要卸载已经不存在的节点。
+  - 索引值位于 oldStartIdx 和 oldEndIdx 这个区间内的节点都应该被卸载，于是我们开启一个 for 循环将它们逐一卸载。
+
+相比简单 Diff 算法，双端 Diff 算法的**优势**在于，对于同样的更新场景，执行的 DOM 移动操作次数更少。
+
+**\textcolor{brown}{快速 diff 算法简单总结}**:先预处理寻找相同的前置和后置节点，此时若新旧节点组有遍历完的，可以通过卸载或挂载完成更新。没能通过卸载和挂载完成更新，再根据剩下的节点的索引关系，构建新节点组的最长子序列索引数据，其指向的节点不需要移动。剩下的节点再根据情况挂载或移动。
+
+**1. 预处理**
+
+- 前置节点通过建立索引 j，从 0 开始，使用 while 循环递增 j 遍历新旧节点序列，直到遇到不相同的节点。
+- 后置节点通过建立索引 newEnd 和 oldEnd，指向新旧两个节点序列的最后一个节点，使用 while 从后往前遍历，直到遇到不相同的节点。
+- 判断**新**节点**没有**遍历完且**旧**节点**遍历完**，即`oldEnd < j && newEnd >= j`，从 j 到 newEnd 的节点都依次**挂载**(调用 patch 函数)。
+- 判断**旧**节点**没有**遍历完且**新**节点**遍历完**，即`newEnd < j && oldEnd >= j`，从 j 到 oldEnd 的节点都依次**卸载**(调用 unmount 函数)。
+- 判断 **新旧节点都没遍历完**，则进行比较第二步部分，判断是否需要进行 DOM 的移动。
+
+**2. 判断是否需要进行 DOM 的移动**
+
+- 构建一个 source 数组，用于存放**新节点对应旧节点组中的索引**。长度为`newEnd - j + 1`，初始化全部 `fill(-1)`。
+  - 遍历*新节点组*，将其 `el.key` 作为`[key]`，`index` 作为 `[value]` 保存为一个**索引表**
+  - 遍历*旧节点组*，在索引表中找相同的 `el.key`
+    - 没找到，该节点已经不存在于新子节组中了，调用 unmount 函数**卸载**该节点
+    - 找到了，**将其在旧节点中的索引放入索引的 source** 中。如果在遍历过程中遇到的**索引值呈现递增趋势**，则说明**不需要移动**节点。
+  - 其中新增了 moved 代表是否需要移动节点，初始为 false；pos 代表遍历旧节点组的过程中遇到的最大索引值 k，初始为 0； patched 代表更新过的节点数量,每更新一个节点，都将 patched 变量 `+1` 。
+    - 在第二个 for 循环内，通过比较变量 k 与变量 pos 的值来判断是否需要移动节点。`if(k<pos){moved=true} else{pos=k}`。
+    - 如果*已经更新过*的节点数量 patched**大于** *需要更新*的节点数量 `newEnd-j+1`，则调用 unmount 函数**卸载**多余的节点。
+
+**3. 移动元素**
+
+- 通过 source 数组计算出**最长递增子序列的索引信息数组 seq**(source 数组的长度是去除了相同前后置节点的新节点组长度)。
+  - 例如 seq 的值为`[0, 1]`的含义: 在新子节点序列中，重新编号后索引值为 0 和 1 的这两个节点在更新前后顺序没有发生变化。
+- 用索引 **i** 指向**新节点组中的最后一个节点**，用索引 _s_ 指向最长递增子序列中的*最后一个元素*，_循环使 i 递减，从下向上移动_
+  - 第一步: 判断表达式 `source[i]===-1`是否成立
+    - _成立_，说明索引为 i 的节点是*全新的节点*。找到真实索引位置的下一个节点处，调用 patch**挂载**节点。_不成立_，继续下一步。
+  - 第二步: 判断表达式 `i !== seq[s]` 是否成立
+    - _成立_，说明该节点*需要移动*。找到该节点在新节点组中的真实位置作为锚点，调用 insert **移动**节点
+  - 第三步: 第一步和第二步中的条件*都不成立*
+    - 说明该节点*不需要移动*，但仍然需要让索引 s 的值递减，即 `s--`
+
+\newpage
+
+## 2 [Vue 响应式原理](https://tsejx.github.io/vue-guidebook/infrastructure/vue2/reactivity)
+
+### 2.1 Vue 双向绑定
+
+**`MVVM`模型** 简单讲`Model`指的是后端传递的数据;`View`指的是所看到的页面;`ViewModel` 是`MVVM`模式的核心，连接 View 和 Model 的桥梁。
+
+- 将 Model 转化成 View，即将后端传递的数据转化成所看到的页面。实现方式：**数据绑定**
+- 将 View 转化成 Model，即将所看到的页面转化成后端的数据。实现方式：**DOM 事件监听**
+- 这两个方向都实现的，称之为数据的**双向绑定**
+
+在 MVVM 框架下 View 和 Model 是不能直接通信的，它们通过 ViewModel 来通信:
+
+- ViewModel 通常要实现一个 Observer 观察者，
+- 当*数据发生变化*，ViewModel 能够监听到数据的这种变化，然后*通知*对应的*视图做自动更新*，
+- 而当*用户操作视图*，ViewModel 也能监听到视图的变化，然后*通知数据做改动*，这实际上就实现了数据的双向绑定。
+- 并且 MVVM 中的 View 和 ViewModel 可以互相通信。
+
+**发布订阅模式**主要包含:
+
+- 发布函数：发布的时候执行相应的回调
+- 订阅函数：添加订阅者，传入发布时要执行的函数，可能会携额外参数
+- 一个缓存订阅者以及订阅者的回调函数的列表
+- 取消订阅
+
+JavaScript 中事件模型，在 DOM 节点上绑定事件函数（addEventListener），触发的时候执行就是应用了发布-订阅模式。
+
+**实现 MVVM 的双向绑定，就必须要实现以下几点**：
+
+- **Compile**: 指令解析系统，_对**每个元素节点的指令**进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数_
+- **Observer**: 数据监听系统，能够对数据对象的**所有属性**进行监听，如有变动可拿到最新值并通知订阅者
+  - Observer 类用于附加到每个被观察的对象。一旦附加后，观察者会将目标对象的 Property 键使用 `Object.definProperty`转换成用于**收集依赖**以及**调度更新**的 `getters` 和 `setters`(相当于数据劫持)。
+    - Observer：附加至每个被观察对象的*观察者类*，一旦被添加，观察者会将目标对象进行响应式化
+    - observe：用于*观察对象的方法*，返回 Observer 类的实例对象
+  - 通过向 observe 方法传入需要双向绑定的数据对象。
+    - 如果观察数据为数组类型，将会修改该该数据类型原型上 7 个原生数组方法，并遍历数组对数组每个成员进行观察，达到监听数组数据变化响应的效果。
+    - 如果观察数据为对象类型，则使用 `walk` 方法遍历对象中每对键值，并触发 `defineReactive` 进行双向绑定。
+      - defineReactive 内部的 `Object.defineProperty` 的 getter 将会实例化一个订阅者类 Dep，并通过闭包的方式将实例对象 dep 用于收集以及缓存订阅者。而其 setter 将会通过 `dep.notify` 通知所有观察者，进行派发更新。
+      - `getter`：正确地`返回属性值`以及`收集依赖`
+      - `setter`：正确地为属性`设置新值`以及`触发相应的依赖`（不存在添加属性的情况，添加属性请用 Vue.set）
+- **Dep`+`Watcher**: 发布订阅模型，作为连接 Observer 和 Compile 的桥梁，能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图。
+  - **Dep 是发布订阅者模型中的发布者**: get 数据时收集订阅者，触发 Watcher 的依赖收集；set 数据时发布更新，通知 Watcher 。
+    - 一个 Dep 实例对应一个对象属性或一个被观察的对象，用来收集订阅者和在数据改变时发布更新。
+    - 订阅者 Dep 类主要作用是用于存放 Watcher 观察者对象
+      - 用 addSub 方法可以在目前 Dep 对象中增加一个 Watcher 的订阅操作
+      - 用 notify 方法通知目前 Dep 对象的 subs 中的所有 Watcher 对象触发更新操作
+  - **Watcher 是发布订阅者模型中的订阅者**: 订阅的数据改变时执行相应的回调函数（更新视图或表达式的值）。
+    - 只有在这四种场景中，Watcher 才会收集依赖，更新模版或表达式，否则，_数据变更后无法通知依赖这个数据的模版或表达式_：
+      - 第一种：观察`模版中的数据`，如 HTML 模板中用到的 `{{test}}`，
+      - 第二种：观察创建 vue 实例时 `watch` 选项中的数据
+      - 第三种：观察创建 vue 实例时 `computed` 选项里的数据
+      - 第四种：调用 `$watch` API 观察的数据或表达式
+    - Watcher 对象通过调用 `updateComponent` 方法达到更新视图的目的。
+      - Watcher 并不实时更新视图，在实例化 vue 构造函数时默认会将 Watcher 对象存在一个队列中，在下个 Tick 时更新异步更新视图，完成了性能优化。
+- **依赖收集**: 依赖收集就是*订阅数据变化的 watcher 的收集*。_前提条件_: 触发 get 方法,新建一个 Watcher 对象
+  - *依赖收集的目的*是为了当这些响应式数据发生变化时，触发它们的 setter 的时候，能知道应该通知哪些订阅者去做相应的逻辑处理
+
+**响应式原理概述**
+
+**vue2** 通过[数据劫持]和[观察-订阅者模式]来实现 MVVM 双向绑定，也就是响应式。其中，
+
+- `数据劫持`使用了`Object.definProperty`将组件实例的`data`对象转换成用于收集依赖的 getter 和触发更新的 setter。
+- `Dep 和 Watcher`作为了发布订阅模型。
+  - Dep: 发布者，用于收集当前响应式对象的依赖关系，主要作用存放 Watcher 观察者对象。
+    - 触发 getter 时，收集依赖，使用`addSub`添加一个对应 watcher 订阅者；
+    - 触发 setter 时，用 `notify` 方法通知目前 Dep 对象中的所有相关依赖的 Watcher 对象触发更新操作。
+  - Watcher: 订阅者，订阅的数据改变时执行相应的回调函数，更新视图或表达式的值。
+    - **watcher 可订阅的只有四种数据：模板中的数据、watch 选项的数据、computed 选项的数据、调用`$watch` API 的数据**。
+    - 有数据改变后触发相应的回调函数，就重新渲染视图。
+
+一言以蔽之，通过`数据劫持`得到了 getter、setter，触发 getter 时会添加一个订阅者，触发 setter 时会发布通知，所有关联的订阅者进行数据更新。
+
+![vue2中mvvm双向绑定的实现](./pictures/pictures-vue/vue2中mvvm双向绑定的实现.jpg)
+
+**vue 3** 实现响应式类似，本质上是通过 Proxy API 劫持了**数据对象**的读写:
+当我们访问数据时，会触发 getter 执行依赖收集；修改数据时，会触发 setter 派发通知。
+
+常见的响应式副作用的用例:更新 DOM、添加 DOM 事件监听器或者请求数据。[每个组件实例创建一个响应式副作用来渲染和更新 DOM](https://cn.vuejs.org/guide/extras/reactivity-in-depth.html#how-reactivity-works-in-vue)。
+
+_vue 通过一个副作用（effect）函数来跟踪_ **当前正在运行的函数**。
+副作用是一个函数包裹器，在函数被调用前就启动跟踪，而 vue 在派发更新时就能准确的找到这些被收集起来的副作用函数，**当数据发生更新时再次执行它**。
+
+一些当状态改变时需要执行的行为就是[副作用](https://cn.vuejs.org/guide/extras/reactivity-in-depth.html)，比如在每次 msg 变量改变时我需要重新打印它，那么这个打印行为就可以说是一个副作用。
+
+1. 通过 `state = reactive(target)`来定义响应式数据（这里基于 Proxy 实现，按属性转换成 getter、setter）。
+2. 通过 `effect` 声明`依赖响应式数据的函数cb`(例如视图渲染函数 render 函数)，并执行 cb 函数，执行过程中，会触发响应式数据 getter。
+3. 在响应式数据 getter 中进行 `track` 依赖收集：存储响应式数据与更新函数 cb 的映射关系，存储于 `targetMap`。
+4. 当变更响应式数据时(触发了 setter 捕获器)，触发 `trigger`，根据 targetMap 找到关联的 cb 并执行。
+
+<!-- ![vue3响应式原理](./pictures/pictures-vue/vue3响应式原理-5.png) -->
+
+\rule[0pt]{19.4cm}{0.03em}
+
+![vue3响应式原理-1.jpg](./pictures/pictures-vue/vue3响应式原理-1-2.jpg){width=100%}\textcolor{white}{.}
+
+类比(但不一样): targetMap - Dep，响应式函数 cb - watcher，track - addSub，trigger - notify。
+
+\newpage
+
+### 2.2 ref()、reactive()、nextTick()
+
+**ref()**: 接受一个*内部值*，返回一个响应式的、可更改的 ref 对象，此对象只有一个指向其内部值的属性 `.value`。
+
+- ref 对象是可更改的，也就是说可以为 `.value` 赋予新的值。
+  - 它也是响应式的，即所有对 `.value` 的操作都将被追踪，并且写操作会触发与之相关的副作用。
+- _如果将一个对象赋值给 ref，那么这个对象将通过 `reactive()` 转为具有深层次响应式的对象。_
+  - 这也意味着如果对象中包含了嵌套的 ref，它们将被深层地解包。若要避免这种深层次的转换，请使用 `shallowRef()` 来替代。
+
+**reactive()**: 返回一个*对象*的响应式代理。
+
+- 响应式转换是“深层”的：它**会影响到所有嵌套的属性**。一个响应式对象也将深层地解包任何 ref 属性，同时保持响应性。
+- 值得注意的是，当访问到某个响应式数组或 Map 这样的原生集合类型中的 ref 元素时，不会执行 ref 的解包。
+- 若要避免深层响应式转换，只想保留对这个对象顶层次访问的响应性，请使用 `shallowReactive()` 作替代。
+- 返回的对象以及其中嵌套的对象都会通过 ES Proxy 包裹，因此**不等于**源对象，_建议只使用响应式代理，避免使用原始对象。_
+- reactive() API 有两条限制：
+  - 仅对对象类型有效（对象、数组和 Map、Set 这样的集合类型），而对 string、number 和 boolean 这样的原始类型无效(会报警告)。
+  - 因为 vue 的响应式系统是通过属性访问进行追踪的，因此我们必须始终保持对该响应式对象的相同引用。
+    - 这意味着我们不可以随意地“替换”一个响应式对象，因为这将导致对初始引用的响应性连接丢失。
+    - 同时这也意味着当我们将响应式对象的属性赋值或解构至本地变量时，或是将该属性传入一个函数时，我们会失去响应性。
+
+**toRef()**: 基于响应式对象上的**一个属性**创建一个对应的 ref。这样创建的 ref 与其源属性保持同步:_改变源属性的值将更新 ref 的值，反之亦然_。
+
+**toRefs()**: 将**一个响应式对象**转换为一个*每个属性都是指向源对象相应属性的 ref*的普通对象。每个单独的 ref 都是使用 toRef() 创建的。
+
+- 当从组合式函数中返回响应式对象时，toRefs 相当有用。使用它，消费者组件可以解构/展开返回的对象而不会失去响应性。
+- toRefs 在调用时只会为源对象上可以枚举的属性创建 ref。如果要**为可能还不存在的属性创建 ref，请改用 toRef**。
+
+**nextTick 的使用与原理**
+
+**nextTick()**:在下次`DOM`更新循环结束之后执行延迟回调，就可以拿到更新后的`DOM`相关信息(等待下一次`DOM`更新刷新的工具方法)。
+
+- 当在 vue 中更改响应式状态时最终的 DOM 更新并**不是同步生效的**，而是由 vue 将它们**缓存在一个队列中**，直到下一个“tick”才一起执行。
+  - 这样是为了确保每个组件无论发生多少状态改变，都仅执行一次更新。
+- `nextTick()` 可以*在状态改变后立即使用，以等待 DOM 更新完成*。你可以传递一个回调函数作为参数，或者 await 返回的 Promise。
+
+_前置知识: JS 执行机制事件循环(EventLoop)_
+
+- (1) 执行宏任务(一开始的代码块也是一个宏任务)，同步代码正常输出;
+- (2) 然后执行该宏任务产生的微任务，若微任务在执行过程中产生了新的微任务，则继续执行微任务;
+- (3) 微任务执行完毕后，再回到宏任务中进行下一轮循环。
+
+JS 常见的同步异步任务:
+
+- 同步任务：指排队在主线程上依次执行的任务
+- 异步任务：不进入主线程，而进入任务队列的任务，又分为宏任务和微任务
+  - 宏任务：渲染事件、请求、`script`、`setTimeout`、`setInterval`、Node 中的 `setImmediate` 等
+  - 微任务：`Promise.then`、`MutationObserver`(监听 DOM)、Node 中的 `Process.nextTick` 等
+
+_nextTick 用一句话总结就是『利用 Event loop 事件线程去异步操作』。**本质上**就是注册异步任务来对任务进行处理。就是创建一个异步任务，那么它自然要等到同步任务执行完成后才执行。_ **基本原理**:
+
+- vue 实现了一个 nextTick 函数，如果传入一个 cb，这个 cb 会被存储到一个队列中，在下一个 tick 时触发队列中的所有 cb 事件。
+- 因为目前浏览器平台并没有实现 nextTick 方法，所以 vue 使用 Promise、setTimeout、setImmediate 等方式在 microtask（或是 task）中创建一个事件，目的是在当前调用栈执行完毕以后（不一定立即）才会去执行这个事件。
+
+[vue2 nextTick 源代码](https://github.com/vuejs/vue/blob/main/src/core/util/next-tick.ts#L94) 分为为两部分: **一是判断当前环境能使用的最合适的 API 并保存异步函数，二是调用异步函数 执行回调队列**。
+
+- 环境判断: 判断用哪个宏任务或微任务，因为*宏任务耗费的时间是大于微任务*的，**所以先使用微任务**，判断顺序
+  - Promise、MutationObserver、setImmediate、setTimeout
+  - 环境判断结束就会得到一个延迟回调函数 timerFunc
+- 环境判断完之后运行核心的 nextTick 方法，**主要逻辑**:
+  - 把传入的回调函数放进回调队列 callbacks
+  - 执行保存的异步任务 timeFunc，就会遍历 callbacks 执行相应的回调函数了
+  - 最后有返回一个 Promise 是可以让我们在不传参的时候用的
+
+[vue3 nextTick 源码](https://github.com/vuejs/core/blob/main/packages/runtime-core/src/scheduler.ts#L53) 里这一块有大改，不过事件循环的原理还是一样，只是加了几个专门维护队列的方法，以及关联到 effect。
+
+- **核心 nextTick 接受一个函数为参数，同时会创建一个微任务；页面调用 nextTick 的时候，会执行该函数，把我们的参数 fn 赋值给 `p.then(fn)`，在队列的任务完成后，fn 就执行了。**
+- 几个维护队列的方法，执行顺序是这样的: `queueJob -> queueFlush -> flushJobs -> nextTick参数的 fn`
+  - `queueJob()`方法负责*维护主任务队列，接受一个函数作为参数，为待入队任务，会将参数 push 到 queue 队列中，有唯一性判断*。会在当前宏任务执行结束后，清空队列
+  - `queueFlush()`方法负责尝试创建微任务，等待任务队列执行
+  - `flushJobs()` 方法负责处理队列任务，**主要逻辑**如下：
+    - 1 先处理*前置任务队列* 2 根据 Id 排队队列 3 遍历执行队列任务 4 执行完毕后清空并重置队列 5 执行*后置队列任务* 6 _如果还有就递归继续执行_
+    - 调用 `flushPreFlushCbs()` 方法负责执行前置任务队列
+    - 调用 `flushPostFlushCbs()` 方法负责执行后置任务队列
+
+\newpage
+
+### 2.3 computed() 、watch()
+
+**computed()**: _接受一个 getter 函数，返回一个只读的响应式 ref 对象_。该 ref 通过 `.value` 暴露 getter 函数的返回值。它也可以接受一个带有 get 和 set 函数的对象来创建一个可写的 ref 对象。
+
+- **计算属性的结果会被缓存**，除非依赖的响应式 property 变化才会重新计算。
+  - 注意，如果某个依赖 (比如非响应式 property) 在该实例范畴之外，则计算属性是**不会**被更新的。
+  - 缓存的作用，避免重复计算，加大性能消耗。_确定不需要缓存，那么也可以使用方法调用。_
+- `与方法的区别`:_将同样的函数定义为一个方法_，在**结果上是完全相同的**。但计算属性会**缓存**，方法调用**总是**会在重渲染发生时再次执行函数。
+  - 绑定在表达式中的方法在*组件每次更新时都会被重新调用*，因此*不应该产生任何副作用*，比如改变数据或触发异步操作。
+- _计算属性默认是只读的_。可以通过同时提供 getter 和 setter 来创建可读可写的计算属性。
+- 最佳实践: **getter 不应有副作用**,不要在 getter 中做异步请求或者更改 DOM。**避免直接修改计算属性值。**
+  - 一个*计算属性*的声明中描述的*是如何根据其他值派生一个值*。因此 getter 的职责应该仅为计算和返回该值。
+  - 从计算属性返回的值类似一个“临时快照”，每当源状态发生变化时，就会创建一个新的快照。更改快照是没有意义的。
+  - _**计算属性的返回值应该被视为只读的，应该更新它所依赖的源状态以触发新的计算**_。
+
+```cs
+const count = ref(1)
+const plusOne = computed({get: () => count.value + 1,set: (val) => { count.value = val - 1 }})
+plusOne.value = 1; console.log(count.value) // 0
+// 选项式API
+export default {
+    data() {return { a: 1 }},
+    computed:{aDouble(){return this.a*2},/*只读*/
+        aPlus:{get(){return this.a+1},set(v){this.a=v-1}} /*可写*/    },
+    created() {console.log(this.aDouble); /* 2*/ console.log(this.aPlus); /* 2*/
+        this.aPlus = 3; console.log(this.a); /* 2*/ console.log(this.aDouble); /* 4 */  } }
+```
+
+**watch()**: _侦听一个或多个响应式数据源，并在数据源变化时调用所给的回调函数。返回值是一个**用来停止该副作用的函数**_。
+
+- watch() 默认是懒侦听的，即**仅在侦听源发生变化时才执行回调函数。**
+- _第一个参数是侦听器的源_。这个来源可以是:**一个函数，返回一个值;一个 ref;一个响应式对象;或是由前诉类型的值组成的数组。**
+  - 当使用 getter 函数作为源时，回调只在此函数的*返回值变化时才会触发*。
+- _第二个参数是在发生变化时要调用的回调函数_。这个回调函数接受三个参数: **新值、旧值，以及一个用于注册副作用清理的回调函数。**
+  - 该回调函数会在副作用下一次重新执行前调用，可以用来清除无效的副作用，例如等待中的异步请求。
+  - 当侦听多个来源时，回调函数接受两个数组，分别对应来源数组中的新值和旧值。
+- _第三个可选的参数是一个对象_，支持以下这些选项:
+  - `immediate`: 在侦听器创建时*立即触发回调*。第一次调用时旧值是 undefined。 - `flush`: 调整回调函数的刷新时机。
+  - `deep`: 如果源是对象，_强制深度遍历_，以便在深层级变更时触发回调。 - `onTrack/onTrigger`: 调试侦听器的依赖。
+- 与 watchEffect() 相比可以:懒执行副作用；更加明确是应该由哪个状态触发侦听器重新执行；可以访问所侦听状态的前一个值和当前值。
+
+```cs
+const state = reactive({ count: 0 })
+watch(() => state,(newValue, oldValue) => { /**do something */ },{ deep: true })
+/**侦听多个源 */ watch([fooRef, barRef], ([foo, bar], [prevFoo, prevBar]) => {  /* ... */})
+export default { // 选项式API使用
+  watch: {
+    someObject: {
+      handler(newVal, oldVal) {/*在嵌套的变更中，只要没有替换对象本身，那么这里的newVal和oldVal相同*/},
+      deep: true
+    },
+    valA(val, oldVal) {console.log(`new: ${val}, old: ${oldVal}`)}, // 侦听根级属性
+    'valB.b': function (val, oldVal) {/* do something*/}, // 侦听单个嵌套属性
+  }}
+```
+
+**watchEffect()**: _立即运行一个函数_，同时响应式地追踪其依赖(会先执行一次用来自动收集依赖)，并在依赖更改时重新执行。
+
+- _第一个参数就是要运行的副作用函数_。这个副作用函数的参数也是一个函数，用来注册清理回调。**依赖源同时是回调函数。**
+  - 清理回调会在该副作用下一次执行前被调用，可以用来清理无效的副作用。
+- _第二个参数是一个可选的选项_，可以用来调整副作用的刷新时机或调试副作用的依赖。
+  - _默认情况下，`flush:'pre'`,侦听器将在组件渲染之前执行_。设置`flush:'post'`将会**使侦听器延迟到组件渲染*之后*再执行。**
+  - 在某些特殊情况下(例如要使缓存失效)，可以通过设置`flush:'sync'`来实现在**响应式依赖发生改变时*立即*触发侦听器。**
+- _返回值是一个用来停止该副作用的函数_。**不需要手动传入依赖；无法获取到变化前的值， 只能获取变化后的值**。
+- _可以简单理解为同一个功能的两种不同形态，底层的实现是一样的。类似 watch 设置了选项`immediate:true`的效果_。
+
+```cs
+watch( () => {/*依赖源收集函数*/}, () => {/*依赖源改变时的回调函数*/});
+watchEffect(() => { /*依赖源同时是回调函数*/});
+/* watchEffect(() => { document.body.innerHTML = `计数：${count.value}`}) */
+/* 以下两种用法在行为上基本等价*/ watchEffect(() => console.log(counter.value));
+watch(() => counter.value, () => console.log(counter.value), { immediate: true });
+```
+
+**watchPostEffect()**: watchEffect() 使用 `flush: 'post'` 选项时的别名。
+
+**watchSyncEffect()**: watchEffect() 使用 `flush: 'sync'` 选项时的别名。
+
+\newpage
+
+## 3 Vue.js 设计与实现总结
+
+一：框架设计概览 -- (1,2,3)  
+二：响应系统 -- (4,5,6)  
+三：渲染器(renderer) -- (7,8,9,10,11)  
+四：组件化 -- (12,13,14)  
+五：编译器(compiler) -- (15,16,17)  
+六：服务端渲染 -- (18)
+
+### 1 权衡的艺术
+
+**命令式和声明式这两种范式的差异**，其中命令式更加关注过程，而声明式更加关注结果。
+
+- *命令式*在理论上可以做到极致优化，但是用户要承受巨大的心智负担；
+- *声明式*能够有效减轻用户的心智负担，但是性能上有一定的牺牲，框架设计者要想办法尽量使性能损耗最小化。
+
+**虚拟 DOM 的性能**，并给出了一个公式： _声明式的更新性能消耗 `=` 找出差异的性能消耗 `+` 直接修改的性能消耗_ 。
+
+- 虚拟 DOM 的意义就在于使 _`找出差异的性能消耗`最小化_。
+  - 用原生 js 操作`DOM`的方法(如 document.createElement)、虚拟`DOM`和`innerHTML`三者操作页面的性能，不可以简单地下定论:
+    - 这与**页面大小**、**变更部分的大小**都有关系，除此之外，与**创建页面**还是**更新页面**也有关系。
+    - 选择哪种更新策略，需要结合**心智负担**、**可维护性**等因素综合考虑。
+- 一番权衡之后，发现虚拟 DOM 是个还不错的选择。
+
+**运行时和编译时**的相关知识，了解纯运行时、纯编译时以及两者都支持的框架各有什么特点(Vue.js 3 是一个`编译时+运行时`的框架):
+
+- **纯运行时**: 用户为 Render 函数提供一个树型结构的数据对象，然后 Render 函数会根据该对象递归地将数据渲染成 DOM 元素。
+- **编译时`+`运行时**: 用户使用 Compiler 的程序把 HTML 字符串编译成树型结构的数据对象，再使用 Render 函数渲染成 DOM 元素。
+- **纯编译时**: Compiler 把 HTML 字符串直接编译成命令式代码。
+
+### 2 框架设计的核心要素
+
+**提升用户的开发体验**。框架设计中关于开发体验的内容，开发体验是衡量一个框架的重要指标之一。
+
+- **框架提供友好的警告信息**至关重要。大多数情况下框架要比开发者更清楚问题出在哪里，因此其抛出有意义的警告有助于开发者快速定位问题。
+
+**控制框架代码的体积**。但提供的警告信息越详细，就意味着框架体积越大。
+
+- 因此，_为了框架体积不受警告信息的影响_，需要利用 Tree-Shaking 机制，配合构建工具预定义常量的能力，
+  - 例如预定义 `__DEV__` 常量，从而实现仅在开发环境中打印警告信息，
+  - 而生产环境中则不包含这些用于提升开发体验的代码，从而实现线上代码体积的可控性。
+
+**Tree-Shaking** 是一种排除 dead code 的机制，框架中会内建多种能力，例如 Vue.js 内建的组件等。
+
+- 对于用户可能用不到的能力，可以利用 Tree-Shaking 机制使最终打包的代码体积最小化。
+- _Tree-Shaking 本身基于 ESM_，并且 JavaScript 是一门动态语言，通过纯静态分析的手段进行 Tree-Shaking 难度较大，因此大部分工具能够识别`/*#__PURE__*/`注释(不会产生副作用)，在编写框架代码时可以利用`/*#__PURE__*/`来辅助构建工具进行 Tree-Shaking。
+
+**框架的输出产物**，不同类型的产物是为了满足不同的需求。
+
+- 为了让用户能够通过 `<script>` 标签直接引用并使用，需要*输出 IIFE 格式*的资源，即立即调用的函数表达式。
+- 为了让用户能够通过 `<script type="module">` 引用并使用，需要*输出 ESM 格式*的资源。
+  - 这里需要注意的是，ESM 格式的资源有两种：用于浏览器的 esm-browser.js 和用于打包工具的 esm-bundler.js。
+    - 它们的区别在于对预定义常量`__DEV__`的处理，前者直接将`__DEV__`常量替换为字面量 true 或 false，
+    - 后者则将 `__DEV__ `常量替换为`process.env.NODE_ENV !== 'production'` 语句。
+
+**特性开关**，框架会提供多种能力或功能。 有时出于灵活性和兼容性的考虑，对于同样的任务，框架提供了两种解决方案，例如:
+
+- vue 中的选项对象式`API`和组合式`API`都能用来完成页面的开发，两者虽然不互斥，但从框架设计的角度看完全是基于兼容性考虑的。
+- 有时用户明确知道自己仅会使用组合式 API，而不会使用选项对象式 API，这时用户可以通过特性开关关闭对应的特性，这样在打包的时候，用于实现关闭功能的代码将会被 Tree-Shaking 机制排除。
+
+**框架的错误处理**做得好坏直接决定了用户应用程序的健壮性，同时还决定了用户开发应用时处理错误的心智负担(`app.config.errorHandler`)。
+
+- 框架需要为用户提供统一的错误处理接口，这样用户可以通过注册自定义的错误处理函数来处理全部的框架异常。
+
+**一个常见的认知误区**，即“使用 TS 编写框架和框架对 TS 类型支持友好是两件完全不同的事”。
+
+- 有时候为了让框架提供更加友好的类型支持，甚至要花费比实现框架功能本身更多的时间和精力。
+
+### 3 Vue3 的设计思路
+
+**声明式地描述 UI** 的概念
+
+- Vue.js 是一个声明式的框架。声明式的好处在于，它直接描述结果，用户不需要关注过程。
+- Vue.js 采用模板的方式来描述 UI，但它同样支持使用虚拟 DOM 来描述 UI。
+- 虚拟 DOM 要比模板更加灵活，但模板要比虚拟 DOM 更加直观。
+
+**最基本的渲染器的实现**
+
+- 渲染器的**作用**是，把虚拟 DOM 对象渲染为真实 DOM 元素。
+- 它的**工作原理**是，递归地遍历虚拟 DOM 对象，并调用原生 DOM API 来完成真实 DOM 的创建。
+- 渲染器的**精髓**在于后续的更新，它会通过 Diff 算法找出变更点，并且只会更新需要更新的内容。
+
+**组件的本质**。组件其实就是一组虚拟 DOM 元素的封装。
+
+- 它可以是一个*返回虚拟 DOM 的函数*，也可以是*一个对象*，但这个对象下必须要有一个函数用来产出组件要渲染的虚拟 DOM。
+- 渲染器在渲染组件时会**先执行组件的渲染函数并得到其返回值**，称之为 subtree，最后再**递归地调用渲染器将 subtree 渲染**出来即可。
+
+**模板的工作原理**。Vue.js 的模板会被一个叫作编译器的程序编译为渲染函数。**Vue.js 是各个模块组成的有机整体**。
+
+- 组件的实现依赖于 _渲染器_ ，模板的编译依赖于 _编译器_ ，并且编译后生成的代码是根据渲染器和虚拟 DOM 的设计决定的。
+
+### 4 响应系统的作用与实现
+
+**副作用函数和响应式数据**的概念，以及它们之间的关系。
+
+- effect 函数的执行*会直接或间接影响其他函数的执行*，这时 effect 函数产生了**副作用**(例如:添加 DOM 事件监听器或者请求数据)。
+- 一个**响应式数据**最基本的实现依赖于对`读取`和`设置`操作的拦截，从而在副作用函数与响应式数据之间建立联系(**响应系统的根本实现原理**)。
+  - 当“读取”操作发生时，将当前执行的副作用函数存储到“桶”(一个 Set 实例)中；
+  - 当“设置”操作发生时，再将副作用函数从“桶”里取出并执行。
+
+一个**相对完善的响应系统**。使用 WeakMap 配合 Map 构建了新的“桶”结构，从而能够在响应式数据与副作用函数之间建立更加精确的联系。
+
+- WeakMap 与 Map 这两个数据结构之间的区别:
+  - `WeakMap`是弱引用的，不影响垃圾回收器的工作。当用户代码对一个对象没有引用关系时，`WeakMap`不会阻止垃圾回收器回收该对象。
+
+**分支切换导致的冗余副作用**的问题，这个问题会导致副作用函数进行不必要的更新。为了解决这个问题:
+
+- 需要*在每次副作用函数重新执行之前，清除上一次建立的响应联系*，而*当副作用函数重新执行后，会再次建立新的响应联系*。
+  - 新的响应联系中不存在冗余副作用问题，从而解决了问题。
+- 但在此过程中，还遇到了**遍历 Set 数据结构导致无限循环**的新问题，该问题产生的原因可以从 ECMA 规范中得知:
+  - 即“在调用 forEach 遍历 Set 集合时，如果一个值已经被访问过了，但这个值被删除并重新添加到集合，如果此时 forEach 遍历没有结束，那么这个值会重新被访问。”
+    ```cs
+    const set = new Set([1,2]);
+    set.forEach(item => {set.delete(1);set.add(1);console.log('遍历中');}) // 无限循环
+    ```
+  - 解决方案是建立一个新的 Set 数据结构用来遍历。
+    ```cs
+    const set = new Set([1,2]);
+    const newSet = new Set(set); // newSet 和set结构一样，地址不一样: Set(2) { 1, 2 }
+    newSet.forEach((item) => {set.delete(1);set.add(1);console.log("遍历中");});
+    ```
+
+**嵌套的副作用函数**的问题
+
+- 在实际场景中，嵌套的副作用函数发生在*组件嵌套的场景中*，即父子组件关系。
+  - 这时为了避免在响应式数据与副作用函数之间建立的响应联系发生错乱，需要使用**副作用函数栈**来存储不同的副作用函数。
+  - 当一个副作用函数执行完毕后，将其从栈中弹出。
+  - 当读取响应式数据的时候，被读取的响应式数据只会与当前栈顶的副作用函数建立响应联系，从而解决问题。
+- 关于**副作用函数无限递归地调用自身，导致栈溢出的问题**。
+  - 该问题的根本原因在于，_对响应式数据的读取和设置操作发生在同一个副作用函数内_。
+  - 解决办法很简单，_如果 trigger 触发执行的副作用函数与当前正在执行的副作用函数相同，则不触发执行_ 。
+
+**响应系统的可调度性**
+
+- 所谓可调度，指的是*当 trigger 动作触发副作用函数重新执行时，有能力决定副作用函数执行的时机、次数以及方式*。
+- 为了实现调度能力为 effect 函数增加了第二个选项参数，可以通过 scheduler 选项指定调用器，这样用户可以通过调度器自行完成任务的调度。
+- 如何通过调度器实现任务去重: 即通过一个微任务队列对任务进行缓存，从而实现去重。
+
+**计算属性**，即 computed。计算属性实际上是一个懒执行的副作用函数，通过 lazy 选项使得副作用函数可以懒执行。
+
+- 被标记为懒执行的副作用函数可以通过手动方式让其执行。
+  - 利用这个特点设计了计算属性，当读取计算属性的值时，只需要手动执行副作用函数即可。
+- 当计算属性依赖的响应式数据发生变化时，会通过 scheduler 将 dirty 标记设置为 true，代表“脏”。这样，下次读取计算属性的值时，会重新计算真正的值。
+
+**watch 的实现原理**。它本质上利用了副作用函数重新执行时的可调度性。
+
+- 一个 watch 本身会创建一个 effect，当这个 effect 依赖的响应式数据发生变化时，会执行该 effect 的调度器函数，即 scheduler。
+  - 这里的 scheduler 可以理解为“回调”，所以只需要在 scheduler 中执行用户通过 watch 函数注册的回调函数即可。
+- 通过添加新的 immediate 选项来实现立即执行回调的 watch。
+- 通过 flush 选项来指定回调函数具体的执行时机，本质上是利用了调用器和异步的微任务队列。
+
+**过期的副作用函数，它会导致竞态问题**
+
+- 为了解决这个问题，Vue.js 为 watch 的回调函数设计了第三个参数，即 onInvalidate。它是一个函数，用来注册过期回调。
+- 每当 watch 的回调函数执行之前，会优先执行用户通过 onInvalidate 注册的过期回调。
+- 这样，用户就有机会在过期回调中将上一次的副作用标记为“过期”，从而解决竞态问题。
+
+### 5 非原始值的响应式方案
+
+**Proxy 与 Reflect**
+
+- Vue.js 3 的响应式数据是基于 Proxy 实现的，Proxy 可以为其他对象创建一个代理对象。
+  - 所谓代理，指的是对一个对象 **基本语义** 的代理。它允许**拦截**并**重新定义**对一个对象的基本操作。
+- 在实现代理的过程中遇到了访问器属性的 this 指向问题，这需要使用 `Reflect.*` 方法并指定正确的 receiver 来解决。
+
+**JavaScript 中对象的概念，以及 Proxy 的工作原理**
+
+- 在 ECMAScript 规范中，JavaScript 中有两种对象，其中一种叫作常规对象(ordinary object)，另一种叫作异质对象(exotic object)。
+  - 满足以下三点要求的对象就是*常规对象*：
+    - 对于`[[Get]]`、`[[Set]]`等 11 个必要的内部方法，必须使用[规范 10.1.x](https://262.ecma-international.org/#sec-ordinary-object-internal-methods-and-internal-slots) 节给出的定义实现；
+    - 对于内部方法 `[[Call]]`，必须使用[规范 10.2.1](https://262.ecma-international.org/#sec-ecmascript-function-objects-call-thisargument-argumentslist) 节给出的定义实现（对象是函数）；
+    - 对于内部方法 `[[Construct]]`，必须使用[规范 10.2.2](https://262.ecma-international.org/#sec-ecmascript-function-objects-construct-argumentslist-newtarget) 节给出的定义实现（对象是构造函数）。
+  - 而所有不符合这三点要求的对象都是*异质对象*。 Proxy 是一个异质对象。
+- 一个对象是函数(必须部署内部方法`[[Call]]`,普通对象则没有)还是其他对象，是由部署在该对象上的内部方法和内部槽决定的。
+
+**`关于对象 Object 的代理`**
+
+- _代理对象的本质，就是查阅规范并找到可拦截的基本操作的方法_。
+- 有一些操作并不是基本操作而是复合操作，这需查阅规范了解它们都依赖哪些基本操作，从而通过基本操作的拦截方法间接地处理复合操作。
+- 还详细分析了添加、修改、删除属性对 for...in 操作的影响:
+  - 添加和删除属性都会影响`for...in`循环的执行次数，当这些操作发生时，需要触发与`ITERATE_KEY`相关联的副作用函数重新执行。
+  - 而修改属性值则不影响 for...in 循环的执行次数，因此无须处理。
+- 还讨论了*如何合理地触发副作用函数重新执行*，包括对 NaN 的处理，以及访问原型链上的属性导致的副作用函数重新执行两次的问题:
+  - 对于 NaN，主要注意的是 `NaN === NaN`永远等于 false。
+  - 对于原型链属性问题，需要查阅规范定位问题的原因。
+- 由此可见，想要基于 Proxy 实现一个相对完善的响应系统，免不了去了解 ECMAScript 规范。
+
+**深响应与浅响应，以及深只读与浅只读**
+
+- 这里的深和浅指的是对象的层级，浅`响应(或只读,下同)`代表仅代理一个对象的第一层属性，即只有对象的第一层属性值是`响应(只读)`的。
+- 深响应(或只读)则恰恰相反，为了实现深响应(或只读)需要在返回属性值之前对值做一层包装，将其包装为响应式(或只读)数据后再返回。
+
+**`关于数组的代理`**
+
+- _数组是一个异质对象_，因为数组对象部署的*内部方法 **`[[DefineOwnProperty]]`** 不同于常规对象*。
+  - 通过索引为数组设置新的元素，可能会隐式地改变数组 length 属性的值。
+  - 对应地，修改数组 length 属性的值，也可能会间接影响数组中的已有元素。所以在触发响应的时候需要额外注意。
+- 如何拦截 for...in 和 for...of 对数组的遍历操作。
+  - 使用 for...in 循环遍历数组与普通对象区别不大，唯一需要注意的是当追踪 for...in 操作时应该使用**数组的 length 作为追踪的 key**。
+  - for...of 基于迭代协议工作，数组内建了`Symbol.iterator`方法。
+    - 根据[规范的 23.1.5.1 节](https://262.ecma-international.org/#sec-createarrayiterator)可知，数组迭代器执行时，会读取数组的 length 属性或数组的索引。
+    - 因此*不需要做其他额外的处理*，就能够实现对 for...of 迭代的响应式支持。
+
+**数组的查找方法**。如 includes、indexOf 以及 lastIndexOf 等。
+
+- 对于数组元素的查找，用户既可能使用代理对象进行查找，也可能使用原始对象进行查找。为了支持这两种形式需要*重写数组的查找方法*。
+- 原理很简单，当用户使用这些方法查找元素时，可以**先去代理对象**中查找，如果找不到，**再去原始数组**中查找。
+
+**会隐式修改数组长度的原型方法**，即 push、pop、shift、unshift 以及 splice 等方法。
+
+- 调用这些方法会间接地读取和设置数组的 length 属性，
+  - 因此，_在不同的副作用函数内对同一个数组执行上述方法，会导致多个副作用函数之间循环调用，最终导致调用栈溢出。_
+- 为了解决这个问题，使用一个标记变量 shouldTrack 来代表*是否允许进行追踪*，然后重写了上述这些方法.
+  - 目的是，当这些方法间接读取 length 属性值时，会先将 shouldTrack 的值设置为 false，即禁止追踪。
+  - 这样就可以断开 length 属性与副作用函数之间的响应联系，从而避免循环调用导致的调用栈溢出。
+
+**`关于集合类型数据的响应式方案`**。集合类型指 Set、Map、WeakSet 以及 WeakMap。
+
+- _使用 Proxy 为集合类型创建代理对象的一些注意事项_:
+  - *集合类型*不同于普通对象，它*有特定的数据操作方法*。当使用 Proxy 代理集合类型的数据时要格外注意。
+    - 例如，集合类型的 size 属性是一个访问器属性，当通过代理对象访问 size 属性时，由于代理对象本身并没有部署`[[SetData]]`这样的内部槽，所以会发生错误。
+  - 另外，通过代理对象执行集合类型的操作方法时，要*注意这些方法执行时的 this 指向*，需要在 get 拦截函数内通过 `.bind` 函数为这些方法绑定正确的 this 值。
+- _集合类型响应式数据的实现_:
+  - 需要**通过“重写”集合方法的方式来实现自定义的能力**，当 Set 集合的 add 方法执行时，需要调用 trigger 函数触发响应。
+- _数据污染_:**把响应式数据设置到原始数据上的行为**称为数据污染。它导致用户可以通过原始数据执行响应式相关操作，这不是所期望的。
+  - 为了避免这类问题发生，_通过响应式数据对象的 **raw 属性**来访问对应的**原始数据对象**_，后续操作使用原始数据对象就可以了。
+- _关于集合类型的遍历_，即 forEach 方法。集合的 forEach 方法与对象的 for...in 遍历类似，最大的不同体现在:
+  - 当使用 for...in 遍历对象时，**只关心对象的键是否变化**，而不关心值；
+  - 但使用 forEach 遍历集合时，**既关心键的变化，也关心值的变化**。
+
+### 6 原始值的响应式方案
+
+**ref 的概念**。ref 本质上是一个“包裹对象”。
+
+- 因为 JavaScript 的 Proxy 无法提供对原始值的代理，所以需要使用一层对象作为包裹，间接实现原始值的响应式方案。
+- 由于“包裹对象”本质上与普通对象没有任何区别，因此为了区分 ref 与普通响应式对象，还为“包裹对象”定义了一个值为 true 的属性，即`__v_isRef`，用它作为 ref 的标识。它的值为 true，代表这个对象是一个 ref，而非普通对象。
+
+ref 除了能够用于原始值的响应式方案之外，还能用来**解决响应丢失问题**(普通对象不具有响应能力)。
+
+- 为了解决该问题，实现了 toRef 以及 toRefs 这两个函数。它们本质上是对响应式数据做了一层包装，或者叫作“访问代理”。
+- toRef 函数接收两个参数(一个响应式数据，对象的一个键)，返回一个类似于 ref 结构的 wrapper 对象。toRefs 函数为批量地完成转换。
+
+**自动脱 ref 的能力**（在模板可以直接访问一个 ref 的值而无须通过 `.value` 属性来访问的原因）。
+
+- 为了减轻用户的心智负担，自动对暴露到模板中的响应式数据进行脱 ref 处理。用户在模板中使用响应式数据时就无须关心一个值是不是 ref 。
+
+### 7 渲染器的设计
+
+**渲染器与响应系统的关系**
+
+- 利用响应系统的能力，可以做到，当响应式数据变化时自动完成页面更新（或重新渲染），这与渲染器的具体实现无关。
+- 一个极简的渲染器，它只能利用 innerHTML 属性将给定的 HTML 字符串内容设置到容器中。
+
+**与渲染器相关的基本名词和概念**
+
+- *渲染器(renderer)*的作用是把虚拟 DOM 渲染为特定平台上的真实元素。
+- _虚拟 DOM_ 通常用英文 virtual DOM 来表达，有时会简写成 vdom 或 vnode。
+- 渲染器会执行挂载和打补丁操作:
+
+  - 对于新的元素，渲染器会将它挂载到容器(container)内；渲染器把虚拟 DOM 节点渲染为真实 DOM 节点的过程叫作**挂载(mount)**
+  - 对于新旧 vnode 都存在的情况，渲染器则会执行打补丁操作，即对比新旧 vnode，只更新变化的内容。
+    - **渲染器会使用`newVNode`与上一次渲染的`oldVNode`进行比较，试图找到并更新变更点**。这个过程叫作**打补丁(patch)**或更新。
+    - patch 函数不仅可以用来完成打补丁(例如更新虚拟节点所对应的真实`DOM`的文本内容，从 hi 改为 hello)，也可以用来执行挂载。
+
+一个运行时渲染器将会遍历整个虚拟`DOM`树，并据此构建真实的`DOM`树。这个过程被称为`挂载`。
+
+假如有两份虚拟`DOM`树，渲染器将会**有比较地遍历**它们，**找出**它们之间的**区别**，并**应用**这其中的**变化到真实的`DOM`上**。这个过程被称为`打补丁`。
+
+**自定义渲染器的实现**
+
+- 在浏览器平台上，渲染器可以利用 DOM API 完成 DOM 元素的创建、修改和删除。
+  - 为了让渲染器不直接依赖浏览器平台特有的 API，将这些用来创建、修改和删除元素的操作抽象成可配置的对象。
+  - 用户可以在调用 createRenderer 函数创建渲染器的时候指定自定义的配置对象，从而实现自定义的行为。
+- 还实现了一个用来打印渲染器操作流程的自定义渲染器，它不仅可以在浏览器中运行，还可以在 Node.js 中运行。
+
+### 8 挂载与更新
+
+**如何挂载子节点，以及节点的属性**
+
+- 对于子节点，只需要递归地调用 patch 函数完成挂载即可。
+- 而节点的属性比想象中的复杂，它涉及两个重要的概念：HTML Attributes 和 DOM Properties。
+  - 为元素设置属性时，不能总是使用 setAttribute 函数，也不能总是通过元素的 DOM Properties 来设置。
+  - 至于如何正确地为元素设置属性，取决于被设置属性的特点。
+    - 例如，表单元素的 el.form 属性是只读的，因此只能使用 setAttribute 函数来设置。
+
+**特殊属性的处理**
+
+- 以 class 为例，Vue.js 对 class 属性做了增强，它允许为 class 指定不同类型的值。但在把这些值设置给 DOM 元素之前，要对值进行正常化。
+- 为元素设置 class 的三种方式及其性能情况:
+  - 在浏览器中为一个元素设置 class 有三种方式，即使用 `setAttribute`、`el.className` 或 `el.classList`。
+  - 其中，**`el.className` 的性能最优**，所以选择在 patchProps 函数中使用 el.className 来完成 class 属性的设置。
+- 除了 class 属性之外，Vue.js 也对 style 属性做了增强，所以 style 属性也需要做类似的处理。
+
+**卸载(unmount)操作**
+
+- 一开始，直接使用 innerHTML 来清空容器元素，但是这样存在诸多问题。
+  - 容器的内容可能是由某个或多个组件渲染的，当卸载操作发生时，应该正确地调用这些组件的 beforeUnmount、unmounted 等生命周期函数。
+  - 即使内容不是由组件渲染的，有的元素存在自定义指令，应该在卸载操作发生时正确地执行对应的指令钩子函数。
+  - 使用 innerHTML 清空容器元素内容的另一个缺陷是，它不会移除绑定在 DOM 元素上的事件处理函数。
+- 因此，_不能直接使用 innerHTML 来完成卸载任务_。 为了解决这些问题，**封装了 unmount 函数**。
+  - 该函数是以一个 vnode 的维度来完成卸载的，它会根据 vnode.el 属性取得该虚拟节点对应的真实 DOM，然后调用原生 DOM API 完成 DOM 元素的卸载。
+  - 这样做还有两点额外的好处。
+    - 在 unmount 函数内，有机会调用绑定在 DOM 元素上的指令钩子函数，例如 beforeUnmount、unmounted 等。
+    - 当 unmount 函数执行时，有机会检测虚拟节点 vnode 的类型。如果该虚拟节点描述的是组件，则也有机会调用组件相关的生命周期函数。
+
+**vnode 类型的区分**
+
+- _渲染器在执行更新时，需要优先检查新旧 vnode 所描述的内容是否相同。只有当它们所描述的内容相同时，才有打补丁的必要。_
+- 即使它们描述的内容相同，也需要进一步检查它们的类型，即检查 `vnode.type` 属性值的类型，据此判断它描述的具体内容是什么。
+  - 如果类型是**字符串**，则它描述的是**普通标签元素**，这时会调用 mountElement 和 patchElement 来完成挂载和打补丁；
+  - 如果类型是**对象**，则它描述的是**组件**，这时需要调用 mountComponent 和 patchComponent 来完成挂载和打补丁。
+
+**事件的处理**
+
+- _如何在虚拟节点中描述事件_，把`vnode.props`对象中以字符串`on`开头的属性当作事件对待。
+- _如何绑定和更新事件_:
+  - 在更新事件的时候，为了提升性能，伪造了`invoker`函数，并把真正的事件处理函数存储在`invoker.value`属性中，
+  - 当事件需要更新时，只更新`invoker.value`的值即可，这样可以避免一次`removeEventListener`函数的调用。
+- _如何处理事件与更新时机的问题_: 利用事件处理函数被绑定到 DOM 元素的时间与事件触发时间之间的差异。
+  - 需要**屏蔽所有绑定时间晚于事件触发时间的事件处理函数的执行** 。
+- _子节点的更新_: 对虚拟节点中的 children 属性进行了规范化，规定`vnode.children`属性只能有如下三种类型:
+  - `字符串类型`：代表元素具有文本子节点。`数组类型`：代表元素具有一组子节点。`null`：代表元素没有子节点。
+  - 在更新时，新旧 vnode 的子节点都有可能是以上三种情况之一，所以在执行更新时一共要考虑九种可能，即下面所展示的那样。
+    - 但落实到代码中，并不需要罗列所有情况:
+      ```txt
+         新子节点     旧子节点      新子节点      旧子节点      新子节点     旧子节点
+        -----------------------------------------------------------------------
+                    没有子节点                 没有子节点                没有子节点
+        没有子节点    文本子节点    文本子节点     文本子节点    一组子节点    文本子节点
+                    一组子节点                 一组子节点                一组子节点
+      ```
+  - 另外，当新旧 vnode 都具有一组子节点时，采用了比较笨的方式来完成更新，即`卸载所有旧子节点，再挂载所有新子节点`。
+  - **更好的做法**是通过 Diff 算法比较新旧两组子节点，试图最大程度复用 DOM 元素。
+
+**如何使用虚拟节点来描述文本节点和注释节点**
+
+- 利用了 symbol 类型值的唯一性，为文本节点和注释节点分别创建唯一标识，并将其作为 `vnode.type `属性的值。
+
+**Fragment 及其用途**
+
+- Vue.js 3 支持多根节点模板。Vue.js 3 使用 Fragment(一个新的 vnode 类型)来描述多根节点模板。
+- 当渲染器渲染 Fragment 类型的虚拟节点时，由于**Fragment 本身并不会渲染任何内容**，所以渲染器只会渲染 Fragment 的子节点。
+- 当卸载 Fragment 类型的虚拟节点时，同样只需要遍历它的 children 数组，并将其中的节点逐个卸载即可。
+
+### 9 简单 Diff 算法
+
+**Diff 算法的作用**: Diff 算法用来计算两组子节点的差异，并试图最大程度地复用 DOM 元素。
+
+- 之前的方法`卸载所有旧子节点，再挂载所有新子节点`无法对 DOM 元素进行复用，需要大量的 DOM 操作才能完成更新，非常消耗性能。
+- *改进后的方案*是，遍历新旧两组子节点中*数量较少的那一组*，并逐个调用 patch 函数进行打补丁(节点有差异就更新差异，没有就不变化)，然后比较新旧两组子节点的数量，如果新的一组子节点数量更多，说明有新子节点需要挂载；否则说明在旧的一组子节点中，有节点需要卸载。
+
+**虚拟节点中 key 属性的作用**，它就像虚拟节点的“身份证号”。
+
+- 只要两个*虚拟节点的 type 属性值和 key 属性值都相同，那么就认为它们是相同的*，即可以进行 **DOM 的复用**。
+- 在更新时渲染器通过 key 属性找到可复用的节点，然后尽可能地通过`DOM`移动操作来完成更新，避免过多地对`DOM`元素进行销毁和重建。
+
+**简单 Diff 算法是如何寻找需要移动的节点的**。简单 Diff 算法的**核心逻辑**:
+
+- 拿**新一组**子节点中的节点去旧一组子节点中寻找可复用的节点。如果找到则记录该节点的位置索引并保持最大值。这个位置索引称为**最大索引**。
+- 在整个更新过程中，如果**一个节点的索引值小于最大索引**，则说明该节点对应的真实 DOM 元素需要**移动**。
+  - 取新一组 children 遍历时，新节点在旧 children 中寻找具有相同 key 值节点的过程中，遇到的最大索引值(初始为 0)。
+  - 如果在后续寻找的过程中，存在索引值比当前遇到的最大索引值还要小的节点，则意味着该节点需要移动。
+
+### 10 双端 Diff 算法
+
+双端 Diff 算法的原理及其优势:
+
+- 顾名思义，双端 Diff 算法指的是，_在新旧两组子节点的四个端点之间分别进行比较，并试图找到可复用的节点_。
+- 相比简单 Diff 算法，双端 Diff 算法的*优势在于，对于同样的更新场景，执行的 DOM 移动操作次数更少*。
+
+### 11 快速 Diff 算法
+
+[快速 Diff 算法](https://github.com/vuejs/core/blob/da2ced15339b6fdb7a1459fa359bb79346a82bc2/packages/runtime-core/src/renderer.ts#L1747)在实测中性能最优:
+
+- 它借鉴了文本 Diff 中的预处理思路，先处理新旧两组子节点中*相同的前置节点和相同的后置节点*。
+- 当前置节点和后置节点全部处理完毕后，如果无法简单地通过挂载新节点或者卸载已经不存在的节点来完成更新，则需要*根据节点的索引关系，构造出一个最长递增子序列*。**最长递增子序列所指向的节点即为不需要移动的节点**。
+
+无论是简单 Diff 算法，还是双端 Diff 算法，抑或快速 Diff 算法，它们都遵循同样的处理规则：
+
+- 1 判断是否有节点需要移动，以及应该如何移动；2 找出那些需要被添加或移除的节点。
+
+**最原始**: 当新旧 vnode 都具有一组子节点时，采用了比较笨的方式来完成更新，即"卸载所有旧子节点，再挂载所有新子节点"。
+**简单 Diff 算法**: 利用虚拟节点的 key 属性，尽可能地复用 DOM 元素，并通过移动 DOM 的方式来完成更新，从而减少不断地创建和销毁 DOM 元素带来的性能开销。
+**双端 Diff 算法**: 同时对新旧两组子节点的两个端点进行比较，比较四次(新首旧首，新尾旧尾，新首旧尾，新尾旧首)，如果首尾没有可复用的，尝试看看非头部、非尾部的节点能否复用。复用了双端节点，减少了 DOM 的移动操作。
+**快速 Diff 算法**: 包含预处理步骤，相同的前置元素和后置元素不需要核心 Diff 算法。剩余部分子节点构建 source 数组 和最长连续子序列 seq(不需要移动)，判断 source 对应索引值是否为-1(挂载新节点)，或者 source 的索引对应的 seq 位置的值是否相等(不相等则需要移动节点)
+
+### 12 组件的实现原理
+
+**如何使用虚拟节点来描述组件**。(一个组件必须包含一个渲染函数，即 render 函数，并且渲染函数的返回值应该是虚拟 DOM)
+
+- 使用虚拟节点的 vnode.type 属性来存储组件对象(例如值是 div、Text)，**渲染器根据虚拟节点的该属性的类型来判断它是否是组件**。
+  - 不同类型的节点，需要采用不同的处理方法来完成挂载和更新。_虚拟节点的 vnode.type 属性值为对象，该虚拟节点为组件的描述_。
+  - 如果是组件，则渲染器会使用 mountComponent 和 patchComponent 来完成组件的挂载和更新。
+
+**组件的自更新**
+
+- _在组件**挂载阶段**，会为组件创建一个用于渲染其内容的**副作用函数**。该副作用函数会与组件自身的响应式数据建立响应联系_。
+- 当组件自身的**响应式数据发生变化时，会触发渲染副作用函数重新执行，即重新渲染**。
+- 但由于默认情况下重新渲染是同步执行的，这导致无法对任务去重，因此在创建渲染副作用函数时，指定了自定义的调用器:
+  - 该调度器的作用是，_当组件自身的响应式数据发生变化时，将渲染副作用函数缓冲到微任务队列中_。
+    - 调度器的本质上是利用了**微任务的异步执行机制**，实现对副作用函数的缓冲。
+  - 有了缓冲队列，即可实现对渲染任务的*去重*，从而避免无用的重新渲染所导致的额外性能开销。
+
+**组件实例**:本质上是一个对象，包含了组件运行过程中的状态。
+
+- 对象包含的组件运行状态例如组件是否挂载、组件自身的响应式数据、组件所渲染的内容(即 subtree)等:
+  - state：组件自身的状态数据，即 data。
+  - isMounted：一个布尔值，用来表示组件是否被挂载。
+  - subTree：存储组件的渲染函数返回的虚拟 DOM，即组件的子树（subTree）
+  - 实际上，可以在需要的时候，任意地在组件实例 instance 上添加需要的属性。但应该尽可能保持组件实例轻量，以减少内存占用。
+- 有了组件实例后，在**渲染副作用函数内**，就可以**根据**组件实例上的**状态标识**，来**决定**应该进行全新的挂载，还是应该打补丁。
+  - 例如组件实例的 instance.isMounted 属性可以用来区分组件的挂载和更新。同理可以在合适的时机调用组件对应的其他**生命周期钩子**。
+
+**组件的 props 与组件的被动更新**
+
+- **props** 本质上是父组件的数据，当 props 发生变化时，会触发父组件重新渲染。
+  - 响应式数据变化后，父组件的渲染函数会重新执行副作用函数进行自更新；
+  - 自更新过程中发现父组件的 subTree 包含组件类型的虚拟节点，所以会调用 patchComponent 函数完成子组件的更新。
+- 副作用自更新所引起的子组件更新叫作子组件的**被动更新**。发生被动更新时，需要:
+  - 检测子组件是否真的需要更新，因为子组件的 props 可能是不变的；如果需要更新，则更新子组件的 props、slots 等内容。
+- **渲染上下文对象**(renderContext)，它实际上是组件实例的代理对象。它的意义在于:
+  - 拦截数据状态的读取和设置操作，每当在渲染函数或生命周期钩子中通过 this 来读取数据时，**都会优先从组件的自身状态中读取**，
+    - 如果组件本身并没有对应的数据，则再从 props 数据中读取。
+  - 在渲染函数内访问组件实例所暴露的数据都是通过该代理对象实现的。
+
+**setup 函数** 是为了组合式 API 而生的，所以要避免将其与 Vue.js 2 中的“传统”组件选项混合使用。
+
+- setup 函数的**返回值**两种类型:如果返回**函数**，则将该函数作为组件的渲染函数；如果返回**数据对象**，则将该对象中包含的数据暴露给模板使用。
+- setup 函数接收两个参数:第一个参数是 props 数据对象，第二个参数是 setupContext 对象(保存着与组件接口相关的数据和方法):
+  - slots(非响应式对象)、emit 触发事件(函数)、attrs(没有显式地声明为 props 的属性,非响应式对象)、expose 暴露公共属性(函数)
+
+**emit 函数**包含在 setupContext 对象中，可以通过 emit 函数发射组件的自定义事件。
+
+- 通过 `v-on` 指令为组件绑定的事件在经过编译后，会以 `onXxx` 的形式存储到 props 对象中。
+- 当 emit 函数执行时，会在 props 对象中寻找对应的事件处理函数并执行它。
+
+**组件的插槽**，指组件会预留一个槽位，该槽位具体要渲染的内容由用户插入.
+
+- 它借鉴了 Web Component 中`<slot>` 标签的概念。插槽内容会被编译为插槽函数，插槽函数的返回值就是向槽位填充的内容。
+- `<slot>`标签则会被编译为**插槽函数的调用**,通过执行对应的插槽函数,得到外部向槽位填充的内容`虚拟DOM`,最后将该内容渲染到槽位中。
+
+**onMounted 等用于注册生命周期钩子函数的方法的实现**:
+
+- _通过 onMounted 注册的生命周期函数会被注册到当前组件实例的 instance.mounted 数组中_。
+  - 每当初始化组件并执行组件的 setup 函数之前，先将 currentInstance 设置为当前组件实例，再执行组件的 setup 函数，这样就可以通过 currentInstance 来获取当前正在被初始化的组件实例，从而将那些通过 onMounted 函数注册的钩子函数与组件实例进行关联。
+- 为了维护当前正在初始化的组件实例，定义了全局变量 currentInstance，以及用来设置该变量的 setCurrentInstance 函数。
+
+### 13 异步组件与函数式组件
+
+**异步组件要解决的问题**。异步组件在页面性能、拆包以及服务端下发组件等场景中尤为重要。
+
+- 从根本上来说，异步组件的实现可以完全在用户层面实现，而无须框架支持。但一个完善的异步组件仍需要考虑诸多问题，例如：
+  - 允许用户指定加载出错时要渲染的组件；
+  - 允许用户指定 Loading 组件，以及展示该组件的延迟时间；
+  - 允许用户设置加载组件的超时时长；
+  - 组件加载失败时，为用户提供重试的能力。
+- 因此，框架有必要内建异步组件的实现。Vue.js 3 提供了 defineAsyncComponent 函数，用来定义异步组件。
+
+**异步组件的加载超时问题**，以及**当加载错误发生时，如何指定 Error 组件**
+
+- 通过为 defineAsyncComponent 函数指定选项参数，允许用户通过 timeout 选项设置超时时长。
+- 当加载超时后，会触发加载错误，这时会渲染用户通过 errorComponent 选项指定的 Error 组件。
+
+**在加载异步组件的过程中，受网络状况的影响较大**。当网络状况较差时，加载过程可能很漫长。
+
+- 为了提供更好的用户体验，需要在加载时展示 loading 组件。vue 设计了 loadingComponent 选项以允许用户配置自定义的 loading 组件
+- 为了避免 Loading 组件导致的闪烁问题，还需要设计一个接口，让用户能指定延迟展示 Loading 组件的时间，即 delay 选项。
+
+**在加载组件的过程中，发生错误的情况非常常见**。所以，vue 设计了组件加载发生错误后的重试机制(当加载出错时有能力重新发起加载组件的请求)。
+
+- 异步组件的重试加载机制与接口请求发生错误时的重试机制，两者的思路类似。
+
+**函数式组件**。它本质上是一个函数，其内部实现逻辑可以复用有状态组件的实现逻辑。
+
+- 为了给函数式组件定义 props，允许开发者在函数式组件的主函数上添加静态的 props 属性。
+- **函数式组件没有自身状态，也没有生命周期的概念**。所以在初始化函数式组件时，需要选择性地复用有状态组件的初始化逻辑。
+
+\newpage
+
+### 14 内建组件和模块
+
+**Vue.js 内建的三个组件**，即 KeepAlive 组件、Teleport 组件和 Transition 组件。
+
+- 它们的共同特点是，与渲染器的结合非常紧密，因此需要框架提供底层的实现与支持。
+
+**KeepAlive 组件**(在多个组件间动态切换时**缓存**被移除的组件实例)的作用类似`HTTP`中的持久链接,它可以避免组件实例不断地被销毁和重建。
+
+- KeepAlive 的*基本实现*并不复杂。
+  - 当被 KeepAlive 的组件“卸载”时，渲染器并不会真的将其卸载掉，而是将其搬运到一个隐藏容器中，使得组件可以维持当前状态。
+  - 当被 KeepAlive 的组件“挂载”时，渲染器也不会真的挂载它，而是将它从隐藏容器搬运到原容器。
+- KeepAlive 的*其他能力*，如*匹配策略和缓存策略*。
+  - include 和 exclude 这两个选项用来指定哪些组件需要被 KeepAlive，哪些组件不需要被 KeepAlive。
+    - 默认情况下，include 和 exclude 会匹配组件的 name 选项。但是在具体实现中可以扩展匹配能力。
+  - 对于缓存策略，Vue.js 默认采用“最新一次访问”。为了让用户能自行实现缓存策略，还介绍了正在讨论中的提案。
+
+**Teleport 组件**(_将一个组件内部的一部分模板“传送”到该组件的 DOM 结构外层的位置去_)所要解决的问题和它的实现原理。
+
+- Teleport 组件可以跨越 DOM 层级完成渲染，这在很多场景下非常有用。
+- 在实现 Teleport 时，将 Teleport 组件的渲染逻辑从渲染器中分离出来，这么做有两点好处：
+  - 可以避免渲染器逻辑代码“膨胀”；
+  - 可以利用 Tree-Shaking 机制在最终的 bundle 中删除 Teleport 相关的代码，使得最终构建包的体积变小。
+- Teleport 组件是一个特殊的组件。
+  - 与普通组件相比，它的组件选项非常特殊，例如 `__isTeleport` 选型和 process 选项等。
+  - 这是因为 Teleport 本质上是渲染器逻辑的合理抽象，它完全可以作为渲染器的一部分而存在。
+
+**Transition 组件**的原理与实现:`<Transition>` 会在*一个元素或组件进入和离开 DOM 时应用动画*。
+
+- 从原生 DOM 过渡开始，讲解了如何使用 JavaScript 为 DOM 元素添加进场动效和离场动效。
+- 在此过程中，将实现动效的过程分为多个阶段，即 beforeEnter、enter、leave 等。
+- Transition 组件的实现原理与为原生 DOM 添加过渡效果的原理类似，将过渡相关的钩子函数定义到虚拟节点的 vnode.transition 对象中。
+- 渲染器在执行挂载和卸载操作时，会优先检查该虚拟节点是否需要进行过渡，
+- 如果需要，则会在合适的时机执行 vnode.transition 对象中定义的过渡相关钩子函数。
+
+### 15 编译器核心技术概览
+
+**Vue.js 模板编译器的工作流程**。Vue.js 的模板编译器用于把模板编译为渲染函数。它的工作流程大致分为三个步骤:
+
+- (1) 分析模板，将其解析为模板 AST。(解析器 parser 的功能)
+- (2) 将模板 AST 转换为用于描述渲染函数的 JavaScript AST。(转换器 transformer 的功能)
+- (3) 根据 JavaScript AST 生成渲染函数代码。(生成器 generator 的功能)
+
+**解析器(parser) 的实现原理**，以及如何用有限状态自动机构造一个词法分析器。
+
+- *词法分析*的过程就是状态机在不同状态之间迁移的过程。在此过程中，状态机会产生一个个 Token，形成一个 Token 列表。
+  - 将使用该 Token 列表来构造用于描述模板的 AST。具体做法是:
+    - 扫描 Token 列表并维护一个开始标签栈。每当扫描到一个开始标签节点，就将其压入栈顶。栈顶的节点始终作为下一个扫描的节点的父节点。这样，当所有 Token 扫描完毕后，即可构建出一棵树型 AST。
+
+**AST 的转换与插件化架构**。
+
+- AST 是树型数据结构，为了访问 AST 中的节点，采用深度优先的方式对 AST 进行遍历。
+  - 在遍历过程中，可以对 AST 节点进行各种操作，从而实现对 AST 的转换。
+- 为了解耦节点的访问和操作，设计了插件化架构，将节点的操作封装到独立的转换函数中。
+  - 这些转换函数可以通过 `context.nodeTransforms` 来注册。这里的 context 称为转换上下文。
+    - 上下文对象中通常会维护程序的当前状态，例如当前访问的节点、当前访问的节点的父节点、当前访问的节点的位置索引等信息。
+    - 有了上下文对象及其包含的重要信息后，即可轻松地实现节点的替换、删除等能力。
+- **有时当前访问节点的转换工作依赖于其子节点的转换结果**，所以为了优先完成子节点的转换，将整个转换过程分为“进入阶段”与“退出阶段”。
+  - 每个转换函数都分两个阶段执行，这样就可以实现更加细粒度的转换控制。
+
+**如何将模板 AST 转换为用于描述渲染函数的 JavaScript AST**
+
+- 模板 AST 用来描述模板，类似地，JavaScript AST 用于描述 JavaScript 代码。
+- 需要将模板编译为渲染函数。而渲染函数是由 JavaScript 代码来描述的。
+  - 因此只有把模板 AST 转换为 JavaScript AST 后，才能据此生成最终的渲染函数代码。
+
+**渲染函数代码的生成工作**
+
+- *代码生成*是模板编译器的最后一步工作，生成的代码将作为组件的渲染函数。
+- _代码生成的过程就是字符串拼接的过程_。需要为不同的 AST 节点编写对应的代码生成函数。
+- 为了让生成的代码具有更强的可读性，还讨论了如何对生成的代码进行缩进和换行。
+  - 将用于缩进和换行的代码封装为工具函数，并且定义到代码生成过程中的上下文对象中。
+
+### 16 解析器(parser)
+
+**解析器的文本模式及其对解析器的影响**
+
+- 文本模式指的是解析器在工作时所进入的一些特殊状态，如[RCDATA](https://html.spec.whatwg.org/#rcdata-state)模式、`CDATA`模式、`RAWTEXT`模式，以及初始的`DATA`模式等。
+- 在不同模式下，解析器对文本的解析行为会有所不同。
+
+**如何使用递归下降算法构造模板 AST**
+
+- 在 parseChildren 函数运行的过程中，为了处理标签节点，会调用 parseElement 解析函数，这会间接地调用 parseChildren 函数，并产生一个新的状态机。
+- 随着标签嵌套层次的增加，新的状态机也会随着 parseChildren 函数被递归地调用而不断创建，这就是“递归下降”中 **“递归”** 二字的含义。
+- 而上级 parseChildren 函数的调用用于构造上级模板 AST 节点，被递归调用的下级 parseChildren 函数则用于构造下级模板 AST 节点。
+- 最终会构造出一棵树型结构的模板 AST，这就是“递归下降”中 **“下降”** 二字的含义。
+- _在解析模板构建 AST 的过程中，parseChildren 函数是核心_。
+  - 每次调用 parseChildren 函数，就意味着新状态机的开启。状态机的结束时机有两个:
+    - 第一个停止时机是当模板内容被解析完毕时。
+    - 第二个停止时机则是遇到结束标签时，
+      - 这时解析器会取得父级节点栈栈顶的节点作为父节点，检查该结束标签是否与父节点的标签同名，如果相同，则状态机停止运行。
+
+**文本节点的解析**
+
+- 解析文本节点本身并不复杂，它的复杂点在于，**需要对解析后的文本内容进行 HTML 实体的解码工作**。
+- [WHATWG 规范](https://whatwg-cn.github.io/html/#data-state)中也定义了解码 HTML 实体过程中的状态迁移流程。
+- HTML 实体类型有两种，分别是*命名字符引用*和*数字字符引用*。
+  - 命名字符引用的解码方案可以总结为两种:当*存在分号*时：执行完整匹配。当*省略分号*时：执行最短匹配。
+  - 对于数字字符引用，则需要按照 WHATWG 规范中定义的规则逐步实现。
+
+### 17 编译优化
+
+Vue.js 3 在**编译优化**方面所做的努力。
+
+- 编译优化指的是通过编译的手段提取关键信息，并以此指导生成最优代码的过程。
+- 具体来说，Vue.js 3 的编译器会充分分析模板，提取关键信息并将其附着到对应的虚拟节点上。
+- 在运行时阶段，渲染器通过这些关键信息执行“快捷路径”，从而提升性能。
+
+编译优化的核心在于，**区分动态节点与静态节点**。
+
+- Vue.js 3 会为动态节点打上补丁标志，即 patchFlag。
+- Vue.js 3 还提出了 Block 的概念，一个 Block 本质上也是一个虚拟节点，但与普通虚拟节点相比，会多出一个 dynamicChildren 数组。
+  - 该数组用来收集所有动态子代节点，这利用了 createVNode 函数和 createBlock 函数的层层嵌套调用(由内向外的方式执行)的特点
+  - 再配合一个用来临时存储动态节点的节点栈，即可完成动态子代节点的收集。
+- 由于 **Block 会收集所有动态子代节点**，所以*对动态节点的比对操作是忽略 DOM 层级结构的*。
+  - 这会带来额外的问题，即 v-if、v-for 等结构化指令会影响 DOM 层级结构，使之不稳定。这会间接导致基于 Block 树的比对算法失效。
+  - 而解决方式很简单，只需要让带有 v-if、v-for 等指令的节点也作为 Block 角色即可。
+
+除了 Block 树以及补丁标志之外，Vue.js 3 在编译优化方面还做了**其他努力**，具体如下:
+
+- _静态提升_：能够减少更新时创建虚拟 DOM 带来的性能开销和内存占用。
+- _预字符串化_：在静态提升的基础上，对静态节点进行字符串化。这样做能够减少创建虚拟节点产生的性能开销以及内存占用。
+- _缓存内联事件处理函数_：避免造成不必要的组件更新。
+- _`v-once` 指令_：缓存全部或部分虚拟节点，能够避免组件更新时重新创建虚拟 DOM 带来的性能开销，也可以避免无用的 Diff 操作。
+
+### 18 同构渲染
+
+Vue.js 的三种渲染方式:CSR、SSR 和同构渲染
+
+- **客户端渲染**(client-side rendering,CSR): Vue.js 可以用于构建客户端应用程序，组件的代码在浏览器中运行，并输出 DOM 元素。
+- **服务端渲染**(server-side rendering,SSR): Vue.js 还可以在 Node.js 环境中运行，它可以将同样的组件渲染为字符串并发送给浏览器。
+- Vue.js 作为现代前端框架，不仅能够独立地进行 CSR 或 SSR，还能够将两者结合，形成所谓的**同构渲染**(isomorphic rendering)。
+
+_服务端渲染_(在服务端完成模板和数据的融合)的工作流程:
+
+1. 用户通过浏览器请求站点。
+2. 服务器请求 API 获取数据。
+3. 接口返回数据给服务器。
+4. 服务器根据模板和获取的数据拼接出最终的 HTML 字符串。
+5. 服务器将 HTML 字符串发送给浏览器，浏览器解析 HTML 内容并渲染。
+
+_客户端渲染_(在浏览器中完成模板与数据的融合，并渲染出最终的 HTML 页面)的工作流程:
+
+- 客户端向服务器或 CDN 发送请求，获取静态的 HTML 页面。
+  - 注意，此时获取的 HTML 页面通常是空页面。在 HTML 页面中，会包含 `<style>`、`<link>` 和 `<script>` 等标签
+- 虽然 HTML 页面是空的，但浏览器仍然会解析 HTML 内容。
+  - 因为存在`<style>`、`<link>` 和 `<script>` 等标签，所以会加载这些引用资源。
+- 服务器或 CDN 会将相应的资源返回给浏览器，浏览器对 CSS 和 JavaScript 代码进行解释和执行。
+  - 因为页面的渲染任务是由 JavaScript 来完成的，所以当 JavaScript 被解释和执行后，才会渲染出页面内容，即“白屏”结束。
+  - 但初始渲染出来的内容通常是一个“骨架”，因为还没有请求 API 获取数据。
+- 客户端再通过 AJAX 技术请求 API 获取数据，一旦接口返回数据，客户端就会完成动态内容的渲染，并呈现完整的页面。
+
+_同构渲染_(“同构”指的是同样的代码既能在服务端运行，也能在客户端运行)的工作机制:
+
+- 同构渲染中的首次渲染与 SSR 的工作流程是一致的。
+  - 当首次访问或者刷新页面时，整个页面的内容是在服务端完成渲染的，浏览器最终得到的是渲染好的 HTML 页面。
+  - 该页面是纯静态的，这意味着用户还不能与页面进行任何交互，因为整个应用程序的脚本还没有加载和执行。
+  - 该静态的 HTML 页面中也会包含` <link>`、`<script> `等标签。
+  - **同构渲染**所产生的 **HTML 页面**与 SSR 所产生的 HTML 页面有一点最大的不同，即前者**会包含当前页面所需要的初始化数据**。
+- 浏览器接收到初次渲染的静态 HTML 页面后会解析并渲染该页面。
+  - 在解析过程中，浏览器发现`HTML`代码中存在`<link>`和`<script>`标签，于是会从`CDN`或服务器获取相应的资源，与 CSR 一致。
+  - 当 JavaScript 资源加载完毕后，会进行激活操作(在 Vue.js 中常说的 “hydration”)。激活包含两部分工作内容:
+    - Vue.js 在当前页面已经渲染的 DOM 元素以及 Vue.js 组件所渲染的虚拟 DOM 之间建立联系。
+    - Vue.js 从 HTML 页面中提取由服务端序列化后发送过来的数据，用以初始化整个 Vue.js 应用程序。
+- 激活完成后，整个应用程序已经完全被 Vue.js 接管为 CSR 应用程序了。后续操作都会按照 CSR 应用程序的流程来执行。
+  - 当然，如果刷新页面，仍然会进行服务端渲染，然后再进行激活，如此往复。
+
+CSR、SSR 和同构渲染的各自的优缺点。具体可以总结为下表(为应用程序选择渲染架构时，需要结合软件的需求及场景，选择合适的渲染方案):
+
+        |                | SSR  | CSR    | 同构渲染 |
+        | -------------- | ---- | ------ | -------- |
+        | SEO            | 友好 | 不友好 | 友好     |
+        | 白屏问题       | 无   | 有     | 无       |
+        | 占用服务端资源 | 多   | 少     | 中       |
+        | 用户体验       | 差   | 好     | 好       |
+
+**Vue.js 是如何把虚拟节点渲染为字符串的**。以普通标签节点为例，在将其渲染为字符串时，要考虑以下内容:
+
+- 自闭合标签的处理。对于自闭合标签，无须为其渲染闭合标签部分，也无须处理其子节点。
+- 属性名称的合法性，以及属性值的转义。
+- 文本子节点的转义。HTML 转义指的是将特殊字符转换为对应的 HTML 实体，这对于防御 XSS 攻击至关重要。
+  - 具体的转义规则如下:
+    - 对于普通内容，应该对文本中的以下字符进行转义:
+      - 将字符 `&` 转义为实体 `&amp;`。
+      - 将字符 `<` 转义为实体 `&lt;`。
+      - 将字符 `>` 转义为实体 `&gt;`。
+    - 对于属性值，除了上述三个字符应该转义之外，还应该转义下面两个字符:
+      - 将字符 `"` 转义为实体 `&quot;`。
+      - 将字符 `'` 转义为实体 `&#39;`。
+
+**如何将组件渲染为 HTML 字符串**
+
+- 在服务端渲染组件与渲染普通标签并没有本质区别:
+  - 只需要通过执行组件的 render 函数，得到该组件所渲染的 subTree(本身可能是任意类型的虚拟节点)并将其渲染为`HTML`字符串即可。
+- 另外，在渲染组件时，需要考虑以下几点:
+  - _服务端渲染不存在数据变更后的重新渲染_，所以无须调用 reactive 函数对 data 等数据进行包装，也无须使用 shallowReactive 函数对 props 数据进行包装。正因如此，也无须调用 beforeUpdate 和 updated 钩子。
+  - _服务端渲染时，由于不需要渲染真实 DOM 元素_，所以无须调用组件的 beforeMount 和 mounted 钩子。
+
+**客户端激活的原理**
+
+- 在同构渲染过程中，组件的代码会分别在服务端和浏览器中执行一次。
+  - 在*服务端*，组件会被渲染为静态的`HTML`字符串，并发送给浏览器。
+  - *浏览器*则会渲染由服务端返回的静态`HTML`内容并下载打包在静态资源中的组件代码。当下载完毕后浏览器会解释并执行该组件代码。
+- 当组件代码在客户端执行时，由于页面中已经存在对应的 DOM 元素，所以渲染器并不会执行创建 DOM 元素的逻辑，而是会执行激活操作。
+- 激活操作可以总结为两个步骤:
+  - 在虚拟节点与真实 DOM 元素之间建立联系，即 `vnode.el=el`。这样才能保证后续更新程序正确运行。
+  - 为 DOM 元素添加事件绑定。
+
+**如何编写同构的组件代码**:由于组件代码既运行于服务端，也运行于客户端，所以编写组件代码时要额外注意。具体可以总结为以下几点:
+
+- **注意组件的生命周期**。beforeUpdate、updated、beforeMount、mounted、beforeUnmount、unmounted 等生命周期钩子函数不会在服务端执行。
+- **使用跨平台的 API**。由于组件的代码既要在浏览器中运行，也要在服务器中运行，所以编写组件代码时，要额外注意代码的跨平台性。
+  - 通常在选择第三方库的时候，会选择支持跨平台的库，例如使用 Axios 作为网络请求库。
+- **特定端的实现**。无论在客户端还是在服务端，都应该保证功能的一致性。
+  - 例如，组件需要读取 cookie 信息。在客户端，可以通过 document.cookie 来实现读取；而在服务端，则需要根据请求头来实现读取。
+  - 所以，很多功能模块需要为客户端和服务端分别实现。
+- **避免交叉请求引起的状态污染**。状态污染既可以是应用级的，也可以是模块级的。
+  - 对于应用，应该为每一个请求创建一个独立的应用实例。这是为了避免不同请求共用同一个应用实例所导致的状态污染。
+  - 对于模块，应该避免使用模块级的全局变量。因为在不做特殊处理的情况下，多个请求会共用模块级的全局变量，造成请求间的交叉污染。
+- **仅在客户端渲染组件中的部分内容**。这需要自行封装`<ClientOnly>` 组件，被该组件包裹的内容仅在客户端才会被渲染。
+
+\newpage
+
+# 前端工程化概述
+
+## 1 [Vue 开发风格指南](https://cn.vuejs.org/style-guide/rules-essential.html)
 
 **必要规则** 【说明，camelCase:驼峰命名; PascalCase:首字母全大写; kebab-case:全小写用横线连接.】
 
@@ -4355,7 +3552,7 @@ vite 是直接启动开发服务器，请求哪个模块再对该模块进行实
 - 应该优先通过 prop 和事件进行父子组件之间的通信，而不是 `this.$parent` 或`变更 prop`。
 - 应该优先通过 vuex 管理全局状态，而不是通过` this.$root` 或一个全局事件总线。(v3 版没说)
 
-## 1. 什么是前端工程化
+## 2 什么是前端工程化
 
 **前端工程化**是指围绕代码处理的一系列工具链，他们把代码当作字符串处理，并不关心代码的内容，包括编译构建、静态分析、格式化、CI/CD 等等。  
 也可以认为*一切能提升前端开发效率、提高前端应用质量的方法和工具都是前端工程化*。
@@ -4373,7 +3570,7 @@ vite 是直接启动开发服务器，请求哪个模块再对该模块进行实
 **主要解决的问题**:传统语言或语法的弊端;无法使用模块化/组件化;重复的机械式工作;代码风格统一、质量保证;依赖后端服务接口支持;整体依赖后端项目
 (ES6`+`语法、TypeScript、Sass)；(ES Modules、Components)；(Build、Publish)；(git、ESLint)；(Mock)；(DevServer)
 
-## 2. 前端工程化的内容
+## 3 前端工程化的内容
 
 **内容概述**(加粗部分表示后续有少量补充)
 
@@ -4508,7 +3705,7 @@ Mock 服务解决的是前后端协作开发的问题，前后端开发人员提
 考虑团队协作和安全方面的因素，最佳的方式应该是搭建一个可供严格审查、队列控制、操作简化的部署平台，并且有专人负责掌握流程进度。  
 虽然这种搭建部署平台的方式在一定程度上减缓了整体的部署速度，但是加强了团队协作和安全保障。
 
-## 3. 组件设计原则
+## 4 组件设计原则
 
 一句话总结:**ui 组件看设计 antd/element-ui，业务组件抽逻辑，smart (容器)组件带状态 state，dump (展示)组件纯模版**。
 
@@ -4563,7 +3760,7 @@ Mock 服务解决的是前后端协作开发的问题，前后端开发人员提
 - 这个组件当别人用时，会怎么想？接口设计符合规范和大众习惯
 - 假如业务需要不需要这个功能，是否方便清除？
 
-## 4. 组件二次封装原则(以 vue 为例)
+## 5 组件二次封装原则(以 vue 为例)
 
 - _主要以父组件传递数据给子组件来实现一些功能，子组件定义固定的展示样式，将具体要实现的业务逻辑抛出来给父组件处理_
   - 不要在一个 vue 文件内，封装多个数据的入口处理，你应该遵守“单一职责”
@@ -4582,7 +3779,7 @@ Mock 服务解决的是前后端协作开发的问题，前后端开发人员提
 - 搞清楚哪些是 props，不要修改 props 的数据
 - 载体分离原则: 内容和载体要分两个 vue 文件，内容是页面的主要内容，载体是展示的方式，例如弹窗、抽屉等等。
 
-## 5. code review
+## 6 code review
 
 简单的示例: 代码提交之后，专人负责 review 代码，也可以使用工具设置指定规范性的检查。如果通过了，触发 CI、自动测试等，在合并到指定分支进行构建部署等自动化操作。未通过就修改代码。
 
@@ -4597,9 +3794,334 @@ code review 的目的:
 
 \newpage
 
-# http 基础
+# Webpack 相关
 
-## TCP 和 UDP 的简述
+## 1 Webpack 名词解释
+
+**名词解释**(webpack 编译过程都是围绕着这些关键对象(特指加粗部分，其他为补充)展开)入口、输出、loader、插件、模式、浏览器兼容性、环境
+
+- _(webpack)_ 是一个用于现代 JavaScript 应用程序的*静态模块打包工具*。当 webpack 处理应用程序时，它会在内部从一个或多个入口点构建一个**依赖图**，然后将项目中所需的*每一个模块组合成一个或多个 bundles*，它们均为静态资源，用于展示你的内容。
+- _依赖图(dependency graph)_: _每当一个文件依赖另一个文件时，webpack 都会将文件视为直接存在 **依赖关系** _。这使得 webpack 可以获取非代码资源，如 images 或 web 字体等。并会把它们作为**依赖**提供给应用程序。
+  - 当 webpack 处理应用程序时，它会根据命令行参数中或配置文件中定义的模块列表开始处理。 从 _入口_ 开始，webpack 会递归的构建一个 **依赖关系图**，这个依赖图包含着应用程序中所需的每个模块，然后将所有模块打包为少量的 bundle，通常只有一个，可由浏览器加载。
+  - _对于 HTTP/1.1 的应用程序，webpack 构建的 bundle 非常强大。当浏览器发起请求时，能最大程度的减少应用的等待时间。_
+  - _对于 HTTP/2 来说，还可以使用代码分割进行进一步优化。_
+- **`entry`**：编译入口，webpack 编译的起点(指示 webpack _应该使用哪个模块来作为构建其内部依赖图的开始_)
+- _(output)_ 属性告诉 webpack _在哪里输出它所创建的 bundle，以及如何命名这些文件_。
+- **`compiler`**：编译管理器，webpack 启动后会创建 compiler 对象，该对象一直存活直到结束退出。
+- **`compilation`**：单次编译过程的管理器。
+  - 比如 `watch = true` 时，运行过程中只有一个 compiler 但每次文件变更触发重新编译时，都会创建一个新的 compilation 对象。
+- **`dependence`**：依赖对象，webpack 基于该类型记录模块间依赖关系。
+- **`module`**：webpack 内部所有资源都会以“module”对象形式存在，所有关于资源的操作、转译、合并都是以 “module” 为基本单位进行的。
+  - module 是 webpack 资源处理的基本单位，可以认为 webpack 对资源的路径解析、读入、转译、分析、打包输出，所有操作都是围绕着 module 展开的。
+  - Webpack 天生支持如下模块类型：ECMAScript 模块(import 语句)、CommonJS 模块(require()语句)、AMD 模块(define 和 require 语句)、Assets、WebAssembly 模块。
+- **`chunk`**：编译完成准备输出时，webpack 会将 module 按特定的规则组织成一个一个的 chunk。
+  - 这些 chunk 某种程度上跟最终输出一一对应。
+- **`loader`**：资源内容转换器，其实就是实现从内容 A 转换 B 的转换器。(用于转换某些类型的模块)
+- **`plugin`**：webpack 构建过程中，会在特定的时机广播对应的事件，插件监听这些事件，在特定时间点介入编译过程。
+  - 用于打包优化，资源管理，注入环境变量等
+- _(configuration)_:webpack 的配置文件是 JavaScript 文件，文件内导出了一个 webpack 配置的对象，webpack 会根据该配置定义的属性进行处理。遵循 CommonJS 模块规范。
+- _(tapable)_: 是一个小型的 webpack 核心工具库，以提供类似的插件接口。 它对外暴露了 tap，tapAsync 和 tapPromise 等方法， 插件可以使用这些方法向 webpack 中注入自定义构建的步骤，这些步骤将在构建过程中触发。**本质上是为我们更方便创建自定义事件和触发自定义事件的库**，类似于 Nodejs 中的 EventEmitter Api。
+- _(mode)_:使用 development, production(默认值) 或 none 之中的一个来设置 mode 参数，可以启用 webpack 内置在相应环境下的优化。
+- _(浏览器兼容性)_:webpack 支持所有符合 ES5 标准的浏览器(不支持 IE8 及以下)。webpack 的 `import()` 和 `require.ensure()` 需要 Promise。旧版本浏览器可能需要提前加载 polyfill。
+- _(environment)_:Webpack 5 运行于 Node.js v10.13.0+ 的版本。
+
+**compiler**: 对象代表了完整的 webpack 环境配置。
+
+- compiler 模块是 webpack 的主要引擎，它通过 CLI 或者 Node API 传递的所有选项创建出一个 compilation 实例。
+- 它扩展（extends）自 Tapable 类，_用来注册和调用插件。_ 大多数面向用户的插件会首先在 Compiler 上注册。
+- _Compiler 支持可以监控文件系统的监听(watching)机制，并且在文件修改时重新编译。_
+- 当处于监听模式(watch mode)时， compiler 会触发诸如 `watchRun`, `watchClose` 和 `invalid` 等额外的事件。
+- 通常在 开发环境 中使用，也常常会在 `webpack-dev-server` 这些工具的底层调用， 由此开发人员无须每次都使用手动方式重新编译。
+- 还可以通过 CLI 进入监听模式。
+
+**compilation**: 对象代表了一次资源版本构建。
+
+- compilation 模块会被 Compiler 用来创建新的 compilation 对象（或新的 build 对象）。
+- compilation 实例能够访问所有的模块和它们的依赖（大部分是循环依赖）。
+- _它会对应用程序的依赖图中所有模块， 进行字面上的编译(literal compilation)_。
+- _在编译阶段，模块会被加载(load)、封存(seal)、优化(optimize)、 分块(chunk)、哈希(hash)和重新创建(restore)。_
+- compilation 类继承自 tapable， 可以按照 compiler 钩子的相同方式来调用 tap，也可以在某些钩子上访问 tapAsync 和 tapPromise
+
+## 2 Webpack5 特性
+
+1. 编译缓存: webpack5 统一了持久化缓存的方案，有效降低了配置的复杂性.
+2. 长效缓存: 长效缓存指的是能充分利用浏览器缓存，尽量减少由于模块变更导致的构建文件 hash 值的改变，从而导致文件缓存失效。增加了确定的 moduleId，chunkId 的支持。
+3. Node Polyfill 脚本被移除: webpack5 将不会自动为 Node.js 模块添加 polyfill，而是更专注的投入到前端模块的兼容中。
+4. 更优的 tree-shaking
+5. Module Federation: 相当于 webpack 提供了线上 runtime 的环境，多个应用利用 CDN 共享组件或应用，不需要本地安装 npm 包再构建了，这就有点云组件的概念了.
+
+\newpage
+
+## 3 Webpack 性能优化
+
+- 1 [编译日志分析](https://mp.weixin.qq.com/s/A0udBhvNoA0o-kX1B0rt9A)：Webpack Analysis、Webpack Bundle Analyzer、WebpackDashboard、UnusedWebpackPlugin
+- 2 产物优化: tree-shaking 3 编译优化: cache、并行编译(happy-oack,thread-loader)
+
+4 个方向：构建速度优化、代码体积优化、持久化缓存优化、Module Federation
+
+[**webpack5 优化方向**](https://heapdump.cn/article/3466991)
+
+- 分离配置文件
+- 打包性能分析: 分析打包后的依赖包大小`webpack-bundle-analyzer`,友好的编译进度提示`webpackbar`
+- **打包优化**
+  - **去掉大的库中没有用到的代码**
+  - **缩小文件搜索范围**
+    - 优化 loader 配置: 由于 Loader 对文件的转换操作很耗时，需要让尽可能少的文件被 Loader 处理
+    - 优化 `resolve.modules` 配置: 用于配置 Webpack 去哪些目录下寻找第三方模块
+    - 优化 `resolve.mainFields` 配置: `resolve.mainFields` 用于配置第三方模块使用哪个入口文件。
+    - 优化 `resolve.alias` 配置: `resolve.alias` 配置项通过别名来把原导入路径映射成一个新的导入路径。
+    - 优化 `resolve.extensions` 配置: `resolve.extensions` 用于配置在尝试过程中用到的后缀列表。
+    - 优化 `module.noParse` 配置: `module.noParse` 配置项可以让 Webpack 忽略对部分没采用模块化的文件的递归解析处理，这样做的好处是能提高构建性能。
+- **保持最新的版本**
+- **减少辅助程序**: 尽可能少地使用 loader 和插件。
+- **开发环境优化**
+  - **开启缓存**: 缓存生成的 webpack 模块和块，以提高构建速度，推荐在开发环境开启，生产环境关闭。
+  - **Devtool**: 注意不同 devtool 设置之间的性能差异
+  - **避免使用生产环境下才需要用的工具**(例如压缩代码、输出随机字符串的文件名等)
+  - **最小的入口 chunk**
+  - **避免额外的优化步骤**: webpack 做了额外的算法工作来优化输出的大小和加载性能。这些优化适用于较小的代码库，但在较大的代码库中可能代价高昂。
+  - **输出不带路径信息**
+  - **TypeScript Loader**: 在使用 ts-loader 时要**提高构建速度**，启用 transpileOnly 加载器选项为 true。该选项**关闭了类型检查**。
+    - 再次进行类型检查，使用 `ForkTsCheckerWebpackPlugin`。这可以通过将 TypeScript 类型检查和 ESLint lint 移动到单独的进程来加速它们。
+- **生产环境优化**
+  - **并行构建**: 多页应用,使用 `parallel-webpack` 进行并行构建，它充分利用了 CPU 的多核特性
+  - **Source Maps**
+  - **Tree Shaking**: 可以用来剔除 JavaScript 中用不上的死代码。
+  - **压缩 CSS**: 插件`css-minimizer-webpack-plugin`
+  - **提取 CSS**: 使用 `optimization.splitChunks.cacheGroups` 将 CSS 提取到一个单独的文件中
+- 其它优化
+  - **图片优化**
+- [代码分离(把代码分离到不同的 bundle 中，然后可以按需加载或并行加载这些文件)的三种常用方式]
+  - 1 **入口起点**：使用 entry 配置手动地分离代码。2 **动态导入**：通过模块的内联函数调用来分离代码。
+  - 3 **防止重复**：使用 Entry dependencies 或者 SplitChunksPlugin 去重和分离 chunk。
+
+**webpack 的`loader`和`plugin`**: _loader 是一个转换器_，将 A 文件进行编译成 B 文件; _plugin 是一个扩展器_，它丰富了 webpack 本身。
+
+\newpage
+
+## 4 Webpack 核心流程
+
+Webpack 最核心的功能: 将各种类型的资源，包括图片、css、js 等，转译、组合、拼接、生成 JS 格式的 bundler 文件。
+
+**webpack5 核心流程解析**(2022-11-30 部分方法或类在源码中都搜不到了，所以仅供理清流程的参考)
+
+**初始化阶段**: 在真正构建入口模块之前的这一阶段
+
+- 初始化参数：将用户传入配置与默认配置结合得到最终配置参数；
+- 创建编译器对象：根据配置参数创建 `Compiler` 实例对象(从创建 compiler 实例到调用 make 钩子，逻辑链路很长)；
+- 初始化编译环境：注册用户配置插件及内置插件；
+- 运行编译：执行 `compiler.run` 方法；
+- 确定入口：根据配置 `entry` 找寻所有入口文件，并转换为 `dependence` 对象，等待执行 `compilation.addEntry` 编译工作。
+
+**构建阶段（make）**，`hooks.make` 是触发入口模块编译的开始
+
+- 构建阶段从 entry 开始递归解析资源与资源的依赖，在 `compilation` 对象内逐步构建出 module 集合以及 module 之间的依赖关系。
+- 调用 `handleModuleCreate` ，根据文件类型构建 module 子类
+- 调用 [loader-runner](https://www.npmjs.com/package/loader-runner) 仓库的 `runLoaders` 转译 module 内容，通常是从各类资源类型转译为 JavaScript 文本
+- 调用 [acorn](https://www.npmjs.com/package/acorn) 将 JS 文本解析为 AST(Webpack 读出 AST 之后仅遍历 AST 集合；babel 则对源码做等价转换)。
+- 遍历 AST，触发各种钩子
+  - 在 `HarmonyExportDependencyParserPlugin` 插件监听 `exportImportSpecifier` 钩子，解读 JS 文本对应的资源依赖
+  - 调用 module 对象的 `addDependency` 将依赖对象加入到 module 依赖列表中
+- AST 遍历完毕后，调用 `module.handleParseResult` 处理模块依赖
+- 对于 module 新增的依赖，调用 `handleModuleCreate` ，控制流回到第一步
+- 所有依赖都解析完毕后，构建阶段结束
+
+**生成阶段（seal）**：构建阶段围绕 module 展开，生成阶段则围绕 chunks 展开。webpack 得到足够的*模块内容与模块关系信息*，接下来开始生成最终资源了。代码层面，就是开始执行 `compilation.seal` 函数。_seal 函数主要完成从 module 到 chunks 的转化_，核心流程：
+
+- 构建本次编译的 `ChunkGraph` 对象；
+- 遍历 `compilation.modules` 集合，将 module 按 `entry/动态引入` 的规则分配给不同的 Chunk 对象(生成阶段的关键逻辑)；
+  - entry 及 entry 触达到的模块，组合成一个 chunk
+  - 使用动态引入语句引入的模块，各自组合成一个 chunk
+- `compilation.modules` 集合遍历完毕后，得到完整的 chunks 集合对象，调用 `createXxxAssets` 方法
+- `createXxxAssets` 遍历 module/chunk ，调用 `compilation.emitAssets` 方法将资 assets 信息记录到 `compilation.assets` 对象中
+- 触发 `seal` 回调，控制流回到 compiler 对象
+  - _chunk 是输出的基本单位，默认情况下这些 chunks 与最终输出的资源一一对应，那按上面的规则大致上可以推导出一个 entry 会对应打包出一个资源，而通过动态引入语句引入的模块，也对应会打包出相应的资源。_
+
+**输出阶段（emit）**
+
+- 经过`make`阶段处理后，`compilation`会获知**资源模块的内容与依赖关系**，也就知道“输入”是什么；
+- 经过`seal`阶段处理后，`compilation`则获知**资源输出的图谱**，也就是知道怎么“输出”:哪些模块跟哪些模块“绑定”在一起输出到哪里。
+- seal 结束之后，紧接着调用`compiler.emitAssets`函数，函数内部调用`compiler.outputFileSystem.writeFile`方法将 assets 集合写入文件系统
+
+各个阶段一句话说明:
+
+1. 初始化: 收集处理各部分的参数、创建编译器对象、初始化编译环境(注册用户配置插件及内置插件)、运行编译(compiler.run)、确认入口
+2. 构建(make)阶段: 模块路径解析、模块内容解析、AST 遍历处理、依赖解析(构建 ModuleDependencyGraph，依赖递归处理)
+3. 生成(seal)阶段: entry _生成 chunk_、异步模块生成 chunk、[optional] runtime 生成 chunk、_构建 ChunkGraph_
+4. 输出(emit)阶段: _合并 chunk、写出 assets_
+
+<!-- \rule[0pt]{19.4cm}{0.01em}
+
+从**资源形态流转**角度重新考察整个过程: -->
+
+![webpack资源形态流传的运行过程](./pictures/pictures-additions/webpack资源形态流传的运行过程.png){width=66%}
+
+\newpage
+
+## 5 Plugin 解析
+
+_核心原理：何时启动、如何介入编译流程、插件开发（识别钩子运行时机、识别钩子类型、识别钩子参数）_  
+webpack 的钩子体系是一种强耦合架构，它在特定时机触发钩子时会附带上足够的上下文信息，插件定义的钩子回调中，能也只能与这些上下文背后的数据结构、接口交互产生 side effect，进而影响到编译状态和后续流程。
+
+**\textcolor{brown}{【什么是插件】}**: 从形态上看，插件通常是一个带有 apply 函数的类。`class SomePlugin { apply(compiler) {} }`
+
+**apply 函数运行时会得到参数 compiler ，以此为起点可以调用 hook 对象注册各种钩子回调**。  
+例如:`compiler.hooks.make.tapAsync()`，这里面 make 是钩子名称，tapAsync 定义了钩子的调用方式。  
+webpack 的插件架构基于这种模式构建而成，插件开发者可以使用这种模式在钩子回调中，插入特定代码。
+
+webpack 各种内置对象都带有 hooks 属性，比如 compilation 对象：
+
+```cs
+class SomePlugin {
+  apply(compiler) {
+    compiler.hooks.thisCompilation.tap("SomePlugin", (compilation) => {
+      compilation.hooks.optimizeChunkAssets.tapAsync("SomePlugin", () => {});
+    });
+  }
+}
+```
+
+钩子的核心逻辑定义在 [Tapable](https://github.com/webpack/tapable) 仓库，内部定义了如下类型的钩子:
+
+```cs
+const {SyncHook,SyncBailHook,SyncWaterfallHook,SyncLoopHook,AsyncParallelHook,AsyncParallelBailHook,
+  AsyncSeriesHook,AsyncSeriesBailHook,AsyncSeriesWaterfallHook,} = require("tapable");
+```
+
+**\textcolor{brown}{【什么时候会触发钩子】}**: 钩子的三个源码学习要素：触发时机、传递参数、示例代码。几个例子：
+
+`compiler.hooks.compilation`  
+时机：启动编译创建出 compilation 对象后触发;参数：当前编译的 compilation 对象;示例：很多插件基于此事件获取 compilation 实例.  
+`compiler.hooks.make`  
+时机：正式开始编译时触发;参数：当前编译的 compilation 对象;示例：webpack 内置的 EntryPlugin 基于此钩子实现 entry 模块的初始化.  
+`compilation.hooks.optimizeChunks`  
+时机： seal 函数中 chunk 集合构建完毕后触发;参数：chunks 集合与 chunkGroups 集合;示例：SplitChunksPlugin 插件基于此钩子实现 chunk 拆分优化.  
+`compiler.hooks.done`  
+时机：编译完成后触发;参数：stats 对象，包含编译过程中的各类统计信息;示例：webpack-bundle-analyzer 插件基于此钩子实现打包分析.
+
+webpack 会在什么时间节点触发什么钩子？钩子的触发时机与 webpack 工作过程紧密相关，大体上从启动到结束。参看[API](https://webpack.docschina.org/api/compiler-hooks/)。
+
+**apply 虽然是一个函数，但是从设计上就只有输入，webpack 不关心输出，所以在插件中只能通过调用类型实体的各种方法来或者更改实体的配置信息，变更编译行为。**例如：
+
+- compilation.addModule：添加模块，可以在原有的 module 构建规则之外，添加自定义模块
+- compilation.emitAsset：直译是“提交资产”，功能可以理解将内容写入到特定路径
+
+**\textcolor{brown}{【如何影响编译状态】}**:webpack 的插件体系与平常所见的 订阅/发布 模式差别很大，是一种非常强耦合的设计，**hooks 回调由 webpack 决定何时，以何种方式执行；而在 hooks 回调内部可以通过修改状态、调用上下文 api 等方式对 webpack 产生 [side effect]**。
+
+webpack 会将上下文信息以参数或 this (compiler 对象) 形式传递给钩子回调，在回调中可以调用上下文对象的方法或者直接修改上下文对象属性的方式，对原定的流程产生 side effect。所以想纯熟地编写插件，除了要理解调用时机，还需要了解我们可以用哪一些 api，例如：
+
+- compilation.addModule：添加模块，可以在原有的 module 构建规则之外，添加自定义模块
+- compilation.emitAsset：直译是“提交资产”，功能可以理解将内容写入到特定路径
+- compilation.addEntry：添加入口，功能上与直接定义 entry 配置相同
+- module.addError：添加编译错误信息
+
+[常用 plugin](https://webpack.docschina.org/plugins/)
+
+- `html-webpack-plugin`: 轻松地创建 HTML 文件 - `clean-webpack-plugin`: 每次打包都清除之前打包的文件
+- `mini-css-extract-plugin`: 分离样式文件的插件 - `css-minimizer-webpack-plugin`: 压缩 css 的插件
+- `terser-webpack-plugin`: 使用 Terser 对项目中的 JS 进行最小化 - `DllPlugin`: 为了极大减少构建时间，进行分离打包
+- `webpack-bundle-analyzer`: 直观的看到打包结果中，文件的体积大小、各模块依赖关系、文件是够重复等问题
+
+## 6 Loader 介绍
+
+_核心原理：运行顺序、同步 loader、异步 loader、pitcher、raw、行内路径的处理、类型(pre、normal、post、inline)_  
+在【构建阶段】有一过程，调用 [loader-runner](https://www.npmjs.com/package/loader-runner) 仓库的 `runLoaders` 转译 module 内容，通常是从各类资源类型转译为 JavaScript 文本。  
+_`runLoaders`会调用用户所配置的 loader 集合读取、转译各种类型的资源。_ 转译之后理论上应该输出标准 js 文本或者 AST 对象，webpack 才能继续处理模块依赖。
+
+[常用 loader](https://webpack.docschina.org/loaders/)(分类: 文件、JSON、语法转换、模板、样式、框架等)
+
+- `vue-loader`：加载并编译 vue 组件 - `css-loader`：加载 CSS 文件并解析 import 的 CSS 文件，最终返回 CSS 代码
+- `babel-loader`：使用 Babel 加载 ES2015+ 代码并将其转换为 ES5。
+- `posthtml-loader`：使用 PostHTML 加载并转换 HTML 文件。 - `postcss-loader`：使用 PostCSS 加载并转换 CSS/SSS 文件
+- `ts-loader`：像加载 JavaScript 一样加载 TypeScript 2.0+ - `thread-loader`: 开启多进程打包
+
+dependence 和 dependency 意思差不多，dependence 是抽象的， dependency 是更具体的.
+
+## 7 主流构建工具对比
+
+_构建工具指能自动对代码执行检验、转换、压缩等功能的工具_。常见功能包括：代码转换、代码打包、代码压缩、HMR、代码检验。
+
+**browserify**: 1 预编译模块化方案（文件打包工具）。2 Browserify 基于流方式干净灵活。3 遵循 commonJS 规范打包 JS。4 可引入插件打包 CSS 等其他资源（非原生能力）。  
+**gulp**: 1 基于流的自动化构建工具（工程化）。2 配置复杂度高，偏向编程式，需要定义 task 处理构建。3 支持监听读写文件。4 可搭配 Browserify 等模块化工具来使用。  
+**parcel**: 1 极速打包（工程化：极速 0 配置）。2 零配置，但造成了配置不灵活，内置常见场景的构建方案及其依赖，无需再次安装（babel 等）。3 以 html 入口，自动检测和打包依赖。4 不支持
+SourceMap。5 无法 Tree-shaking。  
+**webpack**: 1 预编译模块化方案（工程化：大而全）。2 通过配置文件达到一站式配置。3 loader 进行资源转换，功能全面（css+js+icon+front）。4 插件丰富，灵活扩展。5 社群庞大。6 大型项目构建慢。  
+**rollup**: 1 基于 ES6 打包（模块打包工具）。2 Tree-shaking。3 打包文件小且干净，执行效率更高。4 更专注于 JS 打包。  
+**snowpack**: 1 基于 ESM 运行时编译（工程化：ESM 运行时）。2 无需递归循环依赖组装依赖树。3 默认输出单独的构建模块（未打包），可选择不同打包器（webpack、rollup 等）。  
+**vite**: 1 基于 ESM 运行时打包。2 借鉴了 Snowpack。3 生产环境使用 Rollup，集成度更高，相比 Snowpack 支持多页面、库模式、动态导入自动 polyfill 等。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**gulp** 是基于 Nodejs 的自动任务运行器。
+
+- 它能自动化地完成 javascript、sass、less、html/image、css 等文件的测试、检查、合并、压缩、格式化、浏览器自动刷新、部署文件生成，并监听文件在改动后重复指定的这些步骤。
+  - 它借鉴了 Unix 操作系统的管道（pipe）思想，前一级的输出，直接变成后一级的输入，使得在操作上非常简单。
+- gulp 主要用到 node 中的两个模块，fileSystem 和 stream，
+  - 文件系统可以对文件进行操作，比如读取文件、写入文件、创建文件、修改文件名、删除文件等；
+  - 而数据流主要分为读取流、写入流和双工流；
+  - 这里还有一个管道 pipe 的概念，管道可以使文件对象从一个流安全的流入到另一个流。
+- gulp 就是先创建一个读取流、一个写入流，在创建若干个双工流，对双工流进行数据的处理，比如去空字符，然后通过管道将读取流、不同功能的双工流、写入流依次连接起来，从而实现对文件的操作处理。
+
+**Babel** 是一个 JavaScript 编译器，是一个工具链，主要用于将采用 ECMAScript 2015+ 语法编写的代码**转换为向后(或向下、回溯)兼容**的 JavaScript 语法，以便能够**运行在当前和旧版本**的浏览器或其他环境中。
+
+Babel 本质上就是在*操作 AST 来完成代码的转译* 。AST 是抽象语法树（Abstract Syntax Tree, AST）。
+
+大多数编译器的工作过程可以分为解析(Parse)、转换(Transform)、生成(Generate)三部分。
+
+<!-- - **解析**（Parse）
+  - 将源代码转换成更加抽象的表示方法（例如抽象语法树）。包括词法分析和语法分析。
+  - 词法分析主要把字符流源代码（Char Stream）转换成令牌流（ Token Stream）。
+  - 语法分析主要是将令牌流转换成抽象语法树（Abstract Syntax Tree，AST）。
+- **转换**（Transform）
+  - 通过 Babel 的插件能力，对AST做一些特殊处理，将高版本语法的 AST 转换成支持低版本语法的 AST。让它符合编译器的期望。
+  - 当然在此过程中也可以对 AST 的 Node 节点进行优化操作，比如添加、更新以及移除节点等。
+- **生成**（Generate）: 将 AST 转换成字符串形式的低版本代码，同时也能创建 Source Map 映射。 -->
+
+webpack 流程中 babel：
+
+- webpack 读取 `webpack.config.js` 配置之后，加载 module.rules 中的配置
+- 加载 js 文件得到 source(即 js 代码)，如果配置了 babel-loader，则将 source 传给 babel-loader
+- 通过 `@babel/parse` 把代码转成 AST 语法树
+- 遍历 plugins，然后执行，装语法转换成对应的语法
+- 通过 `@babel/generator` 再把 AST 语法树转成 js 代码
+- 再将 source 返回给 webpack
+
+**vite** 是一种新型前端构建工具，能够显著提升前端开发体验。它主要由两部分组成：
+
+- 一个开发服务器，它基于 **原生 ES 模块** 提供了 丰富的内建功能，如速度快到惊人的 模块热更新（HMR）。
+- 一套构建指令，它使用 **Rollup** 打包你的代码，并且它是预配置的，可输出用于生产环境的高度优化过的静态资源。
+
+vite 意在提供开箱即用的配置，同时它的 插件 API 和 JavaScript API 带来了高度的可扩展性，并有完整的类型支持。
+
+传统打包工具的一些问题：
+
+- **缓慢的服务器启动**: 当冷启动开发服务器时，基于打包器的方式启动必须优先抓取并构建你的整个应用，然后才能提供服务。
+- **缓慢的更新**: 基于打包器启动时，重建整个包的效率很低。原因显而易见：因为这样更新速度会随着应用体积增长而直线下降。
+  - 即使采用了 HMR (动态模块热替换)模式，其热更新速度也会随着应用规模的增长而显著下降。
+
+解决问题的前置条件：_**浏览器开始原生支持 ES 模块，且越来越多 JavaScript 工具使用编译型语言编写**_。
+
+**`生产环境仍需打包`**: 尽管原生 ESM 现在得到了广泛支持，但**由于嵌套导入会导致额外的网络往返**，在生产环境中发布未打包的 ESM 仍然效率低下（即使使用 HTTP/2）。为了在生产环境中获得最佳的加载性能，**最好还是将代码进行 tree-shaking、懒加载和 chunk 分割（以获得更好的缓存）**。
+
+vite 的**基本实现原理**，就是启动一个 koa 服务器拦截由浏览器请求 ESM 的请求。通过请求的路径找到目录下对应的文件做一定的处理最终以 ESM 的格式返回给客户端。
+
+vite 通过在一开始将应用中的模块区分为 **依赖** 和 **源码** 两类，`改进了开发服务器启动时间`:
+
+- **依赖: 大多为在开发时不会变动的纯 JavaScript**。一些较大的依赖(eg 多模块组件库)处理的代价也很高。依赖也通常会存在多种模块化格式（例如 ESM 或者 CommonJS）。_vite 将会使用 esbuild 预构建依赖_。
+- **源码: 通常包含一些并非直接是 JavaScript 的文件，需要转换（例如 JSX，CSS 或者 vue/Svelte 组件），时常会被编辑**。同时，并不是所有的源码都需要同时被加载（例如基于路由拆分的代码模块）。_vite 以 原生 ESM 方式提供源码_。让浏览器接管了打包程序的部分工作：vite 只需要在浏览器请求源码时进行转换并按需提供源码。根据情景动态导入代码，即只在当前屏幕上实际使用时才会被处理。
+
+webpack 会先打包，然后启动开发服务器，请求服务器时直接给予打包结果。
+
+vite 是直接启动开发服务器，请求哪个模块再对该模块进行实时编译。由于现代浏览器本身就支持 ES Module，会自动向依赖的 Module 发出请求。  
+当浏览器请求某个模块时再根据需要对模块内容进行编译。这种按需动态编译的方式极大的缩减了编译时间，项目越复杂模块越多，vite 优势越明显。
+
+在热更新方面，当改动了一个模块后，仅需让浏览器重新请求该模块即可，不像 webpack 那样需要把该模块的相关依赖模块全部编译一次，效率更高。
+
+\newpage
+
+# HTTP 基础
+
+## 1 TCP 和 UDP 的简述
 
 **TCP/IP 是指能够在多个不同网络间实现信息传输的协议簇。**里面包括不同网络层的很多的协议，其中 TCP 协议和 IP 协议最具代表性，所以被称为`TCP/IP`协议。
 
@@ -4640,7 +4162,7 @@ TCP 是一个可靠的传输协议，基本上，可以将它视为在两台计�
 
 **`URI`**(Uniform Resource Identifier)代表统一资源标识符。**`URL`**（统一资源定位符 Locator）是一种常见的 URI（可狭义认为就是网址）。
 
-## HTTP 概述
+## 2 HTTP 概述
 
 **定义与简介**
 
@@ -4738,9 +4260,9 @@ HTTP 位于最上层的应用层。虽然底层对于分析网络问题非常重
 
 \newpage
 
-## HTTP 消息/报文(Messages)
+## 3 HTTP 报文
 
-**HTTP 消息是服务器和客户端之间交换数据的方式**。  
+**HTTP 消息/报文(Messages)是服务器和客户端之间交换数据的方式**。  
 有两种类型的消息: 请求（requests）由客户端发送用来触发一个服务器上的动作；响应（responses）来自服务器的应答。
 
 **HTTP 消息由采用 ASCII 编码的多行文本构成**。  
@@ -4811,7 +4333,7 @@ HTTP 位于最上层的应用层。虽然底层对于分析网络问题非常重
 
 \newpage
 
-## HTTP 的发展
+## 4 HTTP 的发展
 
 **万维网的发明**
 
@@ -4851,7 +4373,7 @@ HTTP/1.1 消除了大量歧义内容并引入了多项改进：
 - 引入**内容协商机制**，包括语言，编码，类型等，并允许客户端和服务器之间约定以最合适的内容进行交换。
 - 凭借 **Host 头**，能够使不同域名配置在同一个 IP 地址的服务器上。
 
-**缺陷**:高延迟:队头阻塞(Head-Of-Line Blocking)；无状态特性:header 巨大且重复, 阻碍交互；明文传输:不安全性；不支持服务端推送。 
+**缺陷**:高延迟:队头阻塞(Head-Of-Line Blocking)；无状态特性:header 巨大且重复, 阻碍交互；明文传输:不安全性；不支持服务端推送。
 
 **HTTP 用于安全传输**
 
@@ -4895,7 +4417,7 @@ _拥塞控制算法_:慢启动、拥塞避免、拥塞发生、快速恢复
 
 \newpage
 
-## HTTP/1.x 的连接管理
+## 5 HTTP/1.x 的连接管理
 
 连接管理(Connection management)是一个 HTTP 的关键话题：_打开和保持连接在很大程度上影响着网站和 Web 应用程序的性能。_  
 在 HTTP/1.x 里有多种模型：短连接, 长连接, 和 HTTP 流水线。HTTP/2 新增了其它连接管理模型。
@@ -4931,7 +4453,7 @@ _拥塞控制算法_:慢启动、拥塞避免、拥塞发生、快速恢复
   - 正确的实现流水线是复杂的: 要理清传输中的资源大小，多少有效的[RTT](https://en.wikipedia.org/wiki/Round-trip_delay)会被用到，还有有效带宽，流水线带来的改善有多大的影响范围。(_因此 HTTP 流水线在大多数情况下带来的改善并不明显_。)
   - 流水线受制于 HOL (队头堵塞)问题。已经被更好的算法给代替，如 多路复用(multiplexing)，已经用在 HTTP/2。
 
-## 协议升级机制
+## 6 协议升级机制
 
 HTTP 协议 提供了一种特殊的机制，这一机制**允许将一个已建立的连接升级成新的、不相容的协议**。  
 常来说这一机制*总是由客户端(也有例外,例如由服务端发起升级到 TLS)发起的，服务端可以选择是否要升级到新协议*。  
@@ -4953,7 +4475,7 @@ HTTP 协议 提供了一种特殊的机制，这一机制**允许将一个已建
 
 \newpage
 
-## HTTP 的方法和响应状态码
+## 7 HTTP 的方法和响应状态码
 
 **网络拥塞**: 在某段时间，若*对网络中某一资源的需求超过了该资源所能提供的可用部分，网络性能就要变坏*。
 
@@ -4966,7 +4488,7 @@ HTTP 协议 提供了一种特殊的机制，这一机制**允许将一个已建
 
 **GET 和 POST 区别**: 在浏览器回退不会再次请求/会再次请求;请求会被浏览器主动缓存/需要手动设置;请求参数会被完整保留在浏览器历史记录/不保留参数;URL 中传送的参数是有长度限制/无限制;参数通过 URL 传递/参数放在 Request body 中;参数暴露在地址栏/参数放在报文内部;一般用于查询/一般查询新增修改。
 
-### HTTP 请求方法
+### 7.1 HTTP 请求方法
 
 `CONNECT`方法可以*开启一个客户端与所请求资源之间的双向沟通的通道*。它可以用来创建隧道(tunnel)。**成功的响应有主体(body)**，其他否。
 
@@ -5038,7 +4560,7 @@ HTTP 协议 提供了一种特殊的机制，这一机制**允许将一个已建
 
 \newpage
 
-### HTTP 响应状态码
+### 7.2 HTTP 响应状态码
 
 HTTP 响应状态码用来表明特定 HTTP 请求是否成功完成。 响应被归为以下五大类：
 
@@ -5217,7 +4739,7 @@ Age 的值通常接近于 0。表示此对象刚刚从原始服务器获取不�
 
 一般服务端设置，例如 node 等服务端设置
 
-```js
+```cs
 res.setHeader('Cache-Control', 'no-cache')
 const crypto = require('crypto'); const hash = crypto.createHash('sha1').update(content).digest('hex')
 res.setHeader('Etag', hash)
@@ -5418,9 +4940,9 @@ location ~ .*\.php$ {
 
 \newpage
 
-# web 性能
+# Web 性能
 
-## [以用户为中心的性能指标](https://web.dev/user-centric-performance-metrics)
+## 1 [以用户为中心的性能指标](https://web.dev/user-centric-performance-metrics)
 
 **\textcolor{brown}{【定义指标】}**: 围绕几个关键问题构建出了*指标框架*: 1 **是否正在发生？** 导航是否成功启动？服务器有响应吗？ 2 **是否有用？** 是否渲染了足够的内容让用户可以深入其中？ 3 **是否可用？** 页面是否繁忙，用户是否可以与页面进行交互？ 4 **是否令人愉快？** 交互是否流畅自然，没有延迟和卡顿？
 
@@ -5454,11 +4976,11 @@ location ~ .*\.php$ {
 
 [TTI(Time to Interactive)](https://web.dev/tti/) `可交互时间`指标测量**页面从开始加载到主要子资源完成渲染，并能够快速、可靠地响应用户输入所需的时间。**
 
-- *TTI 是**安静窗口**(没有长任务且不超过两个正在处理的网络 GET 请求)之前最后一个长任务的结束时间。*
+- _TTI 是**安静窗口**(没有长任务且不超过两个正在处理的网络 GET 请求)之前最后一个长任务的结束时间。_
 
 [TBT(Total Blocking Time)](https://web.dev/tbt/) `总阻塞时间`指标测量**FCP 与 TTI 之间的总时间，这期间主线程被阻塞的时间过长，无法作出输入响应。**
 
-- *一个页面的总阻塞时间是在 FCP 和 TTI 之间发生的每个长任务的阻塞时间总和*。
+- _一个页面的总阻塞时间是在 FCP 和 TTI 之间发生的每个长任务的阻塞时间总和_。
 - 如果任务时长足够长（例如超过 50 毫秒），那么用户很可能会注意到延迟，并认为页面缓慢或卡顿。
 
 [LCP(Largest contentful paint)](https://web.dev/lcp/) `最大内容绘制`指标测量**页面从开始加载到最大文本块或图像元素在屏幕上完成渲染的时间**。
@@ -5541,7 +5063,7 @@ location ~ .*\.php$ {
 
 \newpage
 
-## [优化 LCP](https://web.dev/optimize-lcp/)
+## 2 [优化 LCP](https://web.dev/optimize-lcp/)
 
 LCP 主要受四个因素影响: **缓慢的服务器响应速度、JavaScript 和 CSS 渲染阻塞、资源加载时间、客户端渲染**。
 
@@ -5592,7 +5114,7 @@ LCP 主要受四个因素影响: **缓慢的服务器响应速度、JavaScript �
 
 \newpage
 
-## <span id="jump-opt-fid"> [优化 FID](https://web.dev/optimize-fid)</span>
+## <span id="jump-opt-fid"> 3 [优化 FID](https://web.dev/optimize-fid)</span>
 
 该项指标需要**真实的用户交互**才能测量响应延迟。  
 为了有助于在实验室中预测 FID，建议测量总阻塞时间。虽然这两项指标的测量内容不同，但 TBT 的改进通常能够带来 FID 的相应改进。
@@ -5648,7 +5170,7 @@ LCP 主要受四个因素影响: **缓慢的服务器响应速度、JavaScript �
 
 \newpage
 
-## [优化 CLS](https://web.dev/optimize-cls/)
+## 4 [优化 CLS](https://web.dev/optimize-cls/)
 
 对于大多数网站来说，您可以通过遵循一些指导原则来**避免所有的意外布局偏移**：
 
@@ -5691,7 +5213,7 @@ LCP 主要受四个因素影响: **缓慢的服务器响应速度、JavaScript �
 
 加快时间: 使用多线程构建、使用缓存、开启热更新、指定哪些文件要处理哪些不处理、开发环境生产环境使用不同方案...  
 减小体积: 压缩 (样式、代码、图片资源)、开启树摇(只打包用到的代码)、source-map 类型...还可以分析一下打包后体积，专项处理  
-其他用户体验: 适当使用懒加载 (反例可以举例 openfeign)、开启 Gzip、小图片转 base64(大图片修改图片质量等)  
+其他用户体验: 适当使用懒加载 (反例可以举例 openfeign)、开启 Gzip、小图片转 base64(大图片修改图片质量等)
 
 **页面白屏**通常是在一些单页面应用中，因为单页面应用的内容是通过执行 JavaScript 代码添加到页面中的，在资源下载和执行的过程中存在页面白屏，用户体验不好。 **白屏优化**，就是加快资源下载和执行的操作，也就是上面的性能优化。
 
@@ -5701,7 +5223,7 @@ LCP 主要受四个因素影响: **缓慢的服务器响应速度、JavaScript �
 
 \newpage
 
-## [性能审核](https://web.dev/lighthouse-performance/) Overview
+## 5 [性能审核](https://web.dev/lighthouse-performance/) Overview
 
 指标
 
@@ -5750,7 +5272,7 @@ LCP 主要受四个因素影响: **缓慢的服务器响应速度、JavaScript �
 - **确保在 webfont 加载期间文本保持可见**: 临时显示系统字体(在 `@font-face`中使用`font-display: swap`为字体提供一个非常小的阻塞周期和无限的交换周期。)、预加载网络字体`<link rel="preload" as="font">`
 - **保持较低的请求数和较小的传输大小**: 参看[优化 FID](#jump-opt-fid)对应部分
 
-## MDN[关键性能指南](https://developer.mozilla.org/zh-CN/docs/Web/Performance)
+## 6 MDN[关键性能指南](https://developer.mozilla.org/zh-CN/docs/Web/Performance)
 
 **Web 性能指页面加载到可交互和可响应所消耗的时间，以及页面在交互时的流畅度。**  
 既包括客观的度量如加载时间，每秒帧数和到页面可交互的时间；也包括用户的对页面内容加载时间的主观感觉。
@@ -5778,7 +5300,7 @@ LCP 主要受四个因素影响: **缓慢的服务器响应速度、JavaScript �
 
 CORS 请求失败会产生错误，但是为了安全，在 JavaScript 代码层面是无法获知到底具体是哪里出了问题。你只能查看浏览器的控制台以得知具体是哪里出现了错误。
 
-## [浏览器的同源策略](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)
+## 1 [浏览器的同源策略](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)
 
 **源/起源(origin)** : Web 内容的源由用于访问它的`URL`的方案(协议)scheme(protocol)，主机(域名)hostname(domain)和端口 port 定义。
 
@@ -5839,7 +5361,7 @@ CORS 请求失败会产生错误，但是为了安全，在 JavaScript 代码层
   - 读取 cookie 时，无法知道它是在哪里被设置的。
   - _即使只使用安全的 https 连接，看到的任何 cookie 都有可能是使用不安全的连接进行设置的_。
 
-## [CORS 预检请求(Preflight request)](https://developer.mozilla.org/zh-CN/docs/Glossary/Preflight_request)
+## 2 [CORS 预检请求(Preflight request)](https://developer.mozilla.org/zh-CN/docs/Glossary/Preflight_request)
 
 一个 CORS 预检请求是**用于检查服务器是否支持 CORS 即跨域资源共享**。它是一个 `OPTIONS` 请求, 使用了 3 个 HTTP 请求头: `Access-Control-Request-Method`, `Access-Control-Request-Headers`, 和 `Origin` header。
 
@@ -5869,7 +5391,7 @@ Access-Control-Max-Age: 86400
 
 规范要求，对那些*可能对服务器数据产生副作用的 HTTP 请求方法*（特别是 GET 以外的 HTTP 请求，或者搭配某些 MIME 类型 的 POST 请求），_浏览器必须首先使用 OPTIONS 方法发起一个预检请求_，从而获知服务端是否允许该跨源请求。_服务器确认允许之后，才发起实际的 HTTP 请求。_ 在预检请求的*返回中*，服务器端也可以通知客户端，_是否需要携带身份凭证_（包括 Cookies 和 HTTP 认证相关数据）。
 
-## CORS 若干访问控制场景
+## 3 CORS 若干访问控制场景
 
 需要 CORS 的场景: 由 `XMLHttpRequest` 或 `Fetch APIs` 发起的*跨源 HTTP 请求*;Web 字体 (CSS 中通过 `@font-face` 使用跨源字体资源);WebGL 贴图;使用 `drawImage` 将 `Images/video` 画面绘制到 `canvas`;[来自图像的 CSS 图形(Shapes from images)](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Shapes/Shapes_From_Images)……
 
@@ -5899,7 +5421,7 @@ _“预检请求”的使用，可以避免跨域请求对服务器的用户数�
 
 **示例**: 使用 POST 请求发送一个 XML 文档，该请求包含了一个自定义的请求首部字段（`X-PINGOTHER: pingpong`）_就像实际使用的自定义请求头_。另外，该请求的 `Content-Type` 为 `application/xml`。因此，该请求需要首先发起“预检请求”。
 
-```js
+```cs
 xhr.setRequestHeader('X-PINGOTHER', 'pingpong');xhr.setRequestHeader('Content-Type', 'application/xml');
 ```
 
@@ -5940,7 +5462,7 @@ Access-Control-Max-Age:86400 # 表明该响应的有效时间为 86400 秒。在
 
 示例: `https://foo.example` 的某脚本向 `https://bar.other` 发起一个 GET 请求，并设置 Cookies:
 
-```js
+```cs
 const invocation = new XMLHttpRequest();
 const url = "https://bar.other/resources/credentialed-content/";
 function callOtherDomain() {
@@ -5989,7 +5511,7 @@ Access-Control-Request-Method: <method> # 将实际请求所使用的 HTTP 方�
 Access-Control-Request-Headers: <field-name>[, <field-name>]* # 将实际请求所携带的首部字段告诉服务器。
 ```
 
-## [常见跨域解决方式](http://www.imooc.com/article/291931)
+## 4 [常见跨域解决方式](http://www.imooc.com/article/291931)
 
 jsonp: 利用`<script>`标签没有跨域限制，通过`<script>`标签 src 属性，发送带有 callback 参数的 GET 请求，服务端将接口返回数据拼凑到 callback 函数中，返回给浏览器，浏览器解析执行，从而前端拿到 callback 函数返回的数据。
 
@@ -6008,9 +5530,9 @@ websocket 实现跨域: websocket 进行通信不需要考虑跨域的问题,但
 
 \newpage
 
-# [web 安全](https://web.dev/secure/)
+# [Web 安全](https://web.dev/secure/)
 
-## 1、安全基础知识
+## 1 安全基础知识
 
 **bug**: 在软件开发中，当一个应用程序不能按照预期的方式工作时，它被称为 "bug"。有时，一个 bug 会显示错误的信息或在某个动作上崩溃。
 
@@ -6058,9 +5580,9 @@ Most security techniques are just good programming:
 Chrome 将请求与`Sec-Fetch-Site`HTTP 标头一起发送，可以根据该头的值确定请求是“同站”、“同源”还是“跨站”(无法检查有方案的同站)。  
 `Sec-Fetch-Site`的值可选项为 `cross-site`、`same-site`、`same-origin`、`none`
 
-## 2、[http 安全](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP)和[安全标头快速参考](https://web.dev/security-headers/)
+## 2 [HTTP 安全](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP)和[安全标头快速参考](https://web.dev/security-headers/)
 
-### (1)常见的安全威胁和相关安全标头
+### 2.1 常见的安全威胁和相关安全标头
 
 [web-security](https://portswigger.net/web-security/all-materials)中可以学习到很多 web 安全方面的东西，比如常见的安全威胁以及应对措施。
 
@@ -6097,7 +5619,7 @@ Chrome 将请求与`Sec-Fetch-Site`HTTP 标头一起发送，可以根据该头�
 - 可能会出现加密不足的情况: 不使用`HTTPS`、混合内容、设置没有`Secure`属性(或`__Secure`前缀)的 cookie 或松散的`CORS`验证逻辑。
 - 应对措施: **使用 `HTTP Strict Transport Security (HSTS)`通过 HTTPS 始终如一地提供内容**。
 
-### (2) 重要的安全标头说明
+### 2.2 重要的安全标头说明
 
 **[Content-Security-Policy CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)** (防止 XSS、注入问题)
 
@@ -6143,7 +5665,7 @@ Content-Security-Policy: require-trusted-types-for 'script'
 
 如果浏览器支持`window.trustedTypes`，可以在使用 eval()等需要注入 DOM 的地方进行自定字符串替换等策略。
 
-```js
+```cs
 if (window.trustedTypes && trustedTypes.createPolicy) { // 检查浏览器是否支持该功能
   // 命名并创建一个 policy
   const policy = trustedTypes.createPolicy("escapePolicy", {
@@ -6255,7 +5777,7 @@ Strict-Transport-Security: max-age=<expire-time>; includeSubDomains
 <!-- | ----------------------------------- | ---------------------------------------------------------------------- | -->
 
 | 响应头                              | 应对问题                                                                     |
-| ----------------------------------- | ---------------------------------------------------------------------- |
+| ----------------------------------- | ---------------------------------------------------------------------------- |
 | Content-Security-Policy (CSP)       | XSS 和数据注入等 [`额外的安全层`]                                            |
 | X-Content-Type-Options              | 跨站脚本错误、XSSI [`禁用了客户端的 MIME 类型嗅探`]                          |
 | X-Frame-Options                     | 点击劫持 [`是否允许浏览器在 iframe 等标签中显示页面`]                        |
@@ -6267,7 +5789,7 @@ Strict-Transport-Security: max-age=<expire-time>; includeSubDomains
 
 \newpage
 
-## 3、HTTPS 进行安全连接
+## 3 HTTPS 进行安全连接
 
 **HTTPS 为何重要**
 
@@ -6351,7 +5873,7 @@ Content-Security-Policy: block-all-mixed-content # 优先级比上一个低
 
 \newpage
 
-## 4、防止信息泄露
+## 4 防止信息泄露
 
 **\textcolor{brown}{浏览器沙箱模式(browser sandbox)}**
 
@@ -6501,7 +6023,7 @@ _在跨域隔离状态下，请求站点被认为不那么危险_，这解锁了
 
 \newpage
 
-## 5、保护用户免受跟踪
+## 5 保护用户免受跟踪
 
 **[Set-Cookie](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie)\textcolor{brown}{响应头及其 SameSite 指令说明}**
 
@@ -6687,13 +6209,13 @@ _意外的跨域信息泄露是网络用户隐私的绊脚石_。一个保护性
 
 例如在 chrome 控制台打印:
 
-```js
+```cs
 /*获得低熵提示*/ console.log(navigator.userAgentData.brands);
 /*获得高熵提示*/ navigator.userAgentData.getHighEntropyValues(["architecture","model","platform",])
   .then((ua) => {console.log(ua);});
 ```
 
-## 6、MDN 的 web 安全概述
+## 6 MDN 的 Web 安全概述
 
 - 内容安全
   - [CSP (内容安全策略)](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP)
@@ -6726,7 +6248,7 @@ _意外的跨域信息泄露是网络用户隐私的绊脚石_。一个保护性
 
 \newpage
 
-## 7、常见的 web 攻击方式
+## 7 常见的 Web 攻击方式
 
 根据[Web Security Academy](https://portswigger.net/web-security/learning-path)的 learning path，指定了一条方便学习的路线(由简到难)。分别为:
 
@@ -6759,7 +6281,7 @@ _意外的跨域信息泄露是网络用户隐私的绊脚石_。一个保护性
 
 参看[OWASP Top 10:2021](https://owasp.org/Top10/zh_CN/A01_2021-Broken_Access_Control/)
 
-### (1) XSS
+### 7.1 XSS
 
 **是什么？** 跨站脚本（也被称为 XSS）是一个网络安全漏洞，它**允许攻击者破坏用户与易受攻击的应用程序的互动**，它允许攻击者规避同源策略。跨站脚本漏洞通常允许攻击者伪装成受害者用户，执行用户能够执行的任何行动，并访问用户的任何数据。如果受害者用户在应用程序中拥有特权访问权，那么攻击者就可能获得对应用程序所有功能和数据的完全控制。
 
@@ -6798,7 +6320,7 @@ Content-Security-Policy:script-src 'nonce-{RANDOM}' 'strict-dynamic';object-src 
 CSP(同上):script-src 'sha256-{HASHED_INLINE_SCRIPT}' 'strict-dynamic';object-src 'none';base-uri 'none';
 ```
 
-### (2) CSRF
+### 7.2 CSRF
 
 **是什么？** 跨站请求伪造（也称为 CSRF）是一个网络安全漏洞，**允许攻击者诱导用户执行他们不打算执行的操作**。它允许攻击者部分规避同源策略。
 
@@ -6824,7 +6346,7 @@ CSP(同上):script-src 'sha256-{HASHED_INLINE_SCRIPT}' 'strict-dynamic';object-s
     - 一个针对会话的、一次性使用的数字或 nonce。CSRF 令牌被置于请求中，并作为正常行为会话的一部分传递给服务器。
 - 保证页面的幂等性，后端接口不要在 GET 页面中做用户操作。
 
-### (3) 由 CORS 配置问题引起的漏洞
+### 7.3 由 CORS 配置问题引起的漏洞
 
 网站使用`CORS`来允许来自子域和受信任的第三方的访问。其 **`CORS`**的实现可能包含**错误或过于宽松**以确保一切正常，这可能导致可利用的漏洞。
 
@@ -6854,7 +6376,7 @@ CSP(同上):script-src 'sha256-{HASHED_INLINE_SCRIPT}' 'strict-dynamic';object-s
 - **避免在内部网络中使用通配符**:当内部浏览器可以访问不受信任的外部域时，仅仅相信网络配置来保护内部资源是不够的。
 - **CORS 不能替代服务端的安全策略**: 除了正确配置 CORS 外，服务端应该继续对敏感信息进行保护，例如认证、会话管理等。
 
-### (4) Clickjacking
+### 7.4 点击劫持
 
 **是什么？** 点击劫持(Clickjacking)是一种基于界面的攻击，即**通过点击诱饵网站中的一些其他内容来诱使用户点击隐藏网站中的可操作内容。**。
 
@@ -6874,7 +6396,7 @@ _与 CSRF 攻击的不同在于，**用户需要执行一个动作**，如点击
 - HTTP CSP 标头指定可以包含`<iframe>`等标签的源:`Content-Security-Policy:frame-ancestors <source> <source>;`
 - 使用`X-Frame-Options`标头给浏览器指示是否允许一个页面展示`<frame>`、`<iframe>`、`<embed>`或者`<object>`中的标记。
 
-### (5) 基于 DOM 的漏洞(DOM-based vulnerabilities)
+### 7.5 基于 DOM 的漏洞
 
 **文档对象模型 (DOM)** 是 web 浏览器对页面元素的分层表示。网站可以使用 JavaScript 来操作 DOM 的节点和对象，以及它们的属性。  
 DOM 操作本身不是问题。事实上，它是现代网站运作方式不可或缺的一部分。但是，_不安全地处理数据的 JavaScript 可能会引发各种攻击。_
@@ -6894,7 +6416,7 @@ DOM 操作本身不是问题。事实上，它是现代网站运作方式不可�
 
 **示例**: 如果业务逻辑中，有对`location`对象做类似处理:
 
-```js
+```cs
 goto = location.hash.slice(1);if (goto.startsWith("https:")) { location = goto;}
 ```
 
@@ -6911,7 +6433,7 @@ localStorage、sessionStorage、IndexedDB (mozIndexedDB, webkitIndexedDB, msInde
 
 此外还有[反射型数据、储存型数据](https://portswigger.net/web-security/cross-site-scripting/dom-based#dom-xss-combined-with-reflected-and-stored-data)、[web 的 message](https://portswigger.net/web-security/dom-based/controlling-the-web-message-source)也可能作为污点流漏洞的源。
 
-**可能导致基于 DOM 漏洞的接收器**
+**可能导致基于 DOM 漏洞(DOM-based vulnerabilities)的接收器**
 
 | DOM-based vulnerability          | Example sink             | DOM-based vulnerability     | Example sink        |
 | -------------------------------- | ------------------------ | --------------------------- | ------------------- |
@@ -6929,7 +6451,7 @@ localStorage、sessionStorage、IndexedDB (mozIndexedDB, webkitIndexedDB, msInde
 避免基于 DOM 的漏洞的最有效方法是**不允许来自任何不受信任的来源的数据,去动态地改变传输到任何接收器的值。**  
 如果动态修改是必须的，则必须在客户端的**代码中实现防御措施**。确保实施强有力的措施来验证任何传入消息的来源。
 
-### (6) WebSockets 安全漏洞
+### 7.6 WebSockets 安全漏洞
 
 原则上，实际上任何 web 安全漏洞都可能与 WebSockets 相关：
 
@@ -6959,7 +6481,7 @@ localStorage、sessionStorage、IndexedDB (mozIndexedDB, webkitIndexedDB, msInde
 - **将通过 WebSocket 接收的数据在两个方向上都视为不受信任**。
 - 在服务器端和客户端安全地处理数据，以防止基于输入的漏洞，例如 SQL 注入和跨站点脚本。
 
-### (7) SQLi(SQL 注入)
+### 7.7 SQLi(SQL 注入)
 
 _SQL 注入 (SQLi) 是一种网络安全漏洞，允许攻击者干扰应用程序对其数据库的查询。_  
 它通常允许攻击者**查看他们通常无法检索的数据**。这可能包括属于其他用户的数据，或应用程序本身能够访问的任何其他数据。  
@@ -6979,7 +6501,7 @@ _SQL 注入 (SQLi) 是一种网络安全漏洞，允许攻击者干扰应用程�
 - 对进入数据库的特殊字符（`'`，`"`，`\`，`<`，`>`，`&`，`*`，`;` 等）进行转义处理，或编码转换。
 - 所有的查询语句建议使用数据库提供的参数化查询接口
 
-### (8) OS 命令注入攻击
+### 7.8 OS 命令注入攻击
 
 OS 命令注入(也称 shell 注入)和 SQL 注入差不多，只不过 SQL 注入是针对数据库的，而 _OS 命令注入是针对操作系统的_。  
 _OS 命令注入攻允许攻击者在运行应用程序的服务器上执行任意操作系统 (OS) 命令，并且**通常会完全破坏应用程序及其所有数据**。_  
@@ -7000,3 +6522,442 @@ _OS 命令注入攻允许攻击者在运行应用程序的服务器上执行任�
 - 验证输入仅包含字母数字字符，不包含其他语法或空格。
 
 永远不要试图通过转义 shell 元字符来清理输入。在实践中，这太容易出错并且容易被熟练的攻击者绕过。
+
+\newpage
+
+# Dart 基础语法
+
+## Dart 基础语法
+
+**重要概念**
+
+- **Dart 是一种真正面向对象的语言**。所有变量引用的都是**对象**，每个对象都是一个**类** 的实例。
+  - 数字、函数以及 null 都是对象。_除去 null 以外（如果你开启了 空安全(Null safety)）, 所有的类都继承于 Object 类_。
+- 尽管 Dart 是强类型语言，但是在声明变量时指定类型是可选的，因为 Dart 可以进行**类型推断**。
+- 如果开启了 **空安全**，变量在未声明为可空类型时不能为 null。
+  - 可以通过在类型后加上问号 (`?`) 将类型声明为可空。例如，int? 类型的变量可以是整形数字或 null。
+  - 如果 **明确知道** 一个表达式不会为空，但 Dart 不这么认为时，你可以在表达式后添加 `!` 来断言表达式不为空（为空时将抛出异常）。
+    例如：`int x = nullableButNotNullInt!`
+- 如果想要**显式地声明允许任意类型**，使用`Object?`（如果开启了空安全）、`Object`或者特殊类型`dynamic`将检查延迟到运行时进行。
+- Dart 支持**泛型**: 比如 `List<int>`（表示一组由 int 对象组成的列表）或 `List<Object>`（表示一组由任何类型对象组成的列表）。
+- Dart 支持**顶级函数**（例如 main 方法），还支持**定义属于类或对象的函数**（即*静态*和*实例方法*）。还可以在**函数中定义函数**（*嵌套*或*局部函数*）。
+- Dart 支持**顶级变量**，以及定义**属于类或对象的变量**（静态和实例变量）。*实例变量*有时称之为*域*或*属性*。
+- Dart **没有**类似 public、protected 和 private 的成员访问限定符。如果一个标识符*以下划线 (`_`) 开头*则表示该标识符*在库内是私有的*。
+- _标识符_ 可以以字母或者下划线 (`_`) 开头，其后可跟字符和数字的组合。
+- Dart 中**表达式**和**语句**是有区别的，**表达式有值而语句没有。**
+  - 比如条件*表达式* `expression condition ? expr1 : expr2` 中含有值 expr1 或 expr2。
+  - 作为对比，if-else 分支*语句*则没有值。 **if 语句中的条件必须是布尔值而不能为其它类型**。
+  - _一个语句通常包含一个或多个表达式，但是一个表达式不能只包含一个语句_。
+- Dart 工具可以显示**警告**和**错误**两种类型的问题。
+  - 警告表明代码可能有问题但*不会阻止其运行*。
+  - 错误分为编译时错误和运行时错误: - 编译时错误代码*无法运行*； - 运行时错误会在代码运行时导致*异常*。
+
+**变量**: 由于其支持类型推断，因此大多数变量*不需要显式地指定类型*。**变量仅存储对象的引用**。 通过`var`声明*局部变量*而非使用指定的类型。
+
+- 在 Dart 中，未初始化以及可空类型的变量拥有一个默认的初始值 null。
+- `late` 声明一个不可为空的变量，并在声明后被初始化。例如 `late String description;`
+- _一个 `final` 变量只可以被赋值一次；一个 `const` 变量是一个编译时常量（const 变量同时也是 final 的）。_
+  - 顶层的 final 变量或者类的 final 变量在其第一次使用的时候被初始化。_不能修改一个 final 变量的值_。
+  - **编译时常量**指的就是程序在编译时就能确定这个常量的具体值。
+  - 使用 const 修饰类中的变量，则必须加上 static 关键字，即 `static const aa=...` （译者注：顺序不能颠倒）
+  - const 关键字不仅仅可以用来定义常量，还可以用来创建常量值，该常量值可以赋予给任何变量。_常量的值不可以被修改_。
+  - **实例变量可以是 final 的但不可以是 const。**
+- 可以*在常量中使用*类型检查和强制类型转换 (`is` 和 `as`)、 集合中的 `if` 以及 展开操作符 (`...` 和 `...?`)。
+
+**内置类型**
+
+- Numbers: 包含 `int` (长度不超过 64 位的整数) 和 `float`(64 位的双精度浮点数字，符合 IEEE 754 标准)。
+- Strings: `String` 包含了 UTF-16 编码的字符序列。单/双引号创建。**在字符串中，请`${表达式}`的形式使用表达式**。_只要是编译时常量 (null、数字、字符串、布尔) 都可以作为字符串字面量的插值表达式。_
+- Booleans: `bool`类型只包含`true`和`false`两个对象。Dart 的类型安全不允许使用类似`if(boolVal)`或者`assert(boolVal)`这样的代码检查布尔值。应该**总是显示地检查布尔值**。
+- Arrays: 数组由 `List` 对象表示。扩展操作符 **`...`** 和空感知扩展操作符 **`...?`** 提供了一种将多个元素插入集合的简洁方法。还同时引入了**集合中的 `if`**和**集合中的 `for` 操作**，在构建集合时，可以使用条件判断 (`if`) 和循环 (`for`)。以下`Set`和`Map`也支持扩展运算符和集合中 `if`、`for`。更多查看[List API](https://api.dart.cn/stable/2.16.2/dart-core/List-class.html)
+- Sets:在 Dart 中，`Set` 是*一组特定元素的无序集合*。更多查看[Set API](https://api.dart.cn/stable/2.16.2/dart-core/Set-class.html)
+- Maps: `Map` 是用来关联 keys 和 values 的对象。其中键(需要不重复)和值都可以是任何类型的对象。不建议使用`new Map()`。
+- Symbols: _可以使用在标识符前加`#`前缀来获取 Symbol。_ 代码压缩后，尽管标识符的名称会改变，但是它们的 Symbol 会保持不变。
+
+```cs
+var hex=0xDEADBEEF;/*定义整数字面量*/  var y=1.1;/*定义浮点数字面量*/ var s='字符串插值';/*创建字符串*/
+var unicorn; assert(unicorn == null); /*显示地检查布尔值,Check for null*/
+var list = [1, 2, 3];/*列表字面量创建列表*/ var halogens = {'ok', 'bad'};/* Set 字面量来创建 Set 集合*/
+var gifts = {'first': 'ok', 'second': 'bad',};/*Map 字面量创建 Map*/
+var ints = [2, 3];var strs = ['#0', for (var i in ints) '#$i']; print(strs); // [#0,#2, #3]
+#radix /*标识符前加 # 前缀来获取 Symbol。Symbol 字面量是编译时常量。*/
+```
+
+**函数**: _函数也是对象并且类型为 Function_，这意味着函数可以被赋值给变量或者作为其它函数的参数。
+
+- **参数**: 必要参数和可选参数(*命名参数*`{参数1, 参数2, …}`、可选的*位置参数*(用`[]`将一系列参数包裹起来)、*默认参数值*(用 `=` 为函数的命名参数和位置参数定义默认值))。
+  - 可选位置参数和可选命名参数不能混合在一起使用，因为可选参数列表只能位于整个函数形参列表的最后。
+
+```cs
+// from msg 必要参数。device action 可选参数，其中action为默认参数。都没有用{}指定命名参数，所以都是位置参数
+String say(String from, String msg, [String? device, String? action = "Smile"]) {
+  var result = '$from says $msg';
+  if (device != null) {result = '$result with a $device action is $action';} return result;
+}
+```
+
+- 每个 Dart 程序都必须有一个 **`main()`顶级函数**作为程序的入口，其返回值为`void`并且有一个`List<String>`类型的可选参数。
+- 函数是一级对象,可以将函数作为参数传递给另一个函数 (例如 forEach 的参数)。也可以将函数赋值给一个变量。
+- 创建一个没有名字的函数，称之为**匿名函数**、Lambda 表达式或 Closure 闭包 。_函数体内只有一行返回语句时可以使用胖箭头缩写法_。
+- Dart 是*词法有作用域*语言，**变量的作用域在写代码的时候就确定了**，_大括号内定义的变量只能在大括号内访问_，与 Java 类似。
+- **闭包**即一个函数对象，即使函数对象的调用在它原始作用域之外，依然能够访问在它词法作用域内的变量。(与 js 类似)
+- _所有的函数都有**返回值** _。没有显示返回语句的函数最后一行默认为执行 `return null;` 。
+
+**运算符**: 算术运算符(加减乘除)、关系运算符(相等不等)、类型判断运算符(是不是指定类型`as`、`is`、`is!`)、赋值运算符(`=`、`??=`等)、逻辑运算符(与或非)、按位和移位运算符(仅适用于整数)、条件表达式(三元和`??`)、级联运算符(`..`和`?..`)、其他运算符(`()`、`[]`、`?[]`、`.`、`?.`、`!`)
+
+```cs
+b ??= value; // b为null则赋值为value，否则还是b (??= 赋值运算符)
+String myName(String? name) => name ?? 'Guest'; //条件表达式:如果name为非null则返回其值，否则返回Guest。
+querySelector('#confirm') // Get an object.
+  ?..text = 'Confirm' // Use its members. (.. / ?.. 级联操作符：同一个对象上连续调用多个对象的变量或方法)
+  ..classes.add('important')..onClick.listen((e) => window.alert('Confirmed!')) // 胖箭头缩写匿名函数
+  ..scrollIntoView();
+foo?.bar // 如果 foo 为 null 则返回 null ，否则返回 foo的bar属性 (?. 条件访问成员)
+foo!.bar // 如果 foo 为 null，则抛出运行时异常 (! 空断言操作符)
+```
+
+**控制流程语句**: if else、for、for in、forEach、while、break 和 continue、switch 和 case、assert、异常(try on catch finally)。
+
+**类**
+
+Dart 是支持基于 mixin 继承机制的面向对象语言，所有对象都是一个类的实例，而除了 Null 以外的所有的类都继承自 `Object` 类。  
+**基于 mixin 的继承**意味着尽管每个类（top class `Object?` 除外）_都只有一个超类_，一个类的代码可以在其它多个类继承中*重复使用*。  
+*扩展方法*是一种在不更改类或创建子类的情况下向类添加功能的方式。
+
+**使用类的成员**:_对象的成员由函数和数据（即方法和实例变量）组成_。方法的*调用*要通过对象来完成，这种方式可以访问对象的函数和数据。
+
+- 使用`.`来访问对象的实例变量或方法，使用`?.`代替`.`可以避免因为左边表达式为 null 的问题。`var a=p?.y;`(见运算符节)
+
+_**使用构造函数**来创建一个对象_。构造函数的命名方式可以为`类名`或`类名 .标识符` 的形式。类似`Point() 和 Point.fromJson()`
+
+- 一些类提供了 _常量构造函数_ 。使用常量构造函数，在构造函数名之前加 `const` 关键字，来创建编译时常量时。
+- 在 _常量上下文_ 场景中，你可以省略掉构造函数或字面量前的 const 关键字。
+- 如果无法根据上下文判断是否可以省略 const，则不能省略掉 const 关键字，否则将会创建一个 **非常量对象**。(回想 flutter 创建组件)
+
+**获取对象的类型**:使用 `Object 对象的 runtimeType 属性`在运行时获取一个对象的类型。类似`a.runtimeType`。
+
+**实例变量**:类似`class Point {double? x;double? y;double z=0;} // 声明了xyz实例变量，xy初始值null，z初始值0`。
+
+- **所有未初始化的实例变量其值均为 `null`。**- **所有实例变量均会隐式地声明一个 `Getter` 方法。**
+- **非终值(non-final)的实例变量和 `late final` 声明但未声明初始化的实例变量还会隐式地声明一个 `Setter` 方法。**
+- _如果实例变量是 `final` 的，那就必须初始化。_
+- 在声明时，使用构造函数参数或使用构造函数的初始化器列表初始化 `final`、`non-late` 实例变量。
+
+**构造函数**声明一个与类名一样的函数即可声明一个构造函数。
+
+- 对于**命名式构造函数**,还可以添加额外的标识符。- 大部分的构造函数形式是**生成式构造函数**，**其用于创建一个类的实例**。
+- **终值(final)初始化**: 构造中初始化的参数可以用于初始化非空或 final 修饰的变量，它们都必须被初始化或提供一个默认值。
+- **重定向构造函数**:有时候*类中的构造函数仅用于调用类中其它的构造函数*，需在函数签名后使用`:`指定需要重定向到的其它构造函数。
+
+```cs
+import 'dart:math';
+void main() {
+  var a = Point.origin();  print(a.x); /* 3.6 */  var b = Point(5, 8);  print(b.x);/* 5 */
+  var c = Point.alongXAxis(12);print(c.x); /*12*/ print(a.distanceTo(b)); // 2.4413111231467406
+} 
+const double xOrigin = 3.6; const double yOrigin = 6; // 用作命名构造函数初始化Point的初始值
+class Point { // 声明一个Point类
+  double x = 0;  double y = 0;// 类的实例变量，初始值为0
+  /* Point(double x, double y) {this.x = x;this.y = y;  } // 使用 this 关键字引用当前实例 */
+  Point(this.x, this.y);// 语法糖方式的构造函数，对上一行更简洁的初始化实例变量
+  Point.origin(): x = xOrigin,y = yOrigin;  // 命名构造函数
+  Point.alongXAxis(double x) : this(x, 0); // 重定向构造函数, Delegates(委托) to the main constructor.
+  // distanceTo() 方法就是一个实例方法
+  double distanceTo(Point other) {var dx = x-other.x; var dy=y-other.y; return sqrt(dx*dx + dy*dy);}
+}
+```
+
+- 如果你没有声明构造函数，那么 Dart 会自动生成一个**无参数的构造函数**并且该构造函数*会调用其父类的无参数构造方法*。
+  - _子类不会继承父类的构造函数_，如果子类没有声明构造函数，那么只会有一个默认无参数的构造函数。
+  - **调用父类非默认构造函数**顺序:子类构造函数初始化列表 `->` 父类的无参数构造函数 `->` 当前类的构造函数。
+  - _如果父类没有匿名无参数构造函数，那么子类必须调用父类的其中一个构造函数_，只需在构造函数体前使用（`:`）指定。
+  - 除了调用父类构造函数之外，还可以*在构造函数体执行之前*初始化实例变量。每个实例变量之间使用逗号分隔。
+- **常量构造函数**: 如果类生成的对象都是不变的，可以在*生成这些对象时*就将其变为编译时常量。在类的构造函数前加上 `const` 并确保所有实例变量均为 `final` 。
+- 使用 `factory` 关键字标识类的构造函数将会令该构造函数变为**工厂构造函数**，这将意味着*使用该构造函数构造类的实例时并非总是会返回新的实例对象*。在工厂构造函数中无法访问 `this`。
+
+**方法**是为对象提供行为的函数 (Methods are functions that provide behavior for an object.)。
+
+- 对象的**实例方法**可以访问实例变量和 this。上例中的`distanceTo()`。
+- 使用 `operator` 标识来进行标记**重写操作符**。
+- 可以使用 `get` 和 `set` 关键字为额外的属性添加 `Getter` 和 `Setter` 方法(一对用来读写对象属性的特殊方法)。
+- **抽象方法**就是以 `abstract` 修饰的方法，_只声明返回的数据类型、方法名称和所需的参数，没有方法体_，即**只需要声明而不需要实现**。
+  - _当一个方法为抽象方法时，意味着这个方法必须被子类的方法所重写，否则其子类的该方法仍然是 `abstract` 的，而这个子类也必须是抽象的_，即声明为 `abstract` 。
+  - 实例方法、`Getter` 方法以及 `Setter` 方法*都可以*是抽象的，定义一个接口方法而不去做具体的实现让实现它的类去实现该方法。
+  - **抽象方法只能存在于*抽象类*中**, 直接使用分号（`;`）替代方法体即可声明一个抽象方法。
+
+**抽象类**: 使用关键字 `abstract` 标识类可以让该类成为 **抽象类**，_抽象类将无法被实例化_。
+
+**隐式接口**: 每一个类都隐式地定义了一个接口并实现了该接口，这个接口包含所有这个类的实例成员以及这个类所实现的其它接口。
+
+- 一个类可以通过关键字 `implements` 来实现一个或多个接口并实现每个接口定义的 API；实现多个类接口需要使用逗号分割每个接口类。
+
+**扩展一个类**: 使用 `extends` 关键字来创建一个子类，并可使用 `super` 关键字引用一个父类。**Dart 支持单继承**。
+
+- _重写类成员_: 子类可以重写父类的实例方法（包括操作符）、 Getter 以及 Setter 方法。使用 `@override` 注解来表示重写的成员。
+- 一个重写方法的*声明必须*与它所重写的方法*匹配*以下内容:
+  - 返回类型相同（或为其子类型）。参数类型相同（或者是超类型）。位置参数的个数。泛型方法或非泛型方法重写后依旧是泛型或非泛型。
+- _如果重写 `==` 操作符，必须同时重写对象 hashCode 的 Getter 方法。_
+- 如果调用了对象上*不存在的方法或实例变量*将会触发 `noSuchMethod` 方法。
+  - 除非重写 `noSuchMethod`，否则使用不存在的成员会导致 `NoSuchMethodError`。
+
+**枚举类型**: 使用关键字 `enum` 来定义*简单的枚举类型和枚举值*: `enum Color { red, green, blue }`
+
+- 可以使用与定义*类*类似的语句来定义**增强的枚举**，但有一些限制条件:
+
+  - 1 实例的字段必须是 final，包括由 mixin 混入的字段。2 所有的 实例化构造 必须以 const 修饰。3 工厂构造 只能返回已知的一个枚举实例。4 由于 Enum 已经自动进行了继承，所以枚举类不能再继承其他类。5 不能重载 `index`、`hashCode` 和比较操作符 `==`。
+  - 6 不能声明 `values` 字段，否则它将与枚举本身的静态 `values` getter 冲突。7 在进行枚举定义时，所有的实例都需要首先进行声明，且至少要声明一个枚举实例。
+
+- **使用枚举**: 像访问 静态变量 一样访问枚举值:`final favoriteColor = Color.blue;`
+
+**Mixin** 是一种*在多重继承中复用某个类中代码的方法模式*。（dart 是单继承多实现，使用 mixin 可以多重继承）。使用 `with` 关键字并在其后跟上 Mixin 类的名字来使用 Mixin 模式。`class Maestro extends Person with Musical, Aggressive, Demented{/* */}`
+
+- 想要实现一个 Mixin，_使用`with`创建一个继承自 Object 且未声明构造函数的类_。关键字 `on` 指定*哪些类可以使用*该 Mixin 类。
+- `mixin MusicalPerformer on Musician {/* */}`: 需要先 `extends` Musician 才能使用 MusicalPerformer 类。
+- 不用`mixin`关键字而是`class`就变成了一个普通的类一样可以被正常地使用。
+
+**类变量和方法**: 使用关键字 `static` 可以声明类变量或类方法(静态变量或静态方法)，**在其首次被使用的时候才被初始化**。
+
+**泛型**: 例如数组 List 的实际类型为 `List<E>`:`<…>` 符号表示数组是一个`泛型`(或`参数化类型`）。**通常使用一个字母来代表类型参数**。
+
+- 泛型常用于需要**要求类型安全**的情况: 适当地指定泛型可以更好地帮助代码生成。使用泛型可以减少代码重复。
+- List、Set 以及 Map 字面量也可以是参数化的。Set 类似`var uniqueNames = <String>{'Seth', 'Kathy', 'Lars'};`
+- 在*调用构造方法时使用泛型*，只需在*类名后用尖括号(`<...>`)将一个或多个类型包裹*:`var nameSet = Set<String>.from(names);`
+- **Dart 的泛型类型是固化的**(reified)，这意味着即便**在运行时也会保持类型信息**，Java 中的泛型是类型*擦除* (erasure) 的。
+- **限制参数化类型**: 使用泛型时，参数必须是指定类型的子类，这时候**可以使用 `extends` 关键字**。
+- 在方法上使用泛型，称之为**泛型方法**:`T first<T>(List<T> ts) {T tmp = ts[0]; return tmp;}`
+  - `first`方法的返回值类型、参数 List 类型、局部变量`tmp`的类型都可使用泛型 T。
+
+**库和可见性**:`import` 和 `library` 关键字用于创建一个模块化和可共享的代码库。以下划线（`_`）开头的成员仅在代码库中可见。**每个 Dart 程序都是一个库**，即便没有使用关键字 library 指定。
+
+- 使用 `import` 来指定命名空间以便其它库可以访问，唯一参数是用于指定代码库的 URI。例如`import 'dart:html';`
+  - URI 代表统一资源标识符。URL（统一资源定位符）是一种常见的 URI。
+- 使用`as`关键字指定前缀，使用`show`(只导入 show 指定的)或`hide`(导入除了 hide 指定的其他所有)导入代码库的部分。
+- 使用 `deferred as` 关键字来标识需要延时加载的代码库。例如`import 'package:greetings/hello.dart' deferred as hello;`
+
+**异步支持**: Dart 代码库中有大量返回 `Future` 或 `Stream` 对象的函数，这些函数都是 **异步** 的， 它们会在*耗时操作（比如 I/O）执行完毕前直接返回而不会等待耗时操作执行完毕*。`async` 和 `await` 关键字用于实现异步编程，并且让代码看起来就像是同步的一样。
+
+- 使用 `async` 和 `await`或 `Future API`获得 `Future` 执行完成的结果。
+  - `await`表达式的返回值通常是一个`Future`对象。`Future`对象代表一个“promise”，`await`表达式会阻塞直到需要的对象返回。
+- 使用 `async` 关键字和一个 `异步循环`（使用 `await for` 关键字标识）或 `Stream API`从 `Stream` 中获取值。
+  - 使用 `break` 和 `return` 语句可以停止接收 Stream 数据，这样就跳出了循环并取消注册监听 Stream。
+
+需要延迟地生成一连串的值时，可以考虑使用**生成器函数**,Dart 内置支持两种形式的生成器方法:
+
+- **同步** 生成器：返回一个 Iterable 对象。在函数上加 `sync*` 关键字并将返回值类型设为 `Iterable`，在函数中使用 `yield` 语句来传递值。
+- **异步** 生成器：返回一个 Stream 对象。异步生成器函数与同步类似，只不过关键字为 `async*` 并且返回值为 `Stream`。
+
+**可调用类**: 通过实现类的 `call()` 方法，允许使用类似函数调用的方式来使用该类的实例。
+
+**隔离区(Isolates)**: 为了解决多线程带来的并发问题，Dart 使用 `isolate` 替代线程，_所有的 Dart 代码均运行在一个 `isolate` 中。\_每一个 `isolate` 有它自己的堆内存以确保其状态不被其它 `isolate` 访问。_
+
+**类型别名**是引用某一类型的简便方法，使用关键字 `typedef`。例如`typedef IntList=List<int>; IntList il=[1,2,3];`
+
+使用**元数据**可以为代码增加一些额外的信息，形式为`@xxx`。Dart 中`@deprecated @Deprecated @override`。也可以自定义元数据注解。
+
+\newpage
+
+## Flutter 概述
+
+Flutter 为软件开发行业带来了革新：**只要一套代码库，即可构建、测试和发布适用于移动、Web、桌面和嵌入式平台的精美应用。**
+
+- 快速: Flutter 代码可以直接编译成 ARM 或 Intel 平台的机器代码，以及 js 代码，确保了 Flutter 应用能够拥有原生平台的性能表现。
+- 高效: 使用热重载 (Hot Reload) 快速构建和迭代你的产品，更新代码后即刻看到变化，也不会丢失应用状态。
+- 灵活: 屏幕上的每个像素都由你来把握，尽情去创造不被定义、不受局限、彰显品牌的完美体验吧，这个舞台专属于你。
+
+在*开发中*，Flutter 应用会*在一个 VM（程序虚拟机）中运行*，从而可以在保留状态且无需重新编译的情况下，*热重载*相关的更新。  
+对于*发行版* (release) ，Flutter 应用程序会*直接编译为机器代码*（Intel x64 或 ARM 指令集），*或*者针对 Web 平台的*JavaScript*。
+
+**Flutter 被设计为一个可扩展的分层系统**。它可以被看作是各个独立的组件的系列合集，上层组件各自依赖下层组件。  
+组件无法越权访问更底层的内容，并且框架层中的各个部分都是可选且可替代的。
+
+![archdiagram](./pictures/pictures-flutter/flutter-system-overview.png){width=62%}
+
+**嵌入层**: 对于底层操作系统而言，Flutter 应用程序的包装方式与其他原生应用相同。_在每一个平台上，会包含一个特定的**嵌入层** _，从而提供一个程序入口，程序由此可以与底层操作系统进行协调，访问诸如 surface 渲染、辅助功能和输入等服务，并且管理事件循环队列。Flutter 代码可以通过嵌入层，以模块方式集成到现有的应用中，也可以作为应用的主体。
+
+**Flutter 引擎** 毫无疑问是 Flutter 的核心，它主要使用 C++ 编写，并提供了 Flutter 应用所需的原语。_当需要绘制新一帧的内容时，引擎将负责对需要合成的场景进行栅格化_。它提供了 Flutter 核心 API 的底层实现，包括图形（通过 **Skia**）、文本布局、文件及网络 IO、辅助功能支持、插件架构和 Dart 运行环境及编译环境的工具链。_引擎将底层 C++ 代码包装成 Dart 代码，通过 `dart:ui` 暴露给 Flutter 框架层_。该库暴露了最底层的原语，包括用于驱动输入、图形、和文本渲染的子系统的类。
+
+开发者可以通过 **Flutter 框架层** 与 Flutter 交互，该框架提供了*以 Dart 语言编写的现代响应式框架*。它包括由*一系列层组成的一组丰富的平台，布局和基础库*。Flutter 框架相对较小，因为*一些开发者可能会使用到的更高层级的功能已经被拆分到不同的软件包中*，使用 Dart 和 Flutter 的核心库实现。Flutter 框架从下层到上层，依次有：
+
+- 基础的 **foundational** 类及一些基层之上的构建块服务，如 animation、 painting 和 gestures，它们可以*提供上层常用的抽象*。
+- **渲染层** 用于提供操作布局的抽象。有了渲染层，可以*构建一棵可渲染对象的树*。动态更新这些对象时，渲染树也会自动根据变更来更新布局。
+- **widget 层**是一种组合的抽象。_每一个渲染层中的渲染对象，都在 widgets 层中有一个对应的类_。此外，widgets 层让你可以*自由组合你需要复用的各种类*。响应式编程模型就在该层级中被引入。
+- **Material 和 Cupertino 库**提供了*全面的 widgets 层的原语组合*，这套组合分别实现了 Material 和 iOS 设计规范。
+
+\rule[0pt]{19.4cm}{0.03em}
+
+**响应式用户界面**: 在 Flutter 里，widgets 是用来配置对象树的不可变类。这些 widgets 会管理单独的布局对象树，接着参与管理合成的布局对象树。 _Flutter 的核心就是一套高效的遍历树的变动的机制_，它会将对象树转换为更底层的对象树，并在树与树之间传递更改。
+
+**Widgets** 是构建 Flutter 应用界面的基础块，_每个 widget 都是一部分不可变的 UI 声明_。Widgets 通过布局组合形成一种层次结构关系。_每个 Widget 都嵌套在其父级的内部，并可以通过父级接收上下文_。从根布局（托管 Flutter 应用的容器，通常是 MaterialApp 或 CupertinoApp）开始，自上而下都是这样的结构。
+
+应用会根据事件交互（例如用户操作），通知框架替换层级中的旧 widget 为新 widget，然后*框架会比较新旧 widgets，高效地更新用户界面*。Flutter 拥有其自己的 UI 控制实现，而不是由系统自带的方法进行托管。
+
+- **组成**: Widgets 通常由更小的且用途单一的 widgets 组合而成，提供更强大的功能。
+- **构建 widgets**:_通过重写 `build()` 方法，返回一个新的元素树，来定义视觉展示_。Widget 的 build 方法应该是没有副作用的。每个渲染帧，Flutter 都可以根据变化的状态，调用 `build()` 方法重建部分 UI。因此，保证 build 方法轻量且能快速返回 widget 是非常关键的，繁重的计算工作应该通过一些异步方法完成，并存储在状态中，在 build 方法中使用。
+- **Widget 的状态**: 框架包含两种核心的 widget 类：有状态的 和 无状态的 widget。
+  - 大部分 widget 都没有需要变更的状态：它们并**不包含随时变化的属性**（例如图标或者标签）。这些 widget 会继承 `StatelessWidget`。
+  - 当 widget 拥有**需要根据用户交互或其他因素而变化的特有属性**就是*有状态的* 。当值变化时 widget 需要被重建以更新相关的 UI。这些 widget 会继承 `StatefulWidget`，并且「可变的」状态会保存在继承 `State` 的另一个子类中(因为 widget 本身是不可变的)。
+    - `StatefulWidget` 自身没有 `build()` 方法，而在其对应的 `State` 对象中。
+    - 每当你更改 `State` 对象时（例如计数增加），你需要调用 `setState()` 来告知框架，再次调用 `State` 的构建方法来更新 UI。
+    - 将状态和 widget 对象分离，可以使其他 widget 无差异地看待无状态和有状态 widget，而不必担心丢失状态。
+- **状态管理**: `InheritedWidget` 提供了一种从共同的祖先节点获取数据的简易方法。库`provider、flutter_hooks`也可以状态管理。
+
+**Flutter 的渲染模型**
+
+通常来说，跨平台框架都会在 Android 和 iOS 的 UI 底层库上创建一层抽象，该抽象层尝试抹平各个系统之间的差异。
+
+**Flutter 通过绕过系统 UI 组件库，使用自己的 widget 内容集，削减了抽象层的开销。**用于绘制 Flutter 图像内容的 Dart 代码被编译为机器码，并使用 Skia 进行渲染。 Flutter 同时也嵌入了自己的 Skia 副本，让开发者能在设备未更新到最新的系统时，也能跟进升级自己的应用，保证稳定性并提升性能。
+
+对于 Flutter 的渲染机制而言，首要原则是 **简单快速**。 Flutter 为数据流向系统提供了直通的管道:
+
+![render-pipeline](./pictures/pictures-flutter/render-pipeline2.png){width=65%}
+
+Flutter 四棵树(subtree of widgets、element tree、 render tree、layer tree)构建过程:
+
+- 当 Flutter 需要绘制某段 widget 层次结构代码片段时，框架会调用 build() 方法，返回一棵基于当前应用状态来绘制 UI 的 **`widget子树`**。
+- 在构建阶段,Flutter 会将代码中描述的 widgets 转换成对应的 **`Element 树`**，_每一个 Widget 都有一个对应的 Element_。
+- 在构建阶段,Flutter 会为 Element 树中的每个 RenderObjectElement 创建或更新其对应的一个从 RenderObject 继承的对象/**`渲染树`**。
+  - 在渲染树中，每个节点的基类都是 RenderObject，该基类为布局和绘制定义了一个抽象模型。
+  - 每一个 RenderObject 都了解其父节点的信息，但对于其子节点，除了如何*访问*和*获得他们的布局约束*，并没有更多的信息。
+- 在进行布局的时候，Flutter 会以 DFS（深度优先遍历）方式遍历渲染树，并**将限制以自上而下的方式**从父节点传递给子节点，生成 **`Layer树`**。
+  - 在遍历完一次树后，每个对象都通过父级约束而拥有了明确的大小，随时可以通过调用 `paint()` 进行渲染生成 layer 树。
+  - 所有 `RenderObject` 的根节点是 `RenderView`，代表了渲染树的总体输出。
+    - 当平台需要渲染新的一帧内容时，会调用一次 `compositeFrame()` 方法，它是 `RenderView` 的一部分。
+    - 该方法会创建一个 `SceneBuilder` 来触发当前画面的更新。
+    - 当画面更新完毕，`RenderView` 会将合成的画面传递给 `dart:ui` 中的 `Window.render()` 方法，控制 GPU 进行渲染。
+
+Widget 和 Element 是一一对应的，但并不和 RenderObject 一一对应。渲染树在上屏前会生成一棵 Layer 树。  
+比如 StatelessWidget 和 StatefulWidget 都没有对应的 RenderObject。  
+真正的布局和渲染逻辑在 Render 树中，Element 是 Widget 和 RenderObject 的粘合剂，可以理解为一个中间代理。
+
+![render-pipeline-trees](./pictures/pictures-flutter/render-pipeline-trees2.png){width=90%}
+
+大部分的 Flutter widget 是由一个继承了 RenderBox 的子类的对象渲染的，RenderBox 提供了**盒子限制模型**。  
+盒子限制模型十分强大，它的对象布局的时间复杂度是 `O(n)`：
+
+- _父节点可以通过设定最大和最小的尺寸限制，决定其子节点对象的大小。_
+- _父节点可以决定子节点的宽度_，而让子节点灵活地自适应布局高度（或决定高度而自适应宽度）。
+- 也适用于子节点对象需要知道有多少可用空间渲染其内容的场景，通过使用`LayoutBuilder`widget，子节点可以得到从上层传递下来的约束
+
+**Flutter 与 React Native 的对比**: _性能_: 都赶不上原生，但 Flutter 要稍好点，高帧更流畅。- _生态_: Google 和 Facebook，pub.dev 和 npm，github 中 Flutter 的 issue 更多 ( 202208 10k vs 1.9k)。- _语言_: dart 和 JavaScript。- _社区_: Flutter 文档更好、Stackoverflow 等讨论较多、市场占有率逐步提升。
+
+\newpage
+
+# SQL NoSQL NewSQL
+
+SQL NoSQL NewSQL 简单特性比较:
+
+![sql-nosql-newsql.png](./pictures/pictures-others/sql-nosql-newsql.png){width=80%}
+
+## ACID 规则和 CAP 定理简介
+
+- A (Atomicity) **原子性**: 原子性是说事务里的所有操作要么全部做完，要么都不做，事务成功的条件是事务里的所有操作都成功，只要有一个操作失败，整个事务就失败，需要回滚。
+- C (Consistency) **一致性**: 一致性是说数据库要一直处于一致的状态，事务的运行不会改变数据库原本的一致性约束。
+- I (Isolation) **隔离性**: 隔离性是指并发的事务之间不会互相影响，如果一个事务要访问的数据正在被另外一个事务修改，只要另外一个事务未提交，它所访问的数据就不受未提交事务的影响。
+- D (Durability) **持久性**: 持久性是指一旦事务提交后，它所做的修改将会永久的保存在数据库上，即使出现宕机也不会丢失。
+
+第一范式：1NF 是对**属性的原子性**约束，要求属性具有原子性，不可再分解；  
+第二范式：2NF 是对**记录的惟一性**约束，要求记录有惟一标识，即实体的惟一性；  
+第三范式：3NF 是对**字段冗余性**的约束，即任何字段不能由其他字段派生出来，它要求字段没有冗余。
+
+**CAP 定理（CAP theorem）** 指出对于一个分布式计算系统来说，不可能同时满足以下三点:
+
+- 一致性(Consistency): 所有节点在同一时间具有相同的数据
+- 可用性(Availability): 保证每个请求不管成功或者失败都有响应
+- 分区容错性(Partition tolerance): 系统中任意信息的丢失或失败不会影响系统的继续运作
+
+根据 CAP 原理将 NoSQL 数据库分成了满足 CA 原则、满足 CP 原则和满足 AP 原则三大类：
+
+- CA - 单点集群，满足一致性，可用性的系统，通常在**可扩展性上不太强大**。
+- CP - 满足一致性，分区容错性的系统，通常**性能不是特别高**。
+- AP - 满足可用性，分区容错性的系统，通常可能**对一致性要求低一些**。
+
+![oltp-olap简单对比.png](./pictures/pictures-others/oltp-olap简单对比.png){width=80%}
+
+## 使用索引及其优化
+
+**索引**是关系数据库中对某一列或多个列的值进行预排序的数据结构。通过使用索引，可以让数据库系统不必扫描整个表，而是直接定位到符合条件的记录，这样就**大大加快了查询速度。**建立*唯一性索引*，可以保证数据库表中*每一行数据的唯一性*。
+
+**不利的方面**: 建立索引和维护索引要耗费时间，索引需要占物理空间，索引也要动态的维护。
+
+**适合建立索引的字段**: 经常需要搜寻的列，作为主键的列，经常用在联机的列，经常需要根据范围进行搜寻的列，经常需要排序的列，经常使用在`where`子句中的列。  
+`select` 的条件是 `where f1 and f2`，那么如果我们在字段 `f1`*或*字段 `f2` 上建立索引是*没有用*的，只有在字段 `f1` **和** `f2` 上同时建立索引才有用等。
+
+**不适合建立索引的字段**: 查询中很少使用或者参考的列，只有很少数据值的列，定义为 text、image 和 bit 数据型别的列，当修改效能远远大于检索效能时。
+
+**索引优化使用原则**
+
+1. 选择**唯一性索引**
+2. 为经**常需要排序、分组和联合操作的字段建立索引**。ORDER BY、GROUP BY、DISTINCT 和 UNION 等操作的字段，
+3. 为**常作为查询条件的字段建立索引**
+4. **限制索引的数目**
+5. 尽量**使用数据量少的索引**（char10 建索引比 char100 在检索时耗时更少，效率更高）
+6. 尽量**使用前缀来索引**
+7. **删除不再使用或者很少使用的索引**
+8. **最左前缀匹配原则**，非常重要的原则。
+9. **`=`和`in`可以乱序**。如`a=1 and b=2 and c=3`建立(a,b,c)索引可以任意顺序，mysql 的查询优化器会帮你优化成索引可以识别的形式
+10. 尽量**选择区分度高的列作为索引**。 区分度公式`count(distinct col)/count(*)`，表示字段不重复的比例，比例越大扫描的记录数越少。
+11. **索引列不能参与计算，保持列“干净”**。b+树中存的都是数据表中的字段值，但进行检索时，需要把所有元素都应用函式才能比较成本太大。
+12. **尽量的扩充套件索引，不要新建索引。** 比如表中已经有 a 的索引，现在要加(a,b)的索引，那么只需要修改原来的索引即可
+
+**SQL 注入**是*用户输入的数据，在拼接 SQL 语句的过程中，超越了数据本身，成为了 SQL 语句查询逻辑的一部分*，然后这样被拼接出来的 SQL 语句被数据库执行，产生了开发者预期之外的动作。
+
+1. 代码层防止 sql 注入攻击的最佳方案就是 **sql 预编译**
+2. 确认每种数据的类型，比如是数字，数据库则必须使用 int 类型来存储
+3. 规定数据长度，能在一定程度上防止 sql 注入
+4. **严格限制数据库权限**，能最大程度减少 sql 注入的危害
+5. 避免直接响应一些 sql 异常信息，sql 发生异常后，**自定义异常进行响应**
+6. **过滤参数**中含有的一些数据库关键词
+
+**优化数据库的方法**:
+
+- （1）选取最适用的字段属性，尽可能减少定义字段宽度，尽量把字段设置 NOT NULL，例如"省份"、"性别"最好适用 ENUM
+- （2）使用连接(JOIN)来代替子查询（3）适用联合(UNION)来代替手动创建的临时表（4）事务处理
+- （5）锁定表、优化事务处理（6）适用外键，优化锁定表（7）建立索引（8）优化查询语句(explain)
+
+**SQL 语句优化**:
+
+- （1）where 子句中：where 表之间的连接必须写在其他 where 条件之前，那些可以过滤掉最大数量记录的条件必须写在 where 子句的末尾。where高于having，能写在where限定的条件就不要去having限定了。（2）避免在索引列上使用计算。
+- （3）用 `EXISTS` 替代 `IN`、用 `NOT EXISTS` 替代 `NOT IN`。（4）避免在索引列上使用 `IS NULL` 和 `IS NOT NULL`。
+- （5）对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。
+- （6）应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描。
+- （7）应尽量避免在 where 子句中对字段进行表达式操作，这将导致引擎放弃使用索引而进行全表扫描。
+
+**脏读**(Dirty Read): 读取未提交的数据。**一个事务中访问到了另外一个事务未提交的数据**。  
+**不可重复读**NonRepeatable Read:前后数据多次读取结果集内容不一致。**一个事务读取同一条记录 2 次得到的结果不一致(主要update导致)**   
+**幻读**(Phantom Read): 前后数据多次读取，结果集数量不一致。**一个事务读取 2 次，得到的记录条数不一致(主要 insert 导致)**。
+
+**设置数据库隔离级别**:隔离级别越高，所需要消耗的MySQL性能越大(如事务并发严重性))，为了平衡二者，一般建议设置的隔离级别为**可重复读**。
+
+| 隔离级别                     | 脏读   | 不可重复读 | 幻读   |
+| ---------------------------- | ------ | ---------- | ------ |
+| 未提交读（Read uncommitted） | 可能   | 可能       | 可能   |
+| 已提交读（Read committed）   | 不可能 | 可能       | 可能   |
+| 可重复读（Repeatable read）  | 不可能 | 不可能     | 可能   |
+| 可串行化（Serializable ）    | 不可能 | 不可能     | 不可能 |
+
+
+**【单体】**应用由传统的三层架构组成，即数据库、用户界面和服务器端应用程序。
+
+**【分布式服务】**顾名思义服务是分散部署在**不同的机器**上的，一个服务可能负责几个功能，是一种面向 SOA 架构的，服务之间也是通过 rpc 来交互或者是 webservice 来交互的。当计算机的程序和数据通过网络分布在多于一个的计算机上时，计算就成为**分布式的**。
+
+**【微服务】**的意思也就是将模块拆分成一个独立的服务单元通过接口来实现数据的交互。可能是同一个机器上。
+
+**分布式：分散压力。微服务：分散能力。** \textcolor{brown}{将一套系统拆分成不同子系统部署在不同服务器上叫}**\textcolor{brown}{分布式}**。 \textcolor{brown}{部署多个相同的子系统在不同的服务器上叫}**\textcolor{brown}{集群}**。\textcolor{brown}{部署在不同服务器上的同一个子系统需要做}**\textcolor{brown}{负载均衡处理}**。
+
+**【Serverless(无服务器架构)】** 指的是由开发者实现的服务端逻辑运行在无状态的计算容器中，它*由事件触发，完全被第三方管理*，其业务层面的状态则被开发者使用的数据库和存储资源所记录。六个特质(trait):入门门槛低（Low barrier-to-entry），无主机（Hostless），无状态（Stateless），弹性（Elasticity），分布式（Distributed），事件驱动（Event-driven）。
+
+## 缓存雪崩、击穿、穿透
+
+**缓存雪崩**(在某一时间大量缓存同时失效，请求全部转发到 DB。可能导致 DB 瞬时压力过重而崩溃)
+
+- 将缓存失效时间分散开，比如在原有的失效时间基础上增加一个随机值(比如 1-5 分钟)，避开集体失效的事件。
+
+**缓存击穿/失效**(缓存中热点数据在高并发请求时过期，导致访问直接转到 DB，DB 崩溃。与雪崩的区别在于 key 的一个与多个)
+
+- 永远不过期:过期时间设置为不过气，或者检测到即将过期时重新获取(后台的异步线程进行缓存)。
+
+**缓存穿透**(缓存中不存在,DB 中也不存在。每次查询都会直接查询 DB，失去缓存的意义。流量大可能导致 DB 崩溃)
+
+- 查询结果为空也一样缓存，只不过时间设置相对较短。或者布隆过滤器
+
+\newpage
