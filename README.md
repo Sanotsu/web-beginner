@@ -66,6 +66,7 @@
 - [09-代理与反射](documents/01-javascript/base-js/09、代理与反射.md)
 - [10-函数](documents/01-javascript/base-js/10、函数.md)
 - [11-Promises 和异步函数](documents/01-javascript/base-js/11、Promises和异步函数.md)
+- [12-MDN 的 Canvas 基础](documents/01-javascript/base-js/12、MDN的Canvas基础.md)
 
 #### rxjs
 
