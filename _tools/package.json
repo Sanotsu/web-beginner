@@ -7,14 +7,15 @@
   "license": "MIT",
   "dependencies": {
     "get-video-duration": "^4.1.0",
+    "got": "^12.5.3",
     "imagemin": "^8.0.1",
     "imagemin-jpegtran": "^7.0.0",
     "imagemin-pngquant": "^9.0.2",
-    "inquirer": "^8.2.0",
+    "inquirer": "^9.1.4",
     "moment": "^2.29.4",
     "mqtt": "^4.3.7",
     "nodejieba": "^2.6.0",
-    "puppeteer": "^19.3.0",
+    "puppeteer": "^19.4.1",
     "tesseract.js": "^4.0.0"
   }
 }
