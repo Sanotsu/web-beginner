@@ -83,6 +83,7 @@
 
 - **[01-CSS 布局与响应式布局简述](documents/01-javascript/_css-part/01-CSS布局与响应式布局简述.md)**
 - [02-CSS 的动画、变换、过渡简介(animation-transform-transition)](documents/01-javascript/_css-part/02-CSS-animation-transform-transition.md)
+- [03-CSS 选择器与 XPath 路径表达式](documents/01-javascript/_css-part/03-CSS选择器和XPath路径表达式.md)
 
 ## vue
 
