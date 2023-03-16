@@ -20412,6 +20412,29 @@ ref:
 
 什么是语义化？其实简单说来就是**让机器可以读懂内容**。
 
+HTML5 中的一些有趣的新特性：
+
+- Canvas、SVG -- 用于绘画的元素，canvas 绘制的图片会失真而 SVG 绘制的不会失真。
+- video、audio -- 用于播放视频和音频的媒体。
+- Drag 、Drop -- 用于拖放。
+- Geolocation -- 用于获取地理位置。
+- localStorage、sessionStorage -- 用于本地离线存储。
+- webSQL、IndexDB -- 前端数据库操作，由于安全性极低，目前 h5 已放弃。
+- web Worker -- 独立于其他脚本，不影响页面性能运行在后台的 javascript。
+- webSocket -- 单个 TCP 连接上进行全双工通讯的协议。
+- 新的特殊内容元素 -- 如：article、footer、header、nav、section。
+- 新的表单控件 -- 如：date、time、email、url、search。
+
+概括 html5 有以下几点优势：
+
+- 提高可用性和可维护性，改进了用户体验。
+- 新增语义化标签，有助于开发人员定义清晰的结构。
+- 可以播放视频音频，增加多媒体元素。
+- 利用 h5 动画，友好地替代了 flash 和 silverlight。
+- 爬虫抓取网站的时候，对于 SEO 很友好。
+- H5 被大量应用于移动应用和游戏开发。
+- 可移植性好。
+
 ### 8.1.2 DOM、BOM
 
 1. 定义
