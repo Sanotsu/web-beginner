@@ -34,10 +34,8 @@ include-before:
 
 ## 1 JS 语法相关
 
-**提升**: 所谓的"提升"(hoist)，也就是把**所有变量声明**都拉到函数作用域的顶部(var)。  
-_函数声明和变量声明总是会被解释器悄悄地被"提升"到方法体的最顶部。_  
-JavaScript _只会提升声明，不会提升其初始化_。
-(带=等号声明的函数、类等等，是表达式声明)
+**提升**: 所谓的"提升"(hoist)，也就是把**所有变量声明**都拉到函数作用域的顶部(var)。(带`=`等号声明的函数、类等等，是表达式声明)  
+_函数声明和变量声明总是会被解释器悄悄地被"提升"到方法体的最顶部。_  JavaScript _只会提升声明，不会提升其初始化_。
 
 ECMAScript 中不能定义自己的数据类型。
 
@@ -61,12 +59,10 @@ _NaN 不等于包括 NaN 在内的任何值_。有 3 个函数可以将非数值
 
 **JavaScript 运行时概念(Runtime concepts)**
 
-![js运行时环境示例](./pictures/pictures-js/the_javascript_runtime_environment_example.png){width=35%}
-
-说明
+\textcolor{white}{-}![the_javascript_runtime_environment](./pictures/pictures-js/the_javascript_runtime_environment.png)
 
 - 栈(Stack):**函数调用**形成了一个由若干帧(Frame)组成的**栈**。
-  - 调用一个函数总是会为其创造一个新的栈**帧**。
+  - 调用一个函数总是会为其创造一个新的栈**帧**(执行上下文)。函数执行完毕并退出，其上下文也从*栈中弹出并销毁*。
 - 堆(Heap):**对象被分配在堆**中，堆是一个用来表示一大块（通常是非结构化的）内存区域的计算机术语。
 - 队列(Queue):一个 JavaScript 运行时包含了一个**待处理消息的消息队列**(Message Queue)。
   - 每一个消息(Message)都关联着一个用以处理这个消息的回调函数。
@@ -86,8 +82,6 @@ Date 类型的 valueOf() 方法根本就不返回字符串，这个方法被重�
 
 引用类型(Boolean 、 Number 和 String)与原始值包装类型的主要区别在于对象的生命周期。
 
-\rule[0pt]{19.4cm}{0.03em}
-
 **原始值为什么可以调用一些方法：**
 
 ```cs
@@ -102,6 +96,8 @@ let s = "str"; console.log(s.slice(1)); // "tr"
 
 这种行为则让原始值拥有了对象的行为。
 
+\newpage
+
 Symbol 全局对象不能使用 new 去实例化。
 
 Math 不是一个构造器。Math 的所有属性与方法**都是静态**的。 用于 Number 类型。它**不支持** BigInt。  
@@ -112,7 +108,7 @@ Math 不是一个构造器。Math 的所有属性与方法**都是静态**的。
 合并两个 Map 对象时，如果有重复的键值，则后面的会覆盖前面的。
 
 一个 Map 的 key 可以是任意值，包括函数、对象或任意基本类型。一个 Object 的 key 必须是一个 String 或是 Symbol。  
-[键的顺序](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#objects_vs._maps): Map 中的 key 是有序的。一个 Object 的 key 不一定是序的(**没有可以迭代对象所有**属性的机制)。
+[键的顺序](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#objects_vs._maps): Map 中的 key 是有序的。一个 Object 的 key 不一定是序的(**没有可以迭代对象所有属性**的机制)。
 
 - for-in、Object.keys、Object.getOwnPropertyNames、Object.getOwnPropertySymbols 获取内容各不一样。
 <!-- - for-in 仅包含了以字符串为键的属性；
@@ -143,9 +139,9 @@ _迭代器可以为各种不同的数据结构提供统一的访问机制_。任
 生成器对象 (Generator) 是由一个 generator function 返回的，并且它符合可迭代协议和迭代器协议。
 箭头函数不能用来定义生成器函数。
 
-yield 关键字可以让生成器停止和开始执行，也是生成器最有用的地方。生成器函数在遇到 yield 关键字之前会正常执行。
+`yield` 关键字可以让生成器停止和开始执行，也是生成器最有用的地方。生成器函数在遇到 `yield` 关键字之前会正常执行。
 遇到这个关键字后，执行会停止，函数作用域的状态会被保留。
-停止执行的生成器函数只能通过在生成器对象上调用 next() 方法来恢复执行。
+停止执行的生成器函数只能通过在生成器对象上调用 `next()` 方法来恢复执行。
 
 \rule[0pt]{19.4cm}{0.03em}
 
@@ -168,7 +164,7 @@ yield 关键字可以让生成器停止和开始执行，也是生成器最有�
 `Object.is()` 与 `==` 和 `===` 都不相同:  
 不会强制转换两边的值;`Object.is(NaN, NaN)` 为 true， `Object.is(+0, -0)` 为 false，和`===`相反。
 
-使用 new 调用类的构造函数会执行如下操作:
+**使用 new 调用类的构造函数**会执行如下操作:
 
 1.  在内存中创建一个新对象。
 2.  这个新对象内部的 `[[Prototype]]` 指针被赋值为构造函数的 prototype 属性。
@@ -194,6 +190,7 @@ person01.__proto__ == Person.prototype
 
 // 所有的构造函数的 __proto__ 的原型都是 Function
 Person.__proto__ === Function.prototype
+
 // 正常的原型链都会终止于 Object 的原型对象 。Object 原型的原型是 null
 Person.prototype.__proto__ === Object.prototype
 Object.prototype.__proto__ === null
@@ -222,8 +219,6 @@ coder1.__proto__.__proto__.constructor = Coder.prototype.__proto__.constructor
 coder1.__proto__.__proto__.constructor = Person
 ```
 
-\rule[0pt]{19.4cm}{0.03em}
-
 **继承**
 
 很多面向对象语言都支持两种继承：接口继承和实现继承。前者只继承方法签名，后者继承实际的方法。
@@ -233,9 +228,9 @@ coder1.__proto__.__proto__.constructor = Person
 
 \rule[0pt]{19.4cm}{0.03em}
 
-**类**
+**类** (*基类、父类、超类是指被继承的类，派生类、子类是指继承于基类的类。通俗点：基类`->`派生类 `<=>` 父类`->`子类*)
 
-ECMAScript 6 新引入的 class 关键字具有正式定义类的能力。表面上看起来可以支持正式的面向对象编程，但实际上它背后使用的仍然是原型和构造函数的概念。
+ECMAScript 6 新引入的 `class` 关键字具有正式定义类的能力。表面上看起来可以支持正式的面向对象编程，但实际上它背后使用的仍然是原型和构造函数的概念。
 从各方面来看，**ECMAScript `类`就是一种特殊函数。**
 
 类可以包含构造函数方法、实例方法、获取函数、设置函数和静态类方法，但这些**都不是必需**的。
@@ -280,7 +275,7 @@ Reflect 不是一个函数对象，因此它是不可构造的(Reflect 的所有
 
 - 这意味着一个函数可以有多个名称。使用*不带括号的函数名会访问函数指针*，而不会执行函数。
 
-_理解函数声明与函数表达式之间的区别_，关键是理解**提升**(声明可以，表达式不行)。
+**理解函数声明与函数表达式之间的区别**，关键是理解**提升**(声明(`function sum(){}`)可以，表达式(`let sum=function (){}`)不行)。
 
 **箭头函数**任何可以使用函数表达式的地方，都可以使用箭头函数。
 
@@ -708,16 +703,16 @@ _Promise 故意将异步行为封装起来，从而隔离外部的同步代码�
 | str.at(index)           | 返回的字符串指定索引（位置）的的单个 UTF-16 码元组成的 String。如果找不到指定的索引，则返回 undefined 。如果是负数，则倒数。                                    |
 | str.charAt(index)       | 从一个字符串中返回指定的字符。                                                                                                                           |
 | str.charCodeAt(index)   | 返回 0 到 65535 之间的整数，表示给定索引处的 UTF-16 代码单元 。                                                                                     |
-| str.codePointAt()       | 返回 一个 Unicode 编码点值的非负整数。\newline 如果在指定的位置没有元素则返回 undefined。如果在索引处开始没有 UTF-16 代理对，将直接返回在那个索引处的编码单元。 |
+| str.codePointAt()       | 返回 一个 Unicode 编码点值的非负整数。如果在指定的位置没有元素则返回 undefined。\newline 如果在索引处开始没有 UTF-16 代理对，将直接返回在那个索引处的编码单元。 |
 | `str.concat()`       | 将一个或多个字符串与原字符串连接合并，形成一个新的字符串并返回。                                                                                                |
-| `str.startsWith()`    | 用来判断当前字符串是否以另外一个给定的子字符串开头，并根据判断结果返回 true 或 false。                                                                          |
-| `str.endsWith()`      | 判断当前字符串是否是以另外一个给定的子字符串“结尾”的，根据判断结果返回 true 或 false。                                                                          |
-| `str.includes()`      | 判断一个字符串是否包含在另一个字符串中，根据情况返回 true 或 false。                                                                                            |
-| `str.indexOf()`       | 返回调用它的 String 对象中第一次出现的指定值的索引，从 fromIndex 处进行搜索。如果未找到该值，则返回 -1。                                                        |
-| str.lastIndexOf()       | 返回调用 String 对象的指定值最后一次出现的索引，在一个字符串中的指定位置 fromIndex 处从后向前搜索。如果没找到这个特定值则返回-1 。                              |
-| `str.localeCompare()` | 返回一个数字来指示一个参考字符串是否在排序顺序前面或之后或与给定字符串相同。                                                                                    |
+| `str.startsWith()`    | 用来判断当前字符串是否**以另外一个给定的子字符串开头**，并根据判断结果返回 true 或 false。                                                                          |
+| `str.endsWith()`      | 判断当前字符串是否是**以另外一个给定的子字符串“结尾”**的，根据判断结果返回 true 或 false。                                                                          |
+| `str.includes()`      | 判断**一个字符串是否包含在另一个字符串中**，根据情况返回 true 或 false。                                                                                            |
+| `str.indexOf()`       | 返回调用它的 String 对象中**第一次出现**的指定值的索引，从 fromIndex 处进行搜索。如果未找到该值，则返回 -1。                                                        |
+| str.lastIndexOf()       | 返回调用 String 对象的指定值**最后一次出现**的索引，在一个字符串中的指定位置 fromIndex 处从后向前搜索。如果没找到这个特定值则返回-1 。                              |
+| `str.localeCompare()` | 返回一个数字来指示一个参考字符串是否**在排序顺序前面或之后**或与给定字符串相同。                                                                                    |
 | str.search()            | 执行正则表达式和 String 对象之间的一个搜索匹配。                                                                                                                |
-| `str.match()`         | 检索返回一个字符串匹配正则表达式的结果。                                                                                                                        |
+| `str.match()`         | 检索返回一个字符串**匹配正则表达式的结果**。                                                                                                                        |
 | str.matchAll()          | 返回一个包含所有匹配正则表达式的结果及分组捕获组的迭代器。                                                                                                      |
 | str.normalize()         | 按照指定的一种 Unicode 正规形式将当前字符串规范化。（如果该值不是字符串，则首先将其转换为一个字符串）。                                                         |
 | str.padEnd()            | 用一个字符串填充当前字符串（如果需要的话则重复填充），返回填充后达到指定长度的字符串。从当前字符串的末尾（右侧）开始填充。                                      |
@@ -725,18 +720,18 @@ _Promise 故意将异步行为封装起来，从而隔离外部的同步代码�
 | str.repeat()            | 构造并返回一个新字符串，该字符串包含被连接在一起的指定数量的字符串的副本。                                                                                      |
 | `str.replace()`       | 返回一个由替换值（replacement）替换部分或所有的模式（pattern）匹配项后的新字符串。                                                                              |
 | str.replaceAll()        | 返回一个新字符串，新字符串所有满足 pattern 的部分都已被 replacement 替换。                                                                                      |
-| `str.slice()`        | 提取某个字符串的一部分，并返回一个新的字符串，且不会改动原字符串。                                                                                              |
-| `str.split()`       | 使用指定的分隔符字符串将一个 String 对象分割成子字符串数组，以一个指定的分割字串来决定每个拆分的位置。                                                          |
-| `str.substring()`     | 返回一个字符串在开始索引到结束索引之间的一个子集，或从开始索引直到字符串的末尾的一个子集。                                                                      |
+| `str.slice()`        | **提取某个字符串的一部分**，并返回一个新的字符串，且不会改动原字符串。                                                                                              |
+| `str.split()`       | 使用指定的分隔符字符串**将一个 String 对象分割成子字符串数组**，以一个指定的分割字串来决定每个拆分的位置。                                                          |
+| `str.substring()`     | 返回一个字符串**在开始索引到结束索引之间的一个子集**，或从开始索引直到字符串的末尾的一个子集。                                                                      |
 | str.toLocaleLowerCase() | 根据任何指定区域语言环境设置的大小写映射，返回调用字符串被转换为小写的格式。                                                                                    |
 | str.toLocaleUpperCase() | 根据本地主机语言环境把字符串转换为大写格式，并返回转换后的字符串。                                                                                              |
 | str.toLowerCase()       | 调用该方法的字符串值转为小写形式，并返回。                                                                                                                      |
 | str.toUpperCase()       | 调用该方法的字符串转为大写形式并返回（如果调用该方法的值不是字符串类型会被强制转换）。                                                                          |
 | str.toString()          | 返回一个 String 包装对象的字符串值，表示指定的字符串。                                                                                                          |
 | str.valueOf()           | 返回 String 对象的原始值。                                                                                                                                      |
-| `str.trim()`          | 从一个字符串的两端删除空白字符。在这个上下文中的空白字符是所有的空白字符 (space, tab, no-break space 等) 以及所有行终止符字符（如 LF，CR 等）。                 |
-| str.trimEnd()           | 从一个字符串的末端移除空白字符。trimRight() 是这个方法的别名。                                                                                                  |
-| str.trimStart()         | 从字符串的开头删除空格。trimLeft() 是此方法的别名。|
+| `str.trim()`          | 从一个字符串的**两端删除空白字符**。在这个上下文中的空白字符是所有的空白字符 (space, tab, no-break space 等) 以及所有行终止符字符（如 LF，CR 等）。                 |
+| str.trimEnd()           | 从一个字符串的**末端移除空白字符**。trimRight() 是这个方法的别名。                                                                                                  |
+| str.trimStart()         | 从字符串的**开头删除空格**。trimLeft() 是此方法的别名。|
 
 **常用 Math 对象静态方法**
 
@@ -767,7 +762,7 @@ _Promise 故意将异步行为封装起来，从而隔离外部的同步代码�
 | arr.values()                           | 否     | 返回数组元素的迭代器|
 | arr.entries()                          | 否     | 返回数组索引/值对的迭代器|
 |**复制** |||
-| arr.copyWithin(target[, start[, end]]) | **是** | 浅复制数组的一部分到同一数组中的另一个位置，并返回新数组。\newline (不会改变原数组的长度 length，但是会改变原数组的内容，且需要时会创建新的属性)|
+| arr.copyWithin(target[, start[, end]]) | **是** | 浅复制数组的一部分到**同一数组中的另一个位置**，并返回新数组。\newline (不会改变原数组的长度 length，但是会改变原数组的内容，且需要时会创建新的属性)|
 |**填充** |||
 | arr.fill(val[, start[, end]])        | **是** | 用一个固定值填充一个数组中从起始索引到终止索引内的全部元素。不包括终止索引。|
 |**转换方法** |||
@@ -808,6 +803,8 @@ _Promise 故意将异步行为封装起来，从而隔离外部的同步代码�
 | arr.flatMap()                          | 否     | 首先使用映射函数映射每个元素，然后将结果压缩成一个新数组。\newline 它与 map 连着深度值为 1 的 flat 几乎相同，但 flatMap 通常在合并成一种方法的效率稍微高一些。 |
 
 \newpage
+
+set、map实例的属性只有size，weakSet和weakMap则没有实例属性。
 
 **Map 实例的方法**
 
@@ -986,7 +983,7 @@ _Promise 故意将异步行为封装起来，从而隔离外部的同步代码�
 
 **RxJS** 是一个使用可观察序列编写异步和基于事件的程序的库。
 
-**RxJS 有一个核心和三个重点，一个核心是 Observable 再加上相关的 Operators，三个重点分别是 Observer、Subject、Schedulers。**
+**\textcolor{brown}{RxJS 有一个核心和三个重点，一个核心是 Observable 再加上相关的 Operators，三个重点分别是 Observer、Subject、Schedulers}。**
 
 RxJS 中解决异步事件管理的基本概念有：
 
@@ -1069,7 +1066,7 @@ RxJS 的*操作符是纯函数*。操作符是能让你以声明方式轻松组�
   - _调度器允许你定义 Observable 将在什么执行上下文中向其 Observer 传递通知。_
 - 调度器类型: 调度器 和 用途
   - null 不传递任何调度器，通知将以同步和递归方式传递。要把它用于恒定时间操作或尾递归操作。
-  - queueScheduler 在当前事件框架（蹦床调度器）中的队列上调度。将其用于迭代操作。
+  - queueScheduler 在当前事件框架（蹦床调度器,trampoline scheduler）中的队列上调度。将其用于迭代操作。
   - asapScheduler 在微任务队列上调度，这与用于 Promise 的队列相同。在当前工作之后，但在下一个工作之前。这些将用于异步转换。
   - asyncScheduler 使用 setInterval 的调度器。将此用于基于时间的操作。
   - animationFrameScheduler 调度将在下一次浏览器内容重绘之前发生的任务。可用于创建流畅的浏览器动画。
@@ -1453,6 +1450,7 @@ const name = createCatName();
   - **每个进程至少有一个主执行线程**。(一辆火车至少一节车厢)
   - **进程间不会相互影响，一个线程挂掉将导致整个进程挂掉。**(一辆火车出事不影响其他火车，一节车厢着火，整辆火车都得停)
 - 进程、线程是操作系统调度的，**进程本身不会负责调度线程**。
+  - **进程间通信(IPC)**: 管道 pipe、消息队列 message queue、信号 sinal、共用内存 shared memory 以及套接字 socket。
 - **单线程**就是进程中只有一个线程。**多线程**就是进程有多个线程。
 - 在 Node.js 中 JavaScript 的执行是单线程的，_因此**并发性** 是指事件循环在完成其他工作后执行 JavaScript **回调函数**的能力。_
   - _js 执行线程是单线程，但把需要做的 I/O 操作交给 libuv。_
@@ -1475,7 +1473,7 @@ Node.js 主要分为四大部分，Node Standard Library，Node Bindings，V8，
   - `C-ares`：提供了异步处理 DNS 相关的能力。
   - `http_parser`、`OpenSSL`、`zlib` 等：提供包括 http 解析、SSL、数据压缩等其他的能力。
 
-事件循环、观察者、请求对象和执行回调是整个异步 I/O 的四个基本要素。
+为了获得速度，**V8 通过实现 JIT（Just-In-Time）编译器将 JavaScript 代码翻译成更有效的机器代码**，而不是使用一个解释器。
 
 \newpage
 
@@ -1523,8 +1521,8 @@ API 要被视为 RESTful API，**必须遵循以下标准**:
 **路由**用于确定应用程序如何响应对特定端点的客户机请求，包含一个 URI（或路径）和一个特定的 HTTP 请求方法（GET、POST 等）。
 
 - 每个路由可以具有一个或多个处理程序函数，这些函数在路由匹配时执行。
-- 路由定义采用以下结构： `app.method(path, handler)` ，其中：
-  - • app 是 express 的实例。• method 是 http 请求方法。• path 是服务器上的路径。• handler 是在路由匹配时执行的函数。
+- 路由定义采用以下结构: `app.method(path, handler)`，其中:
+  - `app` 是 express 的实例。`method` 是 http 请求方法。`path` 是服务器上的路径。`handler` 是在路由匹配时执行的函数。
 
 使用 Express 中的 **`express.static` 内置中间件函数**，去提供诸如图像、CSS 文件和 JavaScript 文件之类的**静态文件**。
 
@@ -1540,11 +1538,11 @@ API 要被视为 RESTful API，**必须遵循以下标准**:
 
 **express 中间件分类**
 
-- 应用层中间件: 使用 `app.use()` 和 `app.METHOD()` 函数将应用层中间件绑定到应用程序对象的实例。
-- 路由器层中间件: 与应用层中间件基本相同，差异之处在于它 **绑定到 `express.Router()` 的实例**。
-- 错误处理中间件: 与其他中间件函数基本相同，差别在于错误处理函数有四个自变量 (err, req, res, next)。
-- 内置中间件: Express 中唯一内置的中间件函数是 `express.static`，负责提供 Express 应用程序的静态资源。
-- 第三方中间件: 安装具有所需功能的 Node.js 模块，然后在应用层或路由器层的应用程序中将其加装入。
+- **应用层**中间件: 使用 `app.use()` 和 `app.METHOD()` 函数将应用层中间件绑定到应用程序对象的实例。
+- **路由器层**中间件: 与应用层中间件基本相同，差异之处在于它 **绑定到 `express.Router()` 的实例**。
+- **错误处理**中间件: 与其他中间件函数基本相同，差别在于错误处理函数有四个自变量 (err, req, res, next)。
+- **内置**中间件: Express 中唯一内置的中间件函数是 **`express.static`**，负责提供 Express 应用程序的静态资源。
+- **第三方**中间件: 安装具有所需功能的 Node.js 模块，然后在应用层或路由器层的应用程序中将其加装入。
   - `cookie-parser`、`body-parser`、`http-errors`、`multer`、`cors`、更多[Express middleware](http://expressjs.com/en/resources/middleware.html)
 
 ![express-middleware](./pictures/pictures-node/express-mw-cn.png){width=60%}
@@ -1622,13 +1620,11 @@ JSON 网络令牌(jwt)由`Header.Payload.Signature`三部分组成，用点（.�
 
 **HTML Attributes 和 DOM Properties 之间的差异和关联**
 
-有一行 HTML 代码：
-
 ```HTML
-<input id="my-input" type="text" value="foo" />
+<!--有一行 HTML 代码：--> <input id="my-input" type="text" value="foo" /> 
 ```
 
-**HTML Attributes** 指的就是定义在 HTML 标签上的属性，这里指的就是 id="my-input"、type="text" 和 value="foo"。
+**\textcolor{brown}{【HTML Attributes】}** 指的就是定义在 HTML 标签上的属性，这里指的就是 id="my-input"、type="text" 和 value="foo"。
 
 _当浏览器解析这段 HTML 代码后，会创建一个与之相符的 DOM 元素对象_，可以通过 JavaScript 代码来读取该 DOM 对象：
 
@@ -1636,7 +1632,7 @@ _当浏览器解析这段 HTML 代码后，会创建一个与之相符的 DOM �
 const el = document.querySelector("#my-input"); // el是一个HTMLInputElement DOM对象
 ```
 
-这个 DOM 对象(el)会包含很多属性，这些属性就是所谓的 **DOM Properties**。
+这个 DOM 对象(el)会包含很多属性，例如el.size、el.placeholder等等，这些属性就是所谓的 **\textcolor{brown}{【DOM Properties】}**。
 
 很多 HTML Attributes 在 DOM 对象上有与之同名的 DOM Properties，  
 例如 `id="my-input"` 对应 `el.id`，`type="text"` 对应 `el.type`，`value="foo"` 对应 `el.value` 等。  
@@ -1652,7 +1648,13 @@ DOM Properties 与 HTML Attributes 的名字不总是一样。
 HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcaption> <figure> <footer>`等。  
 优点: 在没 CSS 样式的情况下，页面整体也会呈现很好的结构效果。代码结构清晰，易于阅读。利于开发和维护。利于 SEO。
 
-**DOM**(文档对象模型) 描述了**处理网页内容**的方法和接口，**BOM**(浏览器对象模型) 描述了**与浏览器进行交互**的方法和接口。
+**DOM**(文档对象模型) 描述了**处理网页内容**的方法和接口，HTML DOM 是关于如何获取、更改、添加或删除 HTML 元素的标准。
+在DOM中，HTML文档的层次结构被表示为一个树形结构。并用document对象表示该文档，树的每个子节点表示HTML文档中的不同内容。
+
+**BOM**(浏览器对象模型) 描述了**与浏览器进行交互**的方法和接口。各个浏览器厂商根据 DOM 在各自浏览器上的实现。  
+BOM 全局对象有 `window`: 表示浏览器窗口，是 JS 的顶层对象(算是核心内容，既为 javascript 访问浏览器提供 API，同时在 ECMAScript 中充当 Global 对象)。`location`: 浏览器当前的 URL 信息。`navigator`: 浏览器本身信息。`history`: 浏览器的浏览历史记录信息。`screen`: 浏览器的屏幕信息。
+
+**简单讲，DOM 所有浏览器都遵守的网页文档标准，BOM 不同浏览器定义可能有差别,实现方式可能不同。内容不仅网页文档，还有其他特性。**
 
 **line-height** CSS 属性用于**设置多行元素的空间量**，如多行文本的间距。对于块级元素，它指定元素行盒（line boxes）的最小高度。对于非替代的 inline 元素，它用于计算行盒（line box）的高度。其属性值可为: 一个数字、一个长度、一个百分比、关键词 `normal`。
 
@@ -1663,7 +1665,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 优先级: 一般记忆 `!important > inline style > id > class` 。
 
 **浮动现象**: 一个浮动元素会被移出正常文档流，且其他元素会显示在它的下方。  
-**浮动溢出**: 容器的高度不能自动伸长以适应内容的高度，使得内容溢出到容器外面而影响（甚至破坏）布局的现象。
+**浮动溢出**: 容器的高度不能自动伸长以适应内容的高度，使得内容溢出到容器外面而影响（甚至破坏）布局的现象。  
 **清除浮动**: `clear`属性、`overflow`属性、`display: flow-root`等。
 
 **块格式化上下文**（Block Formatting Context，BFC）_是 Web 页面的可视 CSS 渲染的一部分，是块级盒子的布局过程发生的区域，也是浮动元素与其他元素交互的区域。_
@@ -1687,7 +1689,94 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 - `visibility: hidden`: 隐藏元素而不更改文档的布局(显示为 visible)。**不会**改变页面布局，**不会**触发已绑定事件。(重绘)
 - `display: none`: 把元素隐藏起来了，其子孙元素也会被同时隐藏。**会**改变页面布局，文档布局中**不再分配空间**。（回流+重绘）
 
+\newpage
+
 **px** 是像素值；**em** 的值是 px 的倍数；**rem** 的值是 px 的倍数(只能在 html 标签里)；**vh** 和 **vw** 就是根据窗口的宽高，分成 100 等份。
+
+**CSS 字体单位**: px、em、rem 和 %
+
+- `px`: 绝对单位，代表屏幕中每个「点」(pixel)。使用示例`style="font-size:24px;"`
+- `em`: 相对单位，每个子元素透过「倍数」乘以父元素的 px 值(父元素字体 10px，子元素字体 10em，那么实际就是 100px)。
+- `rem`: 相对单位，每个元素透过「倍数」乘以根元素的 px 值(单位是相对于`<html>`元素计算的)
+  - 只通过修改`<html>`的文字大小，就可以改变**整个页面中的元素大小**。
+- `%`: 相对单位，每个子元素透过「百分比」乘以父元素的 px 值。
+
+网页 (属性名称)**字体**大小的属性有七种,`style="font-size:x-large;"`
+
+- `medium`: 默认值，等于 16px ( h4 默认值 )
+- `xx-small`: medium 的 0.6 倍 ( h6 默认值 )
+- `x-small`: medium 的 0.75 倍
+- `small`: medium 的 0.8 倍 ( h5 默认值，W3C 定义为 0.89，实测约为 0.8 )
+- `large`: medium 的 1.1 倍 ( h3 默认值，W3C 定义为 1.2，实测约为 1.1 )
+- `x-large`: medium 的 1.5 倍 ( h2 默认值 )
+- `xx-large`: medium 的 2 倍 ( h1 默认值 )
+- `smaller`: 约为父层的 80%
+- `larger`: 约为父层的 120%
+
+印刷(通常对于 CSS 来说只会应用到网页的样式，毕竟真正要做印刷，还是会倾向透过排版软件来进行设计。)
+
+- `pt`: 打印机的每个「点」，定义为`1pt=1/72in`，如果在 72 dpi 的系统上 1px=1pt，但如果在 96dpi 的系统上 1px=0.75pt(72/96=0.75)。
+- `in`: 英吋，在 96 dpi 的系统上 1 in = 96 px。
+- `cm`: 公分，在 96 dpi 的系统上 1 cm = 37.795275593333 px。
+- `mm`: 公厘，在 96 dpi 的系统上 1 cm = 3.7795275593333 px。
+
+**颜色单位**的几种值:颜色名、RGB/RGBA、十六进制的 RGB 值(HEX)、HSL/HSLA 值
+
+- 在 css 可以**直接使用颜色名**来设置各种颜色（但是在 css 中使用颜色名来设置往往不方便）
+- **RGB/RGBA 值**:通过 red,green,blue 三种颜色的不同浓度调配出不同颜色,语法为`RGB(红色,绿色,蓝色,[不透明度])`
+  - 每一种颜色的范围在 0-255(0%-100%)之间；透明度的值 1 表示完全不透明，0 表示完全透明，0.5 为半透明。
+- **十六进制的 RGB 值**: 语法为`#红色绿色蓝色`；颜色浓度在`00-ff`,两位两位重复可以简写:`##aabbcc` 简写为 `#abc`
+- **HSL/HSLA 值**: 代表色调、饱和度、亮度、和透明度(同 RGBA 的 A)，即 hue, saturation, lightness 和 alpha
+  - H 色调，是色轮上从 0 到 360 的度数。0 是红色，120 是绿色，240 是蓝色；[示例 `hsl(30, 100%, 50%)`]
+  - S 饱和度，一个百分比值。0% 表示完全灰色即看不见颜色，100% 表示纯色、没有灰色阴影；
+  - L 亮度，一个百分比值，要给该颜色多少光。0%表示没有光（黑色），50%表示 50%光（既不暗也不亮），100%表示全光（白色）
+
+**Element** 是一个通用性非常强的基类，所有 Document 对象下的对象都继承自它。这个接口描述了所有相同种类的元素所普遍具有的方法和属性。  
+**Document** 接口表示任何在浏览器中载入的网页，并作为网页内容的入口，也就是 DOM 树。  
+**DOM 树**是一种树结构，其节点表示 HTML 或 XML 文档的内容。每个 HTML 或 XML 文档都有一个 DOM 树表示。  
+**Document API**，有时也称为 DOM API，允许以任何方式修改 DOM 树。它使得能够从头开始创建任何 HTML 或 XML 文档，或者更改给定 HTML 或 XML 文件的任何内容。常见的 DOM 操作及方法:
+
+- `Document.createElement("div");` 创建一个由标签名称 tagName 指定的 HTML 元素(Element)
+- `Document.getElementById(idName);` 返回一个匹配特定 ID 的元素
+- `Document.getElementsByClassName(className);` 返回一个包含了所有指定类名的子元素的类数组对象。
+- `Document.querySelector(selectors);` 返回文档中与指定选择器或选择器组匹配的第一个 Element 对象。
+- `Element.append(param1,...,paramN);` 在 Element 的最后一个子节点之后插入一组 Node 对象或 DOMString 对象。
+- `Element.getAttribute(attributeName);` 返回元素上一个指定的属性值。
+- `Element.setAttribute(name, value);` 设置指定元素上的某个属性值。如果属性已经存在，则更新该值。
+- `Element.removeAttribute(attrName);` 从指定的元素中删除一个属性。
+
+除了常见的 Document 和 Element 对象，DOM 还有[很多其他接口](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model#dom_interfaces)，例如:Event,EventTarget,Node,Range,Text,XMLDocument 等。
+
+Element 也有很多子类，例如 HTMLElement、SVGElement 已经更深层级 HTMLImageElement、HTMLButtonElement 等等。
+
+**window 作为接口对象**表示一个包含 DOM 文档的窗口，Window.document 属性指向窗口中载入的 DOM 文档。使用 document.defaultView 属性可以获取指定文档所在窗口。**window 作为全局变量**，代表了脚本正在运行的窗口，暴露给 Javascript 代码。
+
+**EventTarget 接口由可以接收事件、并且可以创建侦听器的对象实现。**换句话说，任何事件目标都会实现与该接口有关的这三个方法。
+Element 及其子项、document 和 window (从小到大?)是最常见的事件目标，但其他对象也可以是事件目标。
+
+window 对象的一些属性，可以看做在 window 对象链接到指定 Web APIs 全局对象(都只读,此外例如 Element 也有链接到 location):
+
+- `Window.document` 返回对当前窗口所包含文档的引用。
+- `window.location` 返回一个 Location 对象，其中包含有关文档当前位置的信息(只有这个 window 必须为小写)。
+- `Window.history` 用来获取 History 对象的引用，History 对象提供了操作浏览器会话历史的接口。
+- `Window.screen` 返回当前 window 的 screen 对象(实现了 Screen 接口，它是个特殊的对象，返回当前渲染窗口中和屏幕有关的属性)
+- `Window.navigator` 会返回一个 Navigator 对象的引用，可以用于请求运行当前代码的应用程序的相关信息。
+
+(想象 window 就是一个浏览器上看到的窗口，除了网页内容，还有导航栏、前进后退按钮等，这些浏览器功能不同浏览器可能有差异，但显示的主内容 document，就应该是有标准的。但即便有标准，也不是所有浏览器都实现了标准里面的功能，所以实际显示才会可能略有不同)更多内容[globalThis](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/globalThis)
+
+\newpage
+
+CSS3 常见简写属性:
+
+- **background**: `background: #000 url(images/bg.gif) no-repeat top right;`
+  - background-color；background-image；background-repeat；background-position
+- **font**: `font: italic bold .8em/1.2 Arial, sans-serif;`
+  - font-style；font-weight；font-size；line-height；font-family
+- **border**: `border: 1px solid #000;`
+  - border-width；border-style；border-color
+- **margin**: `margin: 10px 5px 10px 5px;` 1 个值到 4 个值都可以，被使用的属性不同。
+  - margin-top；margin-right；margin-bottom；margin-left
+- 通用的简写属性**all**，它将除了 unicode-bidi 与 direction 之外的所有属性*重设至其初始值，或继承值*。
 
 \newpage
 
@@ -1706,7 +1795,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 
 - **\textcolor{brown}{正常布局流}**(normal flow)是指在不对页面进行任何布局控制时，浏览器默认的 HTML 布局方式。
   - 使用 css 创建一个布局时，则将离开正常布局流，但是对于页面上的多数元素，正常布局流将完全可以创建所需要的布局。
-  - 默认的，一个*块级元素的内容宽度是其父元素的 100%，其高度与其内容高度一致*。
+  - 默认的，一个**块级元素的内容宽度是其父元素的 100%，其高度与其内容高度一致**。
   - _内联元素的高度和宽度与内容一致_。无法设置内联元素的高度和宽度——它们就那样置于块级元素的内容里。
     - 如果想控制内联元素的尺寸，需要为元素设置 `display: block;`(或者 inline-block; 混合了 inline 和 block 的特性)
   - 使用一些 display 属性、float 属性、position 属性、表格布局、多列布局会**覆盖默认的布局行为**。
@@ -1745,7 +1834,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
   - `table`: 这些元素的行为类似于 HTML`<table>`元素。它定义了一个块级框。(布局都不要用 table)
   - **`flex`**: 该元素的行为类似于块元素，并根据 **flexbox 模型**布置其内容。
   - **`grid`**: 该元素的行为类似于块元素，并根据**网格模型**布置其内容。
-- `<display-listitem>`: 将这个元素的外部显示类型变为 block 盒，并将内部显示类型变为多个 list-item inline 盒。
+- `<display-listitem>`: 将这个元素的外部显示类型变为 block 盒，并将内部显示类型变为多个 list-item inline 盒。(**列表元素**)
   - `list-item`: 将使元素表现得像一个列表项。
 - `<display-internal>`: 有些布局模型有**复杂的内部结构**。这类关键字用来**定义这些“内部”显示类型**，且仅在这样的布局中才有意义。
   - 目前是一堆`<display-inside>`中`table`和实验性质的`ruby`布局模性的属性，类似:
@@ -1756,7 +1845,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 - `<display-box>`: 这些值决定元素**是否使用盒模型**。
   - **`none`**: **关闭元素的显示**，不影响布局（文件中没有该元素）。所有子项的显示也被关闭。**盒子和内容不会渲染**
   - 要一个元素占据空间（文件中存在），但不渲染，使用 CSS 的 visibility 属性。
-- `<display-legacy>`:CSS 2 对于 display 属性使用单关键字语法，对于相同布局模式的块级和行级变体需要使用单独的关键字。
+- `<display-legacy>`:CSS 2 对于 display 属性使用单关键字语法，对于相同布局模式的块级和行级变体需要使用单独的关键字(预组合)。
   - `inline-block`: 元素会产生一个块元素盒子，并且像内联盒子一样（表现得更像一个被替换的元素），可以融入到周围内容中。
   - `inline-table`: 它表现为一个 HTML `<table>` 元素， 但是又表现为一个不同于块级盒子的内联盒子。
   - `inline-flex`: 元素表现为一个内联元素，并对内容采用弹性盒子模型进行布局。
@@ -1776,7 +1865,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 - `content-box`: 默认值，标准盒子模型，**只包括内容(content)的宽和高**，不包括边框（border），内边距（padding），外边距（margin）。
 - `border-box`: width 和 height 属性**包括内容，内边距和边框**，但不包括外边距。IE 盒子模型。
 
-**\textcolor{brown}{flex 弹性布局}**的一些相关属性说明(父元素使用`display:flex`):
+**\textcolor{brown}{flex 弹性布局}**的一些相关属性说明(父元素使用`display:flex`):属性flex是flex-grow、flex-shrink、flex-basis的缩写
 
 - `flex-direction`: 指定了内部元素是如何在 flex 容器中布局的，定义了**主轴的方向** (正方向或反方向，与文字内容水平或垂直)
   - `row`: flex 容器的主轴被定义为与文本方向相同。主轴起点和主轴终点与内容方向相同。
@@ -1899,7 +1988,7 @@ HTML5 中新的语义元素`<header> <nav> <section> <article> <aside> <figcapti
 
 **`回流/重排`** reflow: 当浏览器必须**重新处理和绘制部分或全部页面**时，回流就会发生，例如当一个交互式站点更新后。[最大限度地减少浏览器重排](https://developers.google.com/speed/docs/insights/browser-reflow)
 
-**重绘** repaint: 由于**节点的几何属性或者样式属性发生变化**而不影响布局的称为重绘。
+**重绘** repaint: 由于**节点的几何属性或者样式属性发生变化**而不影响布局的称为重绘。(重排一般会改变布局，重新生成渲染数，性能消耗更大)
 
 \newpage
 
@@ -2031,7 +2120,7 @@ CSS transitions 提供了一种在更改 CSS 属性时 **\textcolor{brown}{控�
 CSS 过渡由简写属性`transition: <property> <duration> <timing-function> <delay>;`定义是最好的方式。包含以下属性:
 
 - `transition-property`: **指定哪个或哪些 CSS 属性用于过渡**。只有指定的属性才会在过渡中发生动画，其它属性仍如通常那样瞬间变化。
-  - 属性值: `none`: `没有过渡动画。all`: 所有可被动画的属性都表现出过渡动画。`<IDENT>`:属性名称
+  - 属性值: `none`: 没有过渡动画。`all`: 所有可被动画的属性都表现出过渡动画。`<IDENT>`:属性名称
 - `transition-duration`: **指定过渡的时长**。或者为*所有属性指定一个值*，或者*指定多个值，为每个属性指定不同的时长*。
 - `transition-timing-function`: **指定一个函数，定义属性值怎么变化**。缓动函数 Timing functions 定义属性如何计算。
   - 多数 [timing functions](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function) 由四点定义一个 bezier 曲线。也可以从 [Easing Functions Cheat Sheet](https://easings.net/) 选择缓动效果。
@@ -2607,12 +2696,9 @@ vue 的生命周期就是 vue 实例从创建到销毁/卸载的过程(括号内
 _是在使用**组合式 API** 时，可以理解为 beforecate 和 created 被 setup() 方法本身所取代。_  
 其他生命周期函数在组合式 API 表现类似: onBeforeMount()、onMounted()、onBeforeUpdate()、onUpdated() ……
 
-生命周期的实现原理:
-
-- 2.x 当创建组件实例的过程中会调用相应的钩子方法。内部会对钩子进行处理，将钩子函数维护成数组的形式。
-- 3.x 就是把各个生命周期的函数挂载或者叫注册到组件的实例上，然后等到组件运行到某个时刻，再去组件实例上把相应的生命周期的函数取出来执行。
-
-\rule[0pt]{19.4cm}{0.03em}
+生命周期的实现原理:  
+2.x 当创建组件实例的过程中会调用相应的钩子方法。内部会对钩子进行处理，将钩子函数维护成数组的形式。  
+3.x 就是把各个生命周期的函数挂载或者叫注册到组件的实例上，然后等到组件运行到某个时刻，再去组件实例上把相应的生命周期的函数取出来执行。
 
 **vue 响应式**
 
@@ -2622,7 +2708,7 @@ _是在使用**组合式 API** 时，可以理解为 beforecate 和 created 被 
 
 - 2.x: 把一个普通的 js 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的 property，并使用 `Object.defineProperty()` 把这些 property 全部转为 `getter/setter` (数据劫持)。每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把“接触(touch)”过的数据 property 记录为依赖。之后当依赖项的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染。
   - 不足: 不能检测数组和对象的变化。由于 Vue 不允许动态添加根级响应式 property，所以必须在初始化实例前声明所有根级响应式 property，哪怕只是一个空值。
-  - 应对: 使用 `Vue.set(object, propertyName, value)` 全局方法或者 `vm.$set()` 实例方法向嵌套对象添加响应式 property。
+  - 应对: 使用`Vue.set(obj, propertyName, value)`全局方法或者`vm.$set()`实例方法向嵌套对象添加响应式 property。
 - 3.x: 主要把数据劫持这部分改为**使用 Proxy 来创建响应式对象**，将 `getter/setter` 用于 ref。**即 组合式 API reactive() 用于对象类型， ref() 用于基础数据类型。**
   - 改进: Proxy 不仅可以代理对象，还可以代理数组。还可以代理动态增加的属性。（但旧版本浏览器可能不支持 ES 新语法）
   - `reactive()` 返回一个对象的响应式代理。
@@ -2632,7 +2718,7 @@ _是在使用**组合式 API** 时，可以理解为 beforecate 和 created 被 
 **vue 双向绑定**(和上面一个意思)
 
 - 两大核心: 数据劫持、发布订阅模式
-- 核心组成部分: 监听器 Observer(数据劫持)、订阅者容器(监听器监听到数据变动时，遍历订阅者容器发布消息)、Compile(解析模板指令)、Watcher(连接 Observe 和 Compile 的桥梁)
+- 核心组成部分(vue2): 监听器 Observer(数据劫持)、订阅者容器(监听器监听到数据变动时，遍历订阅者容器发布消息)、Compile(解析模板指令)、Watcher(连接 Observe 和 Compile 的桥梁)
   - Vue 双向绑定原理是采用发布订阅者模式，在初始化时劫持数据的各个属性的 setter/getter，在数据变动时发布消息给订阅者，触发响应的监听回调。
   - 而每个组件都对应一个 Watcher 实例，它会在组件渲染的过程中把接触过的数据记录为依赖，当依赖的 setter 出发时，会通知 Watcher，从而使组件重新渲染。
 
@@ -2657,10 +2743,8 @@ _是在使用**组合式 API** 时，可以理解为 beforecate 和 created 被 
 
 **使用虚拟 DOM 的不足**:
 
-- 创建 dom 依赖创建函数
-- 当节点数量非常庞大时，其自身的各种判断和计算会将自己击溃
-- 单从创建 dom 的角度出发，它的创建速度比原生的慢
-- 无法进行极致优化(毕竟始终是隔了一层)
+- 创建 dom 依赖创建函数；当节点数量非常庞大时，其自身的各种判断和计算会将自己击溃；
+- 单从创建 dom 的角度出发，它的创建速度比原生的慢；无法进行极致优化(毕竟始终是隔了一层)
 
 **虚拟 dom 原理流程**: 构建虚拟 DOM 树、找出新旧两个虚拟 DOM 树的差异、将查询渲染到真实 DOM 上。
 
@@ -2668,7 +2752,7 @@ _是在使用**组合式 API** 时，可以理解为 beforecate 和 created 被 
 - 2 比较两棵虚拟 DOM 树的差异 (diff 算法)；
 - 3 将两个虚拟 DOM 对象的差异应用到真正的 DOM 树 (patch 算法)。
 
-**diff 算法**
+**diff 算法**: 是当新旧 vnode 的子节点都是一组节点时，为了以最小的性能开销完成更新操作，需要*比较两组子节点*，用于比较的算法。
 
 v3 版文档所说：_如果我们有两份虚拟 DOM 树，渲染器将会有比较地遍历它们，找出它们之间的区别，并应用这其中的变化到真实的 DOM 上。这个过程被称为修补 (patch)，又被称为“比较差异(diffing)”或“协调 (reconciliation)”_
 
@@ -2680,8 +2764,6 @@ v3 版文档所说：_如果我们有两份虚拟 DOM 树，渲染器将会有�
 - 递归比较子节点
 - 正常 Diff 两个树的时间复杂度是 O(n^3) ，实际情况下很少会进行跨层级的移动 DOM，所以 Vue 将 Diff 进行了优化，从`O(n^3)->O(n)`。
 - 只有当新旧 children 都为多个子节点时才需要用核心的 Diff 算法进行同层级比较。
-
-\rule[0pt]{19.4cm}{0.03em}
 
 **MVVM 相关**
 
@@ -2715,13 +2797,26 @@ v3 版文档所说：_如果我们有两份虚拟 DOM 树，渲染器将会有�
 
 - 组合式 API 是以 Vue 中数据可变的、细粒度的响应性系统为基础的，而函数式编程更强调数据不可变。
 - 好处: 更好的逻辑复用、更灵活的代码组织、更好的类型推导、生产包体积更小
-- `<script setup>` 是在单文件组件 (SFC) 中使用组合式 API 的编译时语法糖
+- `<script setup>`是在单文件组件(SFC,将一个组件的逻辑、模板、和样式封装在同一个文件里)中使用组合式 API 的编译时语法糖
 
 **vue3 中的树摇**: _在 Vue3.x 中，所有的 API 都通过 ES6 模块化的方式引入_，这样就能让 webpack 或 rollup 等打包工具在打包时对没有用到 API 进行剔除，最小化 bundle 体积。很多打包工具支持 Treeshaking，但 Treeshaking 的前提是所有的东西都需要用 ES6 module 的 import 来写，_vue2 的全局 API 并不能按需导入，但 vue3 支持按需引入。_
 
 **`<Teleport>组件`** 是一个内置组件，它可以将一个组件内部的一部分模板“传送”到该组件的 DOM 结构外层的位置去(如全屏的模态框)。
 
-**新的相关推荐框架工具**: cli 使用 vite，状态管理 vuex `->` pinia， ide 插件 vetur `-> `volar
+**新的相关推荐框架工具**: 脚手架 vue-cli `->` vite，状态管理 vuex `->` pinia， VSCode 插件 vetur `-> `volar，Cypress 推荐用于 E2E 测试
+
+[vue3 和 vue2 对比](https://v3-migration.vuejs.org/zh/breaking-changes/)：
+
+- 重写了响应式系统、重写了虚拟 DOM 的实现，性能上得到了提升
+- 新推出组合式 API（composition API），使维护组件代码变得更简单
+- 支持 Tree shaking，支持按需编译，体积更小
+- 新增了一些功能，如 Teleport、Suspense、Fragment
+- 修改和优化了一些 API（生命周期、动画类名），同时移除了一些 API（如`$children`、`$listeners`、`filter`等）
+- 有更好的 TypeScript 支持
+
+[总的来说](https://cn.vuejs.org/about/faq.html#what-s-the-difference-between-vue-2-and-vue-3)，Vue 3 提供了更小的包体积、更好的性能、更好的可扩展性和更好的 TypeScript/IDE 支持。如果你现在要开始一个新项目，我们推荐你选择 Vue 3。
+
+[工具链](https://cn.vuejs.org/guide/scaling-up/tooling.html):项目脚手架、IDE 支持、浏览器开发者插件、TypeScript、测试、代码规范、格式化、底层库等。
 
 \newpage
 
@@ -2737,11 +2832,11 @@ v3 版文档所说：_如果我们有两份虚拟 DOM 树，渲染器将会有�
 
 **vue3 渲染管线**
 
-- **编译**：vue 模板被编译成**渲染函数**,即用来返回虚拟`DOM`树的函数。此步骤可以通过构建步骤提前完成,也可通过使用运行时编译器即时完成。
+- **编译**：vue 模板被编译成**渲染函数**,即用来返回虚拟`DOM`树的函数。\textcolor{brown}{此步骤可以通过构建步骤提前完成,也可通过使用运行时编译器即时完成。}
 - **挂载**：运行时渲染器调用渲染函数，遍历返回的虚拟 DOM 树，并基于它创建实际的 DOM 节点。这一步会作为响应式副作用执行，因此它会追踪其中所用到的所有响应式依赖。
 - **更新**：当一个依赖发生变化后，副作用会重新运行，这时候会创建一个更新后的虚拟 DOM 树。运行时渲染器遍历这棵新树，将它与旧树进行比较，然后将必要的更新应用到真实 DOM 上去。
 
-\textcolor{white}{:}![vue3-render-pipeline.png](./pictures/pictures-vue/vue3-render-pipeline-2.png){width=70%}
+\textcolor{white}{:}![vue3-render-pipeline.png](./pictures/pictures-vue/vue3-render-pipeline-3.png){width=90%}
 
 SPA（single-page application）wiki: 它通过**动态重写当前页面**来与用户交互，而非传统的从服务器重新加载整个新页面。
 
@@ -2755,7 +2850,7 @@ SPA（single-page application）wiki: 它通过**动态重写当前页面**来�
 **全局 API** (列式的是 v2 的版本，v3 的形式可能略有不同)
 
 Vue 2 没有`app`的概念，定义的应用只是通过`new Vue()`创建的**根 Vue 实例**。从同一个 Vue 构造函数创建的每个根实例**共享相同的全局配置**。  
-Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp 返回一个**应用实例**，一个 Vue 3 中的新概念。
+Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp 返回一个**应用实例**，一个 Vue 3 中的新概念(见上图代码部分)。
 
 - v3 新的`createApp()`
   - 创建一个应用实例。在 v3，**任何全局改变 Vue 行为的 API 现在都会移动到应用实例上**。(类似下面 API 的 `Vue.` 变 `app.`)
@@ -2767,7 +2862,8 @@ Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp
 - `Vue.mixin(mixin)` / `app.mixin()`
   - 全局注册一个混入，影响注册之后所有创建的每个 Vue 实例。可以向组件注入自定义的行为。**不推荐在应用代码中使用。**
 - `Vue.use(plugin)` / `app.use()`
-  - 安装 Vue.js 插件。如果插件是一个对象，必须提供 install 方法。需要在调用 new Vue() 之前被调用。对同一个插件多次调用，该插件将只被安装一次。
+  - 安装 Vue.js 插件。如果插件是一个对象，必须提供 install 方法。需要在调用 new Vue() 之前被调用。
+  - 对同一个插件多次调用，该插件将只被安装一次。
 - v2.6 以上 `Vue.observable(object)`/ v3 组合式 API `reactive()`
   - 前者让一个对象可响应。Vue 内部会用它来处理 data 函数返回的对象。_被传入的对象会变更，和被返回的对象是同一个对象。_
   - 后者返回一个对象的响应式代理。它会影响到**所有嵌套的 property**。_而对源对象直接进行变更仍然是不可响应的。_
@@ -2810,7 +2906,7 @@ Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp
 - v-if 基于表达式值的真假性，来条件性地**渲染元素或者模板片段**。v-show 基于表达式值的真假性，来**改变元素的可见性**。
 - 当 v-if 元素被触发，元素及其所包含的指令/组件都会**销毁和重构**。v-show 通过**设置内联样式的 display CSS property 来工作**。
 
-**slot 插槽**
+**slot [插槽](https://cn.vuejs.org/guide/components/slots.html)**
 
 通俗的理解就是“占坑”，在组件模板中占好了位置，当使用该组件标签时候，组件标签里面的内容就会自动填坑（替换组件模板中 slot 位置）并且可以作为承载分发内容的出口。
 
@@ -2838,22 +2934,22 @@ Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp
 - v-text: 更新元素的文本内容。 `<span v-text="msg"></span>` 等同: `<span>{{msg}}</span>`
 - v-html: 更新元素的 innerHTML。 注意：内容按普通 HTML 插入，不会作为 Vue 模板进行编译。危险，容易被 XSS 攻击。
 - v-show: 基于表达式值的真假改变元素的可见性。通过设置内联样式的`display`来工作，当元素可见时将使用初始`display`值。
-- v-if:当 v-if 元素被触发，元素及其所包含的指令/组件都会销毁和重构。如果初始条件是假，那么其内部的内容根本都不会被渲染。
+- v-if: 当 v-if 元素被触发，元素及其所包含的指令/组件都会销毁和重构。如果初始条件是假，那么其内部的内容根本都不会被渲染。
 - v-else: 前一兄弟元素必须有 `v-if` 或 `v-else-if`
 - v-else-if: 前一兄弟元素必须有 `v-if` 或 `v-else-if`。
 - v-for: 基于原始数据多次渲染元素或模板块。指令值必须使用特殊语法 `alias in expression` 为正在迭代的元素提供一个别名
-  - v-for 的默认方式是尝试就地更新元素而不移动它们
+  - v-for 的默认方式是尝试就地更新元素而不移动它们。`<div v-for="item in items" :key="item.id">{{item.text}}</div>`
 - **v-on**: Vue 中通过 `v-on` 指令来**给元素绑定事件并且提供了事件修饰符**。可绑定多个事件。缩写为`@`
 - **v-bind**: 动态的绑定一个或多个 attribute，也可以是组件的 prop。缩写为`:` (当使用 `.prop` 修饰符,缩写为`.`)
 - v-model: 在表单输入元素或组件中创建双向绑定。预期：根据表单输入元素或组件输出的值而变化
 - **v-slot**: 用于声明具名插槽或是期望接收 props 的作用域插槽。限用于:`<template>`、组件(用于带有 prop 的单个默认插槽)，缩写为`#`
 - v-pre: 跳过该元素及其所有子元素的编译。所有 Vue 模板语法都会被保留并按原样渲染。
-- v-once:仅渲染元素和组件一次，并跳过之后的更新。在随后的重新渲染，元素/组件及其所有子项将被当作静态内容并跳过渲染。
-- v-cloak 用于隐藏未编译的模板，直到完成。**该指令只在没有构建步骤的环境下需要使用**。
+- v-once: 仅渲染元素和组件一次，并跳过之后的更新。在随后的重新渲染，元素/组件及其所有子项将被当作静态内容并跳过渲染。
+- v-cloak: 用于隐藏未编译的模板，直到完成。**该指令只在没有构建步骤的环境下需要使用**。
   - 与像 `[v-cloak] { display: none }` 这样的 CSS 规则结合，它可以隐藏原始模板直到组件编译完毕。
 - v-memo(vue3.2): 缓存一个模板的子树。元素和组件都可以使用。为了实现缓存，该指令期待传入一个定长地依赖值数组进行比较。
 
-**数据/状态 API**: 注意 v3 有部分组合式 API
+**数据/状态选项式API**: 注意 v3 有部分组合式 API，例如响应式核心中的computed()、watch()
 
 - computed: 用于声明要在组件实例上暴露的*计算属性*。
   - 是计算属性，**依赖其它属性值**，只有它依赖的属性值发生改变，下一次获取 computed 的值时才会重新计算 computed 的值；
@@ -2875,9 +2971,9 @@ Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp
 
 **组件传值**
 
-- 父子通信：父向子传递数据是通过`props`，子向父是通过`$emit`。`$refs`也可以访问组件实例。
-- 兄弟通信：`$emit/$on`，vuex。
-- 跨级通信：`$emit/$on`，`provide/inject` API，vuex。
+- 父子通信：父向子传递数据是通过`props`，子向父是通过`$emit`、v3的`expose`。`$ref`也可以访问组件实例。
+- 兄弟通信：vuex、pinia，(vue2 的 EventBus，vue3 第三方库 mitt)。
+- 跨级通信：`$emit/$on`(逐层从下往上)，`$attrs`(单根[透传属性](https://cn.vuejs.org/guide/components/attrs.html)一直从上透传到下，下详)，`provide/inject`，vuex、pinia。
 
 父子组件创建过程自上而下，挂载过程自下而上。`parent created -> child created -> child mounted -> parent mounted`。  
 类似 koa 的洋葱模型，或者 U 型之类的，_父组件创建过程中涉及到子组件，则把子组件处理完之后，再回归父组件的接续处理_。
@@ -2889,11 +2985,15 @@ Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp
 - provide(key,val):用于提供可以被后代组件注入的值。inject(key,default_v):用于声明要通过从上层提供方匹配并注入进当前组件的属性。
 - 两者通常成对一起使用，以**允许一个祖先组件向其所有子孙后代注入一个依赖**，不论组件层次有多深，只要他们处于同一条组件链上。
 
-**实例的属性和方法** (v2 的 API 标识为`vm.$xx`,v3 是直接`$xx`,在组件内都`this.$xx`的实例调用)
+**组件实例的部分属性和方法** ([v2](https://v2.cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B-property) 的 API 标识为`vm.$xx`，[v3](https://cn.vuejs.org/api/component-instance.html) 是直接`$xx`，在组件内都`this.$xx`的实例调用)
+
+v2 组件实例属性方法: $data $props $el $options $parent $root $children $slots $scopedSlots $refs $isServer $attrs $listeners  
+v2 组件实例数据方法: $watch $set $delete 事件方法: $on $once $off $emit 生命周期方法: $mount $forceUpdate $nextTick $destory   
+v3 组件实例属性方法: $data $props $el $options $parent $root $slots $refs $attrs $watch() $emit() $forceUpdate() $nextTick()  
 
 - `vm.$refs`: 一个包含 DOM 元素和组件实例的对象，通过模板 ref 注册。
-- `模板 ref` 或者说特殊 attribute `ref`: `ref` 被用来给元素或子组件注册引用信息。
-- `vm.$attrs`: 一个包含了组件所有透传 attributes 的对象。
+- `模板 ref` 或者说`特殊 attribute ref`: `ref` 被用来给元素或子组件注册引用信息。
+- `vm.$attrs`: **一个包含了组件所有透传 attributes 的对象**(可用于父子通信)。若不要自动继承属性要配置`inheritAttrs:false`
   - `透传 Attributes` 是指由父组件传入，且没有被子组件声明为 props 或是组件自定义事件的 attributes 和事件处理函数。
 - `vm.$root`: 当前组件树的根组件实例。如果当前实例没有父组件，那么这个值就是它自己。
 - `vm.$parent`: 当前组件可能存在的父组件实例，如果当前组件是顶层组件，则为 null。
@@ -2910,56 +3010,52 @@ Vue 3 中我们引入了一个新的全局 API：`createApp` ，调用 createApp
 
 - 函数式组件剩下的唯一应用场景就是简单组件，比如创建动态标题的组件。否则，建议你像平常一样使用有状态组件。
 
-**组件写 name 的好处**: 可以通过名字找到对应的组件（递归组件）;可以通过 name 属性实现缓存功能 (keep-alive);可以通过 name 来识别组件（跨级组件通信时非常重要）。
+**组件写 name 的好处**: 可以通过名字找到对应的组件（递归组件）;可以通过 name 属性实现缓存功能 (keep-alive);可以通过 name 来识别组件（跨级组件通信时非常重要）。v3 的 SFC 在一些场景中会*根据文件名自动推导其组件名*。3.2.34以上使用`<script setup>`SFC会自动生成。
 
-**组件和插件的区别**: 组件 (Component) 是用来构成你的 App 的业务模块，它的目标是 `App.vue`;插件 (Plugin) 是用来对 Vue 的功能的增强或补充，它的目标是 Vue 本身。
+**组件和插件的区别**: 组件是用来构成 App 的业务模块，它的目标是 `App.vue`;插件是用来对 Vue 的功能的增强或补充，它的目标是 Vue 本身。
 
-**服务端渲染（Server-Side Rendering）**
+**服务端渲染 SSR** 是指由**服务端**完成页面的 html 结构拼接的页面处理技术，发送到浏览器，然后为其绑定状态与事件，成为完全可交互页面的过程。  
+与客户端的单页应用 (SPA) 相比，**SSR (Server-Side Rendering) 的优势**主要在于: 更快的内容到达时间，统一的心智模型，更好的 SEO。  
+**不足**(权衡考量): 开发中的限制，更多的与构建配置和部署相关的要求，更高的服务端负载。
 
-SSR 是指由**服务端**完成页面的 HTML 结构拼接的页面处理技术，发送到浏览器，然后为其绑定状态与事件，成为完全可交互页面的过程。  
-与客户端的单页应用 (SPA) 相比，**SSR 的优势**主要在于: 更快的内容到达时间，统一的心智模型，更好的 SEO。  
-不足(权衡考量): 开发中的限制，更多的与构建配置和部署相关的要求，更高的服务端负载。
-
-\rule[0pt]{19.4cm}{0.03em}
-
-**vue-router 相关**
+### vue-router 相关
 
 **Vue Router** 是 Vue.js 的官方路由。它与 Vue.js 核心深度集成，让用 Vue.js 构建单页应用变得轻而易举。功能包括：
 
-- 嵌套路由映射; 动态路由选择; 模块化、基于组件的路由配置; 路由参数、查询、通配符; 展示由 Vue.js 的过渡系统提供的过渡效果
-- 细致的导航控制; 自动激活 CSS 类的链接; HTML5 history 模式或 hash 模式; 可定制的滚动行为; URL 的正确编码
+- 嵌套路由映射；动态路由选择；模块化、基于组件的路由配置；路由参数、查询、通配符；展示由 Vue.js 的过渡系统提供的过渡效果；
+- 细致的导航控制；自动激活 CSS 类的链接；HTML5 history 模式或 hash 模式；可定制的滚动行为; URL 的正确编码。
 
 **vue-router 路由模式**
 
-- v3 配置参数选项为 mode，可选值为"hash"(默认值) | "history" | "abstract"(Node.js 环境)
+- v3 配置参数选项为 mode，可选值为 "hash"(默认值) | "history" | "abstract" (Node.js 环境)
   - **"history" 的 url 没有`#`号**，hash 反之。相同的 url，**"history" 会触发添加到浏览器历史记录栈中**，"hash" 不会触发。
 - v4 对应配置选项为 history，可选值为 createWebHashHistory() | createWebHistory() | createMemoryHistory()
 
 **vue-router 动态路由**
 
-- 动态路由匹配
-  - 路径参数用冒号`:`表示。当一个路由被匹配时，它的 params 的值将在每个组件中以 `this.$route.params` 的形式暴露出来。
+- 动态路由匹配:路径参数用冒号`:`表示。当一个路由被匹配时它的 params 的值将在每个组件中以`this.$route.params`的形式暴露出来。
 - 编程式导航
   - `router.push` 导航到不同的`url`。这个方法**会**向 history 栈添加一个新的记录，当用户点击浏览器后退按钮时，会回到之前的`url`。
   - `router.replace`: 替换当前位置, 在导航时**不会**向 history 添加新记录，正如它的名字所暗示的那样,它取代了当前的条目。
   - `router.go`: 该方法采用一个整数作为参数，表示在历史堆栈中前进或后退多少步，类似于 `window.history.go(n)` 。
 - 响应路由参数变化:
-  - 用 `watch` 监听: `watch: { $route(to, from){ /** */ } }`
-  - 向 `router-view` 组件中添加 key: `<router-view :key="$route.fullPath"></router-view>`
+  - 用 `watch` 监听: `watch: { $route(to, from){ /** */ } }` vue3要用useRoute()先获取当前路由信息。
+  - 向 `router-view` 组件中添加 key: `<router-view :key="$route.fullPath"> </router-view>`
     - `$route.fullPath` 是完成后解析的 URL，包含其查询参数信息和 hash 完整路径。
 
 **vue-router 的导航守卫 (钩子函数)**
 
 - 1 全局守卫
-  - **全局前置守卫** `router.beforeEach((to, from) =>{/* */ return xxx })` (做权限管理有用到)
-    - 当一个导航触发时，全局前置守卫按照创建顺序调用。守卫是异步解析执行，此时导航在所有守卫 resolve 完之前一直处于*等待中*。
-  - 全局解析守卫 `router.beforeResolve(async to => {/* */ return xxx})`
+  - **全局前置守卫** `router.beforeEach((to, from) =>{/* */ return xxx } )` (做权限管理有用到)
+    - 当一个导航触发时，**全局前置守卫按照创建顺序调用**。守卫是异步解析执行，此时导航在所有守卫 resolve 完之前一直处于*等待中*。
+    - 返回的值: false，取消当前的导航；一个路由地址，通过一个路由地址跳转到一个不同的地址。
+  - 全局解析守卫 `router.beforeResolve(async to => {/* */ return xxx } )`
     - *每次导航时*都会触发，但是确保在导航被确认之前，**同时在所有组件内守卫和异步路由组件被解析之后，解析守卫就被正确调用**。
       - **获取数据或执行任何其他操作**（如果用户无法进入页面时你希望避免执行的操作）的理想位置
   - 全局后置钩子 `router.afterEach((to, from, failure) => {if (!failure) sendToAnalytics(to.fullPath)})`
     - 和守卫不同的是，这些钩子**不会**接受 next 函数也**不会**改变导航本身。
     - *对于分析、更改页面标题、声明页面等辅助功能*以及许多其他事情都很有用。
-- 2 路由独享的守卫 `beforeEnter`: **只在进入路由时触发**，不会在 params、query 或 hash 改变时触发。
+- 2 路由独享的守卫: 可以直接在路由配置上定义`beforeEnter`守卫，**只在进入路由时触发**，不会在 params、query 或 hash 改变时触发。
 - 3 组件内的守卫: 在路由组件内直接定义路由导航守卫(传递给路由配置的)。
   - `beforeRouteEnter` 守卫**不能**访问 this，因为守卫在导航确认前被调用，因此即将登场的新组件还没被创建。
     - `beforeRouteEnter` 是支持给 next 传递回调的**唯一守卫**。
@@ -2968,23 +3064,22 @@ SSR 是指由**服务端**完成页面的 HTML 结构拼接的页面处理技术
 
 **完整的导航解析流程**
 
-1. 导航被触发。
-2. 在失活的组件里调用 `beforeRouteLeave` 守卫。
-3. 调用全局的 `beforeEach` 守卫。
-4. 在重用的组件里调用 `beforeRouteUpdate` 守卫 (2.2+)。
-5. 在路由配置里调用 `beforeEnter` 。
-6. 解析异步路由组件。
-7. 在被激活的组件里调用 `beforeRouteEnter` 。
-8. 调用全局的 `beforeResolve` 守卫 (2.5+)。
-9. 导航被确认。
-10. 调用全局的 `afterEach` 钩子。
-11. 触发 DOM 更新。
-12. 调用 `beforeRouteEnter` 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。
+1 导航被触发。 2 在失活的组件里调用 `beforeRouteLeave` 守卫。  
+3 调用全局的 `beforeEach` 守卫。  
+4 在重用的组件里调用 `beforeRouteUpdate` 守卫 (2.2+)。  
+5 在路由配置里调用 `beforeEnter`。  
+6 解析异步路由组件。  
+7 在被激活的组件里调用 `beforeRouteEnter`。  
+8 调用全局的 `beforeResolve` 守卫 (2.5+)。  
+9 导航被确认。  
+10 调用全局的 `afterEach` 钩子。  
+11 触发 DOM 更新。  
+12 调用 `beforeRouteEnter` 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入。  
 
 **`$route`** 是路由**信息**对象，包括 path，params，hash，query，fullPath，matched，name 等路由信息参数。  
-**`$router`** 是路由**实例**对象，包括了路由的跳转方法，钩子函数等。
+**`$router`** 是路由**实例**对象，包括了路由的跳转方法，钩子函数等。在 setup 里面没有访问 this，使用 useRoute()，useRouter()替代。 
 
-\rule[0pt]{19.4cm}{0.03em}
+### Vuex 状态管理
 
 **Vuex 是专门为 Vue.js 设计的状态管理库，以利用 Vue.js 的细粒度数据响应机制来进行高效的状态更新。**
 
@@ -3006,12 +3101,11 @@ SSR 是指由**服务端**完成页面的 HTML 结构拼接的页面处理技术
 - store 实例上有数据，有方法。方法改变的都是 store 实例上的数据。
 - 由于其他组件引用的是同样的实例，所以一个组件改变了 store 上的数据，导致另一个组件上的数据也会改变，**就像是一个对象的引用**。
 
-**Axios** 是一个**基于 promise** 网络请求库，作用于 node.js 和浏览器中。
+**Axios** 是一个**基于 promise** 网络请求库，作用于 node.js 和浏览器中。它是 isomorphic 的(即同一套代码可以运行在浏览器和 node.js 中)。
 
-- 它是 isomorphic 的(即同一套代码可以运行在浏览器和 node.js 中)。
 - 在**服务端**它使用原生 node.js **http 模块**, 而在**客户端** (浏览端) 则使用 **XMLHttpRequests**。特性有:
   - 从浏览器创建 XMLHttpRequests、 从 node.js 创建 http 请求、 支持 Promise API
-  - 拦截请求和响应、 转换请求和响应数据、 取消请求、 自动转换 JSON 数据、 客户端支持防御 XSRF
+  - 拦截请求和响应、 转换请求和响应数据、 取消请求、 自动转换 JSON 数据、 客户端支持防御 XSRF(CSRF，跨站请求伪造)
 
 vue-cli-service 中**只有`NODE_ENV`/`BASE_URL` 和以`VUE_APP_`开头的变量将通过 `webpack.DefinePlugin` 静态地嵌入到客户端侧的代码中。**使用 vite 时，为了防止意外地将一些环境变量泄漏到客户端，只有以 **`VITE_`** 为前缀的变量才会暴露给经过 vite 处理的代码。
 
@@ -3019,7 +3113,7 @@ vue-cli-service 中**只有`NODE_ENV`/`BASE_URL` 和以`VUE_APP_`开头的变量
 
 \newpage
 
-## Vue 的模板语法(应该合并到 FAQ)
+### 补充: Vue 的模板语法
 
 vue 使用一种基于 HTML 的模板语法，使我们能够声明式地将其组件实例的数据绑定到呈现的 DOM 上。  
 所有的 vue 模板都是语法层面合法的 HTML，可以被符合规范的浏览器和 HTML 解析器解析。
@@ -3069,7 +3163,7 @@ vue 使用一种基于 HTML 的模板语法，使我们能够声明式地将其�
 
 ![vue的完整directive语法](./pictures/pictures-vue/vue的完整directive语法.png){width=60%}
 
-**模板编译和渲染大概流程:`template -> ast -> render 函数 -> 创建虚拟dom -> diff 算法更新虚拟dom -> 产生、更新真实dom`**
+**模板编译和渲染大概流程:`template -> ast -> render函数 | -> 创建虚拟dom -> diff 算法更新虚拟dom -> 产生、更新真实dom`**
 
 - template → parse 模版基础编译 → optimize 优化 AST → generate 生成 JS 字符串 → render 函数
 
@@ -3077,7 +3171,7 @@ vue 使用一种基于 HTML 的模板语法，使我们能够声明式地将其�
 
 \newpage
 
-## diff 算法简述
+### 补充: diff 算法简述
 
 **\textcolor{brown}{简单 diff 算法简单总结}**
 
@@ -3143,12 +3237,12 @@ _简单 Diff 算法的**核心逻辑**_ 是，拿新的一组子节点中的节�
 - 通过 source 数组计算出**最长递增子序列的索引信息数组 seq**(source 数组的长度是去除了相同前后置节点的新节点组长度)。
   - 例如 seq 的值为`[0, 1]`的含义: 在新子节点序列中，重新编号后索引值为 0 和 1 的这两个节点在更新前后顺序没有发生变化。
 - 用索引 **i** 指向**新节点组中的最后一个节点**，用索引 _s_ 指向最长递增子序列中的*最后一个元素*，_循环使 i 递减，从下向上移动_
-  - 第一步: 判断表达式 `source[i]===-1`是否成立
+  - 第一步: 判断表达式 `source[i]===-1`是否成立([源码部分](https://github.com/vuejs/core/blob/da2ced15339b6fdb7a1459fa359bb79346a82bc2/packages/runtime-core/src/renderer.ts#L1950))
     - _成立_，说明索引为 i 的节点是*全新的节点*。找到真实索引位置的下一个节点处，调用 patch**挂载**节点。_不成立_，继续下一步。
   - 第二步: 判断表达式 `i !== seq[s]` 是否成立
     - _成立_，说明该节点*需要移动*。找到该节点在新节点组中的真实位置作为锚点，调用 insert **移动**节点
   - 第三步: 第一步和第二步中的条件*都不成立*
-    - 说明该节点*不需要移动*，但仍然需要让索引 s 的值递减，即 `s--`
+    - 说明该节点*不需要移动*，但仍然需要让索引 s 的值递减，即 `s--`。(前面两步成立不会移动 s)
 
 \newpage
 
@@ -3223,6 +3317,8 @@ JavaScript 中事件模型，在 DOM 节点上绑定事件函数（addEventListe
 
 一言以蔽之，通过`数据劫持`得到了 getter、setter，触发 getter 时会添加一个订阅者，触发 setter 时会发布通知，所有关联的订阅者进行数据更新。
 
+\newpage
+
 ![vue2中mvvm双向绑定的实现](./pictures/pictures-vue/vue2中mvvm双向绑定的实现.jpg)
 
 **vue 3** 实现响应式类似，本质上是通过 Proxy API 劫持了**数据对象**的读写:
@@ -3282,8 +3378,8 @@ _vue 通过一个副作用（effect）函数来跟踪_ **当前正在运行的�
 
 **nextTick()**:在下次`DOM`更新循环结束之后执行延迟回调，就可以拿到更新后的`DOM`相关信息(等待下一次`DOM`更新刷新的工具方法)。
 
-- 当在 vue 中更改响应式状态时最终的 DOM 更新并**不是同步生效的**，而是由 vue 将它们**缓存在一个队列中**，直到下一个“tick”才一起执行。
-  - 这样是为了确保每个组件无论发生多少状态改变，都仅执行一次更新。
+- 当**在 vue 中更改响应式状态**时最终的 DOM 更新并**不是同步生效的**，而是由 vue 将它们**缓存在一个队列中**，直到下一个“tick”才一起执行。
+  - 这样是为了确保*每个组件无论发生多少状态改变，都仅执行一次更新*。
 - `nextTick()` 可以*在状态改变后立即使用，以等待 DOM 更新完成*。你可以传递一个回调函数作为参数，或者 await 返回的 Promise。
 
 _前置知识: JS 执行机制事件循环(EventLoop)_
@@ -3304,7 +3400,7 @@ _nextTick 用一句话总结就是『利用 Event loop 事件线程去异步操�
 - vue 实现了一个 nextTick 函数，如果传入一个 cb，这个 cb 会被存储到一个队列中，在下一个 tick 时触发队列中的所有 cb 事件。
 - 因为目前浏览器平台并没有实现 nextTick 方法，所以 vue 使用 Promise、setTimeout、setImmediate 等方式在 microtask（或是 task）中创建一个事件，目的是在当前调用栈执行完毕以后（不一定立即）才会去执行这个事件。
 
-[vue2 nextTick 源代码](https://github.com/vuejs/vue/blob/main/src/core/util/next-tick.ts#L94) 分为为两部分: **一是判断当前环境能使用的最合适的 API 并保存异步函数，二是调用异步函数 执行回调队列**。
+[vue2 nextTick 源代码](https://github.com/vuejs/vue/blob/main/src/core/util/next-tick.ts#L94) 分为为两部分: **一是判断当前环境能使用的最合适的 API 并保存异步函数，二是调用异步函数执行回调队列**。
 
 - 环境判断: 判断用哪个宏任务或微任务，因为*宏任务耗费的时间是大于微任务*的，**所以先使用微任务**，判断顺序
   - Promise、MutationObserver、setImmediate、setTimeout
@@ -3327,7 +3423,7 @@ _nextTick 用一句话总结就是『利用 Event loop 事件线程去异步操�
 
 \newpage
 
-### 2.3 computed() 、watch()
+### 2.3 computed()、watch()
 
 **computed()**: _接受一个 getter 函数，返回一个只读的响应式 ref 对象_。该 ref 通过 `.value` 暴露 getter 函数的返回值。它也可以接受一个带有 get 和 set 函数的对象来创建一个可写的 ref 对象。
 
@@ -3335,7 +3431,7 @@ _nextTick 用一句话总结就是『利用 Event loop 事件线程去异步操�
   - 注意，如果某个依赖 (比如非响应式 property) 在该实例范畴之外，则计算属性是**不会**被更新的。
   - 缓存的作用，避免重复计算，加大性能消耗。_确定不需要缓存，那么也可以使用方法调用。_
 - `与方法的区别`:_将同样的函数定义为一个方法_，在**结果上是完全相同的**。但计算属性会**缓存**，方法调用**总是**会在重渲染发生时再次执行函数。
-  - 绑定在表达式中的方法在*组件每次更新时都会被重新调用*，因此*不应该产生任何副作用*，比如改变数据或触发异步操作。
+  - 绑定在表达式中的方法在**组件每次更新时都会被重新调用**，因此*不应该产生任何副作用*，比如改变数据或触发异步操作。
 - _计算属性默认是只读的_。可以通过同时提供 getter 和 setter 来创建可读可写的计算属性。
 - 最佳实践: **getter 不应有副作用**,不要在 getter 中做异步请求或者更改 DOM。**避免直接修改计算属性值。**
   - 一个*计算属性*的声明中描述的*是如何根据其他值派生一个值*。因此 getter 的职责应该仅为计算和返回该值。
@@ -3383,7 +3479,7 @@ export default { // 选项式API使用
   }}
 ```
 
-**watchEffect()**: _立即运行一个函数_，同时响应式地追踪其依赖(会先执行一次用来自动收集依赖)，并在依赖更改时重新执行。
+**watchEffect()**: _立即运行一个函数_，**同时响应式地追踪其依赖**(会先执行一次用来自动收集依赖)，**并在依赖更改时重新执行**。
 
 - _第一个参数就是要运行的副作用函数_。这个副作用函数的参数也是一个函数，用来注册清理回调。**依赖源同时是回调函数。**
   - 清理回调会在该副作用下一次执行前被调用，可以用来清理无效的副作用。
@@ -3393,12 +3489,12 @@ export default { // 选项式API使用
 - _返回值是一个用来停止该副作用的函数_。**不需要手动传入依赖；无法获取到变化前的值， 只能获取变化后的值**。
 - _可以简单理解为同一个功能的两种不同形态，底层的实现是一样的。类似 watch 设置了选项`immediate:true`的效果_。
 
-```cs
-watch( () => {/*依赖源收集函数*/}, () => {/*依赖源改变时的回调函数*/});
-watchEffect(() => { /*依赖源同时是回调函数*/});
-/* watchEffect(() => { document.body.innerHTML = `计数：${count.value}`}) */
-/* 以下两种用法在行为上基本等价*/ watchEffect(() => console.log(counter.value));
-watch(() => counter.value, () => console.log(counter.value), { immediate: true });
+```js
+setup() { const A1 = ref("world"); const A2 = ref();
+    // watchEffect():立即运行一个函数，【同时响应式地追踪其依赖，并在依赖更改时重新执行】。
+    watchEffect(() => { A2.value = "hello " + A1.value })
+    // 将触发副作用。原本A2的值hello world，因为追踪了其依赖的A1，修改之后A2的值现在为hello CUBE
+    A1.value = "CUBE"; return { A2, } }
 ```
 
 **watchPostEffect()**: watchEffect() 使用 `flush: 'post'` 选项时的别名。
@@ -3409,11 +3505,11 @@ watch(() => counter.value, () => console.log(counter.value), { immediate: true }
 
 ## 3 Vue.js 设计与实现总结
 
-一：框架设计概览 -- (1,2,3)  
-二：响应系统 -- (4,5,6)  
-三：渲染器(renderer) -- (7,8,9,10,11)  
-四：组件化 -- (12,13,14)  
-五：编译器(compiler) -- (15,16,17)  
+一：框架设计概览 -- (1 ~ 3)  
+二：响应系统 -- (4 ~ 6)  
+三：渲染器(renderer) -- (7 ~ 11)  
+四：组件化 -- (12 ~ 14)  
+五：编译器(compiler) -- (15 ~ 17)  
 六：服务端渲染 -- (18)
 
 ### 1 权衡的艺术
@@ -4106,13 +4202,25 @@ CSR、SSR 和同构渲染的各自的优缺点。具体可以总结为下表(为
   - 对于模块，应该避免使用模块级的全局变量。因为在不做特殊处理的情况下，多个请求会共用模块级的全局变量，造成请求间的交叉污染。
 - **仅在客户端渲染组件中的部分内容**。这需要自行封装`<ClientOnly>` 组件，被该组件包裹的内容仅在客户端才会被渲染。
 
+\rule[0pt]{19.4cm}{0.03em}
+
+**Svelte** 是一个构建 web 应用程序的工具。
+
+Svelte 与诸如 React 和 Vue 等 JavaScript 框架类似，都怀揣着一颗**让构建交互式用户界面变得更容易**的心。
+一个关键的区别：Svelte 在**构建/编译阶段**将你的应用程序转换为理想的 JavaScript 应用，而不是在**运行阶段**解释应用程序的代码。
+这意味着你不需要为框架所消耗的性能付出成本，并且在应用程序首次加载时没有额外损失。
+
+当应用程序运行时，像 React 和 Vue 等框架会*在使用者的浏览器直接做它们想要做的事情*，而 Svelte 则是*将做的这些事移到编译阶段处理*，因此那些做的事情只会发生在你建置应用程序的时候，进而能产生高度优化的原生 JavaScript 程序代码。
+
+VUE 新版本的编译模式，官方叫做蒸汽模式([Vapor MODE](https://blog.vuejs.org/posts/2022-year-in-review))，也将在 2023 年走这个路子。
+
 \newpage
 
 # 前端工程化概述
 
 ## 1 [Vue 开发风格指南](https://cn.vuejs.org/style-guide/rules-essential.html)
 
-**必要规则** 【说明，camelCase:驼峰命名; PascalCase:首字母全大写; kebab-case:全小写用横线连接.】
+**必要规则** 【说明，camelCase:驼峰命名; PascalCase:首字母全大写; kebab-case:全小写用横线连接; snake_case:全小写底线连接】
 
 - **组件名为多个单词**: 组件名应该始终是多个单词的，根组件 App 以及 `<transition>`、`<component>` 之类的 vue 内置组件除外
   - 可以避免跟现有的以及未来的 HTML 元素**相冲突**，因为所有的 HTML 元素名称都是单个单词的。
@@ -4314,10 +4422,11 @@ Mock 服务解决的是前后端协作开发的问题，前后端开发人员提
 - 统一的工具配置 `=>` 相同配置直接复用，发布、打包、上传等工作自动化
 - 统一的基础代码 `=>` 相同代码直接复用，不需要每次新建项目都 copy
 
-**git commit 消息一般规范**
+**git commit 消息一般规范**。格式可参看`<type>(<scope>:<subject>)`，scope 指提交影响的范围，可选；type 参看下面:
 
-- `feat`: 新功能、新特性、`fix`: 修改 bug、`perf`: 更改代码，以提高性能、`docs`: 文档修改
+- `feat`: 新功能、新特性、`fix`: 修改 bug、`perf`: 更改代码，以提高性能、`docs`: 文档修改、`chore`: 构建脚本或者辅助工具的变动
 - `style`: 代码格式修改, 注意不是 css 修改（例如分号修改）、`test`: 测试用例新增、修改、`build`: 影响项目构建或依赖项修改
+- `refactor`: 重构（不新增/删除功能）、`revert`回滚到上一个版本、`merge`: 代码合并、`sync`: 同步主线或分支bug
 
 **（8）项目部署流程化**
 
@@ -4329,7 +4438,7 @@ Mock 服务解决的是前后端协作开发的问题，前后端开发人员提
 
 ## 4 组件设计原则
 
-一句话总结:**ui 组件看设计 antd/element-ui，业务组件抽逻辑，smart (容器)组件带状态 state，dump (展示)组件纯模版**。
+一句话总结: **ui 组件看设计 antd/element-ui，业务组件抽逻辑，smart (容器)组件带状态 state，dump (展示)组件纯模版**。
 
 **组件分类**: 一个模块下可能现有**容器组件**(layout/container)，包含多个**业务组件**；一个业务组件可能包含多个 **UI 组件**和**展示型组件**；
 
@@ -5245,6 +5354,99 @@ HTTP 响应状态码用来表明特定 HTTP 请求是否成功完成。 响应�
 
 \newpage
 
+## 8 HTTP 常见标头(header)
+
+HTTP 标头允许客户端和服务器通过 HTTP 请求或者响应传递附加信息。`标头名称(不区分大小写): 具体的值(值前面冒号后面的空格会省略)`。
+  
+根据不同的消息上下文，标头可以分为：**请求标头**、**响应标头**、**表示标头**(_描述消息主体中特定的资源不同的表示形式_，例如同样的数据表示为 xml 或 json。包括 Content-Type、Content-Encoding、Content-Language 和 Content-Location)、**有效负荷标头**(其从一个或多个消息中描述*与安全传输和原始资源表示形式重建*的相关的有效负荷信息，包括 Content-Length、Content-Range、Trailer 和 Transfer-Encoding)
+
+| 标头                                                       | 描述 (已弃用或者实验性的不列 截止 2023-03-22)                                                                                                                                                                                                                                            |
+| ----------------------- | --------------------------------------------------------|
+| WWW-Authenticate **(验证)**                                | 定义应该用于访问资源的身份验证方法。                                                                                                                                                                                                                                                     |
+| Authorization                                              | 包含用于向服务器验证用户代理身份的凭据。                                                                                                                                                                                                                                                 |
+| Proxy-Authenticate                                         | 定义应用于访问代理服务器后面资源的身份验证方法。                                                                                                                                                                                                                                         |
+| Proxy-Authorization                                        | 包含用于使用代理服务器验证用户代理的凭据。                                                                                                                                                                                                                                               |
+| Age **\textcolor{brown}{(缓存)}**                          | 对象**在代理缓存中的时间**（以秒为单位）。                                                                                                                                                                                                                                               |
+| Cache-Control                                              | 请求和响应中**缓存机制**的指令。可选值 public、private、no-cache、no-store、max-age=`<>`等                                                                                                                                                                                               |
+| Clear-Site-Data                                            | 清除与请求网站相关联的浏览器数据（例如 cookie、storage、cache）。                                                                                                                                                                                                                        |
+| Expires                                                    | 响应**被视为过时**的日期/时间。                                                                                                                                                                                                                                                          |
+| Pragma                                                     | 特定于实现的标头可能会在请求-响应链（request-response chain）的任何地方产生各种影响。用于向后兼容 Cache-Control 标头尚不存在的 HTTP/1.0 缓存。                                                                                                                                           |
+| Last-Modified **\textcolor{brown}{(条件,与缓存关系密切)}** | **资源的最后修改日期**，用于比较同一个资源的多个版本。它不如 ETag 准确，但在某些环境中更容易计算。使用 If-Modified-Since 和 If-Unmodified-Since 的条件请求可以使用此值来更改请求的行为。                                                                                                 |
+| If-Modified-Since                                          | 使请求有条件，并期望只有在给定日期后**修改**资源时才请求传输资源。仅当缓存过期时才用于传输数据。                                                                                                                                                                                         |
+| If-Unmodified-Since                                        | 使请求有条件，并期望只有在给定日期后资源**未被修改**时才请求传输资源。这确保了特定范围的新片段与先前片段的一致性，或者在修改现有文档时实现乐观的（optimistic）并发控制系统。                                                                                                             |
+| ETag                                                       | **标识资源版本的唯一字符串**。使用 If-Match 和 If-None-Match 的条件请求使用此值来更改请求的行为。如果给定 URL 中的资源更改，一定要生成新的 ETag 值用来比较，以快速确定此资源是否变化。                                                                                                   |
+| If-Match                                                   | 使请求有条件，并且**仅**当存储的资源与给定的 ETag **之一匹配**时才应用该方法。                                                                                                                                                                                                           |
+| If-None-Match                                              | 使请求有条件，并且**仅**当存储的资源与给定的 ETag **都不匹配**时才应用该方法。这用于更新缓存（用于安全请求），或防止在资源已存在时上传新资源。                                                                                                                                           |
+| Vary                                                       | 确定如何匹配请求标头以决定是否可以使用缓存的响应而不是从源服务器请求新的响应。                                                                                                                                                                                                           |
+| Connection **(连接管理)**                                  | 控制当前事务完成后网络连接是否保持打开状态([在 http/2、3 中，禁止使用特定于连接的标头字段](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Connection))                                                                                                                        |
+| Keep-Alive                                                 | 控制持久连接应保持打开状态的时间。                                                                                                                                                                                                                                                       |
+| Accept **(内容协商)**                                      | 通知服务器可以发回的数据类型。                                                                                                                                                                                                                                                           |
+| Accept-Encoding                                            | 编码算法，通常是压缩算法，用于返回的资源。                                                                                                                                                                                                                                               |
+| Accept-Language                                            | 通知服务器有关服务器预期返回的人类语言。这是一个提示，不一定在用户的完全控制之下：服务器应该始终注意不要覆盖明确的用户选择（比如从下拉列表中选择一种语言）。                                                                                                                             |
+| Expect **(Control)**                                       | 表示服务器需要满足的期望才能正确处理请求。                                                                                                                                                                                                                                               |
+| Max-Forwards                                               | 使用 TRACE 时，指示请求在被反映到发送方之前可以执行的最大跃点数。                                                                                                                                                                                                                        |
+| Cookie **\textcolor{brown}{(Cookie)}**                     | 包含先前由服务器使用 Set-Cookie 标头发送存储的 HTTP cookie。                                                                                                                                                                                                                             |
+| Set-Cookie                                                 | 将 cookie 从服务器发送到用户代理。                                                                                                                                                                                                                                                       |
+| Access-Control-Allow-Origin **\textcolor{brown}{(跨域)}**  | 指示响应的资源**是否可以被给定的来源共享**。                                                                                                                                                                                                                                                 |
+| Access-Control-Allow-Credentials                           | 指示当请求的凭证标记为 true 时，**是否可以公开**对该请求响应。                                                                                                                                                                                                                               |
+| Access-Control-Allow-Headers                               | 用在对预检请求的响应中，指示实际的请求中可以使用**哪些 HTTP 标头**。                                                                                                                                                                                                                         |
+| Access-Control-Allow-Methods                               | 指定对预检请求的响应中，**哪些 HTTP 方法**允许访问请求的资源。                                                                                                                                                                                                                               |
+| Access-Control-Expose-Headers                              | 通过列出标头的名称，指示**哪些标头**可以作为响应的一部分公开。                                                                                                                                                                                                                               |
+| Access-Control-Max-Age                                     | 指示预检请求的结果能**被缓存多久**。                                                                                                                                                                                                                                                         |
+| Access-Control-Request-Headers                             | 用于发起一个预检请求，**告知**服务器正式请求**会使用哪些 HTTP 标头**。                                                                                                                                                                                                                           |
+| Access-Control-Request-Method                              | 用于发起一个预检请求，**告知**服务器正式请求**会使用哪一种 HTTP 请求方法**。                                                                                                                                                                                                                     |
+| Origin                                                     | 指示获取资源的请求是从什么源发起的。                                                                                                                                                                                                                                                     |
+| Timing-Allow-Origin                                        | 指定特定的源，以允许其访问 Resource Timing API 功能提供的属性值，否则由于跨源限制，这些值将被报告为零。                                                                                                                                                                                  |
+| Content-Disposition **(下载)**                             | 指示传输的资源是否应内联显示（没有标题的默认行为），或者是否应像下载一样处理并且浏览器应显示“另存为”对话框。                                                                                                                                                                             |
+| Content-Length **\textcolor{brown}{(消息主体信息)}**       | **资源的大小，以十进制字节数表示**。                                                                                                                                                                                                                                                         |
+| Content-Type                                               | 指示**资源的媒体类型**。                                                                                                                                                                                                                                                                     |
+| Content-Encoding                                           | 用于指定压缩算法。                                                                                                                                                                                                                                                                       |
+| Content-Language                                           | 描述面向受众的人类语言，以便用户可以根据自己的首选语言进行区分。                                                                                                                                                                                                                         |
+| Content-Location                                           | 指示返回数据的备用位置。                                                                                                                                                                                                                                                                 |
+| Forwarded **(代理)**                                       | 包含来自代理服务器面向客户端的信息，当请求路径中涉及代理时，这些信息会被更改或丢失。                                                                                                                                                                                                     |
+| Via                                                        | **由代理添加**，包括正向和反向代理，并且可以出现在请求标头和响应标头中。                                                                                                                                                                                                                     |
+| Location **(重定向)**                                      | 指示要将页面重定向到的 URL。                                                                                                                                                                                                                                                             |
+| From **\textcolor{brown}{(请求上下文)}**                   | 包含一个电子邮箱地址，这个电子邮箱地址属于发送请求的用户代理的实际掌控者的人类用户。                                                                                                                                                                                                     |
+| Host                                                       | 指定服务器的域名（用于虚拟主机）和（可选）服务器侦听的 TCP 端口号。                                                                                                                                                                                                                      |
+| Referer                                                    | **前一个网页的地址**，表示从该网页链接（进入）到当前请求的页面。                                                                                                                                                                                                                             |
+| Referrer-Policy                                            | 管理 Referer 标头中发送的哪些引用信息应包含在发出的请求中。                                                                                                                                                                                                                              |
+| User-Agent                                                 | 包含一个特征字符串，允许网络协议对端识别发起请求的用户代理软件的应用程序类型、操作系统、软件供应商或软件版本。                                                                                                                                                                           |
+| Allow **\textcolor{brown}{(响应上下文)}**                  | 列出资源所支持的 HTTP 方法的集合。                                                                                                                                                                                                                                                       |
+| Server                                                     | 包含了处理请求的源头服务器所用到的软件相关信息。                                                                                                                                                                                                                                         |
+| Accept-Ranges **(范围请求)**                               | 指示服务器是否支持范围请求，如果支持，范围可以用哪个单位表示。                                                                                                                                                                                                                           |
+| Range                                                      | 指示服务器应返回的文档部分。                                                                                                                                                                                                                                                             |
+| If-Range                                                   | 创建一个条件范围请求，只有在给定的 etag 或日期与远程资源匹配时才会满足。用于防止从资源的不兼容版本下载两个范围。                                                                                                                                                                         |
+| Content-Range                                              | 指示部分消息在完整正文消息中的位置。                                                                                                                                                                                                                                                     |
+| Strict-Transport-Security **\textcolor{brown}{(安全)}**    | (HSTS) **强制使用 HTTPS** 而不是 HTTP 进行通信。                                                                                                                                                                                                                                             |
+| Cross-Origin-Embedder-Policy                               | (COEP) 允许服务器为给定文档声明嵌入器（embedder）策略。                                                                                                                                                                                                                                  |
+| Cross-Origin-Opener-Policy                                 | (COOP) 防止其他域打开/控制窗口。                                                                                                                                                                                                                                                         |
+| Cross-Origin-Resource-Policy                               | (CORP) 防止从其他域读取应用了此标头的资源的响应。**(和 COOP 一起来启用跨域隔离)**                                                                                                                                                                                                                                        |
+| Content-Security-Policy                                    | (CSP) 控制允许用户代理能够为给定页面加载哪些资源。**(帮助防止跨站脚本攻击xss)**                                                                                                                                                                                                                                       |
+| Content-Security-Policy-Report-Only                        | 允许 Web 开发人员通过监控而不是强制执行其效果来试验策略。这些由 JSON 文档组成的违规报告包含通过 HTTP POST 请求发送到指定的 URI 。                                                                                                                                                        |
+| Expect-CT                                                  | 允许网站选择报告和/或执行证书透明度要求，这可以让你注意到该网站使用了欺诈性证书。当站点启用 Expect-CT 标头时，他们将请求 Chrome 检查该站点的任何证书是否出现在公共证书透明度日志中。                                                                                                     |
+| Permissions-Policy                                         | 提供一种机制来允许和拒绝在网站自己的框架和它嵌入的 `<iframe>` 中使用浏览器特性。                                                                                                                                                                                                         |
+| Upgrade-Insecure-Requests                                  | 向服务器发送一个信号，表达客户端对加密和身份验证响应的偏好，并且它可以成功处理 upgrade-insecure-requests 指令。                                                                                                                                                                          |
+| X-Content-Type-Options                                     | **禁用** MIME 嗅探并**强制浏览器使用** Content-Type 中给出的类型。                                                                                                                                                                                                                               |
+| X-Download-Options                                         | X-Download-Options HTTP 标头指示浏览器（Internet Explorer）不应显示“打开”已从应用程序下载的文件的选项，以防止网络钓鱼攻击，否则该文件将获得在应用程序上下文中执行的权限。                                                                                                                |
+| X-Frame-Options (XFO)                                      | 指示是否应允许浏览器在 `<frame> <iframe> <embed> <object>` 中呈现页面 **(点击劫持)**。                                                                                                                                                                                                      |
+| X-Powered-By                                               | 可能由托管环境或其他框架设置，并包含有关它们的信息，但不会为应用程序或其访问者提供任何用处。取消设置此标头以避免暴露潜在的漏洞。                                                                                                                                                         |
+| X-XSS-Protection                                           | **启用跨站点脚本过滤**。                                                                                                                                                                                                                                                                     |
+| Sec-Fetch-Site **(fetch 元数据)**                          | 它是一个请求标头，指示请求发起者的源与其目标源之间的关系。它是一个结构化标头（Structured Header），其值是一个标记，可能的值有 cross-site、same-origin、same-site 和 none。                                                                                                               |
+| Sec-Fetch-Mode                                             | 它是一个请求标头，向服务器指示请求的模式。它是一个结构化标头（Structured Header），其值是一个标记，可能的值有 cors、navigate、no-cors、same-origin 和 websocket。                                                                                                                        |
+| Sec-Fetch-User                                             | 它是一个请求标头，指示导航请求是否由用户激活触发。它是一个结构化标头（Structured Header），其值为布尔值，因此可能的值为 ?0 表示 false，?1 表示 true。                                                                                                                                    |
+| Sec-Fetch-Dest                                             | 它是一个请求标头，指示请求到服务器的目的地。它是一个结构化标头（Structured Header），其值为具有可能值的标记 audio、audioworklet、document、embed、empty、font、image、manifest、object、paintworklet、report、script、serviceworker、sharedworker、style、track、video、worker 和 xslt。 |
+| Service-Worker-Navigation-Preload                          | 在 service worker 启动期间以抢占式请求发送到 fetch() 资源的请求标头。该值由 NavigationPreloadManager.setHeaderValue() 设置，可用于通知服务器应返回与正常 fetch() 操作不同的资源。                                                                                                        |
+| Alt-Svc **(其他)**                                         | 用于列出到达此服务的替代方法。                                                                                                                                                                                                                                                           |
+| Date                                                       | 包含消息发出的日期和时间。                                                                                                                                                                                                                                                               |
+| Link                                                       | Link 实体标头字段提供了一种在 HTTP 标头中序列化一个或多个链接的方法。它在语义上等同于 HTML 的 `<link>` 元素。                                                                                                                                                                            |
+| Retry-After                                                | 指示用户代理在发出后续请求之前应等待多长时间。                                                                                                                                                                                                                                           |
+| Server-Timing                                              | 传达给定请求-响应周期的一个或多个指标和描述。                                                                                                                                                                                                                                            |
+| SourceMap                                                  | 将生成的代码链接到源映射。                                                                                                                                                                                                                                                               |
+| Upgrade                                                    | (特定于 http1.1)可用于将已建立的客户端/服务器连接**升级到不同的协议**（通过相同的传输协议，如 http 升级到 websocket）。                                                                                                                                                                      |
+| X-DNS-Prefetch-Control                                     | 控制 DNS 预取，浏览器通过该功能主动对用户可能选择访问的链接以及文档（document）引用的项目（包括图片、CSS、JavaScript 等）的 URL 执行域名解析。                                                                                                                                           |                            |
+
+\newpage
+
 # 浏览器缓存机制和 HTTP 缓存
 
 **\textcolor{brown}{【几个区分】}**
@@ -5300,7 +5502,7 @@ HTTP 响应状态码用来表明特定 HTTP 请求是否成功完成。 响应�
 **协商缓存**就是强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程。
 
 - 协商缓存的标识也是在响应报文的 HTTP 头中和请求结果一起返回给浏览器的，
-- 控制协商缓存的字段分别有：**Last-Modified/If-Modified-Since** 和 **Etag/If-None-Match**， 其中 Etag/If-None-Match 的优先级比 Last-Modified/If-Modified-Since 高。同时存在则只有 Etag/If-None-Match 生效。
+- 控制协商缓存的字段分别有：**Last-Modified/If-Modified-Since** 和 **ETag/If-None-Match**， 其中 ETag/If-None-Match 的优先级比 Last-Modified/If-Modified-Since 高。同时存在则只有 ETag/If-None-Match 生效。
   - **Last-Modified** 是服务器响应请求时，返回该资源文件在服务器最后被修改的时间。
     - 不足：最后修改只能精确到秒级;只要编辑了，不管内容是否真的有改变，都会以这最后修改的时间作为判断依据，当成新资源返回。
   - **If-Modified-Since** 则是客户端再次发起该请求时，*携带上次*请求返回的 _Last-Modified 值_，
@@ -5308,14 +5510,14 @@ HTTP 响应状态码用来表明特定 HTTP 请求是否成功完成。 响应�
     - 服务器收到该请求，发现请求头含有 If-Modified-Since 字段，则会根据 If-Modified-Since 的字段值与该资源在服务器的最后被修改时间做对比：
       - 若服务器的资源最后被修改时间大于 If-Modified-Since 的字段值，则重新返回资源，状态码为 200；
       - 否则则返回 304，代表资源无更新，可继续使用缓存文件。
-  - **Etag** 是服务器响应请求时，返回当前资源文件的一个唯一标识(由服务器生成)
-  - **If-None-Match** 是客户端再次发起该请求时，*携带上次*请求返回的唯一标识 _Etag 值_，
+  - **ETag** 是服务器响应请求时，返回当前资源文件的一个唯一标识(由服务器生成)
+  - **If-None-Match** 是客户端再次发起该请求时，*携带上次*请求返回的唯一标识 _ETag 值_，
     - 通过此字段值告诉服务器该资源上次请求返回的唯一标识值。
-    - 服务器收到该请求后，发现该请求头中含有 If-None-Match，则会根据 If-None-Match 的字段值与该资源在服务器的 Etag 值做对比:
+    - 服务器收到该请求后，发现该请求头中含有 If-None-Match，则会根据 If-None-Match 的字段值与该资源在服务器的 ETag 值做对比:
       - 一致则返回 304，代表资源无更新，继续使用缓存文件；
       - 不一致则重新返回资源文件，状态码为 200。
 
-**浏览器缓存过程总结**:_强制缓存优先于协商缓存进行_，若强制缓存(Expires 和 Cache-Control)生效则直接使用缓存，若不生效则进行协商缓存(Last-Modified / If-Modified-Since 和 Etag / If-None-Match)。协商缓存由服务器决定是否使用缓存，若协商缓存失效，那么代表该请求的缓存失效，重新获取请求结果，再存入浏览器缓存中；生效则返回 304，继续使用缓存。
+**浏览器缓存过程总结**:_强制缓存优先于协商缓存进行_，若强制缓存(Expires 和 Cache-Control)生效则直接使用缓存，若不生效则进行协商缓存(Last-Modified / If-Modified-Since 和 ETag / If-None-Match)。协商缓存由服务器决定是否使用缓存，若协商缓存失效，那么代表该请求的缓存失效，重新获取请求结果，再存入浏览器缓存中；生效则返回 304，继续使用缓存。
 
 **\textcolor{brown}{【用户操作对缓存影响】}**
 
@@ -5364,9 +5566,9 @@ Age 的值通常接近于 0。表示此对象刚刚从原始服务器获取不�
 ```cs
 res.setHeader('Cache-Control', 'no-cache')
 const crypto = require('crypto'); const hash = crypto.createHash('sha1').update(content).digest('hex')
-res.setHeader('Etag', hash)
+res.setHeader('ETag', hash)
 if(req.headers['if-none-match'] === hash){
-  console.log('Etag协商缓存命中.....');res.statusCode = 304;res.end();return; }
+  console.log('ETag协商缓存命中.....');res.statusCode = 304;res.end();return; }
 ```
 
 nginx 通过 add_header 设置相对应的缓存策略，对于动态的 php 文件设置为不缓存:
@@ -6384,7 +6586,7 @@ Strict-Transport-Security: max-age=<expire-time>; includeSubDomains
 - `preload` (可选): 查看 预加载 HSTS 获得详情。不是标准的一部分。
   - 谷歌维护着一个 [HSTS 预加载服务](https://hstspreload.org/)。按照其指示成功提交域名后，浏览器将会**永不使用非安全**的方式连接到你的域名。
 
-综合(`Cross-Origin-`有 3 个，`Access-Control-`有 8 个)
+综合(`Cross-Origin-`有 3 个，CORS相关的 `Access-Control-`有 8 个)
 
 <!--
 - `Content-Security-Policy`(CSP): XSS 和数据注入等 [额外的安全层]
