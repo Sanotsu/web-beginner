@@ -112,6 +112,7 @@
 
 - [01-dart 官方教程概述](documents/06-dart/01-dart-language-tour.md)
 - [02-flutter 架构简介](documents/06-dart/02-flutter-resource.md)
+- [03-ubuntu 下配置 flutter 环境的简述](documents/06-dart/03-flutter-config-andsome.md)
 
 ## 数据结构与算法(入门内容)
 
