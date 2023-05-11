@@ -33,6 +33,22 @@
 - [把终端执行命令显示内容写到文件](#%E6%8A%8A%E7%BB%88%E7%AB%AF%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4%E6%98%BE%E7%A4%BA%E5%86%85%E5%AE%B9%E5%86%99%E5%88%B0%E6%96%87%E4%BB%B6)
 - [cron 定时任务](#cron-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1)
 - [查看 CPU 型号](#%E6%9F%A5%E7%9C%8B-cpu-%E5%9E%8B%E5%8F%B7)
+- [复制文件夹](#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%A4%B9)
+- [删除指定文件夹 30 天前的文件的脚本](#%E5%88%A0%E9%99%A4%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9-30-%E5%A4%A9%E5%89%8D%E7%9A%84%E6%96%87%E4%BB%B6%E7%9A%84%E8%84%9A%E6%9C%AC)
+- [修改固定 IP](#%E4%BF%AE%E6%94%B9%E5%9B%BA%E5%AE%9A-ip)
+- [kill 进程](#kill-%E8%BF%9B%E7%A8%8B)
+- [批量删除进程](#%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E8%BF%9B%E7%A8%8B)
+- [显示当前进程的状态](#%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81)
+- [找到指定文件夹下符合条件的内容然后删除](#%E6%89%BE%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%AC%A6%E5%90%88%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9%E7%84%B6%E5%90%8E%E5%88%A0%E9%99%A4)
+- [挂载 U 盘](#%E6%8C%82%E8%BD%BD-u-%E7%9B%98)
+- [使用 bash 执行脚本](#%E4%BD%BF%E7%94%A8-bash-%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC)
+- [使用 scp 复制文件](#%E4%BD%BF%E7%94%A8-scp-%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6)
+- [设定固定 IP(ubuntu16)](#%E8%AE%BE%E5%AE%9A%E5%9B%BA%E5%AE%9A-ipubuntu16)
+- [vscode，替换空行](#vscode%E6%9B%BF%E6%8D%A2%E7%A9%BA%E8%A1%8C)
+- [查看系统内核版本](#%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC)
+- [系统时区相关](#%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA%E7%9B%B8%E5%85%B3)
+- [vbox 修改虚拟硬盘的 uuid](#vbox-%E4%BF%AE%E6%94%B9%E8%99%9A%E6%8B%9F%E7%A1%AC%E7%9B%98%E7%9A%84-uuid)
+- [ubuntu 下的 ext4 硬盘扩容](#ubuntu-%E4%B8%8B%E7%9A%84-ext4-%E7%A1%AC%E7%9B%98%E6%89%A9%E5%AE%B9)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -90,6 +106,14 @@
 `rm 文件名 文件名` => 删除一个文件或多个文件  
 `rm –rf 非空目录名` => 删除一个非空目录下的一切  
 `touch 文件名` => 创建一个空文件
+
+创建文件：`sudo touch newfile.txt`
+
+然后先 Esc 再 shift+z 两次（保存）
+在命令行输入： `chmod  +x test.sh ` (赋予执行权限)
+运行：`./test.sh`
+
+复原权限：`sudo chmod 600 -R <filename>`
 
 ### 设置为系统默认 JDK：
 
@@ -300,6 +324,28 @@ service crond stop
 /etc/init.d/cron start
 ```
 
+补充：
+
+```
+cron servcie 启动
+sudo service cron start
+重启
+sudo service cron restart
+查看状态
+sudo service cron status
+
+编写完 /etc/crontab 文件之后，需要重新启动 cron 服务 #重新加载 cron 配置文件
+sudo /usr/sbin/service cron reload #重启 cron 服务
+sudo /usr/sbin/service cron restart
+
+查看所有 service All the services are there.
+ls -l /etc/init.d
+
+查看 cron 是否被执行
+If you want to check if they are executed, use:
+grep -i cron /var/log/syslog
+```
+
 ### 查看 CPU 型号
 
 ```
@@ -311,6 +357,7 @@ sudo more /proc/cpuinfo | grep -i "model name"
 
 ```
 sudo cp -r <文件夹名> <目标位置文件夹名>
+sudo cp <文件> <目的路徑>
 ```
 
 ### 删除指定文件夹 30 天前的文件的脚本
@@ -411,7 +458,7 @@ xargs kill -9 中的 xargs 命令表示用前面命令的输出结果（也就�
 
 https://blog.csdn.net/lu_embedded/article/details/53590815
 
-## 显示当前进程的状态
+### 显示当前进程的状态
 
 `ps` （英文全拼：process status）命令用于显示当前进程的状态，类似于 windows 的任务管理器。
 
@@ -426,3 +473,115 @@ https://blog.csdn.net/lu_embedded/article/details/53590815
 例如查看 chrome 的进程: `ps -aux |grep chrome`
 
 显示所有命令，连带命令行: `ps -ef`
+
+### 找到指定文件夹下符合条件的内容然后删除
+
+```
+find "/mnt/backups/" -name "*.tar" -ctime +1 -type f -exec rm -rf {}
+```
+
+### 挂载 U 盘
+
+- 查看 U 盘位置
+  `sudo fdisk -l`
+- 创建一个活页夹
+  `sudo mkdir /media/usb`
+- 把 U 盘挂载到了/media/usb 目录下;
+  `sudo mount -t vfat /dev/sdb1 /media/usb`
+- 把 U 盘卸载掉
+  `sudo umount /media/usb`
+
+### 使用 bash 执行脚本
+
+```
+sudo bash auto_backup_to_remote.sh
+```
+
+### 使用 scp 复制文件
+
+```
+scp <本地地址> <ssh远端地址>
+scp /root/.ssh/id_rsa.pub.A root@192.168.21.203:/root/.ssh/
+scp /mnt/backups davidsu@192.168.21.203:~/gitlabDataBackup/
+```
+
+ps -e | grep ssh
+
+### 设定固定 IP(ubuntu16)
+
+`sudo atom /etc/network/interfaces`
+然后添加：（enp0s3：网络连线名称，ifconfig 可见）
+
+```
+ auto enp0s3
+    iface enp0s3 inet static
+    address 192.168.21.116
+    netmask 255.255.255.0
+    gateway 192.168.20.1
+```
+
+ubuntu18 或者 20 之后，`sudo vim /etc/netplan/00-installer-config.yaml`（名称可能不一样）
+
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s9:
+      dhcp4: no
+      addresses:
+        - 192.168.121.221/24
+        - 你的IPV6地址
+      gateway4: 192.168.121.1
+      nameservers:
+        addresses: [8.8.8.8, 1.1.1.1]
+```
+
+### vscode，替换空行
+
+使用正则`^(\s)*$\n`找到所有，进行空替换
+
+### 查看系统内核版本
+
+```
+uname -srm
+```
+
+### 系统时区相关
+
+- 查看系统时区
+
+```
+timedatectl
+```
+
+- 查看可用时区列表
+
+```
+timedatectl list-timezones
+```
+
+- 修改时区
+
+```
+sudo timedatectl set-timezone Asia/Shanghai
+```
+
+### vbox 修改虚拟硬盘的 uuid
+
+解决这个问题：
+
+```
+Cannot register the hard disk 'F:\PCRD029-BACKUP\dev_ubt18-disk01.vmdk' {77aef2eb-a961-4eb4-9953-6a3ba5bf81bd} because a hard disk 'D:\VMs\dev_ubt18\dev_ubt18-disk01.vmdk' with UUID {77aef2eb-a961-4eb4-9953-6a3ba5bf81bd} already exists.
+```
+
+在 vbox 安装路径下执行命令：
+
+```
+C:\Program Files\Oracle\VirtualBox>VBoxManage.exe internalcommands sethduuid "F:\PCRD029-BACKUP\dev_ubt18-disk01.vmdk"
+UUID changed to: d0977b3c-687c-44b3-a8ea-6547ecbe05e5
+```
+
+### ubuntu 下的 ext4 硬盘扩容
+
+[VMware 虚拟机 Linux 系统 Ubuntu 16.04 硬盘/磁盘扩容（超详细图文详解-亲测有效)](https://blog.csdn.net/jiesunliu3215/article/details/125030137)
