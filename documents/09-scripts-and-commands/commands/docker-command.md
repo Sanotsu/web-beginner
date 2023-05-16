@@ -2,14 +2,14 @@
 docker login 192.168.1.1:5001
 
 推送到本地仓库：  
-docker push 192.168.1.1:5001/i2dsp/emqx:4.3.10
+docker push 192.168.1.1:5001/example/emqx:4.3.10
 
 修改镜像标签：  
 `docker tag IMAGEID(镜像id) REPOSITORY:TAG（仓库：标签）`  
-docker tag fa97991dd3e2 192.168.1.1:5001/i2dsp/emqx :4.3.10
+docker tag fa97991dd3e2 192.168.1.1:5001/example/emqx :4.3.10
 
 下载镜像：  
-docker pull 192.168.1.1:5001/i2dsp/elasticsearch:7.16.0
+docker pull 192.168.1.1:5001/example/elasticsearch:7.16.0
 
 重启/关闭/启动 docker：  
 sudo service docker restart/stop/start

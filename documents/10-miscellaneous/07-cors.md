@@ -256,7 +256,7 @@ websocket 实现跨域: websocket 进行通信不需要考虑跨域的问题,但
 gateway 服务的全局跨域设置
 
 ```java
-package com.i2dsp.gateway.config;
+package com.example.gateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -295,7 +295,7 @@ public class CorsConfig {
 security 服务的跨域设置
 
 ```java
-package com.i2dsp.security.config;
+package com.example.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

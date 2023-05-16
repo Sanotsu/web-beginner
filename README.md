@@ -1,15 +1,15 @@
 # 说明
 
-关于前端 web 开发的一些学习记录，整理部分一般都会有参考地址，希望对以后的发展有所裨益。
+关于前端 web 开发的一些学习记录，整理部分一般都会有参考地址，希望对以后的发展有所裨益。此外还有一些小工具脚本等，作为记录，以便后续使用。
 
-此外还有一些小工具脚本等，作为记录，以便后续使用。
+**<u>当然，这都是笔者自己的学习路线中的总结，不具有通用性，请注意甄别。<u>**
 
 文件夹结构
 
-```txt
+```cc
 .
 ├── documents               - 存放直接使用的md文件，可以快捷键格式化，下层为各种主题的分类
-│   ├── 01-javascript           - 分类以下内容可自订再细分，但例如`simplified-(01-11).md`则表示为之前多份md的精简总结内容
+│   ├── 01-javascript           - 分类以下内容可自订再细分
 │   │   ├── base-js             - 基础知识学习部分
 │   │   ├── js-faq              - 常见问题(不一定有答案)
 │   │   └── rxjs
@@ -22,27 +22,27 @@
 │   ├── 07-basic-dsa        - 基本的数据结构与算法
 │   ├── 08-arc-design       - 系统设计相关(设计模式、系统架构之类的)
 │   ├── 09-scripts-and-commands - 一些常用的脚本或者命令
-│   └── 10-miscellaneous    - 其他杂项(CSS、HTTP、缓存、跨域、web安全、mysql基础问题、一些后台工具介绍……)
-├── pandoc                  - 一般是刻意整理的总结性md文件，目的是使用xelatex转成指定格式的pdf，不要轻易格式化，否则排版会乱
-│   ├── format-doc
+│   └── 10-miscellaneous    - 其他杂项(CSS、HTTP、缓存、跨域、web安全、mysql基础、一些后台工具介绍等……)
+├── pandoc                  - 一般是刻意整理的总结性md文件，目的是使用xelatex转成指定格式的pdf
+│   ├── format-doc              - 不要轻易格式化md文件，否则转换的pdf排版会乱
 │   ├── pandoc-usage
 │   └── readme.md
 ├── pic-mind-map            - 一些简单的脑图导出来的图片，做参看。
-└── _tools                  - 一些nodejs或者python脚本小工具，由于某些简单的需求
+└── _tools                  - 一些nodejs或者python脚本小工具，用于某些简单的需求
 ```
 
-简单来讲，有时间可以看 documents 各个细节，没时间就直接八股文 pandoc 的 pdf 就好了，只不过不懂光背没什么用，深有体会。
+- 如果有需要自己制作作成 pdf，可以把对应的 md 文件的内容抽出来，使用 pandoc 配合 Latex 格式(需要安装相应工具)使用。
 
-- 在线阅读的 md 文件每次修改保存都格式化无所谓的。
-- 尽量只把有需要制作成 pdf 的内容单独抽出 pandoc 的 md，注意符合 Latex 格式(需要安装相应工具)。
-
-**分类如下(加粗为应对面试的精华)** 。以下都有整理到`《web 前端基础知识汇整(精简版)》`部分
+**分类如下(加粗为应对面试的精华)** 。以下都有整理到`《web 前端基础知识汇整(精简版)》`部分:
 
 ## 前端基础知识汇整的 pdf
 
-- [web 前端基础知识汇整-500+页](pandoc/format-doc/pandoc-pdf/01-pandoc-form-js-web-base.pdf)
-- [web 前端基础知识汇整(精简版)-100 页左右](pandoc/format-doc/pandoc-pdf/02-pandoc-print-js-web-base.pdf)
-- [web 前端基础知识汇整(关键字-几页)](pandoc/format-doc/pandoc-pdf/03-pandoc-print-js-web-base-keyword.pdf)
+你也可以直接找到对应的 md 文件使用例如 Latex 工具转换成 pdf 文件，所有内容自行确认。
+
+- [web 前端基础知识汇整-500+页](pandoc/format-doc/pandoc-pdf/01-pandoc-form-js-web-base-20230516.pdf)
+- **[web 前端基础知识汇整(精简版)-100 页左右](pandoc/format-doc/pandoc-pdf/02-pandoc-print-js-web-base-20230516.pdf)**
+  - 我是希望自己能够彻底弄懂这一百多页的各类总结。
+- [web 前端基础知识汇整(关键字-几页)](pandoc/format-doc/pandoc-pdf/03-pandoc-print-js-web-base-keyword-20230516.pdf)
 
 ## 简单的思维导图
 
@@ -133,6 +133,7 @@
 
 - [01-极简的基础数据结构与算法介绍](documents/07-basic-dsa/01-simplified-dsa-dp.md)
 - [02-常见基础算法技巧题解(leetcode 题解)](documents/07-basic-dsa/02-simplified-simple-aps.md)
+  - 推荐看他人更具体有效的内容，比如[youngyangyang04/leetcode-master](https://github.com/youngyangyang04/leetcode-master)，这里只是列举个人在意的基础的算法题，没有普遍性。
 
 ## 架构设计
 
@@ -156,10 +157,13 @@
 - [linux 常用的命令](documents/09-scripts-and-commands/commands/linux-command.md)
 - [k8s 常用的命令](documents/09-scripts-and-commands/commands/k8s-command.md)
 - [gitlab-ce 的一些命令](documents/09-scripts-and-commands/configs/gitlab-ce-simple-usage.md)
+- [pandoc 转 pdf 文件使用的 LaTeX 配置](pandoc/pandoc-usage/form.tex)
+  - 代码都有注释，已经覆盖了常见的配置需求
 
 ## 其他
 
-- [工作经验(updating)](<pandoc/format-doc/work-ex-just-read-(updating).md>)
+- [工作经验(updating)](pandoc/format-doc/work-ex-just-read-updating.md)
+  - 笔者的近期经验，不具备参看性，看个乐。
 
 ---
 

@@ -1389,7 +1389,7 @@ emqx 自己编写的桥接 kafka 组件，在服务器断电后，emqx 重启是
 不过在 jarger 链路追踪可以设置[抑制特定代理检测](https://opentelemetry.io/docs/instrumentation/java/automatic/agent-config/)，虽然没有直接的 nacos 的抑制，但实测 nacos 大部分
 都是基于`http-url-connection`的连接，设置`OTEL_INSTRUMENTATION_http-url-connection_ENABLED`的容器环境变量 value 为 false 可能可以减少很大部分。但注意业务或其他服务中也不存在基于此实现的 httpclient.（可以使用自定义url过滤器的方式，比较复杂。）
 
-已经在考虑并测试不把 nacos 作为服务的注册发现工具，在 gateway 中直接使用 k8s 的`.local`域名形式，类似 \newline `https://i2dsp-kb-http.elastic-system.svc.cluster.local:5601/app/home`。不过目前还没有找到将 nacos 作为配置中心的优秀替换方案。
+已经在考虑并测试不把 nacos 作为服务的注册发现工具，在 gateway 中直接使用 k8s 的`.local`域名形式，类似 \newline `https://example-kb-http.elastic-system.svc.cluster.local:5601/app/home`。不过目前还没有找到将 nacos 作为配置中心的优秀替换方案。
 
 ## 8 Flink job 读取 tikv 数据变更
 
@@ -1428,7 +1428,7 @@ A: FLINK 中使用 Table SQL 的 update 语句时，实际会变为 delete 和 i
 
 一开始的数据同步的实现是通过 ticdc 读取 tikv 的日志，转为 kafka 消息，flink job 再去读取 kafka 中的数据增量日志，最后处理为变更后的数据。
 
-cdc 拆分数据库 cdc 日志，ticdc 将所有表变更日志写入同一 kafka 主题（i2dsp-canal）,flink 中将 kafka 主题映射为表，故需将数据库变更日志按照表发布到不同主题，
+cdc 拆分数据库 cdc 日志，ticdc 将所有表变更日志写入同一 kafka 主题（example-canal）,flink 中将 kafka 主题映射为表，故需将数据库变更日志按照表发布到不同主题，
 目前 kafka 主题已关闭自动创建，相关主题需在任务前手动/脚本差创建，kafka 分区 3,行数据按主键 hash 到不同分区，flink 订阅时并行度需与 kafka 分区数相同，否则可能出现分区乱序问题
 
 此处便出现了几个问题:
@@ -2021,7 +2021,7 @@ declare module "*.js";
 
 ## monitor 从 vue2 重写到 vue3 的一些细节
 
-i2dsp 平台监控页面的第三版，更新使用 vue3 + vue-router4 + pinia + element-plus 等
+example 平台监控页面的第三版，更新使用 vue3 + vue-router4 + pinia + element-plus 等
 
 **注意**：新版本开发使用的 nodejs 版本为 16.19.0，如果之前有依赖于 12.x 的低版本，在升级到新版本后，可能会出现 API 变动等情况，注意更新。
 
@@ -2032,7 +2032,7 @@ $ npm init vue@latest
 
 Vue.js - The Progressive JavaScript Framework
 
-Project name: … v3-i2dsp-monitor
+Project name: … v3-example-monitor
 Add TypeScript? …  Yes
 Add JSX Support? … Yes
 Add Vue Router for Single Page Application development? … Yes
@@ -2042,11 +2042,11 @@ Add an End-to-End Testing Solution?  No
 Add ESLint for code quality? …       Yes
 Add Prettier for code formatting? …  Yes
 
-Scaffolding project in /home/david/桌面/I2DSP_PROJECTS/frontend/2ndVersion/a_self/v3-i2dsp-monitor...
+Scaffolding project in /home/david/桌面/xxxxx
 
 Done. Now run:
 
-  cd v3-i2dsp-monitor
+  cd v3-example-monitor
   npm install
   npm run lint
   npm run dev
@@ -2382,7 +2382,7 @@ DeviceStatus
 
 19. （2023-03-11 基本重新编写完成）原本还有一个未启用的客服聊天组件
 
-- 好像 i2dsp-emg-chat 服务从来都没有部署过，为了测试，使用 ws 库简单弄一个 websocket server（在`_ws-server/index.mjs`）
+- 好像 example-emg-chat 服务从来都没有部署过，为了测试，使用 ws 库简单弄一个 websocket server（在`_ws-server/index.mjs`）
 - 客服弹窗中的 avatar 的 size 没法根据全局配置切换进行变化，但其中 button 可以，很奇怪，但还是把 avatar 设为 size="small"，并固定昵称的显示位置
 
 **四、bugs fix：**

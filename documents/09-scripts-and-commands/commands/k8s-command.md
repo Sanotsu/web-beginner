@@ -305,7 +305,7 @@ network:
 
 ```sh
 nerdctl --namespace k8s.io exec -it -u root aaf7231fa664b /bin/bash
-nerdctl pull 192.168.188.106:5000/i2dsp_emg_data:1.2.202111181410-dev
+nerdctl pull 192.168.188.106:5000/example_emg_data:1.2.202111181410-dev
 ```
 
 ### nginx 重新加载配置
@@ -353,7 +353,7 @@ sudo systemctl status avahi-daemon
 # 查看k8s pod域名能不能解析到ip地址，类似：
 nslookup minio-console.minio.svc.cluster.local
 
-http://v2-i2dsp-emg-map-service.development.svc.cluster.local:10185
+http://v2-example-emg-map-service.development.svc.cluster.local:10185
 
 # 在配置网关供pod的local解析失败时，直接修改连接的网关无效，可以尝试卸载原本的network-manager：
 
@@ -420,8 +420,8 @@ https://gitbook.curiouser.top/origin/tidb-br-backup-restore.html
 2 设置需要导出到 minio 的帐号密码环境变量
 
 ```sh
-export AWS_ACCESS_KEY_ID=i2dsp
-export AWS_SECRET_ACCESS_KEY=8qbWHmZqKQtYU4et8g0u
+export AWS_ACCESS_KEY_ID=example
+export AWS_SECRET_ACCESS_KEY=8qbWHmZqKQtYU4etxxxx
 ```
 
 3 使用 br 将 tidb 的数据备份到 MinIo（在 br 工具的文件夹下执行）
