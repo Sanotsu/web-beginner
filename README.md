@@ -164,6 +164,8 @@
 
 - [工作经验(updating)](pandoc/format-doc/work-ex-just-read-updating.md)
   - 笔者的近期经验，不具备参看性，看个乐。
+- [「8 千字经验总结」干了 7 年 web 开发工作，混吃等死的日子可能到头了](documents/11-others/web-development-work-experience-summary.md)
+- 
 
 ---
 
