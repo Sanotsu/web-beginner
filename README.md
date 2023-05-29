@@ -113,6 +113,7 @@
 - [01-dart 官方教程概述](documents/06-dart/01-dart-language-tour.md)
 - [02-flutter 架构简介](documents/06-dart/02-flutter-resource.md)
 - [03-ubuntu 下配置 flutter 环境的简述](documents/06-dart/03-flutter-config-andsome.md)
+- [04-flutter 开发时一些环境建置的问题(持续更新)](documents/06-dart/04-flutter-dev-env-issue.md)
 
 ## 数据结构与算法(入门内容)
 
@@ -164,8 +165,9 @@
 
 - [工作经验(updating)](pandoc/format-doc/work-ex-just-read-updating.md)
   - 笔者的近期经验，不具备参看性，看个乐。
-- [「8 千字经验总结」干了 7 年 web 开发工作，混吃等死的日子可能到头了](documents/11-others/web-development-work-experience-summary.md)
-- 
+- **[干了 7 年 web 开发工作，混吃等死的日子可能到头了](documents/11-others/web-development-work-experience-summary.md)**
+
+- **[web 开发 7 年，浅谈前端架构设计与工程化](documents/11-others/frontend-architecture-design-and-engineering.md)**
 
 ---
 

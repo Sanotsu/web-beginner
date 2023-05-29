@@ -1781,7 +1781,11 @@ window 对象的一些属性，可以看做在 window 对象链接到指定 Web 
 - `Window.screen` 返回当前 window 的 screen 对象(实现了 Screen 接口，它是个特殊的对象，返回当前渲染窗口中和屏幕有关的属性)
 - `Window.navigator` 会返回一个 Navigator 对象的引用，可以用于请求运行当前代码的应用程序的相关信息。
 
-(想象 window 就是一个浏览器上看到的窗口，除了网页内容，还有导航栏、前进后退按钮等，这些浏览器功能不同浏览器可能有差异，但显示的主内容 document，就应该是有标准的。但即便有标准，也不是所有浏览器都实现了标准里面的功能，所以实际显示才会可能略有不同)更多内容[globalThis](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/globalThis)
+简单来讲，DOM[所有浏览器公共遵守的标准]，BOM [不同浏览器定义可能有差别,实现方式可能不同]
+
+**BOM**(浏览器对象模型) 描述了**与浏览器进行交互**的方法和接口。各个浏览器厂商根据 DOM 在各自浏览器上的实现。  
+
+(想象 window 就是一个浏览器上看到的窗口，除了网页内容，还有导航栏、前进后退按钮等，对于后者不同浏览器可能有差异，但显示的主网页内容 document(DOM树)，就应该是有标准的。但即便有标准，也不是所有浏览器都实现了标准里面的功能，所以实际显示才会可能略有不同)更多内容[globalThis](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/globalThis)
 
 \newpage
 
@@ -6620,7 +6624,7 @@ Strict-Transport-Security: max-age=<expire-time>; includeSubDomains
 <!-- | ----------------------------------- | ---------------------------------------------------------------------- | -->
 
 | 响应头                              | 应对问题                                                                     |
-| ----------------------------------- | ---------------------------------------------------------------------------- |
+| ----------------------------------- | ---------------------------------------------------------------------- |
 | Content-Security-Policy (CSP)       | XSS 和数据注入等 [`额外的安全层`]                                            |
 | X-Content-Type-Options              | 跨站脚本错误、XSSI [`禁用了客户端的 MIME 类型嗅探`]                          |
 | X-Frame-Options                     | 点击劫持 [`是否允许浏览器在 iframe 等标签中显示页面`]                        |
@@ -7100,7 +7104,7 @@ _意外的跨域信息泄露是网络用户隐私的绊脚石_。一个保护性
   - 2 Authentication(身份验证机制很弱或者实现中的逻辑缺陷或糟糕的编码，使得攻击者完全绕过了身份验证机制(账密太简单也算))
   - 3 Directory traversal(允许攻击者读取运行应用程序的服务器上的任意文件,比如对 url 中目录层级没有限制或者直接`../../xx`)
   - 4 OS command injection(允许攻击者在运行应用程序的服务器上执行任意操作系统命令，如把用户输入值直接用作 shell 执行参数)
-  - 5 Business logic vulnerabilities(应用程序设计和实现中的缺陷使攻击者能够操纵合法功能以实现恶意目标,如[必填值未被真有填](https://portswigger.net/web-security/logic-flaws/examples))
+  - 5 Business logic vulnerabilities(应用程序设计和实现中的缺陷使攻击者能够操纵合法功能以实现恶意目标,如[必填值未必真有填](https://portswigger.net/web-security/logic-flaws/examples))
   - 6 [Information disclosure](https://portswigger.net/web-security/information-disclosure)(网站无意中向用户泄露敏感信息，比如在源代码中硬编码 API 密钥、IP 地址、数据库凭证等)
   - 7 [Access control](https://portswigger.net/web-security/access-control)(用户实际上可以访问某些资源或执行某些他们不应该能够访问的操作，如控制访问的设计不完备)
   - 8 File upload vulnerabilities(服务器未正确验证文件属性(类型、内容等)，文件成功上传后未受限制。如上传了启用远程代码的脚本)
