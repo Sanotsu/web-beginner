@@ -51,7 +51,11 @@
 
 ---
 
-## javascript、css、html
+## HTML、CSS、JavaScript
+
+#### HTML
+
+- [不止为了面试 —— 万字 HTML 重点基础知识分享](documents/11-others/web-base-html-part1.md)
 
 #### 基础知识
 
@@ -163,7 +167,7 @@
 
 ## 其他
 
-- [工作经验(updating)](pandoc/format-doc/work-ex-just-read-updating.md)
+- [工作经验(updating)](documents/11-others/work-ex-just-read-updating.md)
   - 笔者的近期经验，不具备参看性，看个乐。
 - **[干了 7 年 web 开发工作，混吃等死的日子可能到头了](documents/11-others/web-development-work-experience-summary.md)**
 - **[web 开发 7 年，浅谈前端架构设计与工程化](documents/11-others/frontend-architecture-design-and-engineering.md)**
