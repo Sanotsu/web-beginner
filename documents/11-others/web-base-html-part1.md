@@ -76,7 +76,7 @@
   - 短语内容(Phrasing): 定义了文本和它包含的标记，一些短语内容就构成了段落。
   - 嵌入内容(Embedded): 将来自另一种标记语言或命名空间的内容插入到文档中。
   - 交互式内容(Interactive): 为用户交互而特别设计的元素。
-  - 可触摸内容(Palpable): 作为一般规则，其内容模型允许任何流式内容或短语内容的元素的内容中应至少有一个节点是可触发的内容，并且不具有指定的 hidden 属性。
+  - 可触发内容(Palpable): 作为一般规则，其内容模型允许任何流式内容或短语内容的元素的内容中应至少有一个节点是可触发的内容，并且不具有指定的 hidden 属性。
 - 2 **表单相关的内容类**(Form-associated)，描述了表单相关元素共有的内容规范:
   - 可列举的元素(Listed): 表示在`form.elements`和`fieldet.elements` APIs 中列出的元素。
   - 可提交的元素(Submittable): 包括当表单提交时可以用来组成表单数据的元素。
@@ -351,6 +351,12 @@ meta 元素代表各种不能用 title、base、link、style 和 script 元素�
 注意，如下图中`web.dev`首页源代码的 meta 使用示例，其中的 property 属性(不是全局属性也不是 meta 内容属性)，我还没在规范中找到含义:
 
 ![web.dev和京东首页中meta元素的使用示例](./pictures-others/html/web.dev和京东首页中meta元素的使用示例.png)
+
+---
+
+2023-06-10 补充：受教了，正如评论中老哥指点，原来 meta 元素中的 property 是 [The Open Graph protocol](https://ogp.me/) 元数据属性，而 open graph 协议是一种“为社交分享而生的 Meta 标签，用于标准化网页中元数据的使用，使得社交媒体得以以丰富的‘图形’对象来表示共享的页面内容。”虽然不是 HTML 标准中的全局属性或者内容属性，也主要为了社交媒体分享目的，但其实早在 2010 年就被提出，被国外的 Facebook、Twitter 等使用。不过似乎在国内，还没有被广泛使用。比如下面是 weibo 和 douyin 的首页中的 meta 元素内容:
+
+![douyin和weibo的meta使用示例.png](./pictures-others/html/douyin和weibo的meta使用示例.png)
 
 ---
 
