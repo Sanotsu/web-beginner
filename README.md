@@ -55,9 +55,14 @@
 
 #### HTML
 
-- [不止为了面试 —— 万字 HTML 重点基础知识分享](documents/11-others/web-base-html-part1.md)
+- **[web 开发 7 年，不止为了面试 —— 万字 HTML 重点基础知识分享](documents/11-others/web-base-html-part1.md)**
 
-#### 基础知识
+#### CSS
+
+- **[Web 开发 7 年，一文总结 CSS 常见面试点和基础教程](documents/11-others/web-base-css-part1.md)**
+  - [掘金版本](documents/11-others/web-base-css-part1-掘金版本.md) 
+
+#### JS基础知识
 
 - [01-基本概念：什么是 JavaScript](documents/01-javascript/base-js/01、基本概念：什么是JavaScript.md)
 - [02-语言基础](documents/01-javascript/base-js/02、语言基础.md)

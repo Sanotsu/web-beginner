@@ -80,6 +80,7 @@ Thumbs.db
 # 干脆以self命名的都不加入管理
 
 **/self*
+**/_self*
 
 # tesseract.js 生成的数据文件
 *.traineddata
