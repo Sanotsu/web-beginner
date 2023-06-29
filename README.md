@@ -2,14 +2,16 @@
 
 关于前端 web 开发的一些学习记录，整理部分一般都会有参考地址，希望对以后的发展有所裨益。此外还有一些小工具脚本等，作为记录，以便后续使用。
 
-**<u>当然，这都是笔者自己的学习路线中的总结，不具有通用性，请注意甄别。<u>**
+**<font color=green>当然，这都是笔者自己的学习路线中的总结，不具有通用性，请注意甄别。</font>**
 
-文件夹结构
+文件夹结构:
 
-```cc
+![文件夹结构](pic-mind-map/文件夹结构.png)
+
+<!-- ```txt
 .
 ├── documents               - 存放直接使用的md文件，可以快捷键格式化，下层为各种主题的分类
-│   ├── 01-javascript           - 分类以下内容可自订再细分
+│   ├── 01-javascript           - 分类以下内容可自订再细分,含部分CSS、HTML內容
 │   │   ├── base-js             - 基础知识学习部分
 │   │   ├── js-faq              - 常见问题(不一定有答案)
 │   │   └── rxjs
@@ -22,18 +24,23 @@
 │   ├── 07-basic-dsa        - 基本的数据结构与算法
 │   ├── 08-arc-design       - 系统设计相关(设计模式、系统架构之类的)
 │   ├── 09-scripts-and-commands - 一些常用的脚本或者命令
-│   └── 10-miscellaneous    - 其他杂项(CSS、HTTP、缓存、跨域、web安全、mysql基础、一些后台工具介绍等……)
+│   ├── 10-miscellaneous    - 其他杂项(HTTP、缓存、跨域、web安全、mysql基础、一些后台工具介绍等……)
+│   └── 11-others           - 掘金上写的博文主要放在这里
 ├── pandoc                  - 一般是刻意整理的总结性md文件，目的是使用xelatex转成指定格式的pdf
 │   ├── format-doc              - 不要轻易格式化md文件，否则转换的pdf排版会乱
 │   ├── pandoc-usage
 │   └── readme.md
 ├── pic-mind-map            - 一些简单的脑图导出来的图片，做参看。
 └── _tools                  - 一些nodejs或者python脚本小工具，用于某些简单的需求
-```
+``` -->
 
 - 如果有需要自己制作作成 pdf，可以把对应的 md 文件的内容抽出来，使用 pandoc 配合 Latex 格式(需要安装相应工具)使用。
 
-**分类如下(加粗为应对面试的精华)** 。以下都有整理到`《web 前端基础知识汇整(精简版)》`部分:
+以下都有整理到`《web 前端基础知识汇整(精简版)》`部分。最近也在 [掘金](https://juejin.cn/user/1591748568036765/posts)上整理 web 相关的系列文章，有兴趣可以去看看。
+
+---
+
+**分类如下(加粗的应对面试可能有裨益，写得比较用心)** ：
 
 ## 前端基础知识汇整的 pdf
 
@@ -46,23 +53,26 @@
 
 ## 简单的思维导图
 
-- [基本 web 相关知识关键字 ](pic-mind-map/基本web相关知识关键字map.png)
+- [个人用到的基本 web 相关知识关键字 ](pic-mind-map/基本web相关知识关键字map.png)
 - [某系统架构使用的组件说明](pic-mind-map/某系统架构使用的组件说明.png)
-
----
 
 ## HTML、CSS、JavaScript
 
-#### HTML
+### HTML
 
 - **[web 开发 7 年，不止为了面试 —— 万字 HTML 重点基础知识分享](documents/11-others/web-base-html-part1.md)**
 
-#### CSS
+### CSS
 
+- **[01-CSS 布局与响应式布局简述](documents/01-javascript/_css-part/01-CSS布局与响应式布局简述.md)**
+- [02-CSS 的动画、变换、过渡简介(animation-transform-transition)](documents/01-javascript/_css-part/02-CSS-animation-transform-transition.md)
+- [03-CSS 选择器与 XPath 路径表达式](documents/01-javascript/_css-part/03-CSS选择器和XPath路径表达式.md)
 - **[Web 开发 7 年，一文总结 CSS 常见面试点和基础教程](documents/11-others/web-base-css-part1.md)**
-  - [掘金版本](documents/11-others/web-base-css-part1-掘金版本.md) 
+  - [掘金版本](documents/11-others/web-base-css-part1-掘金版本.md)
 
-#### JS基础知识
+### JS
+
+#### 基础知识
 
 - [01-基本概念：什么是 JavaScript](documents/01-javascript/base-js/01、基本概念：什么是JavaScript.md)
 - [02-语言基础](documents/01-javascript/base-js/02、语言基础.md)
@@ -78,23 +88,17 @@
 - [12-MDN 的 Canvas 基础](documents/01-javascript/base-js/12、MDN的Canvas基础.md)
 - [13-MDN 的 WebGL 基础教程概述](documents/01-javascript/base-js/13、MDN的WebGL基础教程概述.md)
 
-#### rxjs
-
-- [01-rxjs7-basic](documents/01-javascript/rxjs/01-rxjs7-basic.md)
-
 #### 常见问题
 
 - [js-FAQs(纯题目收集)](documents/01-javascript/js-faq/readme.md)
 - **[js 常用技巧](documents/01-javascript/js-faq/03-javascript-tricks.md)**
 - [ES6 以来的新特性关键字(更新到 ES2023)](documents/01-javascript/js-faq/04-es6-new-features.md)
 
-#### css
+#### RxJS
 
-- **[01-CSS 布局与响应式布局简述](documents/01-javascript/_css-part/01-CSS布局与响应式布局简述.md)**
-- [02-CSS 的动画、变换、过渡简介(animation-transform-transition)](documents/01-javascript/_css-part/02-CSS-animation-transform-transition.md)
-- [03-CSS 选择器与 XPath 路径表达式](documents/01-javascript/_css-part/03-CSS选择器和XPath路径表达式.md)
+- [01-rxjs7-basic](documents/01-javascript/rxjs/01-rxjs7-basic.md)
 
-## vue
+## Vue
 
 - [01-vue 常见问题(纯问题转存)](documents/02-vue/01-vue-faq.md)
 - **[02-vue-FAQs](documents/02-vue/02-vue-simplification-FAQs.md)**
@@ -102,7 +106,7 @@
 - **[04-vue 响应式原理](documents/02-vue/04-vue响应式原理.md)**
 - [05-vue3 新特性关键字](documents/02-vue/05-vue3-new-features.md)
 
-## nodejs
+## Node.js
 
 - [01-nodejs_interview_questions](documents/03-nodejs/01-nodejs_interview_questions_en-cn.md)
 - **[02-nodejs-FAQs](documents/03-nodejs/02-node-faq.md)**
@@ -112,12 +116,13 @@
 - **[01-前端工程化概述](documents/04-engineered/01-frontend-engineered-overview.md)**
 - **[02-渲染页面:浏览器的工作原理](documents/04-engineered/02-渲染页面:浏览器的工作原理.md)**
 - **[03-web 性能指标及优化](documents/04-engineered/03-web性能指标及优化.md)**
+- **[web 开发 7 年，浅谈前端架构设计与工程化](documents/11-others/frontend-architecture-design-and-engineering.md)**
 
-## typescript
+## TypeScript
 
 - [01-typescript 官方手册概述](documents/05-typescript/01-typescript-handbook概述.md)
 
-## dart
+## Dart
 
 - [01-dart 官方教程概述](documents/06-dart/01-dart-language-tour.md)
 - [02-flutter 架构简介](documents/06-dart/02-flutter-resource.md)
@@ -147,7 +152,7 @@
 
 ## 架构设计
 
-- [01-设计模式](documents/08-arc-design/01-design-patterns.md)
+- [01-设计模式概述](documents/08-arc-design/01-design-patterns.md)
 
 ## 杂项
 
@@ -175,7 +180,6 @@
 - [工作经验(updating)](documents/11-others/work-ex-just-read-updating.md)
   - 笔者的近期经验，不具备参看性，看个乐。
 - **[干了 7 年 web 开发工作，混吃等死的日子可能到头了](documents/11-others/web-development-work-experience-summary.md)**
-- **[web 开发 7 年，浅谈前端架构设计与工程化](documents/11-others/frontend-architecture-design-and-engineering.md)**
 
 ---
 

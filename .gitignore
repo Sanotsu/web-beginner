@@ -98,3 +98,5 @@ Thumbs.db
 
 # 使用pandoc输出的本地的pdf
 **/test-pdf
+
+_tools/yarn.lock
