@@ -585,3 +585,9 @@ UUID changed to: d0977b3c-687c-44b3-a8ea-6547ecbe05e5
 ### ubuntu 下的 ext4 硬盘扩容
 
 [VMware 虚拟机 Linux 系统 Ubuntu 16.04 硬盘/磁盘扩容（超详细图文详解-亲测有效)](https://blog.csdn.net/jiesunliu3215/article/details/125030137)
+
+### 簡單查看服務器硬件信息
+
+```
+lshw -short
+```

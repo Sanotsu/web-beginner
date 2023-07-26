@@ -68,6 +68,12 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# python项目的.gitignore 参考 https://github.com/github/gitignore/blob/main/Python.gitignore 参考
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 # 嵌套层级的npm依赖
 **/node_modules
 **/package-lock.json
