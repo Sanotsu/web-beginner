@@ -87,6 +87,7 @@
 - [11-Promises 和异步函数](documents/01-javascript/base-js/11、Promises和异步函数.md)
 - [12-MDN 的 Canvas 基础](documents/01-javascript/base-js/12、MDN的Canvas基础.md)
 - [13-MDN 的 WebGL 基础教程概述](documents/01-javascript/base-js/13、MDN的WebGL基础教程概述.md)
+- **[Web 开发 7 年，3 万字分享 JavaScript 常用重要知识点](documents/11-others/web-base-js-part1.md)**
 
 #### 常见问题
 
