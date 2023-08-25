@@ -55,6 +55,17 @@ plugins: [
 
 这里仅是个单纯的示例，[更多配置](https://github.com/vbenjs/vite-plugin-compression/blob/main/README.zh_CN.md#%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E)参看文档说明。更多[vite 的插件](https://github.com/vitejs/awesome-vite#plugins)也可自行选择。
 
+```js
+// vite-plugin-compression 的一些其他配置
+viteCompression({
+  // 压缩算法,可选 [ 'gzip' , 'brotliCompress' ,'deflate' , 'deflateRaw']
+  algorithm: "brotliCompress", // 默认是gzip
+  deleteOriginFile: true, // 压缩后是否删除源文件
+  threshold: 10, // 体积大于 threshold 才会被压缩,单位 b
+}),
+
+```
+
 webpack 等也有对应的压缩插件工具，比如[compression-webpack-plugin](https://github.com/webpack-contrib/compression-webpack-plugin)。
 
 ## 二、在 nginx 部署时使用 Brotli
@@ -66,7 +77,7 @@ Brotli 以下简称为 br。
 下载 br 源码并更新
 
 ```shell
-# 下载的位置看个人，后面注意替换到自己实际的路劲
+# 下载的位置看个人，后面注意替换到自己实际的路径
 cd /usr/src
 # 下载brotli
 git clone https://github.com/google/ngx_brotli.git
@@ -296,7 +307,76 @@ Failed to load module script: Expected a JavaScript module script but the server
 
 实际上我尝试了其他操作，比如修改 index.html 里面的引入、其他 nginx 配置，目前还没有成功仅部署 br 文件能在浏览器正常解析成页面，希望实现的诸君能告知一下，谢谢。
 
-我用 vite 打包时也没有只保留 br 或者 gzip 的选项，测试是手动删除压缩成 br 或者 gzip 之前的 js、css 然后部署该项目。没必要搞这些，只是单纯好奇。是有 chrome 的 network 看到资源是 br 了，但是页面是没有正常解析到的，暂时就不研究这个东西了。
+我用 vite 打包时也没有只保留 br 或者 gzip 的选项，测试是手动删除压缩成 br 或者 gzip 之前的 js、css 然后部署该项目（当然，正如一开始所说，vite-plugin-compression 有删除源文件的选项，只是个人愚昧测试时没注意）。没必要搞这些，只是单纯好奇。是有 chrome 的 network 看到资源是 br 了，但是页面是没有正常解析到的，暂时就不研究这个东西了。
+
+简单记录下此时的配置，以便后续有空再研究（vite build 配置不删除源码正常的，只保留 br 的就 404）:
+
+vite 的打包配置:
+
+```js
+  viteCompression({
+    // 压缩算法,可选 [ 'gzip' , 'brotliCompress' ,'deflate' , 'deflateRaw']
+    algorithm: "brotliCompress", // 默认是gzip)
+    deleteOriginFile: true, // 压缩后是否删除源文件
+    threshold: 10, // 体积大于 threshold 才会被压缩,单位 b
+  }),
+```
+
+`my.conf`的 server 配置:
+
+```
+server {
+
+        listen 8091 ssl http2;
+        ssl_certificate     /etc/nginx/crtdir/server.cer;
+        ssl_certificate_key /etc/nginx/crtdir/server.key;
+        server_name http_host2;
+
+        brotli on;
+        brotli_static on;
+
+       location /monitor/ {
+                alias /home/david/TTT/nginx_project/monitor/;
+                index  index.html;
+                try_files $uri $uri/ @fallback;
+                error_log /home/david/TTT/nginx_project/logs/error-monitor.log error;
+        }
+
+        location @fallback {
+                types {
+                        .br application/brotli;
+                        default text/html;
+                }
+        }
+
+}
+```
+
+`nginx.conf`的 http 中 br 的配置:
+
+```conf
+
+http{
+  ……
+  # 启用 brotli 压缩
+  # brotli on;
+  # brotli_static on;
+  brotli_comp_level 6;
+  brotli_buffers 16 8k;
+  brotli_min_length 20;
+  brotli_types text/plain
+    text/css
+    application/json
+    application/x-javascript
+    text/xml application/xml
+    application/xml+rss
+    text/javascript
+    application/javascript
+    image/svg+xml;
+  ……
+}
+
+```
 
 ## 三：nginx 启用 HTTP/2
 
