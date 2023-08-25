@@ -132,7 +132,7 @@ ls objs/*.so
 cp objs/{ngx_http_brotli_filter_module.so,ngx_http_brotli_static_module.so} /usr/share/nginx/modules
 ```
 
-注意：`/usr/share/nginx/modules`是我这 1.18.0 版本的 nginx 的模块默认路径，请确认自己 nginx 版本的位置是否一样、或者有异动配置。此外，像我为了和其他模块区分，会刻意创建一个文件夹存放自行编译的模块，所以放置的位置类似`/usr/share/nginx/modules/dynamic_modules`。
+注意：`/usr/share/nginx/modules`是我这 1.18.0 版本的 nginx 的模块默认路径，请确认自己 nginx 版本的位置是否一样、或者有异动配置。此外，像我为了和其他模块区分，会刻意创建一个文件夹存放自行编译的模块，所以放置的位置类似 `/usr/share/nginx/modules/dynamic_modules`。
 
 **3. 注册 Brotli 模块**
 
@@ -170,16 +170,14 @@ load_module modules/dynamic_modules/ngx_http_brotli_static_module.so;
 ```cong
 http {
     ……
-
     # 启用 brotli 压缩
-	  brotli on;
+    brotli on;
     brotli_comp_level 6;
     brotli_buffers 16 8k;
     brotli_min_length 20;
     brotli_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript image/svg+xml;
     ……
 }
-
 ```
 
 还有一点特别注意: **Brotli 压缩只能在 https 中生效**，所以自定的 server 配置需要启用 ssl，当然也需要配置 key。
@@ -188,11 +186,11 @@ http {
 
 ```conf
 server {
-        server_name http_host;
-        listen 8089 ssl; # 以前是单独一行 ssl on; 快弃用了直接在listen后面加 ssl 就好了
-        ssl_certificate     /etc/nginx/crtdir/server.cer;
-        ssl_certificate_key /etc/nginx/crtdir/server.key;
-        ……
+    server_name http_host;
+    listen 8089 ssl; # 以前是单独一行 ssl on; 快弃用了直接在listen后面加 ssl 就好了
+    ssl_certificate     /etc/nginx/crtdir/server.cer;
+    ssl_certificate_key /etc/nginx/crtdir/server.key;
+    ……
 }
 ```
 
@@ -223,22 +221,22 @@ Content-Encoding: br # 就这里
 
 ```conf
 http {
-    ##
-	# Gzip Settings
-	##
-	gzip_proxied any;
-	gzip_comp_level 6;
-	gzip_buffers 16 8k;
-	gzip_http_version 1.1;
-	gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+  ##
+  # Gzip Settings
+  ##
+  gzip_proxied any;
+  gzip_comp_level 6;
+  gzip_buffers 16 8k;
+  gzip_http_version 1.1;
+  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
-    ##
-	# Brotli Settings
-	##
-    brotli_comp_level 6;
-    brotli_buffers 16 8k;
-    brotli_min_length 20;
-    brotli_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript image/svg+xml;
+  ##
+  # Brotli Settings
+  ##
+  brotli_comp_level 6;
+  brotli_buffers 16 8k;
+  brotli_min_length 20;
+  brotli_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript image/svg+xml;
 }
 ```
 
@@ -246,7 +244,7 @@ http {
 
 ```
 server {
-	server_name demo_server1;
+    server_name demo_server1;
     listen 8089 ssl;
     ssl_certificate     /etc/nginx/crtdir/server.cer;
     ssl_certificate_key /etc/nginx/crtdir/server.key;
@@ -255,8 +253,8 @@ server {
 }
 
 server {
-	listen 8088;
-	server_name demo_server2;
+    listen 8088;
+    server_name demo_server2;
     gzip on;
     ……
 }
@@ -282,6 +280,10 @@ vue 的项目打包有设置 br 压缩，nginx 配置启用 br，浏览器请求
 
 所以上面我 nginx 中只有 js/css 文件、br 文件，但启用的压缩方式是 gzip，没有现成的 gz 文件，那实际上就是*动态压缩*把 js/css 先压缩为 gz 文件再响应请求。此时 br 文件没有用到，除非是 nginx 启用了 br 压缩，那就是通过*静态压缩*直接用这个 br 文件响应请求。
 
+注意，nginx 配置压缩算法动态或者静态时也有对应的选项，可以参看[ngx_brotli](https://github.com/google/ngx_brotli) 和[nginx 的 gzip 模块说明](http://nginx.org/en/docs/http/ngx_http_gzip_module.html)。
+
+其实也就是 `brotli_static on | off | always` 和 `	gzip_static on | off | always;` 选项配置。
+
 ---
 
 当然你还可以搞事情。比如构建的时候使用了 br，但删除了原始的 js/css，但 nginx 启用了 gzip 压缩，那么页面资源请求是报错的。
@@ -305,7 +307,7 @@ nginx 启用 http2 也很简单，上面的 server 配置看到了吧，把 list
 ```conf
 # 更高效率的压缩：br + h2
 server {
-	server_name demo_server1;
+    server_name demo_server1;
     listen 8089 ssl http2; # 加http2
     ssl_certificate     /etc/nginx/crtdir/server.cer;
     ssl_certificate_key /etc/nginx/crtdir/server.key;
@@ -332,4 +334,4 @@ nginx 中的压缩也可以多些内容，比如压缩的配置选项，涉及�
 
 注意，h2 不会对已经压缩的文件进行额外压缩了，也没有必要，毕竟压缩算法是那些，再压也不会再减少了。
 
-说的传输协议，可能也有听说过 TCP 慢启动之类的，也有说优化文件在 14kb 之内，及请求页面的 HTML 小于初始的 14KB 数据包，就能最快的完成数据的请求然后优化页面加载渲染效率。这按下不变。
+说的传输协议，可能也有听说过 TCP 慢启动之类的，也有说优化文件在 14kb 之内，及请求页面的 HTML 小于初始的 14KB 数据包，就能最快的完成数据的请求然后优化页面加载渲染效率。这按下不表。
