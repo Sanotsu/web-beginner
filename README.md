@@ -119,6 +119,7 @@
 - **[03-web 性能指标及优化](documents/04-engineered/03-web性能指标及优化.md)**
 - **[web 开发 7 年，浅谈前端架构设计与工程化](documents/11-others/frontend-architecture-design-and-engineering.md)**
 - **[web 开发 7 年，Chrome 开发工具 Performance 使用实战](documents/11-others/web-base-chrome-performance-devtool.md)**
+- [「前端性能优化」之 nginx 启用 br 压缩和 h2 的配置](documents/04-engineered/04-前端性能优化之nginx启用br和h2的配置.md)
 
 ## TypeScript
 
