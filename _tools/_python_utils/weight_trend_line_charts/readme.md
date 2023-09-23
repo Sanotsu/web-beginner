@@ -4,6 +4,8 @@
 
 2023-09-21 又简单添加了摄入和体重的对比图，主要学习折线图和条状图的一些设定和事件。
 
+2023-09-23 又加了个示例，主要把组合图表中比较大的函数拆了一下，并体验了一些细节。
+
 主要记录下这两个月从想要减脂到落实减脂的体重变化趋势。
 
 Weight trend last two month:
@@ -17,3 +19,7 @@ Sept weight with intake and exercise:
 Daily intake weight chart:
 
 ![daily_intake_weight_chart](./_images/daily_intake_weight_chart.png)
+
+Daily intake weight exercise chart
+
+![daily_intake_weight_exercise_chart](./_images/daily_intake_weight_exercise_chart.png)
