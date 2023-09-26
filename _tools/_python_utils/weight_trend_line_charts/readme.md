@@ -6,20 +6,36 @@
 
 2023-09-23 又加了个示例，主要把组合图表中比较大的函数拆了一下，并体验了一些细节。
 
-主要记录下这两个月从想要减脂到落实减脂的体重变化趋势。
+2023-09-26 重命名了一些文件，添加了一点示例。
 
-Weight trend last two month:
+---
 
-![weight_trend_last_two_month](./_images/weight_trend_last_two_month.png)
+主要测试数据为记录下这两个月从想要减脂到落实减脂的体重变化趋势。
 
-Sept weight with intake and exercise:
+weight_trend_monthly:
 
-![sept_weight_with_intake.png](./_images/sept_weight_with_intake.png)
+![weight_trend_monthly](./_output/weight_trend_monthly.png)
 
-Daily intake weight chart:
+weight_trend_oneline:
 
-![daily_intake_weight_chart](./_images/daily_intake_weight_chart.png)
+![weight_trend_oneline](./_output/weight_trend_oneline.png)
 
-Daily intake weight exercise chart
+weight_trend_oneline_range:
 
-![daily_intake_weight_exercise_chart](./_images/daily_intake_weight_exercise_chart.png)
+![weight_trend_oneline_range](./_output/weight_trend_oneline_range.png)
+
+weight_intake_exercise_detail:
+
+![weight_intake_exercise_detail](./_output/weight_intake_exercise_detail.png)
+
+weight_intake_exercise_simple:
+
+![weight_intake_exercise_simple](./_output/weight_intake_exercise_simple.png)
+
+weight_intake_exercise_simple_optional:
+
+![weight_intake_exercise_simple_optional](./_output/weight_intake_exercise_simple_optional.png)
+
+weight_intake_exercise_separated:
+
+![weight_intake_exercise_separated](./_output/weight_intake_exercise_separated.png)

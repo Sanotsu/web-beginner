@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from datetime import timedelta
 
 
-def draw_intake_and_weight(start_date, end_date, intake_data, weight_data):
+def draw_weight_intake_simple(start_date, end_date, intake_data, weight_data):
     # 生成日期列表
     dates = []
     current_date = start_date
@@ -13,20 +13,20 @@ def draw_intake_and_weight(start_date, end_date, intake_data, weight_data):
         current_date += timedelta(days=1)
 
     # 划分数据到月份中(传入数据可能时间跨度多个月，这里拼接每个月的数据)
-    start_month = start_date.strftime('%Y%m')
-    end_month = end_date.strftime('%Y%m')
-    months = []
-    current_month = start_month
-    while current_month <= end_month:
-        months.append(current_month)
-        year = int(current_month[0:4])
-        month = int(current_month[4:6])
-        if month == 12:
-            month = 1
-            year += 1
-        else:
-            month += 1
-        current_month = f"{year:04d}{month:02d}"
+    # start_month = start_date.strftime('%Y%m')
+    # end_month = end_date.strftime('%Y%m')
+    # months = []
+    # current_month = start_month
+    # while current_month <= end_month:
+    #     months.append(current_month)
+    #     year = int(current_month[0:4])
+    #     month = int(current_month[4:6])
+    #     if month == 12:
+    #         month = 1
+    #         year += 1
+    #     else:
+    #         month += 1
+    #     current_month = f"{year:04d}{month:02d}"
 
     # 创建坐标系和实例
     fig, ax1 = plt.subplots(figsize=(16, 8))
@@ -39,7 +39,7 @@ def draw_intake_and_weight(start_date, end_date, intake_data, weight_data):
     # 设置共用的x轴和不同的y轴的名称
     ax1.set_xlabel("Date (day)")
     ax1.set_ylabel("Intake (kcal)", color='green')
-    ax2.set_ylabel("Weight (ky)", color='blue')
+    ax2.set_ylabel("Weight (kg)", color='blue')
 
     # 提取每天的摄入量和体重数据
     intake_arr = [x["v"] for month_data in intake_data.values()
@@ -111,7 +111,7 @@ def draw_intake_and_weight(start_date, end_date, intake_data, weight_data):
     # 添加每天摄入量的平均值参考线和标注文本
     intake_mean_line = ax1.axhline(intake_mean, color='gray', linestyle='--')
     intake_mean_label = ax1.text(
-        len(dates)-1,
+        len(dates),
         intake_mean,
         f"平均值: {intake_mean:.2f}",
         ha='right',
@@ -207,5 +207,7 @@ def draw_intake_and_weight(start_date, end_date, intake_data, weight_data):
     slider.on_changed(update)
 
     # dpi表示每英寸点数，bbox_inches='tight'会裁剪边界框，以适应图表内容
-    fig.savefig('daily_intake_weight_chart.png', dpi=300,  bbox_inches='tight')
+    fig.savefig('./_output/weight_intake_simple.png',
+                dpi=300,  bbox_inches='tight')
+
     plt.show()

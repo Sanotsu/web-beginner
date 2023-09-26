@@ -278,7 +278,8 @@ def add_reference_line(ref_ax, ref_arr, color):
         f"平均值: {ref_mean:.2f}",
         ha='left',
         va='bottom',
-        color=color,
+        # color=color,
+        color="black",
     )
 
     return ref_mean_line, ref_mean_label
@@ -401,8 +402,6 @@ def slider_update(slider, intake_ax, weight_ax, exercise_ax, intake_arr, exercis
         # 滑块变更返回不显示文字，去看图例(依旧添加文本是因为上面有移除，没有文本移除会报错)
         intake_mean_label.set_visible(False)
 
-        print("exercise_mean_line", exercise_mean_line)
-
         exercise_mean_line.remove()
         exercise_mean_line = exercise_ax.axhline(
             new_exercise_mean, color='#dfebe2', linestyle='--')
@@ -461,7 +460,7 @@ def create_plot(dates):
     # 创建一个与 intake_ax 坐标系共享 x 轴的另一个坐标系 exercise_ax
     exercise_ax = intake_ax.twinx()
     # y轴的刻度和颜色
-    exercise_ax.set_ylabel("exercise (min)", color="grey")
+    exercise_ax.set_ylabel("Exercise (min)", color="grey")
     exercise_ax.tick_params("y", colors="grey")
     # 将y轴右侧边框线从默认位置移动到1.05倍axes的宽度处
     exercise_ax.spines["right"].set_position(("axes", 1.05))
@@ -469,7 +468,7 @@ def create_plot(dates):
     # 图表的标题
     plt.title("Daily Intake、Exercise and Weight")
     plt.tight_layout()
-    # plt.grid(True)
+    plt.grid(True)
 
     return fig, weight_ax, intake_ax, exercise_ax
 
@@ -486,7 +485,7 @@ def generate_dates(start_date, end_date):
 
 
 # 主函数
-def draw_intake_and_weight_exercise(bar_width, start_date, end_date, intake_data, weight_data, exercise_data):
+def draw_weight_intake_exercise_simple(bar_width, start_date, end_date, intake_data, weight_data, exercise_data):
 
     # 统一的文本显示大小
     font_size = 8
@@ -546,5 +545,6 @@ def draw_intake_and_weight_exercise(bar_width, start_date, end_date, intake_data
     )
 
     # dpi表示每英寸点数，bbox_inches='tight'会裁剪边界框，以适应图表内容
-    fig.savefig('daily_intake_weight_exercise_chart.png', dpi=300,  bbox_inches='tight')
+    fig.savefig('./_output/weight_intake_exercise_simple.png',
+                dpi=300,  bbox_inches='tight')
     plt.show()

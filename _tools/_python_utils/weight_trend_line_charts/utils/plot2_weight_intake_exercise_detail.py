@@ -3,8 +3,9 @@ from matplotlib.widgets import RangeSlider
 import numpy as np
 import random
 
-
 # 生成随机浅色
+
+
 def generate_light_color():
     r = random.randint(128, 255)  # 生成范围在 128-255 之间的随机红色值
     g = random.randint(128, 255)  # 生成范围在 128-255 之间的随机绿色值
@@ -204,7 +205,7 @@ def draw_exercise_bar(bar_width, ax, positions, dates, exercise):
 
 
 # 绘制图表的主入口
-def plot_weight_intake(
+def draw_weight_intake_exercise_detail(
     bar_width, dates, weights, breakfast_data, lunch_data, dinner_data, exercise_data
 ):
     """
@@ -230,7 +231,7 @@ def plot_weight_intake(
     # fig 是代表整个图形窗口的对象，可以用于设置图形窗口的属性和保存图形。
     # meal_ax 是代表子图（坐标系）的对象，可以用于对子图进行各种操作，包括绘制图形、设置坐标轴、添加标签等。
     # figsize=(10, 6) 是一个可选参数，用于指定图形窗口的尺寸，单位是英寸。这里设置的尺寸是宽度为 10 英寸，高度为 6 英寸。
-    fig, meal_ax = plt.subplots(figsize=(10, 8))
+    fig, meal_ax = plt.subplots(figsize=(16, 8))
     draw_three_meals_bar(
         bar_width, meal_ax, positions, dates, breakfast_data, lunch_data, dinner_data
     )
@@ -297,4 +298,52 @@ def plot_weight_intake(
 
     slider.on_changed(update)
 
+    # dpi表示每英寸点数，bbox_inches='tight'会裁剪边界框，以适应图表内容
+    fig.savefig('./_output/weight_intake_exercise_detail.png',
+                dpi=300,  bbox_inches='tight')
+
     plt.show()
+
+
+# if __name__ == "__main__":
+
+#     # 条形图的默认宽度
+#     bar_width = 0.2
+
+#     start_date = datetime(2023, 9, 1)  # 开始日期
+#     end_date = datetime(2023, 9, 18)  # 结束日期
+#     days = (end_date - start_date).days + 1  # 总天数
+
+#     # x轴为日期序列，并格式化
+#     original_dates = [start_date + timedelta(days=i) for i in range(days)]
+
+#     date_format = "%Y年%m月%d日"
+
+#     # x轴的日期数据（各个y轴数据都共用同一个x轴）
+#     formatted_dates = [date.strftime(date_format) for date in original_dates]
+
+#     # 指定JSON文件的路径
+#     weight_file_path = "./_input_data/sept/weight_records.json"
+#     breakfast_file_path = "./_input_data/sept/breakfast_records.json"
+#     lunch_file_path = "./_input_data/sept/lunch_records.json"
+#     dinner_file_path = "./_input_data/sept/dinner_records.json"
+#     exercise_file_path = "./_input_data/sept/exercise_records.json"
+
+#     # 打开文件并读取JSON数据（y轴的各项数据）
+#     with open(weight_file_path, "r", encoding="utf-8", errors="ignore") as file:
+#         weight_data = json.load(file)
+
+#     with open(breakfast_file_path, "r", encoding="utf-8", errors="ignore") as file:
+#         breakfast_data = json.load(file)
+
+#     with open(lunch_file_path, "r", encoding="utf-8", errors="ignore") as file:
+#         lunch_data = json.load(file)
+
+#     with open(dinner_file_path, "r", encoding="utf-8", errors="ignore") as file:
+#         dinner_data = json.load(file)
+
+#     with open(exercise_file_path, "r", encoding="utf-8", errors="ignore") as file:
+#         exercise_data = json.load(file)
+
+#     plot_weight_intake(bar_width, formatted_dates, weight_data,
+#                        breakfast_data, lunch_data, dinner_data, exercise_data,)

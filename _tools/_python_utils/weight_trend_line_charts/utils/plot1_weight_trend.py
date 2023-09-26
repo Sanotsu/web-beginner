@@ -16,6 +16,8 @@ def draw_lines_by_month(jul_data, aug_data, sept_data):
     # 利用切片使用列表切片操作可以非常方便地获取列表的子集，
     # 语法，list[start:end:step]，包含start，不包含end，都可省略，start默认0,end默认列表尾，step默认1。
 
+    fig, ax = plt.subplots(figsize=(18, 9))
+
     # 7月份的数据是14号到31号，所以显示的内容是x轴31天的切片 [31-7月数据长度，31]
     plt.plot(x[(len(x) - len(jul_data)):],
              jul_data, label='Jul')
@@ -56,13 +58,18 @@ def draw_lines_by_month(jul_data, aug_data, sept_data):
     plt.legend()
 
     # 设置标题和轴标签
-    plt.title('Weight Trends')
+    plt.title('Weight Trends - Monthly Statistics')
     plt.xlabel('Time (day)')
     plt.ylabel('Weight (kg)')
 
     # 设置x轴步进
     x_ticks = list(range(1, 32, 1))
     plt.xticks(x_ticks)
+
+    plt.tight_layout()
+
+    fig.savefig('./_output/weight_trend_monthly.png',
+                dpi=300,  bbox_inches='tight')
 
     # 展示图形
     plt.show()
@@ -109,7 +116,7 @@ def draw_one_line(formatted_dates, weight_data):
     # x轴y轴以及标题的名称
     plt.xlabel('Date')
     plt.ylabel('Weight (kg)')
-    plt.title('Weight Trends')
+    plt.title('Weight Trends - Oneline')
 
     # 绘制图例
     plt.legend()
@@ -120,8 +127,11 @@ def draw_one_line(formatted_dates, weight_data):
 
     plt.rcParams['figure.figsize'] = [18, 6]  # 宽度为 18 英寸，高度为 6 英寸
 
+    plt.tight_layout()
+
     # 调整图表尺寸并保存为图片文件
-    plt.savefig('my_plot.png', dpi=300)
+    fig.savefig('./_output/weight_trend_oneline.png',
+                dpi=300,  bbox_inches='tight')
 
     plt.show()
 
@@ -138,7 +148,7 @@ def draw_one_line_with_range_slider(start_date, end_date, weight_data):
     y = weight_data
 
     # 创建子图
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(18, 9))
 
     # 调整子图位置
     plt.subplots_adjust(bottom=0.25)
@@ -149,7 +159,7 @@ def draw_one_line_with_range_slider(start_date, end_date, weight_data):
     # 绘制x、y轴、标题文字和图例
     plt.xlabel('Date')
     plt.ylabel('Weight (kg)')
-    plt.title('Weight Trends')
+    plt.title('Weight Trends - Oneline RangeSlider')
     plt.legend()
     # x轴标签文字旋转角度
     plt.xticks(rotation=270)
@@ -215,5 +225,9 @@ def draw_one_line_with_range_slider(start_date, end_date, weight_data):
     slider.on_changed(update_chart)
 
     plt.tight_layout()
+
+    # 调整图表尺寸并保存为图片文件
+    fig.savefig('./_output/weight_trend_oneline_range.png',
+                dpi=300,  bbox_inches='tight')
 
     plt.show()
