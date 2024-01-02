@@ -183,6 +183,7 @@
 - [工作经验(updating)](documents/11-others/work-ex-just-read-updating.md)
   - 笔者的近期经验，不具备参看性，看个乐。
 - **[干了 7 年 web 开发工作，混吃等死的日子可能到头了](documents/11-others/web-development-work-experience-summary.md)**
+- [说干就干不如不干？3个月开发flutter项目的实践经验分享](documents/11-others/experience-sharing/说干就干不如不干？3个月开发flutter项目的实践经验分享.md)
 
 ---
 
