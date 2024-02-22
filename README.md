@@ -164,11 +164,12 @@
 - [02-mysql 常见问题](documents/10-miscellaneous/02-mysql-faq.md)
 - [03-后端常用工具简介](documents/10-miscellaneous/03-backend-common-tools.md)
 - [04-sass 简介](documents/10-miscellaneous/04-sass-overview.md)
-- **[05-http 基础](documents/10-miscellaneous/05-http-basic.md)**
+- [05-http 基础](documents/10-miscellaneous/05-http-basic.md) - 已合到 10
 - **[06-http 缓存](documents/10-miscellaneous/06-http-cache.md)**
 - **[07-跨源资源共享 cors](documents/10-miscellaneous/07-cors.md)**
 - **[08-web 安全](documents/10-miscellaneous/08-web-secure.md)**
-- [09-http 方法和常见响应码介绍](documents/10-miscellaneous/09-http-methods.md)
+- [09-http 方法和常见响应码介绍](documents/10-miscellaneous/09-http-methods.md) - 已合到 10
+- **[10-Web 前端八股整理：比较全面的初级 HTTP、HTTPS 和 TLS 知识点分享](documents/11-others/web-base-https-part1.md)**
 
 ## 脚本命令等
 
@@ -184,7 +185,7 @@
 - [工作经验(updating)](documents/11-others/work-ex-just-read-updating.md)
   - 笔者的近期经验，不具备参看性，看个乐。
 - **[干了 7 年 web 开发工作，混吃等死的日子可能到头了](documents/11-others/web-development-work-experience-summary.md)**
-- [说干就干不如不干？3个月开发flutter项目的实践经验分享](documents/11-others/experience-sharing/说干就干不如不干？3个月开发flutter项目的实践经验分享.md)
+- [说干就干不如不干？3 个月开发 flutter 项目的实践经验分享](documents/11-others/experience-sharing/说干就干不如不干？3个月开发flutter项目的实践经验分享.md)
 
 ---
 

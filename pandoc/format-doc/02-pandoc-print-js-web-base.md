@@ -4914,7 +4914,7 @@ TCP 是一个可靠的传输协议，基本上，可以将它视为在两台计�
 
 这种单个数据包造成的阻塞，就是 TCP 上的队头阻塞（head of line blocking）。随着丢包率的增加，HTTP/2 的表现越来越差。
 
-**`URI`**(Uniform Resource Identifier)代表统一资源标识符。**`URL`**（统一资源定位符 Locator）是一种常见的 URI（可狭义认为就是网址）。
+**`URI`**(Uniform Resource Identifier)代表统一资源标识符。**`URL`**(Uniform Resource Locator)是一种常见的 URI(可狭义认为就是网址)。
 
 ## 2 HTTP 概述
 
